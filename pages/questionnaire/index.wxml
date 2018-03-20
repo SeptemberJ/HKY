@@ -1,0 +1,29 @@
+<view class='wrap'>
+  <view class='StepBlock' wx-if="{{CurStep == StepIdx}}" wx:for="{{StepList}}" wx:for-index="StepIdx" wx:for-item="Step" wx:key="StepIdx" data-step="{{StepIdx}}">
+    <view wx-if="{{ifShowList[StepIdx*2 + QuestionIdx]}}" wx:for="{{Step}}" wx:for-index="QuestionIdx" wx:for-item="Question" wx:key="QuestionIdx">
+    <text class='question'>>> {{Question.qusetion}}{{submitForm[StepIdx*2 + QuestionIdx]}}</text>
+    <view wx-if="{{Question.type == 'Single'}}">
+      <!--单选  -->
+       <radio-group class="radio-group" bindchange="ChangeRadio" data-idx="{{StepIdx*2 + QuestionIdx}}">
+        <label class="radio" wx:for="{{Question.answer}}" wx:for-index="{{StepIdx*2 + AnswerIdx}}" wx:for-item="Answer" wx:key="AnswerIdx">
+          <radio value="{{Answer.value}}" checked="2人"/>{{Answer.value}}
+          <view wx-if="{{Answer.img}}">
+            <image src='{{Answer.img}}'></image>
+          </view>
+        </label>
+      </radio-group> 
+    </view>
+    <view wx-if="{{Question.type == 'Multiple'}}">
+      <!--多选  -->
+        <checkbox-group bindchange="ChangeCheckbox" data-idx="{{StepIdx*2 + QuestionIdx}}">
+        <label class="checkbox" wx:for="{{Question.answer}}" wx:for-index="{{StepIdx*2 + AnswerIdx}}" wx:for-item="Answer" wx:key="AnswerIdx">
+          <checkbox value="{{Answer.value}}" checked=""/>{{Answer.value}}
+        </label>
+      </checkbox-group>  
+    </view>
+    </view>
+    <button wx-if="{{CurStep > 0}}" bindtap="PreStep">上一步</button>
+    <button wx-if="{{CurStep < StepList.length - 1}}"  bindtap="NextStep">下一步{{StepList.length}}{{CurStep}}</button>
+    <button wx-if="{{CurStep == StepList.length - 1}}" bindtap="Submit">提交</button>
+  </view>
+</view>

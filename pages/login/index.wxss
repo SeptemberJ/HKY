@@ -1,0 +1,11 @@
+.ImgBlock{
+  width: 100%;
+  height: 150px;
+  margin: 20rpx auto;
+  text-align: center;
+}
+image{
+  width: 150rpx;
+  height: 150rpx;
+  margin: 0 auto;
+}

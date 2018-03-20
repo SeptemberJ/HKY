@@ -1,0 +1,9 @@
+.StepBlock{
+  border: 0px solid red;
+}
+radio-group{
+  margin: 20px auto;
+}
+checkbox-group{
+  margin: 20px auto;
+}
