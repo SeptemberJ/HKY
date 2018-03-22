@@ -1,11 +1,54 @@
+.LoginBox{
+  width: 500rpx;
+  height: 500rpx;
+  margin: 0 auto;
+  margin-top: 50rpx;
+  /* position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-80%) */
+}
+input{
+  padding: 10rpx;
+  font-size: 14px;
+  margin-top: 40px;
+}
+.BorderBottom{
+  border-bottom: 2px solid #398e3d;
+}
+.circleBtn{
+  width: 120rpx;
+  height: 120rpx;
+  margin: 30px auto 0 auto;
+  background: #398e3d;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+}
+.circleBtn image{
+  width: 50rpx;
+  height: 50rpx;
+  margin-top: 35rpx;
+}
+.active{
+  border-bottom: 2px solid #737ca5
+}
+.operationBox{
+  margin-top: 10px;
+  text-align: right;
+}
+.operationBox text{
+  font-size: 14px;
+}
 .ImgBlock{
   width: 100%;
-  height: 150px;
+  height: 250rpx;
   margin: 20rpx auto;
   text-align: center;
 }
 image{
-  width: 150rpx;
-  height: 150rpx;
+  width: 250rpx;
+  height: 250rpx;
   margin: 0 auto;
 }

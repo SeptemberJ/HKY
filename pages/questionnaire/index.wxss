@@ -1,9 +1,39 @@
+.Skip{
+  width: 100rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  border-radius: 50%;
+  background: #ccc;
+  color: #fff;
+  position: fixed;
+  top: 60rpx;
+  right: 20rpx;
+}
+.tip{
+  margin: 10px auto;
+  font-size: 14px;
+  text-align: center;
+  color: #333;
+}
+.SmallIcon{
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
+.question{
+  font-size: 16px;
+  margin-top: 20px;
+  padding-left: 10px;
+}
 .StepBlock{
   border: 0px solid red;
 }
 radio-group{
   margin: 20px auto;
+  font-size: 14px;
 }
 checkbox-group{
   margin: 20px auto;
+  font-size: 14px;
 }

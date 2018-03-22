@@ -1,9 +1,15 @@
 {
   "pages":[
     "pages/questionnaire/index",
-    "pages/bar/index",
+    "pages/login/index",
     "pages/sign/index",
-    "pages/login/index"
+    
+    
+    
+    "pages/index/index",
+    "pages/bar/index"
+    
+   
   ],
   "window":{
     "backgroundTextStyle":"light",

@@ -1,3 +1,13 @@
 <view class='ImgBlock'>
   <image src='../../images/icon/earth.png'></image>
 </view>
+
+<view class="LoginBox">
+  <input class="{{BordeName?'BorderBottom active':'BorderBottom'}}" placeholder='手机号' bindfocus="changeBorderColor_name" bindblur="NormalBorder"></input>
+  <input class="{{BordePsd?'BorderBottom active':'BorderBottom'}}" placeholder='密码' bindfocus="changeBorderColor_pds" bindblur="NormalBorder"></input>
+  
+  <view class='operationBox'>
+    <text bindtap='GoSign'>没有账户？去注册</text>
+  </view>
+  <view class='circleBtn' bindtap='Login'><image src='../../images/icon/arrow-right.png'></image></view>
+</view>

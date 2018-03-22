@@ -1,9 +1,6 @@
-<view class='Skip'>跳过</view>
-<view class='tip'>为了给您提供更好的后续服务请先填写以下问卷</view>
 <view class='wrap'>
   <view wx-if="{{ifShowList[QuestionIdx]}}" wx:for="{{questionList}}" wx:for-index="QuestionIdx" wx:for-item="Question" wx:key="QuestionIdx">
-    <image class='SmallIcon' src='../../images/icon/icon_status-two-dots.png'></image>
-    <text class='question'>{{Question.qusetion}} </text>
+    <text class='question'>>> {{Question.qusetion}} </text>
     <view wx-if="{{Question.type == 'Single'}}">
       <!--单选  -->
        <radio-group class="radio-group" bindchange="ChangeRadio" data-idx="{{QuestionIdx}}">
@@ -24,5 +21,4 @@
       </checkbox-group>  
     </view>
   </view>
-  <button bindtap='Submit'>提交</button>
 </view>

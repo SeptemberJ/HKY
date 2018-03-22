@@ -1,0 +1,34 @@
+<view class='wrap'>
+  <view class='StepBlock' wx-if="{{CurStep == StepIdx}}" wx:for="{{StepList}}" wx:for-index="StepIdx" wx:for-item="Step" wx:key="StepIdx" data-step="{{StepIdx}}">
+    <view wx-if="{{ifShowList[StepIdx*2 + QuestionIdx]}}" wx:for="{{Step}}" wx:for-index="QuestionIdx" wx:for-item="Question" wx:key="QuestionIdx">
+    <text class='question'>>>{{StepIdx*2 + QuestionIdx}} {{Question.qusetion}}{{submitForm[StepIdx*2 + QuestionIdx]}}</text>
+     <!--单选  -->
+     <view wx-if="{{Question.type == 'Single'}}">
+       <radio-group class="radio-group" bindchange="ChangeRadio" data-idx="{{StepIdx*2 + QuestionIdx}}">
+        <label class="radio" wx:for="{{Question.answer}}" wx:for-index="{{StepIdx*2 + AnswerIdx}}" wx:for-item="Answer" wx:key="AnswerIdx">
+          <radio value="{{Answer.value}}" checked="{{submitForm[StepIdx*2 + QuestionIdx] == Answer.value}}"/>{{Answer.value}}
+          <view wx-if="{{Answer.img}}">
+            <image src='{{Answer.img}}'></image>
+          </view>
+        </label>
+      </radio-group> 
+    </view> 
+     <!--多选  -->
+    <view wx-if="{{Question.type == 'Multiple'}}">
+        <checkbox-group bindchange="ChangeCheckbox" data-idx="{{StepIdx*2 + QuestionIdx}}">
+        <label class="checkbox" wx:for="{{Question.answer}}" wx:for-index="{{AnswerIdx}}" wx:for-item="Answer" wx:key="AnswerIdx" data-idx="{{AnswerIdx}}">
+          <checkbox value="{{Answer.value}}" checked=""/>
+          {{Answer.value}}
+        </label>
+        <!-- {{submitForm[StepIdx*2 + QuestionIdx]}} -->
+        <!-- <label class="checkbox" wx:for="{{Question.answer}}" wx:for-index="{{StepIdx*2 + AnswerIdx}}" wx:for-item="Answer" wx:key="AnswerIdx" data-idx="{{AnswerIdx}}">
+          <checkbox value="{{Answer.value}}" checked="true"/>{{Answer.value}} {{(StepIdx*2 + QuestionIdx)}}
+        </label> -->
+      </checkbox-group>  
+    </view>
+    </view>
+    <button wx-if="{{CurStep > 0}}" bindtap="PreStep">上一步</button>
+    <button wx-if="{{CurStep < StepList.length - 1}}"  bindtap="NextStep">下一步{{StepList.length}}{{CurStep}}</button>
+    <button wx-if="{{CurStep == StepList.length - 1}}" bindtap="Submit">提交</button>
+  </view>
+</view>

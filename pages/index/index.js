@@ -7,7 +7,19 @@ Page({
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    items: [
+      [
+        { id:0,name: 'USA', value: '美国' },
+        { id: 1,name: 'CHN', value: '中国', checked: 'true' },
+        { id: 2,name: 'BRA', value: '巴西' }
+      ],
+      [
+        { id: 0,name: 'USA', value: '古巴' },
+        { id: 1,name: 'CHN', value: '中东', checked: 'true' },
+        { id: 2,name: 'BRA', value: '澳洲' }
+      ],
+    ]
   },
   //事件处理函数
   bindViewTap: function() {

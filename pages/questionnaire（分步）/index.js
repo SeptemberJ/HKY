@@ -4,6 +4,12 @@ const app = getApp()
 
 Page({
   data: {
+    questionList2:[
+      { 'type': 'Single', 'qusetion': '您家里几口人？', 'answer': [{ 'value': '1人', 'control': [], 'id': 0 }, { 'value': '2人', 'control': [], 'id': 1 }, { 'value': '3人', 'control': [], 'id': 2 }, { 'value': '3人及以上', 'control': [], 'id': 3 }]},
+      { 'type': 'Single', 'qusetion': '您做饭会开启抽油烟机吗？', 'answer': [{ 'value': '开', 'control': [], 'id': 0 }, { 'value': '偶尔开', 'control': [], 'id': 1 }, { 'value': '不开', 'control': [], 'id': 2}, { 'value': '未装油烟机', 'control': [3,4] }]},
+      { 'type': 'Single', 'qusetion': '您家中抽油烟机的品牌？', 'answer': [{ 'value': '老板', 'control': [] }, { 'value': '方太', 'control': [] }, { 'value': '美的', 'control': [] }, { 'value': '华帝', 'control': [] }, { 'value': '其他', 'control': [] }] },
+      { 'type': 'Single', 'qusetion': '您家中抽油烟机已使用了多少年？', 'answer': [{ 'value': '一年以内', 'control': [] }, { 'value': '2~3年', 'control': [] }, { 'value': '3~4年', 'control': [] }, { 'value': '5~6年及以上', 'control': [] }, { 'value': '7年及以上', 'control': [] }] },
+    ],
     questionList: [
       { 'type': 'Single', 'qusetion': '您家里几口人？', 'answer': [{ 'value': '1人', 'id': 0 }, { 'value': '2人', 'id': 1 }, { 'value': '3人', 'id': 2 }, { 'value': '3人及以上', 'id': 3}] },
       { 'type': 'Multiple', 'qusetion': '您家中有哪些易感人群（多选）？', 'answer': [{ 'value': '老人', 'id': 0 }, { 'value': '儿童', 'id': 1 }, { 'value': '孕妇', 'id': 2 }, { 'value': '无', 'id': 3 }] },
@@ -31,7 +37,6 @@ Page({
       StepListTemp.push(eachArray)
     }
     console.log(StepListTemp)
-    //submitForm ifShowList
     this.data.questionList.map((item,idx)=>{
       if (item.type == 'Single'){
         obj = ''
@@ -49,8 +54,6 @@ Page({
       StepList: StepListTemp
     })
   },
-  
-  //单选
   ChangeRadio: function(e){
     let submitFormTemp = this.data.submitForm
     let ifShowListTemp = this.data.ifShowList
@@ -78,11 +81,11 @@ Page({
     console.log(this.data.ifShowList)
     
   },
-
-  //多选
   ChangeCheckbox: function (e) {
+    console.log(e)
     let temp = this.data.submitForm
-    temp[e.currentTarget.dataset.idx] = e.detail.value
+    temp[e.currentTarget.dataset.idx].value = e.detail.value
+    temp[e.currentTarget.dataset.idx].checked = !temp[e.currentTarget.dataset.idx].checked
     this.setData({
       submitForm: temp
     })

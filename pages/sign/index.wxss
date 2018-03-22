@@ -1,0 +1,45 @@
+.SignBox{
+  width: 650rpx;
+  height: 500rpx;
+  margin: 0 auto;
+  margin-top: 50rpx;
+  overflow: hidden;
+}
+.SignItem{
+  width: 100%;
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.label{
+  width: 150rpx;
+  font-size: 14px;
+  text-align: right;
+}
+input{
+  width: 400rpx;
+  padding: 2rpx 5px;
+  font-size: 14px;
+  border-bottom: 1px solid #398e3d;
+}
+.SignBt{
+  width: 200rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  background: #398e3d;
+  color: #fff;
+  text-align: center;
+  margin: 40px auto 0 auto;
+  border-radius: 10rpx;
+  
+}
+.BottomBox{
+  width: 100%;
+  position: fixed;
+  bottom: -10rpx;
+  left: 0;
+}
+.BottomBox image{
+  width: 100%;
+}
