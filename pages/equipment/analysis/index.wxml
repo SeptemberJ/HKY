@@ -1,0 +1,17 @@
+<view class='equipmentInfo'>
+  <text>厨房1油烟机</text>
+  <text class='equipmentCode'>设备码：WX3ercdv</text>
+</view>
+<!--data  -->
+<view class='DataList'>
+  <view class='DataItem' wx:for="{{dataList}}" wx:for-index="DataIdx" wx:for-item="Data" wx:key="DataIdx" bindtap='ToDetail'>
+    <view class='leftBox'>
+      <image src='{{Data.img}}'></image>
+    </view>
+    <view class='rightBox'>
+      <text>{{Data.kind}}</text>
+      <text>{{Data.value}}</text>
+      <text>{{Data.unit}}</text>
+    </view>
+  </view>
+</view>

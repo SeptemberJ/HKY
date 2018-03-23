@@ -90,22 +90,28 @@ Page({
     console.log(this.data.submitForm)
     console.log(this.data.ifShowList)
   },
-  NextStep: function () {
-    let Cur = this.data.CurStep
-    if (this.data.CurStep < this.data.StepList.length -1){
-      Cur++
-    }
-    this.setData({
-      CurStep: Cur
-    })
-  },
-  PreStep: function () {
-    let Cur = this.data.CurStep
-    if (this.data.CurStep >0) {
-      Cur--
-    }
-    this.setData({
-      CurStep: Cur
+  // NextStep: function () {
+  //   let Cur = this.data.CurStep
+  //   if (this.data.CurStep < this.data.StepList.length -1){
+  //     Cur++
+  //   }
+  //   this.setData({
+  //     CurStep: Cur
+  //   })
+  // },
+  // PreStep: function () {
+  //   let Cur = this.data.CurStep
+  //   if (this.data.CurStep >0) {
+  //     Cur--
+  //   }
+  //   this.setData({
+  //     CurStep: Cur
+  //   })
+  // },
+  // 跳过问卷调查
+  SkipQuestionnaire(){
+    wx.navigateTo({
+      url: '../equipment/list/index'
     })
   },
   Submit: function(){

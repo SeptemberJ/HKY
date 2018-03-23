@@ -37,3 +37,13 @@ checkbox-group{
   margin: 20px auto;
   font-size: 14px;
 }
+.OperationBt{
+  width: 80%;
+  height: 80rpx;
+  background: red;
+  margin: 40rpx auto 20rpx auto;
+  color: #fff;
+  text-align: center;
+  line-height: 80rpx;
+  border-radius: 10rpx;
+}

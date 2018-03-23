@@ -1,0 +1,50 @@
+<!--设备总数  -->
+<view class="conclusionBox">
+  <view class='leftBox'>
+    <image class="Avatar" src="{{userInfo.avatarUrl}}"></image>
+    <text class="nickName">{{userInfo.nickName}}</text>
+  </view>
+  <view class='rightBox'>
+    <view class='rightItem ToLeft'>
+      <text class='TextAlignL'>设备总数:{{equipmentList.length}}</text>
+      <text class='TextAlignL'>当前AQI：75</text>
+    </view>
+    <view class='rightItem ToCenter'>
+      <image class='addBox' src='../../../images/icon/add.png' bindtap='ToAdd'></image>
+    </view>
+  </view>
+</view>
+<!--设备列表  -->
+<view class="equipmentList" wx:if="{{equipmentList.length>0}}">
+  <view class="equipmentItem" wx:for="{{equipmentList}}" wx:for-index="EquipmentIdx" wx:for-item="Equipment" wx:key="EquipmentIdx">
+    <view class="equipmentName">{{Equipment.name}}</view>
+    <view class="equipmentOperation">
+      <view class='OperationItem'>
+        <image src='../../../images/icon/delete.png'></image>
+      </view>
+      <view class='OperationItem'>
+        <image src='../../../images/icon/analysis.png' bindtap='LookData'></image>
+      </view>
+    </view> 
+  </view>
+</view>
+
+<view class="InfoNull" wx:if="{{equipmentList.length<=0}}">
+    <image src="../../../images/icon/box-empty.png" />
+    <text>您还没有绑定的设备！</text>
+</view>
+
+<!--add  -->
+<view class='Mask' wx-if="{{IdAdd}}">
+</view>
+<view class='Modal' wx-if="{{IdAdd}}">
+  <text class='Modal_tit'>新增设备</text>
+  <view class='InputBox'>
+    <input placeholder='请输入设备名称'></input>
+    <input placeholder='请输入设备条码'></input>
+  </view>
+  <view class='operationBlock'>
+      <view class='operation_item lightGreen' bindtap='Cancel'>取消</view>
+      <view class='operation_item borderL lightGreen' bindtap='Add'>保存    </view> 
+  </view>
+</view>

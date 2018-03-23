@@ -1,11 +1,12 @@
 {
   "pages":[
-    "pages/questionnaire/index",
     "pages/login/index",
+    "pages/equipment/detail/index",
+    "pages/equipment/analysis/index",
+    "pages/equipment/list/index",
+    "pages/equipment/add/index",
+    "pages/questionnaire/index",
     "pages/sign/index",
-    
-    
-    
     "pages/index/index",
     "pages/bar/index"
     

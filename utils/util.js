@@ -1,3 +1,22 @@
+var Promise = require('./blue')
+
+// promise
+function wxPromisify(fn) {
+  return function (obj = {}) {
+    return new Promise((resolve, reject) => {
+      obj.success = function (res) {
+        resolve(res)
+      }
+
+      obj.fail = function (res) {
+        reject(res)
+      }
+
+      fn(obj)
+    })
+  }
+}
+
 const formatTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -15,5 +34,6 @@ const formatNumber = n => {
 }
 
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  wxPromisify: wxPromisify,
 }

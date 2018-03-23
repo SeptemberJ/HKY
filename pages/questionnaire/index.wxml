@@ -1,4 +1,4 @@
-<view class='Skip'>跳过</view>
+<view class='Skip' bindtap='SkipQuestionnaire'>跳过</view>
 <view class='tip'>为了给您提供更好的后续服务请先填写以下问卷</view>
 <view class='wrap'>
   <view wx-if="{{ifShowList[QuestionIdx]}}" wx:for="{{questionList}}" wx:for-index="QuestionIdx" wx:for-item="Question" wx:key="QuestionIdx">
@@ -24,5 +24,8 @@
       </checkbox-group>  
     </view>
   </view>
-  <button bindtap='Submit'>提交</button>
+  <!-- <view class='OperationBt' bindtap='Submit'>
+    提交
+  </view> -->
+   <button class='ColorWhite BgRed' bindtap='Submit'>提交</button> 
 </view>
