@@ -61,6 +61,15 @@
   background: #398e3d;
   color: #fff;
 }
+.None{
+     display: none;   
+}
+.CanvasItem{
+  display: block;   
+  position: absolute;
+  top: 0;
+  left: 0; 
+}
 /* .TabLeft{
   border-top-left-radius: 25%;
   border-bottom-left-radius: 25%;

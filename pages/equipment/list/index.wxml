@@ -7,7 +7,7 @@
   <view class='rightBox'>
     <view class='rightItem ToLeft'>
       <text class='TextAlignL'>设备总数:{{equipmentList.length}}</text>
-      <text class='TextAlignL'>当前AQI：75</text>
+      <text class='TextAlignL'>当前AQI：{{AQI}}</text>
     </view>
     <view class='rightItem ToCenter'>
       <image class='addBox' src='../../../images/icon/add.png' bindtap='ToAdd'></image>
@@ -17,13 +17,13 @@
 <!--设备列表  -->
 <view class="equipmentList" wx:if="{{equipmentList.length>0}}">
   <view class="equipmentItem" wx:for="{{equipmentList}}" wx:for-index="EquipmentIdx" wx:for-item="Equipment" wx:key="EquipmentIdx">
-    <view class="equipmentName">{{Equipment.name}}</view>
+    <view class="equipmentName">{{Equipment.second_name}}</view>
     <view class="equipmentOperation">
       <view class='OperationItem'>
-        <image src='../../../images/icon/delete.png'></image>
+        <image src='../../../images/icon/delete.png' data-id='{{Equipment.id}}' bindtap='Delete'></image>
       </view>
       <view class='OperationItem'>
-        <image src='../../../images/icon/analysis.png' bindtap='LookData'></image>
+        <image src='../../../images/icon/analysis.png' data-id='{{Equipment.id}}' data-name='{{Equipment.second_name}}' bindtap='LookData'></image>
       </view>
     </view> 
   </view>
@@ -40,8 +40,9 @@
 <view class='Modal' wx-if="{{IdAdd}}">
   <text class='Modal_tit'>新增设备</text>
   <view class='InputBox'>
-    <input placeholder='请输入设备名称'></input>
-    <input placeholder='请输入设备条码'></input>
+    <input placeholder='请输入设备名称' bindinput='ChangeEquipment_Name'></input>
+    <input placeholder='请输入主控条码' bindinput='ChangeEquipment_Code_F'></input>
+    <input placeholder='请输入设备条码' bindinput='ChangeEquipment_Code_S'></input>
   </view>
   <view class='operationBlock'>
       <view class='operation_item lightGreen' bindtap='Cancel'>取消</view>

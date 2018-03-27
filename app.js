@@ -34,6 +34,8 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    User_Phone:'18234567890',
+    AQI:''
   }
 })

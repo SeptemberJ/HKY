@@ -1,9 +1,16 @@
 <view class='Skip' bindtap='SkipQuestionnaire'>跳过</view>
 <view class='tip'>为了给您提供更好的后续服务请先填写以下问卷</view>
 <view class='wrap'>
-  <view wx-if="{{ifShowList[QuestionIdx]}}" wx:for="{{questionList}}" wx:for-index="QuestionIdx" wx:for-item="Question" wx:key="QuestionIdx">
-    <image class='SmallIcon' src='../../images/icon/icon_status-two-dots.png'></image>
-    <text class='question'>{{Question.qusetion}} </text>
+  <view class='Item' wx-if="{{ifShowList[QuestionIdx]}}" wx:for="{{questionList}}" wx:for-index="QuestionIdx" wx:for-item="Question" wx:key="QuestionIdx">
+    <view class='title'>
+      <view class='title_left'>
+        <image class='SmallIcon' src='../../images/icon/icon_status-two-dots.png'></image>
+      </view>
+      <view class='title_right'>
+        <text class='question'>您家里几口人您家里几口人您家里几口人{{Question.qusetion}} </text>
+      </view>
+    </view>
+    
     <view wx-if="{{Question.type == 'Single'}}">
       <!--单选  -->
        <radio-group class="radio-group" bindchange="ChangeRadio" data-idx="{{QuestionIdx}}">
