@@ -1,5 +1,5 @@
 <view class='Skip' bindtap='SkipQuestionnaire'>跳过</view>
-<view class='tip'>为了给您提供更好的后续服务请先填写以下问卷</view>
+<!-- <view class='tip'>为了给您提供更好的后续服务请先填写以下问卷</view> -->
 <view class='wrap'>
   <view class='Item' wx-if="{{ifShowList[QuestionIdx]}}" wx:for="{{questionList}}" wx:for-index="QuestionIdx" wx:for-item="Question" wx:key="QuestionIdx">
     <view class='title'>

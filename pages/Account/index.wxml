@@ -1,0 +1,9 @@
+<view class='InfoBlock'>
+  <image class="Avatar" src="{{userInfo.avatarUrl}}"></image>
+  <text class="nickName">{{userInfo.nickName}}</text>
+</view>
+
+<view class='LogOutBlock'>
+  <button class='ColorWhite BgRed' bindtap='LogOut'>退出登录</button> 
+</view>
+ 

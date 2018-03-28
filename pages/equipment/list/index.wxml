@@ -1,13 +1,15 @@
 <!--设备总数  -->
 <view class="conclusionBox">
-  <view class='leftBox'>
-    <image class="Avatar" src="{{userInfo.avatarUrl}}"></image>
-    <text class="nickName">{{userInfo.nickName}}</text>
+  <view class='leftBox' bindtap='ToAccount'>
+     <image class="Avatar" src="{{userInfo.avatarUrl}}"></image>
+    <text class="nickName">{{userInfo.nickName}}</text> 
+    <!-- <view class='AQI'>{{AQI}}</view>
+    <text class='MarginT_10'>{{Level}}</text> -->
   </view>
   <view class='rightBox'>
     <view class='rightItem ToLeft'>
       <text class='TextAlignL'>设备总数:{{equipmentList.length}}</text>
-      <text class='TextAlignL'>当前AQI：{{AQI}}</text>
+       <text class='TextAlignL'>AQI:{{AQI}} {{Level}}</text> 
     </view>
     <view class='rightItem ToCenter'>
       <image class='addBox' src='../../../images/icon/add.png' bindtap='ToAdd'></image>
@@ -34,7 +36,7 @@
     <text>您还没有绑定的设备！</text>
 </view>
 
-<!--add  -->
+<!--新增设备  -->
 <view class='Mask' wx-if="{{IdAdd}}">
 </view>
 <view class='Modal' wx-if="{{IdAdd}}">
@@ -46,6 +48,6 @@
   </view>
   <view class='operationBlock'>
       <view class='operation_item lightGreen' bindtap='Cancel'>取消</view>
-      <view class='operation_item borderL lightGreen' bindtap='Add'>保存    </view> 
+      <view class='operation_item borderL lightGreen' bindtap='AddEquipment'>保存    </view> 
   </view>
 </view>

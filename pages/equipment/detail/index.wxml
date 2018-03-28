@@ -1,4 +1,4 @@
- <view class='KindTitle'>{{Kind}}</view>
+  <view class='KindTitle Title'>{{Kind}}</view>
 
 <view class='CurInfo'>
   <view class='CurData'>
@@ -6,18 +6,19 @@
   </view>
   <view class='additionalData'>
     <text>设备：{{EquipmentName}}</text>
-    <!-- <text>标准值：3</text> -->
     <text>单位：{{unit}}</text>
   </view>
-</view>
+</view> 
 
 <view class='TabBox'>
   <view class="{{CurTab == TabIdx?'TabItem Active':'TabItem'}}" bindtap='ChangeTab' wx:for="{{TabMenu}}" wx:for-index="TabIdx" wx:for-item="Tab" wx:key="TabIdx" data-idx='{{TabIdx}}'>{{Tab}}</view>
 </view>
 
- <view class="container">
-    <ec-canvas class="{{!isShowFirst?'None':'CanvasItem'}}"  id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
-    <ec-canvas  class="{{isShowFirst?'None':'CanvasItem'}}" id="mychart-dom-bar2" canvas-id="mychart-bar2" ec="{{ ec2 }}"></ec-canvas>
-      <!-- <ec-canvas class="{{!isShowFirst?'None':''}}"  id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
-    <ec-canvas class="{{isShowFirst?'None':''}}"  wx:if="{{!isDisposed}}" id="mychart-dom-bar2" canvas-id="mychart-bar2" ec="{{ ec2 }}"></ec-canvas>  -->
+ <view class="container" hidden='{{!isShowFirst}}'>
+    <ec-canvas id="mychart-dom-bar2" canvas-id="mychart-bar2" ec="{{ ec2 }}"></ec-canvas>
+</view> 
+
+ <view class="container" hidden='{{isShowFirst}}'>
+    <ec-canvas   id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+    
 </view> 

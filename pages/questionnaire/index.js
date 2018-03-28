@@ -7,14 +7,6 @@ const app = getApp()
 
 Page({
   data: {
-    questionList2: [
-      { 'type': 'Single', 'qusetion': '您家里几口人？', 'answer': [{ 'value': '1人', 'id': 0 }, { 'value': '2人', 'id': 1 }, { 'value': '3人', 'id': 2 }, { 'value': '3人及以上', 'id': 3}] },
-      { 'type': 'Multiple', 'qusetion': '您家中有哪些易感人群（多选）？', 'answer': [{ 'value': '老人', 'id': 0 }, { 'value': '儿童', 'id': 1 }, { 'value': '孕妇', 'id': 2 }, { 'value': '无', 'id': 3 }] },
-      { 'type': 'Single', 'qusetion': '您做饭会开启抽油烟机吗？', 'answer': [{ 'value': '开', 'id': 0 }, { 'value': '偶尔开', 'id': 1 }, { 'value': '不开', 'id': 2 }, { 'value': '未装油烟机', 'id': 3 }], 'control': { 'value':'未装油烟机','list':[4,5]}},
-      { 'type': 'Single', 'qusetion': '您家中抽油烟机的品牌？', 'answer': [{ 'value': '老板', 'id': 0 }, { 'value': '方太', 'id': 1 }, { 'value': '美的', 'id': 2 }, { 'value': '华帝', 'id': 3 }, { 'value': '其他', 'id': 4}] },
-      { 'type': 'Single', 'qusetion': '您家中抽油烟机已使用了多少年？', 'answer': [{ 'value': '一年以内', 'id': 0 }, { 'value': '2~3年', 'id': 1 }, { 'value': '3~4年', 'id': 2 }, { 'value': '5~6年及以上', 'id': 3 }, { 'value': '7年及以上', 'id': 4}] },
-      { 'type': 'Single', 'qusetion': '您的厨房是什么格局？（附图）', 'answer': [{ 'value': '一字型 ', 'img': '../../images/picture/图片1.png', 'id': 0 }, { 'value': 'L字型', 'img': '../../images/picture/图片2.png', 'id': 1 }, { 'value': 'U字型', 'img': '../../images/picture/图片3.png', 'id': 2 }] },
-    ],
     questionList:[],
     QuestionnaireId:'',
     Curchecked:'2人',
@@ -129,6 +121,9 @@ Page({
   },
   //获取问卷
   GetQuestionnaireList(ID){
+    wx.showLoading({
+      title: '加载中',
+    })
     requestPromisified({
       url: h.main + '/collectiontitle',
       data: {
@@ -185,21 +180,25 @@ Page({
             ifShowList: ifShowListTemp,
             // StepList: StepListTemp
           })
+          wx.hideLoading()
           // 
           break
         case 0:
+          wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
             title: '问卷获取失败'
           });
           break
         default:
+          wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
             title: '服务器繁忙！'
           });
       }
     }).catch((res) => {
+      wx.hideLoading()
       wx.showToast({
         image: '../../images/icon/attention.png',
         title: '服务器繁忙！'
@@ -207,7 +206,10 @@ Page({
       console.log(res)
     })
   },
+  //提交问卷
   Submit: function(){
+    console.log(this.data.ifShowList)
+    console.log(this.data.submitForm)
     let temp = this.data.ifShowList
     let DATA = {
       collections:this.data.submitForm,
@@ -215,7 +217,7 @@ Page({
       ftelphone: app.globalData.User_Phone
     }
     for (let i = 0; i < temp.length;i++){
-      if (temp[i] && !this.data.submitForm[i]){
+      if (temp[i] && !this.data.submitForm[i].value){
           wx.showToast({
             image: '../../images/icon/attention.png',
             title: '请将问卷填写完整！'

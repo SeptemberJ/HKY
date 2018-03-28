@@ -8,26 +8,29 @@ const app = getApp()
 Page({
   data: {
     AQI:'',
+    Level:'',
     IdAdd:false,
     Equipment_Name:'',
     Equipment_Code_F: '',
     Equipment_Code_S: '',
     userInfo:{},
     equipmentList2:[],
-    equipmentList:[]
+    equipmentList:[],
   },
   onLoad: function () {
-    this.GetAQI()
-    this.GetEquipmentList()
     wx.getUserInfo({
       success: res => {
         app.globalData.userInfo = res.userInfo
         this.setData({
           userInfo: res.userInfo
         })
-        console.log(res.userInfo)
       }
     })
+  },
+  onShow: function () {
+    console.log('onshow---')
+    this.GetAQI()
+    //this.GetEquipmentList()
   },
   //input change
   ChangeEquipment_Name(e){
@@ -43,6 +46,11 @@ Page({
   ChangeEquipment_Code_S(e) {
     this.setData({
       Equipment_Code_S: e.detail.value
+    })
+  },
+  ToAccount(){
+    wx.navigateTo({
+      url: '../../Account/index'
     })
   },
   ToAdd(){
@@ -84,19 +92,19 @@ Page({
                 break
               case 0:
                 wx.showToast({
-                  image: '../../images/icon/attention.png',
+                  image: '../../../images/icon/attention.png',
                   title: '删除失败'
                 });
                 break
               default:
                 wx.showToast({
-                  image: '../../images/icon/attention.png',
+                  image: '../../../images/icon/attention.png',
                   title: '服务器繁忙！'
                 });
             }
           }).catch((res) => {
             wx.showToast({
-              image: '../../images/icon/attention.png',
+              image: '../../../images/icon/attention.png',
               title: '服务器繁忙！'
             });
             console.log(res)
@@ -108,13 +116,24 @@ Page({
     })
   },
   //新增设备
-  Add(){
+  AddEquipment(){
+    //校验
+    if (!this.data.Equipment_Name || !this.data.Equipment_Code_F || !this.data.Equipment_Code_S){
+      wx.showToast({
+        image: '../../../images/icon/attention.png',
+        title: '请填写相关信息！'
+      });
+      return false
+    }
     let DATA = {
       second_name: this.data.Equipment_Name,
       master_control: this.data.Equipment_Code_F,
       second_qrcode: this.data.Equipment_Code_S,
       ftelphone: app.globalData.User_Phone
     }
+    wx.showLoading({
+      title: '加载中',
+    })
     requestPromisified({
       url: h.main + '/selectqrcode',
       data: {
@@ -128,6 +147,7 @@ Page({
     }).then((res) => {
       switch (res.data.result) {
         case 1:
+          wx.hideLoading()
           wx.showToast({
             title: '新增成功！',
             icon: 'success',
@@ -138,20 +158,23 @@ Page({
           this.GetEquipmentList()
           break
         case 0:
+          wx.hideLoading()
           wx.showToast({
-            image: '../../images/icon/attention.png',
+            image: '../../../images/icon/attention.png',
             title: '新增失败'
           });
           break
         default:
+          wx.hideLoading()
           wx.showToast({
-            image: '../../images/icon/attention.png',
+            image: '../../../images/icon/attention.png',
             title: '服务器繁忙！'
           });
       }
     }).catch((res)=>{
+      wx.hideLoading()
       wx.showToast({
-        image: '../../images/icon/attention.png',
+        image: '../../../images/icon/attention.png',
         title: '服务器繁忙！'
       });
       console.log(res)
@@ -159,6 +182,9 @@ Page({
   },
   //设备列表
   GetEquipmentList(){
+    wx.showLoading({
+      title: '加载中',
+    })
     requestPromisified({
       url: h.main + '/selectallqrcode?ftelphone=' + app.globalData.User_Phone,
       data: {
@@ -175,22 +201,26 @@ Page({
           this.setData({
             equipmentList: res.data.qrcodelist
           })
+          wx.hideLoading()
           break
         case 0:
+          wx.hideLoading()
           wx.showToast({
-            image: '../../images/icon/attention.png',
+            image: '../../../images/icon/attention.png',
             title: '设备列表获取失败'
           });
           break
         default:
+          wx.hideLoading()
           wx.showToast({
-            image: '../../images/icon/attention.png',
+            image: '../../../images/icon/attention.png',
             title: '服务器繁忙！'
           });
       }
     }).catch((res) => {
+      wx.hideLoading()
       wx.showToast({
-        image: '../../images/icon/attention.png',
+        image: '../../../images/icon/attention.png',
         title: '服务器繁忙！'
       });
       console.log(res)
@@ -217,30 +247,30 @@ Page({
       switch (res.data.result) {
         case 1:
           this.setData({
-            AQI: res.data.aqilist[0].aqi
+            AQI: res.data.aqilist[0].aqi,
+            Level: res.data.aqilist[0].number
           })
           app.globalData.AQI = res.data.aqilist[0].aqi
+          this.GetEquipmentList()
           break
         case 0:
           wx.showToast({
-            image: '../../images/icon/attention.png',
+            image: '../../../images/icon/attention.png',
             title: 'AQI获取失败'
           });
           break
         default:
           wx.showToast({
-            image: '../../images/icon/attention.png',
+            image: '../../../images/icon/attention.png',
             title: '服务器繁忙！'
           });
       }
-      
-
     }).catch((res) => {
       wx.showToast({
-        image: '../../images/icon/attention.png',
+        image: '../../../images/icon/attention.png',
         title: '服务器繁忙！'
       });
       console.log(res)
     })
-  }
+  },
 })

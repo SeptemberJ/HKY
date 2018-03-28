@@ -9,6 +9,7 @@
   position: fixed;
   top: 60rpx;
   right: 20rpx;
+  opacity: .5
 }
 .tip{
   margin: 10px auto 0 auto;
@@ -46,9 +47,15 @@ radio-group{
   margin: 10px auto;
   font-size: 14px;
 }
+radio-group radio{
+  margin-bottom: 10rpx;
+}
 checkbox-group{
   margin: 10px auto;
   font-size: 14px;
+}
+checkbox-group checkbox{
+  margin-bottom: 10rpx;
 }
 .OperationBt{
   width: 80%;

@@ -1,17 +1,23 @@
 <view class='equipmentInfo'>
-  <text>{{EquipmentName}}</text>
+  <text class='Title Bold'>{{EquipmentName}}</text>
   <!-- <text class='equipmentCode'>设备码：WX3ercdv</text> -->
 </view>
 <!--data  -->
-<view class='DataList'>
-  <view class='DataItem' wx:for="{{dataList}}" wx:for-index="DataIdx" wx:for-item="Data" wx:key="DataIdx" data-kind='{{Data.kind}}' bindtap='ToDetail'>
-    <view class='leftBox'>
-      <image src='{{Data.img}}'></image>
+<view>
+  <view wx:if="{{ifHasData}}" class='DataList'>
+    <view class='DataItem' wx:for="{{dataList}}" wx:for-index="DataIdx" wx:for-item="Data" wx:key="DataIdx" data-kind='{{Data.kind}}' bindtap='ToDetail'>
+      <view class='leftBox'>
+        <image src='{{Data.img}}'></image>
+      </view>
+      <view class='rightBox'>
+        <text class='Bold MarginB_10'>{{Data.kind}}</text>
+        <text>{{Data.value}}</text>
+        <!-- <text>{{Data.unit}}</text> -->
+      </view>
     </view>
-    <view class='rightBox'>
-      <text>{{Data.kind}}</text>
-      <text>{{Data.value}}</text>
-      <!-- <text>{{Data.unit}}</text> -->
-    </view>
+  </view>
+  <view wx:if="{{!ifHasData}}" class='InfoNull'>
+    <image src="../../../images/icon/box-empty.png" />
+    <text>暂无数据</text>
   </view>
 </view>

@@ -1,7 +1,7 @@
 .conclusionBox{
   width: 100%;
   height: 150px;
-   background-color: #398e3d; 
+  background-color: #398e3d; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,6 +14,16 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.AQI{
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 4px solid yellow;
+  font-size: 32rpx;
+  color: #fff;
+  line-height: 120rpx;
+  text-align: center;
 }
 .rightBox{
   width: 500rpx;
@@ -49,7 +59,8 @@
   margin-bottom: 20rpx;
 }
 .nickName{
-  /* font-size: 16px; */
+  padding: 0 10px;
+  font-size: 28rpx; 
 }
 
 /*equipmentList  */

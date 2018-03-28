@@ -5,6 +5,12 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
+    // 本机信息
+    wx.getSystemInfo({
+      success: (res)=> {
+        this.globalData.width = res.windowWidth
+      }
+    })
 
     // 登录
     wx.login({
@@ -34,8 +40,9 @@ App({
     })
   },
   globalData: {
+    width:'',
     userInfo: null,
-    User_Phone:'18234567890',
+    User_Phone: '18234567890', //18234567890',
     AQI:''
   }
 })

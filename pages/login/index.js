@@ -53,18 +53,33 @@ Page({
   },
   //调查问卷
   ToQuestionnaire(ID){
-    wx.navigateTo({
+    wx.redirectTo({
       url: '../questionnaire/index?id=' + ID
     })
   },
   //跳过问卷
   SkipQuestionnaire() {
-    wx.navigateTo({
+    wx.redirectTo({
       url: '../equipment/list/index'
     })
   },
   //登录
   Login(){
+    //验证
+    if (!this.data.User_Phone){
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '请输入手机号!'
+      });
+      return false
+    }
+    if (!this.data.User_Psd) {
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '请输入密码!'
+      });
+      return false
+    }
     this.setData({
       loadingHidden:false
     })

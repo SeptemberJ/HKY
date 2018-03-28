@@ -7,22 +7,25 @@ const app = getApp()
 
 Page({
   data: {
+    ifHasData:true,
     EquipmentId:'',
     dataList:[
       { 'kind': 'PM2.5', 'value': '', 'img': '../../../images/icon/pm2.5.png', 'unit':'μg/m³'},
       { 'kind': 'CO2', 'value': '', 'img': '../../../images/icon/co2.png', 'unit':'ppm'},
       { 'kind': 'CO', 'value': '', 'img': '../../../images/icon/CO.png', 'unit': 'ppm'},
-      { 'kind': '甲醛', 'value': '', 'img': '../../../images/icon/CH₂O.png', 'unit': 'mg/m3' },
+      { 'kind': '甲醛', 'value': '', 'img': '../../../images/icon/HCHO.png', 'unit': 'mg/m3' },
       { 'kind': '温度', 'value': '', 'img': '../../../images/icon/temperature.png', 'unit': '°C' },
       { 'kind': 'VOCs', 'value': '', 'img': '../../../images/icon/steamer.png', 'unit': 'mg/m3' }
     ]
   },
   onLoad: function (options) {
-    this.GetCurData(options.id)
     this.setData({
       EquipmentId: options.id,
       EquipmentName: options.name
     })
+  },
+  onShow: function(){
+    this.GetCurData(this.data.EquipmentId)
   },
   ToDetail(e){
     let Info = {
@@ -39,6 +42,9 @@ Page({
   },
   //获取当前监测数据
   GetCurData(ID) {
+    wx.showLoading({
+      title: '加载中',
+    })
     requestPromisified({
       url: h.main + '/selectnoqrcode?qrcodeid=' + ID,
       data: {
@@ -77,22 +83,32 @@ Page({
           this.setData({
             dataList: temp
           })
+          wx.hideLoading()
+          break
+        case 2:
+          wx.hideLoading()
+          this.setData({
+            ifHasData: false
+          })
           break
         case 0:
+          wx.hideLoading()
           wx.showToast({
-            image: '../../images/icon/attention.png',
+            image: '../../../images/icon/attention.png',
             title: '获取监测数据失败'
           });
           break
         default:
+          wx.hideLoading()
           wx.showToast({
-            image: '../../images/icon/attention.png',
+            image: '../../../images/icon/attention.png',
             title: '服务器繁忙！'
           });
       }
     }).catch((res) => {
+      wx.hideLoading()
       wx.showToast({
-        image: '../../images/icon/attention.png',
+        image: '../../../images/icon/attention.png',
         title: '服务器繁忙！'
       });
       console.log(res)

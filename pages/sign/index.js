@@ -54,7 +54,7 @@ Page({
     if (!(/^1[34578]\d{9}$/).test(this.data.User_Phone)){
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '手机号格式不正确！'
+        title: '手机号格式不对！'
       });
       return false
     }

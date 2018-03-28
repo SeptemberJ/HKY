@@ -96,6 +96,9 @@ var LimitRange = {
 
 // 延迟
 function setOption(chart, DAY) {
+  wx.showLoading({
+    title: '加载中',
+  })
   wx.getStorage({
     key: 'equipmentInfo',
     success: (res)=> {
@@ -115,59 +118,76 @@ function setOption(chart, DAY) {
         //   'Accept': 'application/json'
         // }, // 设置请求的 header
       }).then((res) => {
-        const option = {
-          title: {
-            text: ''
-          },
-          tooltip: {
-            trigger: 'axis'
-          },
-          xAxis: {
-            data: res.data.qrcodelist.map(function (item) {
-              return item[0];
-            })
-          },
-          yAxis: {
-            splitLine: {
-              show: false
-            }
-          },
-          // toolbox: {
-          //   left: 'center',
-          //   feature: {
-          //     dataZoom: {
-          //       yAxisIndex: 'none'
-          //     },
-          //     restore: {},
-          //     saveAsImage: {}
-          //   }
-          // },
-          // dataZoom: [{
-          //   startValue: '2014-06-01'
-          // }, {
-          //   type: 'inside'
-          // }],
-          visualMap: {
-            top: 10,
-            right: 10,
-            pieces: LimitRange[DATA.kind],
-            outOfRange: {
-              color: '#999'
-            }
-          },
-          series: {
-            name: '',
-            type: 'line',
-            data: res.data.qrcodelist.map(function (item) {
-              return item[1];
-            }),
-            markLine: {
-              silent: true,
-              data: []
-            }
-          }
-        };
-        chart.setOption(option);
+        switch (res.data.result) {
+          case 1:
+            const option = {
+              title: {
+                text: ''
+              },
+              tooltip: {
+                trigger: 'axis'
+              },
+              xAxis: {
+                data: res.data.qrcodelist.map(function (item) {
+                  return item[0];
+                })
+              },
+              yAxis: {
+                splitLine: {
+                  show: false
+                }
+              },
+              // toolbox: {
+              //   left: 'center',
+              //   feature: {
+              //     dataZoom: {
+              //       yAxisIndex: 'none'
+              //     },
+              //     restore: {},
+              //     saveAsImage: {}
+              //   }
+              // },
+              // dataZoom: [{
+              //   startValue: '2014-06-01'
+              // }, {
+              //   type: 'inside'
+              // }],
+              visualMap: {
+                top: 10,
+                right: 10,
+                pieces: LimitRange[DATA.kind],
+                outOfRange: {
+                  color: '#999'
+                }
+              },
+              series: {
+                name: '',
+                type: 'line',
+                data: res.data.qrcodelist.map(function (item) {
+                  return item[1];
+                }),
+                markLine: {
+                  silent: true,
+                  data: []
+                }
+              }
+            };
+            chart.setOption(option);
+            wx.hideLoading()
+            break
+          case 0:
+            wx.hideLoading()
+            wx.showToast({
+              image: '../../../images/attention.png',
+              title: '数据获取失败！'
+            });
+            break
+          default:
+            wx.showToast({
+              image: '../../../images/attention.png',
+              title: '服务器繁忙！'
+            });
+        }
       }).catch((res) => {
         console.log(res)
       })
@@ -176,8 +196,9 @@ function setOption(chart, DAY) {
 }
 // 初始无延迟
 function initChart(canvas, width, height) {
-  console.log('initChart-----------')
-
+  wx.showLoading({
+    title: '加载中',
+  })
   chart = echarts.init(canvas, null, {
     width: width,
     height: height
@@ -210,63 +231,79 @@ function initChart(canvas, width, height) {
         //   'Accept': 'application/json'
         // }, // 设置请求的 header
       }).then((res) => {
-        console.log(LimitRange[DATA.kind])
-        const option = {
-          title: {
-            text: ''
-          },
-          tooltip: {
-            trigger: 'axis'
-          },
-          xAxis: {
-            data: res.data.qrcodelist.map(function (item) {
-              return item[0];
-            })
-          },
-          yAxis: {
-            splitLine: {
-              show: false
-            }
-          },
-          // toolbox: {
-          //   left: 'center',
-          //   feature: {
-          //     dataZoom: {
-          //       yAxisIndex: 'none'
-          //     },
-          //     restore: {},
-          //     saveAsImage: {}
-          //   }
-          // },
-          // dataZoom: [{
-          //   startValue: '2014-06-01'
-          // }, {
-          //   type: 'inside'
-          // }],
-          visualMap: {
-            top: 10,
-            right: 10,
-            pieces: LimitRange[DATA.kind],
-            outOfRange: {
-              color: '#999'
-            }
-          },
-          series: {
-            name: 'Beijing AQI',
-            type: 'line',
-            data: res.data.qrcodelist.map(function (item) {
-              return item[1];
-            }),
-            markLine: {
-              silent: true,
-              data: []
-            }
-          }
-        };
-        chart.setOption(option);
+        switch (res.data.result){
+          case 1:
+            const option = {
+              title: {
+                text: ''
+              },
+              tooltip: {
+                trigger: 'axis'
+              },
+              xAxis: {
+                data: res.data.qrcodelist.map(function (item) {
+                  return item[0];
+                })
+              },
+              yAxis: {
+                splitLine: {
+                  show: false
+                }
+              },
+              // toolbox: {
+              //   left: 'center',
+              //   feature: {
+              //     dataZoom: {
+              //       yAxisIndex: 'none'
+              //     },
+              //     restore: {},
+              //     saveAsImage: {}
+              //   }
+              // },
+              // dataZoom: [{
+              //   startValue: '2014-06-01'
+              // }, {
+              //   type: 'inside'
+              // }],
+              visualMap: {
+                top: 10,
+                right: 10,
+                pieces: LimitRange[DATA.kind],
+                outOfRange: {
+                  color: '#999'
+                }
+              },
+              series: {
+                name: '',
+                type: 'line',
+                data: res.data.qrcodelist.map(function (item) {
+                  return item[1];
+                }),
+                markLine: {
+                  silent: true,
+                  data: []
+                }
+              }
+            };
+            chart.setOption(option);
+            wx.hideLoading()
+            break
+          case 0:
+            wx.hideLoading()
+            wx.showToast({
+              image: '../../../images/attention.png',
+              title: '数据获取失败！'
+            });
+            break
+          default:
+            wx.showToast({
+              image: '../../../images/attention.png',
+              title: '服务器繁忙！'
+            });
+        }
       }).catch((res) => {
         wx.showToast({
-          image: '/images/attention.png',
+          image: '../../../images/attention.png',
           title: '服务器繁忙！'
         });
         console.log(res)
@@ -304,7 +341,7 @@ Page({
     },
     isLoaded: false,
     isDisposed: false,
-    isShowFirst:false,
+    isShowFirst:true,
     DataInfo: [],
     CurTab: 0,
     TabMenu: ['最近7天', '最近2周', '最近一个月'],
@@ -329,8 +366,8 @@ Page({
       // 获取组件的 canvas、width、height 后的回调函数
       // 在这里初始化图表
       const chart = echarts.init(canvas, null, {
-        width: width,
-        height: height
+        width: width ? width : app.globalData.width,
+        height: height ? height : app.globalData.width,
       });
       setOption(chart, DAY);
 
@@ -354,7 +391,7 @@ Page({
 
     this.setData({
       // isDisposed: true,
-      isShowFirst:true
+      isShowFirst:false
     });
   },
   //tab change
@@ -413,19 +450,19 @@ Page({
               break
             case 0:
               wx.showToast({
-                image: '../../images/icon/attention.png',
+                image: '../../../images/icon/attention.png',
                 title: '详细数据获取失败！'
               });
               break
             default:
               wx.showToast({
-                image: '../../images/icon/attention.png',
+                image: '../../../images/icon/attention.png',
                 title: '服务器繁忙！'
               });
           }
         }).catch((res) => {
           wx.showToast({
-            image: '/images/attention.png',
+            image: '../../../images/attention.png',
             title: '服务器繁忙！'
           });
           console.log(res)

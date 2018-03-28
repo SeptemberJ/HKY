@@ -9,11 +9,11 @@
   </view>
   <view class='SignItem'>
     <view class='label'>密码:</view>
-    <input placeholder='请输入密码' bindinput='ChangeUser_Psd'></input>
+    <input type='password' placeholder='请输入密码' bindinput='ChangeUser_Psd'></input>
   </view>
   <view class='SignItem'>
     <view class='label'>确认密码:</view>
-    <input placeholder='请再次确认密码' bindinput='Confirm_Psd'></input>
+    <input type='password' placeholder='请再次确认密码' bindinput='Confirm_Psd'></input>
   </view>
   <view class='SignBt' bindtap='Sign'>注册</view>
 </view>
