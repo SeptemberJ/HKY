@@ -60,7 +60,7 @@ Page({
   //跳过问卷
   SkipQuestionnaire() {
     wx.redirectTo({
-      url: '../equipment/list/index'
+      url: '../index/index'
     })
   },
   //登录

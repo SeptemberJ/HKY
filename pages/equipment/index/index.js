@@ -7,11 +7,20 @@ const app = getApp()
 
 Page({
   data: {
+    equipmentList2: [{ 'icon': '', 'name': '智能升降器', 'id': '2' }, { 'icon': '', 'name': '声控开关', 'id': '2' }],
+    equipmentList:[],
+    IdAdd: false,
     Equipment_Name: '',
     Equipment_Code_F: '',
     Equipment_Code_S: '',
-    
   },
+  onShow: function(){
+    this.GetEquipmentList()
+  },
+  // onLoad: function () {
+  //   this.GetEquipmentList()
+
+  // },
   //input change
   ChangeEquipment_Name(e) {
     this.setData({
@@ -28,23 +37,14 @@ Page({
       Equipment_Code_S: e.detail.value
     })
   },
-  //扫码
-  Scan_Code_F() {
-    wx.scanCode({
-      success: (res) => {
-        this.setData({
-          Equipment_Code_F: res.result
-        })
-      }
+  ToAdd() {
+    wx.navigateTo({
+      url: '../add/index'
     })
   },
-  Scan_Code_S(){
-    wx.scanCode({
-      success: (res) => {
-        this.setData({
-          Equipment_Code_S: res.result
-        })
-      }
+  Cancel() {
+    this.setData({
+      IdAdd: false
     })
   },
   //新增设备
@@ -85,8 +85,9 @@ Page({
             icon: 'success',
             duration: 1500
           })
-          //返回
-          wx.navigateBack();
+          this.Cancel()
+          //刷新列表
+          this.GetEquipmentList()
           break
         case 0:
           wx.hideLoading()
@@ -111,5 +112,56 @@ Page({
       console.log(res)
     })
   },
-
-  })
+  //设备列表
+  GetEquipmentList() {
+    wx.showLoading({
+      title: '加载中',
+    })
+    requestPromisified({
+      url: h.main + '/selectallqrcode?ftelphone=' + app.globalData.User_Phone,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          //刷新列表
+          this.setData({
+            equipmentList: res.data.qrcodelist
+          })
+          wx.hideLoading()
+          break
+        case 0:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../../images/icon/attention.png',
+            title: '设备列表获取失败'
+          });
+          break
+        default:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.hideLoading()
+      wx.showToast({
+        image: '../../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+      console.log(res)
+    })
+  },
+  // 查看数据
+  LookData(e) {
+    wx.navigateTo({
+      url: '../analysis/index?id=' + e.currentTarget.dataset.id + '&name=' + e.currentTarget.dataset.name
+    })
+  },
+})

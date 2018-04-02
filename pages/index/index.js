@@ -1,25 +1,27 @@
-
+import h from '../../utils/url.js'
+var util = require('../../utils/util.js')
+var MD5 = require('../../utils/md5.js')
+var requestPromisified = util.wxPromisify(wx.request)
 //获取应用实例
 const app = getApp()
 
 Page({
   data: {
-    motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    items: [
-      [
-        { id:0,name: 'USA', value: '美国' },
-        { id: 1,name: 'CHN', value: '中国', checked: 'true' },
-        { id: 2,name: 'BRA', value: '巴西' }
-      ],
-      [
-        { id: 0,name: 'USA', value: '古巴' },
-        { id: 1,name: 'CHN', value: '中东', checked: 'true' },
-        { id: 2,name: 'BRA', value: '澳洲' }
-      ],
-    ]
+    DateInfo:'',
+    airQuality:'',
+    imgUrls: [
+      '../../images/picture/carousel_1.png',
+      '../../images/picture/carousel_2.png'
+    ],
+    carousle: [{ 'title': '环境污染，只有你想不到', 'content': '坑比小朋友禁止入内,一起来玩吧', 'img': {} }, { 'title': '你的时间,改如何把握？', 'content': '态度决定一切,SmartHox成就未来', 'img': {} }],
+    indicatorDots: true,
+    autoplay: false,
+    interval: 2000,
+    duration: 1000
+
   },
   //事件处理函数
   bindViewTap: function() {
@@ -28,6 +30,8 @@ Page({
     })
   },
   onLoad: function () {
+    this.GetAirQuality()
+    this.StartClock()
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -61,6 +65,98 @@ Page({
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
+    })
+  },
+  ToAdd() {
+    wx.navigateTo({
+      url: '../equipment/index/index'
+    })
+  },
+  //时钟
+  StartClock(){
+    let _this = this
+    let CurDate = new Date()
+    let Week
+    switch (CurDate.getDay()){
+      case 0:
+        Week = '日'
+        break
+      case 1:
+        Week = '一'
+        break
+      case 2:
+        Week = '二'
+        break
+      case 3:
+        Week = '三'
+        break
+      case 4:
+        Week = '四'
+        break
+      case 5:
+        Week = '五'
+        break
+      case 6:
+        Week = '六'
+        break
+    }
+    let DateInfo = {
+      Month: (CurDate.getMonth() + 1) < 10 ? '0' + (CurDate.getMonth() + 1) : CurDate.getMonth() + 1,
+      Day: (CurDate.getDate()) < 10 ? '0' + CurDate.getDate() : CurDate.getDate(),
+      Week: Week,
+      Hour: CurDate.getHours(),
+      Minute: CurDate.getMinutes() < 10 ? '0' + CurDate.getMinutes() : CurDate.getMinutes(),
+      Second: CurDate.getSeconds() < 10 ? '0' + CurDate.getSeconds() : CurDate.getSeconds(),
+    }
+    this.setData({
+      DateInfo: DateInfo
+    })
+    setTimeout(()=>{
+      this.StartClock()
+    },1000)
+  },
+  //当前空气质量
+  GetAirQuality(){
+    requestPromisified({
+      url: h.main + '/selecttemperature',
+      data: {
+      },
+      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          this.setData({
+            airQuality: res.data.temperaturelist[0]
+          })
+          break
+        case 0:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '获取空气信息失败'
+          });
+          break
+        default:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+      this.setData({
+        loadingHidden: true
+      })
+    }).catch((res) => {
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+      this.setData({
+        loadingHidden: true
+      })
+      console.log(res)
     })
   }
 })

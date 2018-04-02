@@ -1,0 +1,41 @@
+<view class='equipmentInfo'>
+  <view class='circle'>
+    <text>我的设备</text>
+    <text class='colorGreen'>{{equipmentList.length}}</text>
+  </view>
+  <view class='addOperation'>
+    <!-- <view class='addItem'>
+      <image class='operationIcon' src='../../../images/icon/QR_code.png' bindtap='ToAdd'></image>
+      <text>扫码添加</text>
+    </view> -->
+    <view class='addItem' bindtap='ToAdd'>
+      <image class='operationIcon' src='../../../images/icon/wrench.png' bindtap='ToAdd'></image>
+      <text>手动添加</text>
+    </view>
+  </view>
+  <!--list  -->
+  <view class='columnBar'><text>最近添加设备</text></view>
+  <view class='equipmentList'>
+    <view class='equipmentItem' wx:for="{{equipmentList}}" wx:for-index="EquipmentIdx" wx:for-item="Equipment" wx:key="EquipmentIdx">
+      <image class='operationIcon' src='../../../images/icon/QR_code.png' ></image>
+      <text class='equipmentName' data-id='{{Equipment.id}}'>{{Equipment.second_name}}</text>
+      <image class='operationIcon' src='../../../images/icon/arrow_black.png' data-id='{{Equipment.id}}' data-name='{{Equipment.second_name}}' bindtap='LookData'></image>
+    </view>
+  </view>
+</view>
+
+<!--新增设备  -->
+<view class='Mask' wx-if="{{IdAdd}}">
+</view>
+<view class='Modal' wx-if="{{IdAdd}}">
+  <text class='Modal_tit'>新增设备</text>
+  <view class='InputBox'>
+    <input placeholder='请输入设备名称' bindinput='ChangeEquipment_Name'></input>
+    <input placeholder='请输入主控条码' bindinput='ChangeEquipment_Code_F'></input>
+    <input placeholder='请输入设备条码' bindinput='ChangeEquipment_Code_S'></input>
+  </view>
+  <view class='operationBlock'>
+      <view class='operation_item lightGreen' bindtap='Cancel'>取消</view>
+      <view class='operation_item borderL lightGreen' bindtap='AddEquipment'>保存    </view> 
+  </view>
+</view>

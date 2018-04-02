@@ -1,9 +1,73 @@
 <!--index.wxml-->
-<view class="container">
-  <checkbox-group bindchange="checkboxChange" wx:for="{{items}}" wx:for-index="{{questionIdx}}" wx:for-item="question">
-  <label class="checkbox" wx:for="{{question}}" wx:for-index="{{AnswerIdx}}" wx:for-item="Answer" data-idx="{{AnswerIdx}}">
-    <checkbox value="{{Answer.name}}" checked="{{Answer.checked}}"/>
-    {{Answer.id}}-{{Answer.value}}
-  </label>
-</checkbox-group>
+<view class='Wrap'>
+  <view class='dataInfo'>
+    <view class='topBar'>
+      <view class='nickNmae'>
+        {{userInfo.nickName}}的控
+      </view>
+      <view class='operation'>
+        <image class='operationIcon' src='../../images/icon/message.png'></image>
+      <image class='operationIcon' src='../../images/icon/add.png' bindtap='ToAdd'></image>
+      </view>
+    </view>
+    <view class='info'>
+      <view class='info_Left'>
+        <view class='Left_item' style='margin-top:30rpx;'>
+          <text>{{DateInfo.Hour}}:{{DateInfo.Minute}}:{{DateInfo.Second}}</text>
+          <text class='smallFont'>{{DateInfo.Month}}/{{DateInfo.Day}} 星期{{DateInfo.Week}}</text>
+        </view>
+        <view class='Left_item'>
+          <image class='temperatureIcon' src='../../images/icon/cloud.png' bindtap='ToAdd'></image>
+          <text class='smallFont'>{{airQuality.weathertype}}</text>
+          <text class='smallFont'>{{airQuality.mintemperature}}/{{airQuality.temperature}}</text>
+        </view>
+      </view>
+      <view class='info_Right'>
+        <view class='Right_item'>
+          <text class='smallFont'>PM2.5</text>
+          <text class='smallFont'>{{airQuality.PM25}}</text>
+        </view>
+        <view class='Right_item'>
+          <text class='smallFont'>VOCs</text>
+          <text class='smallFont'>{{airQuality.VOCs}}</text>
+        </view>
+        <view class='Right_item'>
+          <text class='smallFont'>CO2</text>
+          <text class='smallFont'>{{airQuality.CO2}}</text>
+        </view>
+        <view class='Right_item'>
+          <text class='smallFont'>CO</text>
+          <text class='smallFont'>{{airQuality.CO}}</text>
+        </view>
+        <view class='Right_item'>
+          <text class='smallFont'>甲醛</text>
+          <text class='smallFont'>{{airQuality.maxformaldehyde}}</text>
+        </view>
+        <view class='Right_item'>
+          <text class='smallFont'>温/湿度</text>
+          <text class='smallFont'>{{airQuality.temhum}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class='carousel'>
+    <swiper indicator-dots="{{indicatorDots}}"
+  autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <block wx:for="{{imgUrls}}">
+        <swiper-item>
+          <!-- <text>{{item.title}}</text>
+          <text>{{item.content}}</text> -->
+           <image src="{{item}}" class="slide-image"/> 
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+
+  <view class='addBlock'>
+    <text class='Bold smallFont MarginB_20'>不再关心设备，更多是设备开始在关心我们</text>
+    <text class='smallFont'>无论何时何地，系统学习感知且节能，让你感受和享受智控,酷玩带来的价值</text>
+    <view class='Btn smallFont' bindtap='ToAdd'>添加设备+</view>
+    <!-- <button class='MarginT_10 smallFont' type="default" bindtap='ToAdd'>添加设备+</button> -->
+  </view>
 </view>

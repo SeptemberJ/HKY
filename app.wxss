@@ -8,7 +8,10 @@
   padding: 0;
   box-sizing: border-box;
    position: relative;  
-} 
+}
+page text{
+  font-size: 30rpx;
+}
 .wrap{
   padding: 20px;
 }
@@ -24,12 +27,16 @@
 .Bold{
   font-weight: bold;
 }
+.Block{
+  display: block;
+}
 .MarginB_10{
   margin-bottom: 10px;
 }
-.MarginT_10{
-  margin-top: 10px;
+.MarginB_20{
+  margin-bottom: 20px;
 }
+
 .Title{
   font-size: 40rpx;
 }

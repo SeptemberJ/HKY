@@ -1,23 +1,25 @@
 {
   "pages":[
-    "pages/equipment/list/index",
+    "pages/index/index",
     "pages/login/index",
+    "pages/equipment/index/index",
+    "pages/equipment/list/index",
     "pages/Account/index",
+    "pages/equipment/add/index",
     "pages/equipment/analysis/index",
     "pages/equipment/detail/index",
-    "pages/equipment/add/index",
     "pages/questionnaire/index",
     "pages/sign/index",
-    "pages/index/index",
+    
     "pages/bar/index"
     
    
   ],
   "window":{
     "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#398e3d",
+    "navigationBarBackgroundColor": "white",
     "navigationBarTitleText": "环科院",
-    "navigationBarTextStyle":"white"
+    "navigationBarTextStyle":"black"
   },
   "debug": true
 }
