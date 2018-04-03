@@ -36,9 +36,18 @@ page text{
 .MarginB_20{
   margin-bottom: 20px;
 }
-
 .Title{
   font-size: 40rpx;
+}
+.smallIcon{
+  width: 80rpx;
+  height: 80rpx;
+  display: block;
+}
+.smallIcon_arrow{
+  width: 50rpx;
+  height: 50rpx;
+  display: block;
 }
 /*InfoNull  */
 .InfoNull{

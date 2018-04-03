@@ -1,0 +1,19 @@
+<view class="releaseWrap">
+  <view class='releaseBt'>
+    <view wx:if="{{!releaseContent && tempFilePaths.length<=0}}" class='normalBt'>发布</view>
+    <view wx:if="{{releaseContent || tempFilePaths.length>0}}" class='fbBt' bindtap='SumitInfo'>发布</view>
+  </view>
+  <textarea auto-height placeholder="分享新鲜事..." value='{{releaseContent}}' bindinput='ChangeContent' />
+  <view class='AddPicture'>
+      <image class="UploadItem" wx:for="{{tempFilePaths}}" wx:for-item="UploadItem" wx:for-index="UploadIdx" wx:key="UploadIdx" src='{{UploadItem}}'>
+        <view class='DeleteBar' bindtap='DeleteFile'>
+          <image src='../../../images/icon/clear.png'></image>
+        </view> 
+      </image>
+    
+    <view class='AddBlock' bindtap='ChooseUploadFiles'>
+      <image src='../../../images/icon/Camera.png'></image>
+      <text>照片/视频</text>
+    </view>
+  </view>
+</view>

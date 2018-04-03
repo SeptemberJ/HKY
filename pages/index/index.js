@@ -16,7 +16,6 @@ Page({
       '../../images/picture/carousel_1.png',
       '../../images/picture/carousel_2.png'
     ],
-    carousle: [{ 'title': '环境污染，只有你想不到', 'content': '坑比小朋友禁止入内,一起来玩吧', 'img': {} }, { 'title': '你的时间,改如何把握？', 'content': '态度决定一切,SmartHox成就未来', 'img': {} }],
     indicatorDots: true,
     autoplay: false,
     interval: 2000,
@@ -104,7 +103,7 @@ Page({
       Month: (CurDate.getMonth() + 1) < 10 ? '0' + (CurDate.getMonth() + 1) : CurDate.getMonth() + 1,
       Day: (CurDate.getDate()) < 10 ? '0' + CurDate.getDate() : CurDate.getDate(),
       Week: Week,
-      Hour: CurDate.getHours(),
+      Hour: CurDate.getHours() < 10 ? '0' + CurDate.getHours() : CurDate.getHours(),
       Minute: CurDate.getMinutes() < 10 ? '0' + CurDate.getMinutes() : CurDate.getMinutes(),
       Second: CurDate.getSeconds() < 10 ? '0' + CurDate.getSeconds() : CurDate.getSeconds(),
     }

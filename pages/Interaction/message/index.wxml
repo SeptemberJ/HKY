@@ -1,0 +1,12 @@
+<view class="MessageList">
+  <view class="MessageItem">
+     <view class='peopleInfo'>
+       <image class='Avatar' src='../../../images/icon/zan.png'></image> 
+        <view class='Info'>
+          <text>张三</text>
+          <text>2018-04-03 12:11</text>
+        </view>
+        <view class='reply'>回复</view>
+    </view> 
+  </view>
+</view>

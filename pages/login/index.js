@@ -15,7 +15,14 @@ Page({
     
   },
   onLoad: function () {
-
+    wx.getUserInfo({
+      success: res => {
+        app.globalData.userInfo = res.userInfo
+        this.setData({
+          userInfo: res.userInfo
+        })
+      }
+    })
   },
   //border焦点
   changeBorderColor_name(){
@@ -59,7 +66,7 @@ Page({
   },
   //跳过问卷
   SkipQuestionnaire() {
-    wx.redirectTo({
+    wx.switchTab({
       url: '../index/index'
     })
   },
@@ -85,7 +92,8 @@ Page({
     })
     let DATA = {
       ftelphone: this.data.User_Phone,
-      password: MD5.hexMD5(this.data.User_Psd)
+      password: MD5.hexMD5(this.data.User_Psd),
+      head_img: this.data.userInfo.avatarUrl
     }
     requestPromisified({
       url: h.main + '/login',

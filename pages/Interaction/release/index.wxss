@@ -1,0 +1,73 @@
+.releaseWrap{
+  width: 710rpx;
+  margin: 0px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.releaseBt{
+  width: 100%;
+  height: 32px;
+  display: flex;
+  justify-content: flex-end;
+}
+.normalBt{
+  width:80px;
+  height: 32px;
+  text-align: center;
+  line-height: 32px;
+  background: #efefef;
+  color: #ccc;
+  border-radius: 5px;
+}
+.fbBt{
+  width:80px;
+  height: 32px;
+  text-align: center;
+  line-height: 32px;
+  background: #3498db;
+  color: #000;
+  border-radius: 5px;
+}
+.AddPicture{
+  width: 100%;
+  margin: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap
+}
+.UploadItem{
+  width: 200rpx;
+  height: 200rpx;
+  position: relative;
+  margin-right: 20px;
+  overflow: visible;
+}
+.DeleteBar{
+  width: 40rpx;
+  height: 40rpx;
+  position: absolute;
+  top: -20rpx;
+  left: 180rpx;
+}
+.DeleteBar image{
+  width: 40rpx;
+  height: 40rpx;
+}
+.AddBlock{
+  width: 200rpx;
+  height: 200rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #efefef;
+  color: #8a8a8a;
+}
+.AddBlock image{
+  width: 80rpx;
+  height: 80rpx;
+}
+

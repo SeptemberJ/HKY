@@ -1,25 +1,57 @@
 {
   "pages":[
-    "pages/index/index",
+    "pages/Interaction/message/index",
     "pages/login/index",
+    "pages/index/index",
+    "pages/Interaction/release/index",
+    "pages/Interaction/index/index",
+    "pages/Interaction/my/index",
+   
+    
+
     "pages/equipment/index/index",
     "pages/equipment/list/index",
-    "pages/Account/index",
     "pages/equipment/add/index",
     "pages/equipment/analysis/index",
     "pages/equipment/detail/index",
+
     "pages/questionnaire/index",
+
     "pages/sign/index",
-    
+    "pages/my/index/index",
     "pages/bar/index"
-    
-   
   ],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "white",
     "navigationBarTitleText": "环科院",
     "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "color": "#000",
+    "selectedColor": "#3498db",
+    "borderStyle": "white",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/icon/control.png",
+        "selectedIconPath": "images/icon/control_active.png",
+        "text": "智控"
+      },
+      {
+        "pagePath": "pages/Interaction/index/index",
+        "iconPath": "images/icon/releaseBar.png",
+        "selectedIconPath": "images/icon/releaseBar_acitve.png",
+        "text": "圈子"
+      },
+      {
+        "pagePath": "pages/my/index/index",
+        "iconPath": "images/icon/my.png",
+        "selectedIconPath": "images/icon/my_active.png",
+        "text": "我的"
+      }
+    ]
   },
   "debug": true
 }
