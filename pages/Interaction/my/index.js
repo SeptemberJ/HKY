@@ -30,9 +30,52 @@ Page({
       }
     ]
   },
+  onShow(){
+    this.GetMyRelease()
+  },
   ToRelease() {
     wx.navigateTo({
       url: '../release/index'
+    })
+  },
+  GetMyRelease() {
+    requestPromisified({
+      url: h.main + '/selectrating',
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          this.setData({
+            DynamicList: res.data.ratinglist
+          })
+          break
+        case 0:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '获取动态失败'
+          });
+          break
+        default:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+      this.setData({
+        loadingHidden: true
+      })
+      console.log(res)
     })
   }
 })

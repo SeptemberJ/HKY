@@ -15,9 +15,11 @@ Page({
     
   },
   onLoad: function () {
+    console.log('onLoad---')
     wx.getUserInfo({
       success: res => {
         app.globalData.userInfo = res.userInfo
+        console.log(res.userInfo)
         this.setData({
           userInfo: res.userInfo
         })
@@ -119,6 +121,7 @@ Page({
             this.SkipQuestionnaire()
           }
           app.globalData.User_Phone = this.data.User_Phone
+          app.globalData.User_name = res.data.registerlist[0].fname
           break
         case 0:
           wx.showToast({

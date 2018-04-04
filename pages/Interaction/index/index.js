@@ -28,7 +28,11 @@ Page({
           }
         ],
       }
-    ]
+    ],
+    ReleaseContent:''
+  },
+  onShow(){
+    this.GetAllRelease()
   },
   ToRelease(){
     wx.navigateTo({
@@ -45,5 +49,121 @@ Page({
       url: '../message/index'
     })
   },
+  Zan(){
+
+  },
+  GetAllRelease2(){
+    let temp = this.data.DynamicList
+    temp.hasZan = false
+    this.data.DynamicList.map((item,idx)=>{
+      if (item.phone == app.globalData.User_Phone){
+        temp.hasZan = true
+      }
+    })
+  },
+  GetAllRelease() {
+    requestPromisified({
+      url: h.main + '/selectrating',
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          this.setData({
+            DynamicList: res.data.ratinglist
+          })
+          break
+        case 0:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '获取动态失败'
+          });
+          break
+        default:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+      this.setData({
+        loadingHidden: true
+      })
+      console.log(res)
+    })
+  },
+  Reply(e){
+    console.log(e.currentTarget.dataset.nameF + '---' + e.currentTarget.dataset.nameZ)
+    if (e.currentTarget.dataset.nameF == e.currentTarget.dataset.nameZ){
+      wx.navigateTo({
+        url: '../message/index'
+      })
+    }else{
+      return false
+    }
+    
+  },
+  // ChangeRelease
+  ChangeRelease(e){
+    this.setData({
+      ReleaseContent: e.detail.value
+    })
+  },
+  SendRelease(e){
+    requestPromisified({
+      url: h.main + '/insertrating1',
+      data: {
+        name_Z: app.globalData.User_name,
+        name_F: e.currentTarget.dataset.fabuName,
+        remark: this.data.ReleaseContent,
+        ratingid: e.currentTarget.dataset.fabuId, //动态id
+        ratinginfoid:'',
+        ftelphone: app.globalData.User_Phone,
+      },
+      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      // switch (res.data.result) {
+      //   case 1:
+      //     this.setData({
+      //       DynamicList: res.data.ratinglist
+      //     })
+      //     break
+      //   case 0:
+      //     wx.showToast({
+      //       image: '../../images/icon/attention.png',
+      //       title: '获取动态失败'
+      //     });
+      //     break
+      //   default:
+      //     wx.showToast({
+      //       image: '../../images/icon/attention.png',
+      //       title: '服务器繁忙！'
+      //     });
+      // }
+    }).catch((res) => {
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+      this.setData({
+        loadingHidden: true
+      })
+      console.log(res)
+    })
+
+  }
 })
 

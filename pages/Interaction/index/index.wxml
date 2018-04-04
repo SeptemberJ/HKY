@@ -21,7 +21,7 @@
         <text class='time'>{{Dynamic.comment_time}}</text>
         <view class='zanOperation'>
           <view class='operationItem'>
-            <image class='operationIcon' src='../../../images/icon/zan.png' bindtap=''></image>
+            <image class='operationIcon' src='../../../images/icon/zan.png' bindtap='Zan'></image>
           </view>
           <view class='operationItem'>
             <image class='operationIcon' src='../../../images/icon/comment.png'></image>
@@ -30,20 +30,28 @@
         </view>
       </view>
       <!--点赞评论显示  -->
-      <view class='interactionBlock'>
-        <view class='zanList'>
+      <view class='interactionBlock' wx:if="{{Dynamic.comment_zan.length>0 || Dynamic.comment_list.length>0}}">
+        <view class='zanList'  wx:if="{{Dynamic.comment_zan.length>0}}">
           <image style="width:20px; height:20px;display:block; margin-right:5px;" src='../../../images/icon/zan_active.png'></image>
            <view class='peopleList'>
-            <text wx:for="{{Dynamic.comment_zan}}" wx:for-index="ZanIdx" wx:for-item="Zan" wx:key="ZanIdx">{{Zan.name}} </text>
+            <text wx:for="{{Dynamic.comment_zan}}" wx:for-index="ZanIdx" wx:for-item="Zan" wx:key="ZanIdx">{{Zan.name}}</text>
            </view> 
         </view>
-        <view class='commentList'>
+        <view class='commentList' wx:if="{{Dynamic.comment_list.length>0}}">
           <view class='commentItem' wx:for="{{Dynamic.comment_list}}" wx:for-index="CommentIdx" wx:for-item="Comment" wx:key="CommentIdx">
             <view class='comment_content'>
-              <text style='display:block;margin-bottom:5px;'>{{Comment.main.people_name}}: {{Comment.main.people_content}}</text>
-              <text style='display:block;margin-bottom:5px;' wx:for="{{Comment.reply}}" wx:for-index="ReplyIdx" wx:for-item="Reply" wx:key="ReplyIdx">{{Reply.name_Z}} 回复 {{Reply.name_F}}: {{Reply.hf_content}}</text>
+              <text style='display:block;margin-bottom:5px;' bindtap='Reply' data-name-f='{{Dynamic.comment_name}}' data-name-z='{{Dynamic.comment_name}}'>{{Comment.main.people_name}}: {{Comment.main.people_content}}</text>
+              <text style='display:block;margin-bottom:5px;' wx:for="{{Comment.reply}}" wx:for-index="ReplyIdx" wx:for-item="Reply" wx:key="ReplyIdx" data-name-f='{{Reply.name_F}}' data-name-z='{{Dynamic.comment_name}}' bindtap='Reply'>{{Reply.name_Z}} 回复 {{Reply.name_F}}: {{Reply.hf_content}}</text>
             </view>
           </view>
+        </view>
+      </view>
+      <!--评论框  -->
+      <view class='ReleaseBox'>
+        <textarea class='TextBox'  bindinput='ChangeRelease' auto-height placeholder="评论一下。。。" />
+        <view class='releaseBt'>
+          <view wx:if="{{!ReleaseContent}}" class='normalBt'>发布</view>
+          <view wx:if="{{ReleaseContent}}" class='fbBt' bindtap='SendRelease' data-fabu-name='{{Dynamic.comment_name}}' data-fabu-id='{{Dynamic.id}}'>发布</view>
         </view>
       </view>
     </view>

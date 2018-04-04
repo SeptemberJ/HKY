@@ -1,11 +1,11 @@
 {
   "pages":[
-    "pages/Interaction/message/index",
     "pages/login/index",
     "pages/index/index",
     "pages/Interaction/release/index",
     "pages/Interaction/index/index",
     "pages/Interaction/my/index",
+    "pages/Interaction/message/index",
    
     
 

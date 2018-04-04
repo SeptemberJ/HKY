@@ -133,3 +133,42 @@
 .recordItem_right .commentList .commentItem .comment_name{
   
 }
+/*ReleaseBox  */
+.ReleaseBox{
+  width: 100%;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.TextBox{
+  width: calc(100% - 100px - 20rpx);
+  padding: 10rpx;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 30rpx;
+}
+.releaseBt{
+  width: 100px;
+  height: 32px;
+  display: flex;
+  justify-content: flex-end;
+}
+.normalBt{
+  width:60px;
+  height: 32px;
+  text-align: center;
+  line-height: 32px;
+  background: #efefef;
+  color: #ccc;
+  border-radius: 5px;
+}
+.fbBt{
+  width:60px;
+  height: 32px;
+  text-align: center;
+  line-height: 32px;
+  background: #3498db;
+  color: #000;
+  border-radius: 5px;
+}

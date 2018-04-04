@@ -6,7 +6,23 @@
           <text>张三</text>
           <text>2018-04-03 12:11</text>
         </view>
-        <view class='reply'>回复</view>
+        <!-- <view class='reply'><text>回复</text></view> -->
     </view> 
+    <!--点赞或评论  -->
+    <view class='detailBlock'>
+      <text>赞了我</text>
+    </view>
+    <!--原始动态  -->
+    <view class='releaseContentBlock'>
+      <image class='thumbnail' src='../../../images/icon/zan.png'></image>
+      <text style='padding:10rpx 20rpx;'>留白：动态内容。。。</text>
+    </view>
+    <view class='replyBlock'>
+      <textarea class='TextBox' bindinput='ChangeReply' auto-height placeholder="回复张三" />
+      <view class='releaseBt'>
+        <view wx:if="{{!ReplyContent}}" class='normalBt'>发布</view>
+        <view wx:if="{{ReplyContent}}" class='fbBt' bindtap='SumitInfo'>发布</view>
+      </view>
+    </view>
   </view>
 </view>
