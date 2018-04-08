@@ -84,19 +84,21 @@
 }
 .normalBt{
   width:60px;
-  height: 32px;
-  text-align: center;
-  line-height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30rpx;
   background: #efefef;
   color: #ccc;
   border-radius: 5px;
 }
 .fbBt{
   width:60px;
-  height: 32px;
-  text-align: center;
-  line-height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30rpx;
   background: #3498db;
-  color: #000;
+  color: #fff;
   border-radius: 5px;
 }

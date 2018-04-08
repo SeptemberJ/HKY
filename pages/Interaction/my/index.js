@@ -7,7 +7,8 @@ const app = getApp()
 
 Page({
   data: {
-    DynamicList: [
+    DynamicList:[],
+    DynamicList2: [
       {
         'id': 0,
         'comment_time': '2018-04-03',
@@ -39,8 +40,11 @@ Page({
     })
   },
   GetMyRelease() {
+    wx.showLoading({
+      title: '加载中',
+    })
     requestPromisified({
-      url: h.main + '/selectrating',
+      url: h.main + '/selectratingno?ftelphone=' + app.globalData.User_Phone,
       data: {
       },
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
@@ -54,28 +58,29 @@ Page({
           this.setData({
             DynamicList: res.data.ratinglist
           })
+          wx.hideLoading()
           break
         case 0:
           wx.showToast({
             image: '../../images/icon/attention.png',
             title: '获取动态失败'
           });
+          wx.hideLoading()
           break
         default:
           wx.showToast({
             image: '../../images/icon/attention.png',
             title: '服务器繁忙！'
           });
+          wx.hideLoading()
       }
-    }).catch((res) => {
-      wx.showToast({
-        image: '../../images/icon/attention.png',
-        title: '服务器繁忙！'
-      });
-      this.setData({
-        loadingHidden: true
-      })
-      console.log(res)
+      }).catch((res) => {
+        wx.hideLoading()
+        wx.showToast({
+          image: '../../images/icon/attention.png',
+          title: '服务器繁忙！'
+        });
+        console.log(res)
     })
   }
 })

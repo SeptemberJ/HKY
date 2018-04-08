@@ -142,7 +142,7 @@
   align-items: center;
 }
 .TextBox{
-  width: calc(100% - 100px - 20rpx);
+  width: calc(100% - 100px - 10rpx);
   padding: 10rpx;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -156,19 +156,20 @@
 }
 .normalBt{
   width:60px;
-  height: 32px;
+  height: 30px;
   text-align: center;
-  line-height: 32px;
+  line-height: 30rpx;
   background: #efefef;
   color: #ccc;
   border-radius: 5px;
 }
 .fbBt{
   width:60px;
-  height: 32px;
-  text-align: center;
-  line-height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30rpx;
   background: #3498db;
-  color: #000;
+  color: #fff;
   border-radius: 5px;
 }

@@ -16,7 +16,7 @@ Page({
   },
   LogOut() {
     wx.reLaunch({
-      url: '../login/index'
+      url: '../../login/index'
     })
   },
   MyRelease() {
@@ -25,8 +25,8 @@ Page({
     })
   },
   MyMessage() {
-    wx.navigateTo({
-      url: '../../Interaction/message/index'
-    })
+    // wx.navigateTo({
+    //   url: '../../Interaction/message/index'
+    // })
   },
 })

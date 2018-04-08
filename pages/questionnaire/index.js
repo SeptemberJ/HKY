@@ -95,8 +95,8 @@ Page({
     }).then((res) => {
       switch (res.data.result) {
         case 1:
-          wx.navigateTo({
-            url: '../equipment/list/index'
+          wx.switchTab({
+            url: '../index/index'
           })
           break
         case 0:
