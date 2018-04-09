@@ -6,7 +6,7 @@
 <view class='optionList'>
   <view class='optionItem' bindtap='MyMessage'>
     <image class='smallIcon' src='../../../images/icon/my_message.png'></image>
-    <text class='optionTit'>我的消息</text>
+    <text class='optionTit'>我的消息 {{MessageCount}}</text>
     <image class='smallIcon_arrow' src='../../../images/icon/arrow_black.png'></image>
   </view>
 

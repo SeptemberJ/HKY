@@ -176,6 +176,7 @@ Page({
       name_F: e.currentTarget.dataset.fabuName,
       ratingid: e.currentTarget.dataset.fabuId, //动态id
       ratinginfoid: '',
+      ftelphone: e.currentTarget.dataset.fabuPhone  //动态发布者电话
     }
     this.setData({
       ifReadyRelease: true,
@@ -186,12 +187,13 @@ Page({
   },
   //调起回复框
   ShowReplyModal(e) {
-    console.log(e.currentTarget.dataset.nameF + '---' + app.globalData.User_name)
-    if (e.currentTarget.dataset.nameF == app.globalData.User_name){
+    console.log(e.currentTarget.dataset.nameF + '---' + e.currentTarget.dataset.nameZ +'---'+  app.globalData.User_name)
+    if (e.currentTarget.dataset.nameF == app.globalData.User_name && e.currentTarget.dataset.nameZ == app.globalData.User_name){
       let Data = {
         name_F: e.currentTarget.dataset.targetName,
         ratingid: e.currentTarget.dataset.fabuId, //动态id
         ratinginfoid: e.currentTarget.dataset.idx,
+        ftelphone: e.currentTarget.dataset.fabuPhone
       }
       this.setData({
         ifReadyReply: true,
@@ -327,14 +329,15 @@ Page({
   },
   //发布评论
   Submit(){
-    this.SendRelease(this.data.CurReleaseInfo.name_F, this.data.ReleaseContentSingle, this.data.CurReleaseInfo.ratingid, '')
+    console.log('Submit---')
+    this.SendRelease(this.data.CurReleaseInfo.name_F, this.data.ReleaseContentSingle, this.data.CurReleaseInfo.ratingid, '', this.data.CurReleaseInfo.ftelphone)
   },
   //回复评论
   SubmitReply() {
-    this.SendRelease(this.data.CurReleaseInfo.name_F, this.data.RelpyContentSingle, this.data.CurReleaseInfo.ratingid, this.data.CurReleaseInfo.ratinginfoid)
+    this.SendRelease(this.data.CurReleaseInfo.name_F, this.data.RelpyContentSingle, this.data.CurReleaseInfo.ratingid, this.data.CurReleaseInfo.ratinginfoid, this.data.CurReleaseInfo.ftelphone)
   },
   //发布
-  SendRelease(Name_F, Remark, Ratingid, Ratinginfoid){
+  SendRelease(Name_F, Remark, Ratingid, Ratinginfoid, Ftelphone){
     // let Idx = e.currentTarget.dataset.idx
     requestPromisified({
       url: h.main + '/insertrating1',
@@ -345,6 +348,7 @@ Page({
         ratingid: Ratingid, //动态id
         ratinginfoid: Ratinginfoid,
         ftelphone: app.globalData.User_Phone,
+        ftelphone1: Ftelphone
       },
       method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
       // header: {
