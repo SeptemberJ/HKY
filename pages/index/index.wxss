@@ -38,6 +38,18 @@ page{
   margin: 0 0 0 10rpx;
   display: block;
 }
+.messageIocn{
+  position: relative;
+}
+.TipDot{
+  width: 8px;
+  height: 8px;
+  background: red;
+  border-radius: 50%;
+  position: relative;
+  top: -2px;
+  left: -4px;
+}
 .info{
   width: 710rpx;
   padding: 0 20rpx;

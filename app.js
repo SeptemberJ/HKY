@@ -44,6 +44,7 @@ App({
     userInfo: null,
     User_Phone: '18234567890', //18234567890',
     User_name:'',
-    AQI:''
+    AQI:'',
+    MessageCount:0
   }
 })

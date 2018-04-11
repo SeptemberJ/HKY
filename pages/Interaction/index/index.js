@@ -204,7 +204,6 @@ Page({
     }else{
       return false
     }
-    
   },
   //关闭评论框
   CloseReleaseModal(){
@@ -359,9 +358,9 @@ Page({
       console.log(res.data)
       switch (res.data.result) {
         case 1:
-          this.setData({
-            ReleaseContentList:[]
-          })
+          // this.setData({
+          //   ReleaseContentList:[]
+          // })
           wx.showToast({
             title: '评论成功！',
             icon: 'success',

@@ -39,6 +39,7 @@ Page({
       url: '../release/index'
     })
   },
+  //获取我的发布
   GetMyRelease() {
     wx.showLoading({
       title: '加载中',
@@ -62,14 +63,14 @@ Page({
           break
         case 0:
           wx.showToast({
-            image: '../../images/icon/attention.png',
+            image: '../../../images/icon/attention.png',
             title: '获取动态失败'
           });
           wx.hideLoading()
           break
         default:
           wx.showToast({
-            image: '../../images/icon/attention.png',
+            image: '../../../images/icon/attention.png',
             title: '服务器繁忙！'
           });
           wx.hideLoading()
@@ -77,10 +78,68 @@ Page({
       }).catch((res) => {
         wx.hideLoading()
         wx.showToast({
-          image: '../../images/icon/attention.png',
+          image: '../../../images/icon/attention.png',
           title: '服务器繁忙！'
         });
         console.log(res)
+    })
+  },
+  //删除动态
+  DeleteMyRelease(e) {
+    wx.showModal({
+      title: '提示',
+      content: '确定删除该动态？',
+      success: (res)=> {
+        if (res.confirm) {
+          wx.showLoading({
+            title: '加载中',
+          })
+          requestPromisified({
+            url: h.main + '/deleterating?ratingid=' + e.currentTarget.dataset.fabuId,
+            data: {
+            },
+            method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+            // header: {
+            //   'content-type': 'application/x-www-form-urlencoded',
+            //   'Accept': 'application/json'
+            // }, // 设置请求的 header
+          }).then((res) => {
+            switch (res.data.result) {
+              case 1:
+                wx.showToast({
+                  title: '删除成功！',
+                  icon: 'success',
+                  duration: 1500
+                })
+                setTimeout(()=>{
+                  this.GetMyRelease()
+                },1500)
+                break
+              case 0:
+                wx.showToast({
+                  image: '../../../images/icon/attention.png',
+                  title: '删除失败'
+                });
+                wx.hideLoading()
+                break
+              default:
+                wx.showToast({
+                  image: '../../../images/icon/attention.png',
+                  title: '服务器繁忙！'
+                });
+                wx.hideLoading()
+            }
+          }).catch((res) => {
+            wx.hideLoading()
+            wx.showToast({
+              image: '../../../images/icon/attention.png',
+              title: '服务器繁忙！'
+            });
+            console.log(res)
+          })
+        } else if (res.cancel) {
+        }
+      }
     })
   }
 })

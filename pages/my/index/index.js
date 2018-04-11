@@ -14,6 +14,8 @@ Page({
     this.setData({
       userInfo: app.globalData.userInfo
     })
+  },
+  onShow(){
     this.GetMessage()
   },
   LogOut() {
@@ -27,9 +29,9 @@ Page({
     })
   },
   MyMessage() {
-    // wx.navigateTo({
-    //   url: '../../Interaction/message/index'
-    // })
+    wx.navigateTo({
+      url: '../../Interaction/message/index'
+    })
   },
   //获取消息
   GetMessage() {
@@ -49,6 +51,7 @@ Page({
           this.setData({
             MessageCount: res.data.count
           })
+          app.globalData.MessageCount = res.data.count
           break
         case 0:
           wx.showToast({

@@ -51,7 +51,10 @@ Page({
         'replyList': null
       }
     ],
-    ReplyContent:'',
+    RelpyContentSingle: '',
+    ifReadyReply: false,
+    RecordTopDistance:0,
+    CurReleaseInfo:''
   },
   onLoad(options) {
     this.GetAllMessage()
@@ -64,79 +67,79 @@ Page({
       ReplyContent:e.detail.value
     })
   },
-  // SumitInfo(){
-  //     requestPromisified({
-  //       url: h.main + '/insertrating1',
-  //       data: {
-  //         name_Z: app.globalData.User_name,
-  //         name_F: this.data.Info.fnamez,
-  //         remark: this.data.ReplyContent,
-  //         ratingid: this.data.Info.ratinglist[0].id, //动态id
-  //         ratinginfoid: this.data.Info.id,
-  //         ftelphone: app.globalData.User_Phone,
-  //       },
-  //       method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-  //       // header: {
-  //       //   'content-type': 'application/x-www-form-urlencoded',
-  //       //   'Accept': 'application/json'
-  //       // }, // 设置请求的 header
-  //     }).then((res) => {
-  //       console.log(res.data)
-  //       switch (res.data.result) {
-  //         case 1:
-  //           wx.showToast({
-  //             title: '回复成功！',
-  //             icon: 'success',
-  //             duration: 1500
-  //           })
-  //           //返回
-  //           wx.navigateBack({
-  //             delta: 1
-  //           })
-  //           break
-  //         case 0:
-  //           wx.showToast({
-  //             image: '../../images/icon/attention.png',
-  //             title: '回复失败!'
-  //           });
-  //           break
-  //         default:
-  //           wx.showToast({
-  //             image: '../../images/icon/attention.png',
-  //             title: '服务器繁忙！'
-  //           });
-  //       }
-  //     }).catch((res) => {
-  //       wx.showToast({
-  //         image: '../../images/icon/attention.png',
-  //         title: '服务器繁忙！'
-  //       });
-  //       console.log(res)
-  //     })
-  // },
-  //获取信息
-  GetInfo(ID){
+  //回复input框
+  ChangeRelpyContent(e) {
+    this.setData({
+      RelpyContentSingle: e.detail.value
+    })
+  },
+  //调起回复框
+  ShowReplyModal(e) {
+    let Data = {
+      name_F: e.currentTarget.dataset.targetName,
+      ratingid: e.currentTarget.dataset.fabuId, //动态id
+      ratinginfoid: e.currentTarget.dataset.idx,
+      ftelphone: e.currentTarget.dataset.fabuPhone
+    }
+    this.setData({
+      ifReadyReply: true,
+      RecordTopDistance: e.target.offsetTop,
+      ReplyContentSingle: '',  //清空之前输入
+      CurReleaseInfo: Data
+    })
+  },
+  //关闭回复框
+  CloseReplyModal() {
+    // this.setData({
+    //   ifReadyReply: false
+    // })
+    //this.GetAllMessage()
+    wx.pageScrollTo({
+      scrollTop: this.data.RecordTopDistance - 30,
+      duration: 300
+    })
+  },
+  //回复评论
+  SubmitReply() {
+    console.log('this.data.CurReleaseInfo---')
+    console.log(this.data.CurReleaseInfo)
+    this.SendRelease(this.data.CurReleaseInfo.name_F, this.data.RelpyContentSingle, this.data.CurReleaseInfo.ratingid, this.data.CurReleaseInfo.ratinginfoid, this.data.CurReleaseInfo.ftelphone)
+  },
+  //发布
+  SendRelease(Name_F, Remark, Ratingid, Ratinginfoid, Ftelphone) {
+    console.log('SendRelease内部---')
+    // let Idx = e.currentTarget.dataset.idx
     requestPromisified({
-      url: h.main + '/selectratinginfo?ratinginfoid=' + ID,
+      url: h.main + '/insertrating1',
       data: {
+        name_Z: app.globalData.User_name,
+        name_F: Name_F,
+        remark: Remark,
+        ratingid: Ratingid, //动态id
+        ratinginfoid: Ratinginfoid,
+        ftelphone: app.globalData.User_Phone,
+        ftelphone1: Ftelphone
       },
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
       // header: {
       //   'content-type': 'application/x-www-form-urlencoded',
       //   'Accept': 'application/json'
       // }, // 设置请求的 header
     }).then((res) => {
-      console.log(res.data)
       switch (res.data.result) {
         case 1:
-          this.setData({
-            Info: res.data.ratinginfo[0]
+          wx.showToast({
+            title: '评论成功！',
+            icon: 'success',
+            duration: 1500
           })
+          //刷新
+          this.GetAllMessage()
           break
         case 0:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '获取信息失败!'
+            title: '评论失败!'
           });
           break
         default:
@@ -150,11 +153,16 @@ Page({
         image: '../../images/icon/attention.png',
         title: '服务器繁忙！'
       });
+      // this.setData({
+      //   loadingHidden: true
+      // })
       console.log(res)
     })
+
   },
+
+
   //获取所有消息
-  //获取信息
   GetAllMessage() {
     requestPromisified({
       url: h.main + '/selectratinginfonew?ftelphone=' + app.globalData.User_Phone,
@@ -166,7 +174,6 @@ Page({
       //   'Accept': 'application/json'
       // }, // 设置请求的 header
     }).then((res) => {
-      console.log(res.data)
       switch (res.data.result) {
         case 1:
           this.setData({

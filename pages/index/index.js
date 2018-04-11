@@ -8,6 +8,7 @@ const app = getApp()
 Page({
   data: {
     userInfo: {},
+    MessageCount:0,
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     DateInfo:'',
@@ -29,8 +30,6 @@ Page({
     })
   },
   onLoad: function () {
-    this.GetAirQuality()
-    this.StartClock()
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -61,32 +60,7 @@ Page({
   onShow: function () {
     this.GetAirQuality()
     this.StartClock()
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
-    }
+    this.GetMessage()
   },
   getUserInfo: function(e) {
     console.log(e)
@@ -186,6 +160,45 @@ Page({
         loadingHidden: true
       })
       console.log(res)
+    })
+  },
+  //获取消息
+  GetMessage() {
+    requestPromisified({
+      url: h.main + '/selectnewinfo?ftelphone=' + app.globalData.User_Phone,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      console.log(res.data)
+      switch (res.data.result) {
+        case 1:
+          this.setData({
+            MessageCount: res.data.count
+          })
+          app.globalData.MessageCount = res.data.count
+          break
+        case 0:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '消息获取失败!'
+          });
+          break
+        default:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
     })
   }
 })
