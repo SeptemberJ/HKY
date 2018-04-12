@@ -8,11 +8,13 @@ const app = getApp()
 Page({
   data: {
     userInfo: {},
+    AccountName:'',
     MessageCount:0,  //新消息数
   },
   onLoad: function () {
     this.setData({
-      userInfo: app.globalData.userInfo
+      userInfo: app.globalData.userInfo,
+      AccountName: app.globalData.User_name
     })
   },
   onShow(){

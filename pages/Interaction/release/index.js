@@ -157,7 +157,7 @@ Page({
   ReleaseNoImage(){
     let DATA = {
       ftelphone: app.globalData.User_Phone,
-      fname: app.globalData.userInfo.nickName,
+      fname: app.globalData.User_name,
       remark: this.data.releaseContent,
     }
     requestPromisified({

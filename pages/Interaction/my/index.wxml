@@ -1,48 +1,59 @@
 <view class='recordList'>
-  <view class='recordItem' wx:for="{{DynamicList}}" wx:for-index="DynamicIdx" wx:for-item="Dynamic" wx:key="DynamicIdx">
-    <view class='recordItem_left'>
-      <image class='Avatar' src='{{Dynamic.comment_avatar}}'></image>
-    </view>
-    <view class='recordItem_right'>
-      <view class='recordItem_right_top'>
-        <text class='nickName'>{{Dynamic.comment_name}}</text>
-        <image class='deleteIcon' src='../../../images/icon_delete.png'  bindtap='DeleteMyRelease' data-fabu-id='{{Dynamic.id}}'></image>
+  <view class='recordItem_wrap' wx:if="{{DynamicList.length>0}}" wx:for="{{DynamicList}}" wx:for-index="DynamicIdx" wx:for-item="Dynamic" wx:key="DynamicIdx">
+    <view class='recordItem'>
+      <view class='recordItem_left'>
+        <image class='Avatar' src='{{Dynamic.comment_avatar}}'></image>
       </view>
-      <text class='content'>{{Dynamic.comment_content}}</text>
-      <!--图片  -->
-      <view class='imgList'>
-        <image class='imgList_item' src='{{Picture}}' wx:for="{{Dynamic.comment_picture}}" wx:for-index="PictureIdx" wx:for-item="Picture" wx:key="PictureIdx"></image>
-      </view>
-      <!--操作框  -->
-      <view class='zanBlock'>
-        <text class='time'>{{Dynamic.comment_time}}</text>
-        <view class='zanOperation'>
-          <view class='operationItem'>
-            <image class='operationIcon' src='../../../images/icon/zan.png' bindtap=''></image>
-          </view>
-          <view class='operationItem'>
-            <image class='operationIcon' src='../../../images/icon/comment.png'></image>
-            <!-- <text>评论</text> -->
+      <view class='recordItem_right'>
+        <view class='recordItem_right_top'>
+          <text class='nickName'>{{Dynamic.comment_name}}</text>
+          <image class='deleteIcon' src='../../../images/icon_delete.png'  bindtap='DeleteMyRelease' data-fabu-id='{{Dynamic.id}}'></image>
+        </view>
+        <text class='content'>{{Dynamic.comment_content}}</text>
+        <!--图片  -->
+        <view class='imgList'>
+          <image class='imgList_item' src='{{Picture}}' wx:for="{{Dynamic.comment_picture}}" wx:for-index="PictureIdx" wx:for-item="Picture" wx:key="PictureIdx"></image>
+        </view>
+        <!--操作框  -->
+        <view class='zanBlock'>
+          <text class='time'>{{Dynamic.comment_time}}</text>
+          <view class='zanOperation'>
+            <view class='operationItem'>
+              <image class='operationIcon' src='../../../images/icon/zan.png' bindtap=''></image>
+            </view>
+            <view class='operationItem'>
+              <image class='operationIcon' src='../../../images/icon/comment.png'></image>
+              <!-- <text>评论</text> -->
+            </view>
           </view>
         </view>
-      </view>
-      <!--点赞评论显示  -->
-      <view class='interactionBlock'>
-        <view class='zanList'>
-          <image style="width:20px; height:20px;display:block; margin-right:5px;" src='../../../images/icon/zan_active.png'></image>
-           <view class='peopleList'>
-            <text wx:for="{{Dynamic.comment_zan}}" wx:for-index="ZanIdx" wx:for-item="Zan" wx:key="ZanIdx">{{Zan.name}} </text>
-           </view> 
+        <!--点赞评论显示  -->
+        <view class='SharpBlock' wx:if="{{Dynamic.comment_zan.length>0 || Dynamic.comment_list.length>0}}">
+            <view class='Sharp'></view>
         </view>
-        <view class='commentList'>
-          <view class='commentItem' wx:for="{{Dynamic.comment_list}}" wx:for-index="CommentIdx" wx:for-item="Comment" wx:key="CommentIdx">
-            <view class='comment_content'>
-              <text style='display:block;margin-bottom:5px;'>{{Comment.main.people_name}}: {{Comment.main.people_content}}</text>
-              <text style='display:block;margin-bottom:5px;' wx:for="{{Comment.reply}}" wx:for-index="ReplyIdx" wx:for-item="Reply" wx:key="ReplyIdx">{{Reply.name_Z}} 回复 {{Reply.name_F}}: {{Reply.hf_content}}</text>
+        <view class='interactionBlock' wx:if="{{Dynamic.comment_zan.length>0 || Dynamic.comment_list.length>0}}">
+          <view class='zanList' wx:if="{{Dynamic.comment_zan.length>0}}">
+            <image style="width:20px; height:20px;display:block; margin-right:5px;" src='../../../images/icon/zan_active.png'></image>
+            <view class='peopleList'>
+              <text wx:for="{{Dynamic.comment_zan}}" wx:for-index="ZanIdx" wx:for-item="Zan" wx:key="ZanIdx">{{Zan.name}} </text>
+            </view> 
+          </view>
+          <view class='commentList' wx:if="{{Dynamic.comment_list.length>0}}">
+            <view class='commentItem' wx:for="{{Dynamic.comment_list}}" wx:for-index="CommentIdx" wx:for-item="Comment" wx:key="CommentIdx">
+              <view class='comment_content'>
+                <text style='display:block;margin-bottom:5px;'>{{Comment.main.people_name}}: {{Comment.main.people_content}}</text>
+                <text style='display:block;margin-bottom:5px;' wx:for="{{Comment.reply}}" wx:for-index="ReplyIdx" wx:for-item="Reply" wx:key="ReplyIdx">{{Reply.name_Z}} 回复 {{Reply.name_F}}: {{Reply.hf_content}}</text>
+              </view>
             </view>
           </view>
         </view>
       </view>
     </view>
+    <view class='Blank'></view>
+  </view>
+
+  <view class="InfoNull" wx:if="{{DynamicList.length == 0}}">
+    <image src="../../../images/icon/box-empty.png" />
+    <text>您还没有发布过动态！</text>
   </view>
 </view>

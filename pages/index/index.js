@@ -8,6 +8,7 @@ const app = getApp()
 Page({
   data: {
     userInfo: {},
+    AccountName:'',
     MessageCount:0,
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
@@ -33,6 +34,7 @@ Page({
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
+        AccountName: app.globalData.User_name,
         hasUserInfo: true
       })
     } else if (this.data.canIUse){
@@ -199,6 +201,12 @@ Page({
         image: '../../images/icon/attention.png',
         title: '服务器繁忙！'
       });
+    })
+  },
+  //跳转到我的消息页面
+  ToMyMessage(){
+    wx.navigateTo({
+      url: '../Interaction/message/index',
     })
   }
 })

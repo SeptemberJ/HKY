@@ -3,10 +3,10 @@
   <view class='dataInfo'>
     <view class='topBar'>
       <view class='nickNmae'>
-        {{userInfo.nickName}}的控
+        {{AccountName}}的控
       </view>
       <view class='operation'>
-        <image class='operationIcon messageIocn' src='../../images/icon/message.png'></image>
+        <image class='operationIcon messageIocn' bindtap='ToMyMessage' src='../../images/icon/message.png'></image>
         <view class='TipDot' wx:if='{{MessageCount>0}}'></view>
       <image class='operationIcon' src='../../images/icon/add.png' bindtap='ToAdd'></image>
       </view>

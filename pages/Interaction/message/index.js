@@ -7,50 +7,7 @@ const app = getApp()
 
 Page({
   data: {
-    MessageList:[
-      {
-        'type':1, //0-点赞 ，1-评论
-        'dynamic': { 
-          'f_id': 123, 
-          'f_name': '留白', 
-          'f_headImg': 'https://wx.qlogo.cn/mmopen/vi_32/RTyEMrVG0UFyNMMSBTG3glDbN255dBYzrkV03envNE2ZAgjnFVFDZ3TNxSRVrfPApkFphwkN1vjibswwx00KT2w/0',
-          'f_remark':'周一。。。',
-          'f_picture':[],
-          },  //原始动态信息
-        'interaction':{
-          'p_id': '123',
-          'p_name':'张三',
-          'p_headImg': 'https://wx.qlogo.cn/mmopen/vi_32/RTyEMrVG0UFyNMMSBTG3glDbN255dBYzrkV03envNE2ZAgjnFVFDZ3TNxSRVrfPApkFphwkN1vjibswwx00KT2w/0',
-          'p_time': '2018-04-09',
-          'p_remark':'张三又回复留白'
-        }, //评论或点赞信息，包括那个人的信息
-        'replyList2': {
-          'main': { 'h_name_z': '张三', 'h_name_t': '留白', 'h_remark': '张三评论留白' },
-          'reply':[
-            { 'h_name_z': '留白', 'h_name_t': '张三', 'h_remark': '留白回复张三' }
-          ]
-        },
-        'replyList': [{ 'h_name_z': '张三', 'h_name_t': '留白', 'h_remark': '张三评论留白' }, { 'h_name_z': '留白', 'h_name_t': '张三', 'h_remark': '留白回复张三' }]
-      },
-      {
-        'type': 0, //0-点赞 ，1-评论
-        'dynamic': {
-          'f_id': 123,
-          'f_name': '留白',
-          'f_headImg': 'https://wx.qlogo.cn/mmopen/vi_32/RTyEMrVG0UFyNMMSBTG3glDbN255dBYzrkV03envNE2ZAgjnFVFDZ3TNxSRVrfPApkFphwkN1vjibswwx00KT2w/0',
-          'f_remark': '周一。。。',
-          'f_picture': [],
-        },  //原始动态信息
-        'interaction': {
-          'p_id': '123',
-          'p_name': '李四',
-          'p_headImg': 'https://wx.qlogo.cn/mmopen/vi_32/RTyEMrVG0UFyNMMSBTG3glDbN255dBYzrkV03envNE2ZAgjnFVFDZ3TNxSRVrfPApkFphwkN1vjibswwx00KT2w/0',
-          'p_time': '2018-04-09',
-          'p_remark': ''
-        }, //评论或点赞信息，包括那个人的信息
-        'replyList': null
-      }
-    ],
+    MessageList:[],
     RelpyContentSingle: '',
     ifReadyReply: false,
     RecordTopDistance:0,
@@ -65,6 +22,13 @@ Page({
   ChangeReply(e){
     this.setData({
       ReplyContent:e.detail.value
+    })
+  },
+  //跳转动态详情页
+  ToDetail(e){
+    console.log('跳转动态详情页')
+    wx.navigateTo({
+      url: '../detail/index?fabuId=' + e.currentTarget.dataset.fabuId + '&ratinginfoid=' + e.currentTarget.dataset.id + '&name_t=' + e.currentTarget.dataset.nameT + '&ftelphone=' + e.currentTarget.dataset.ftelphone
     })
   },
   //回复input框
@@ -160,10 +124,11 @@ Page({
     })
 
   },
-
-
   //获取所有消息
   GetAllMessage() {
+    wx.showLoading({
+      title: '加载中',
+    })
     requestPromisified({
       url: h.main + '/selectratinginfonew?ftelphone=' + app.globalData.User_Phone,
       data: {
@@ -179,25 +144,87 @@ Page({
           this.setData({
             MessageList: res.data.MessageList
           })
+          wx.hideLoading()
           break
         case 0:
           wx.showToast({
             image: '../../images/icon/attention.png',
             title: '获取消息失败!'
           });
+          wx.hideLoading()
           break
         default:
           wx.showToast({
             image: '../../images/icon/attention.png',
             title: '服务器繁忙！'
           });
+          wx.hideLoading()
       }
     }).catch((res) => {
+      wx.hideLoading()
       wx.showToast({
         image: '../../images/icon/attention.png',
         title: '服务器繁忙！'
       });
       console.log(res)
+    })
+  },
+  //删除消息
+  DeleteMessage(e) {
+    wx.showModal({
+      title: '提示',
+      content: '确定删除该消息吗？',
+      success: (res) => {
+        if (res.confirm) {
+          wx.showLoading({
+            title: '加载中',
+          })
+          requestPromisified({
+            url: h.main + '/',
+            data: {
+            },
+            method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+            // header: {
+            //   'content-type': 'application/x-www-form-urlencoded',
+            //   'Accept': 'application/json'
+            // }, // 设置请求的 header
+          }).then((res) => {
+            switch (res.data.result) {
+              case 1:
+                wx.showToast({
+                  title: '删除成功！',
+                  icon: 'success',
+                  duration: 1500
+                })
+                setTimeout(() => {
+                  this.GetAllMessage()
+                }, 1500)
+                break
+              case 0:
+                wx.showToast({
+                  image: '../../../images/icon/attention.png',
+                  title: '删除失败'
+                });
+                wx.hideLoading()
+                break
+              default:
+                wx.showToast({
+                  image: '../../../images/icon/attention.png',
+                  title: '服务器繁忙！'
+                });
+                wx.hideLoading()
+            }
+          }).catch((res) => {
+            wx.hideLoading()
+            wx.showToast({
+              image: '../../../images/icon/attention.png',
+              title: '服务器繁忙！'
+            });
+            console.log(res)
+          })
+        } else if (res.cancel) {
+        }
+      }
     })
   }
 })

@@ -1,20 +1,16 @@
-<view class='releaseBar'>
-  <view bindtap='MyRelease'><text>我的发布</text></view>
-  <view bindtap='ToRelease'><text>我要发布</text></view>
-  <view bindtap='MyMessage' class='MessageBox'><text>我的消息</text>
-    <view class='TipDot' wx:if='{{MessageCount>0}}'></view>
-  </view> 
-</view>
+
 
 <view class='recordList'>
-  <view class='recordItem_wrap' wx:if="{{DynamicList.length >0}}"  wx:for="{{DynamicList}}" wx:for-index="DynamicIdx" wx:for-item="Dynamic" wx:key="DynamicIdx">
+  <view class='recordItem_wrap' wx:for="{{DynamicList}}" wx:for-index="DynamicIdx" wx:for-item="Dynamic" wx:key="DynamicIdx">
     <view class='recordItem'>
       <view class='recordItem_left'>
         <image class='Avatar' src='{{Dynamic.comment_avatar}}'></image>
       </view>
       <view class='recordItem_right'>
+       <view class='recordItem_right_top'>
         <text class='nickName'>{{Dynamic.comment_name}}</text>
-        <text class='content'>{{Dynamic.comment_content}}</text>
+      </view>
+      <text class='content'>{{Dynamic.comment_content}}</text>
         <!--图片  -->
         <view class='imgList'>
           <image class='imgList_item' src='{{Picture}}' wx:for="{{Dynamic.comment_picture}}" wx:for-index="PictureIdx" wx:for-item="Picture" wx:key="PictureIdx"></image>
@@ -23,10 +19,10 @@
         <view class='zanBlock'>
           <text class='time'>{{Dynamic.comment_time}}</text>
           <view class='zanOperation'>
-            <view class='operationItem'>
+            <!-- <view class='operationItem'>
               <image class='operationIcon' wx:if='{{!Dynamic.ifHasZan}}' src='../../../images/icon/zan.png' bindtap='Zan' data-idx='{{DynamicIdx}}' data-dynamic-id='{{Dynamic.id}}'></image>
               <image class='operationIcon' wx:if='{{Dynamic.ifHasZan}}' src='../../../images/icon/zan_active.png' bindtap='CancelZan' data-idx='{{DynamicIdx}}' data-dynamic-id='{{Dynamic.id}}'></image>
-            </view>
+            </view> -->
             <view class='operationItem'>
               <image class='operationIcon' src='../../../images/icon/comment.png' bindtap='ShowReleaseModal' data-fabu-id='{{Dynamic.id}}' data-fabu-name='{{Dynamic.comment_name}}' data-fabu-phone='{{Dynamic.comment_telphone}}'></image>
               <!-- <text>评论</text> -->
@@ -36,7 +32,7 @@
         <!--点赞评论显示  -->
         <view class='SharpBlock' wx:if="{{Dynamic.comment_zan.length>0 || Dynamic.comment_list.length>0}}">
             <view class='Sharp'></view>
-        </view>
+          </view>
         <view class='interactionBlock' wx:if="{{Dynamic.comment_zan.length>0 || Dynamic.comment_list.length>0}}">
           <view class='zanList'  wx:if="{{Dynamic.comment_zan.length>0}}">
             <image style="width:20px; height:20px;display:block; margin-right:5px;" src='../../../images/icon/zan_active.png'></image>
@@ -71,21 +67,17 @@
         <!--  -->
       </view>
     </view>
-    <view class='Blank'></view>
-  </view>
-  <view class="InfoNull" wx:if="{{DynamicList.length == 0}}">
-    <image src="../../../images/icon/box-empty.png" />
-    <text>去做第一个发布动态的人吧！</text>
+    <!-- <view class='Blank'></view> -->
   </view>
 </view>
 
 <!--评论  -->
-<view wx:if='{{ifReadyRelease}}' style='width:calc(100% - 10px);padding:10px 5px; border-top:1px solid #ccc;background:#fff;position:fixed;bottom:0px;left:0;z-index:999999;display: flex;justify-content: space-between;'>
-  <input show-confirm-bar='{{false}}' cursor-spacing='5' focus='{{true}}' bindblur='CloseReleaseModal' bindinput='ChangeReleaseContent' placeholder="评论一下。。。" style='padding:0 2px;border:1px solid #ccc;border-radius:2px;font-size:30rpx;'></input>
-  <view class='fbBt' bindtap='Submit'>发布</view>
-</view>  
+   <view wx:if='{{ifReadyRelease}}' style='width:calc(100% - 10px);padding:10px 5px; border-top:1px solid #ccc;background:#fff;position:fixed;bottom:0px;left:0;z-index:999999;display: flex;justify-content: space-between;'>
+  <input show-confirm-bar='{{false}}' cursor-spacing='5' focus='{{true}}' bindblur='' bindinput='ChangeReleaseContent' placeholder="评论一下。。。" style='padding:0 2px;border:1px solid #ccc;border-radius:2px;font-size:30rpx;'></input>
+  <view class='fbBt' bindtap='Submit'>评论</view>
+</view>   
 <!--回复  -->
-<view wx:if='{{ifReadyReply}}' style='width:calc(100% - 10px);padding:10px 5px; border-top:1px solid #ccc;background:#fff;position:fixed;bottom:0px;left:0;z-index:999999;display: flex;justify-content: space-between;'>
-  <input show-confirm-bar='{{false}}' cursor-spacing='5' focus='{{true}}' bindblur='CloseReplyModal' bindinput='ChangeRelpyContent' placeholder="{{'回复' + CurReleaseInfo.name_F}}" style='padding:0 2px;border:1px solid #ccc;border-radius:2px;font-size:30rpx;'></input>
+  <view wx:if='{{ifReadyReply}}' style='width:calc(100% - 10px);padding:10px 5px; border-top:1px solid #ccc;background:#fff;position:fixed;bottom:0px;left:0;z-index:999999;display: flex;justify-content: space-between;'>
+  <input show-confirm-bar='{{false}}' cursor-spacing='5' focus='{{true}}' bindblur='' bindinput='ChangeRelpyContent' placeholder="{{'回复' + CurReleaseInfo.name_F}}" style='padding:0 2px;border:1px solid #ccc;border-radius:2px;font-size:30rpx;'></input>
   <view class='fbBt' bindtap='SubmitReply'>回复</view>
 </view> 

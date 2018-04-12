@@ -34,8 +34,13 @@
 }
 .optionTit{
   width: calc(100% - 100rpx);
-  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 0 5px;
+}
+.MessageCount{
+  
 }
 .LogOutBlock{
   width: 80%;
