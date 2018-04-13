@@ -67,8 +67,9 @@
   flex-wrap: wrap;
 }
 .recordItem_right .imgList_item{
-  width: 250rpx;
-  height: 250rpx;
+  width: 280rpx;
+  height: 280rpx;
+  margin: 0 5rpx 5rpx 0;
   display: block;
 }
 
@@ -82,11 +83,11 @@
 }
 
 .recordItem_right .zanBlock .time{
-  width: 180rpx;
+  width: calc(100% - 80px);
   color: #666;
 }
 .recordItem_right .zanOperation{
-  width: calc(100% - 180rpx);
+  width: 80px;
   height: 30px;
   display: flex;
   justify-content: flex-end;
@@ -148,6 +149,31 @@
   justify-content: flex-start;
   align-items: flex-start;
   margin-bottom: 0px;
+}
+.releaseBt{
+  width: 100px;
+  height: 32px;
+  display: flex;
+  justify-content: flex-end;
+}
+.normalBt{
+  width:60px;
+  height: 30px;
+  text-align: center;
+  line-height: 30rpx;
+  background: #efefef;
+  color: #ccc;
+  border-radius: 5px;
+}
+.fbBt{
+  width:60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30rpx;
+  background: #3498db;
+  color: #fff;
+  border-radius: 5px;
 }
 .Blank{
   width: 100%;

@@ -19,10 +19,11 @@
           <text class='time'>{{Dynamic.comment_time}}</text>
           <view class='zanOperation'>
             <view class='operationItem'>
-              <image class='operationIcon' src='../../../images/icon/zan.png' bindtap=''></image>
+              <image class='operationIcon' wx:if='{{!Dynamic.ifHasZan}}' src='../../../images/icon/zan.png' bindtap='Zan' data-idx='{{DynamicIdx}}' data-dynamic-id='{{Dynamic.id}}'></image>
+              <image class='operationIcon' wx:if='{{Dynamic.ifHasZan}}' src='../../../images/icon/zan_active.png' bindtap='CancelZan' data-idx='{{DynamicIdx}}' data-dynamic-id='{{Dynamic.id}}'></image>
             </view>
             <view class='operationItem'>
-              <image class='operationIcon' src='../../../images/icon/comment.png'></image>
+              <image class='operationIcon' src='../../../images/icon/comment.png' bindtap='ShowReleaseModal' data-fabu-id='{{Dynamic.id}}' data-fabu-name='{{Dynamic.comment_name}}' data-fabu-phone='{{Dynamic.comment_telphone}}'></image>
               <!-- <text>评论</text> -->
             </view>
           </view>
@@ -38,18 +39,38 @@
               <text wx:for="{{Dynamic.comment_zan}}" wx:for-index="ZanIdx" wx:for-item="Zan" wx:key="ZanIdx">{{Zan.name}} </text>
             </view> 
           </view>
-          <view class='commentList' wx:if="{{Dynamic.comment_list.length>0}}">
+          <!-- <view class='commentList' wx:if="{{Dynamic.comment_list.length>0}}">
             <view class='commentItem' wx:for="{{Dynamic.comment_list}}" wx:for-index="CommentIdx" wx:for-item="Comment" wx:key="CommentIdx">
               <view class='comment_content'>
                 <text style='display:block;margin-bottom:5px;'>{{Comment.main.people_name}}: {{Comment.main.people_content}}</text>
                 <text style='display:block;margin-bottom:5px;' wx:for="{{Comment.reply}}" wx:for-index="ReplyIdx" wx:for-item="Reply" wx:key="ReplyIdx">{{Reply.name_Z}} 回复 {{Reply.name_F}}: {{Reply.hf_content}}</text>
               </view>
             </view>
+          </view> -->
+          <view class='commentList' wx:if="{{Dynamic.comment_list.length>0}}">
+            <view class='commentItem' wx:for="{{Dynamic.comment_list}}" wx:for-index="CommentIdx" wx:for-item="Comment" wx:key="CommentIdx">
+              <view class='comment_content'>
+
+                <view wx:if="{{Comment.main.people_name}}"  style='display:block;margin-bottom:5px;' bindtap='ShowReplyModal' data-target-name='{{Comment.main.people_name}}' data-name-f='{{Dynamic.comment_name}}' data-name-z='{{Dynamic.comment_name}}' data-fabu-id='{{Dynamic.id}}' data-idx='{{Comment.main.id}}' data-fabu-phone='{{Dynamic.comment_telphone}}'>
+                  <text style='color:#00376a; margin-right:20x;'>{{Comment.main.people_name}}</text>
+                  <text>：{{Comment.main.people_content}}</text>
+                </view>
+                <view style='display:block;margin-bottom:5px;' wx:for="{{Comment.reply}}" wx:for-index="ReplyIdx" wx:for-item="Reply" wx:key="ReplyIdx" data-target-name='{{Reply.name_F}}' data-name-f='{{Dynamic.comment_name}}' data-name-z='{{Reply.name_F}}' bindtap='ShowReplyModal' data-fabu-id='{{Dynamic.id}}' data-idx='{{Reply.id}}' data-fabu-phone='{{Dynamic.comment_telphone}}'>
+                  <text style='color:#00376a; margin-right:20x;'>{{Reply.name_Z}}</text>
+                  <text style='margin:0 2px;'>回复</text>
+                  <text style='color:#00376a; margin-right:20x;'>{{Reply.name_F}} </text>
+                  <text>：{{Reply.hf_content}}</text>
+                </view>
+
+              </view>
+            </view>
           </view>
+        <!-- </view> -->
+
         </view>
       </view>
     </view>
-    <view class='Blank'></view>
+    <view wx:if="{{DynamicIdx != DynamicList.length-1}}" class='Blank'></view>
   </view>
 
   <view class="InfoNull" wx:if="{{DynamicList.length == 0}}">
@@ -57,3 +78,15 @@
     <text>您还没有发布过动态！</text>
   </view>
 </view>
+
+
+<!--评论  -->
+<view wx:if='{{ifReadyRelease}}' style='width:calc(100% - 10px);padding:10px 5px; border-top:1px solid #ccc;background:#fff;position:fixed;bottom:0px;left:0;z-index:999999;display: flex;justify-content: space-between;'>
+  <input show-confirm-bar='{{false}}' cursor-spacing='5' focus='{{true}}' bindblur='CloseReleaseModal' bindinput='ChangeReleaseContent' placeholder="评论一下。。。" style='padding:0 2px;border:1px solid #ccc;border-radius:2px;font-size:30rpx;'></input>
+  <view class='fbBt' bindtap='Submit'>发布</view>
+</view>  
+<!--回复  -->
+<view wx:if='{{ifReadyReply}}' style='width:calc(100% - 10px);padding:10px 5px; border-top:1px solid #ccc;background:#fff;position:fixed;bottom:0px;left:0;z-index:999999;display: flex;justify-content: space-between;'>
+  <input show-confirm-bar='{{false}}' cursor-spacing='5' focus='{{true}}' bindblur='CloseReplyModal' bindinput='ChangeRelpyContent' placeholder="{{'回复' + CurReleaseInfo.name_F}}" style='padding:0 2px;border:1px solid #ccc;border-radius:2px;font-size:30rpx;'></input>
+  <view class='fbBt' bindtap='SubmitReply'>回复</view>
+</view> 

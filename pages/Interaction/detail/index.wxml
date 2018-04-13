@@ -43,7 +43,7 @@
           <view class='commentList' wx:if="{{Dynamic.comment_list.length>0}}">
             <view class='commentItem' wx:for="{{Dynamic.comment_list}}" wx:for-index="CommentIdx" wx:for-item="Comment" wx:key="CommentIdx">
               <view class='comment_content'>
-                <view style='display:block;margin-bottom:5px;' bindtap='ShowReplyModal' data-target-name='{{Comment.main.people_name}}' data-name-f='{{Dynamic.comment_name}}' data-name-z='{{Dynamic.comment_name}}' data-fabu-id='{{Dynamic.id}}' data-idx='{{Comment.main.id}}' data-fabu-phone='{{Dynamic.comment_telphone}}'>
+                <view wx:if="{{Comment.main.people_name}}" style='display:block;margin-bottom:5px;' bindtap='ShowReplyModal' data-target-name='{{Comment.main.people_name}}' data-name-f='{{Dynamic.comment_name}}' data-name-z='{{Dynamic.comment_name}}' data-fabu-id='{{Dynamic.id}}' data-idx='{{Comment.main.id}}' data-fabu-phone='{{Dynamic.comment_telphone}}'>
                 <text style='color:#00376a; margin-right:20x;'>{{Comment.main.people_name}}</text>
                 <text>：{{Comment.main.people_content}}</text>
                 </view>

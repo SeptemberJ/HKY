@@ -13,7 +13,7 @@
     
     <view class='AddBlock' bindtap='ChooseUploadFiles'>
       <image src='../../../images/icon/Camera.png'></image>
-      <text>照片/视频</text>
+      <text>照片</text>
     </view>
   </view>
 </view>

@@ -228,7 +228,8 @@ Page({
   //调起回复框
   ShowReplyModal(e) {
     console.log(e.currentTarget.dataset.nameF + '---' + e.currentTarget.dataset.nameZ +'---'+  app.globalData.User_name)
-    if (e.currentTarget.dataset.nameF == app.globalData.User_name && e.currentTarget.dataset.nameZ == app.globalData.User_name){
+    // e.currentTarget.dataset.nameF == app.globalData.User_name && 
+    if (e.currentTarget.dataset.nameZ == app.globalData.User_name){
       let Data = {
         name_F: e.currentTarget.dataset.targetName,
         ratingid: e.currentTarget.dataset.fabuId, //动态id
@@ -424,6 +425,15 @@ Page({
       console.log(res)
     })
 
+  },
+  //图片预览
+  PreviewImage(e){
+    let PictureList = e.currentTarget.dataset.pictures
+    let PictureCur = PictureList[e.currentTarget.dataset.pictureIdx]
+    wx.previewImage({
+      current: PictureCur, // 当前显示图片的http链接
+      urls: PictureList // 需要预览的图片http链接列表
+    })
   }
 })
 

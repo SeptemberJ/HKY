@@ -31,7 +31,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 40px;
+  margin-bottom: 40px;
 }
 .recordItem_wrap{
   width: 750rpx;
@@ -101,8 +101,9 @@
   flex-wrap: wrap;
 }
 .recordItem_right .imgList_item{
-  width: 250rpx;
-  height: 250rpx;
+  width: 280rpx;
+  height: 280rpx;
+  margin: 0 5rpx 5rpx 0;
   display: block;
 }
 
@@ -116,11 +117,11 @@
 }
 
 .recordItem_right .zanBlock .time{
-  width: 180rpx;
+  width: calc(100% - 80px);
   color: #666;
 }
 .recordItem_right .zanOperation{
-  width: calc(100% - 180rpx);
+  width: 80px;
   height: 30px;
   display: flex;
   justify-content: flex-end;

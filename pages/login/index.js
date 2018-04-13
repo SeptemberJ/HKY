@@ -123,10 +123,22 @@ Page({
           app.globalData.User_Phone = this.data.User_Phone
           app.globalData.User_name = res.data.registerlist[0].fname
           break
+        case 2:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '密码错误！'
+          });
+          break
+        case 3:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '用户名不存在！'
+          });
+          break
         case 0:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '登录失败'
+            title: '登录失败！'
           });
           break
         default:

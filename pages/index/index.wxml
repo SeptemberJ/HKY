@@ -26,27 +26,27 @@
       <view class='info_Right'>
         <view class='Right_item'>
           <text class='smallFont'>PM2.5</text>
-          <text class='smallFont'>{{airQuality.PM25}}</text>
+          <text class='smallFont'>{{airQuality.PM25}}μg/m³</text>
         </view>
         <view class='Right_item'>
           <text class='smallFont'>VOCs</text>
-          <text class='smallFont'>{{airQuality.VOCs}}</text>
+          <text class='smallFont'>{{airQuality.VOCs}}mg/m³</text>
         </view>
         <view class='Right_item'>
           <text class='smallFont'>CO2</text>
-          <text class='smallFont'>{{airQuality.CO2}}</text>
+          <text class='smallFont'>{{airQuality.CO2}}ppm</text>
         </view>
         <view class='Right_item'>
           <text class='smallFont'>CO</text>
-          <text class='smallFont'>{{airQuality.CO}}</text>
+          <text class='smallFont'>{{airQuality.CO}}ppm</text>
         </view>
         <view class='Right_item'>
           <text class='smallFont'>甲醛</text>
-          <text class='smallFont'>{{airQuality.maxformaldehyde}}</text>
+          <text class='smallFont'>{{airQuality.maxformaldehyde}}mg/m³</text>
         </view>
         <view class='Right_item'>
-          <text class='smallFont'>温/湿度</text>
-          <text class='smallFont'>{{airQuality.temhum}}</text>
+          <text class='smallFont'>湿度</text>
+          <text class='smallFont'>{{airQuality.temhum}}%RH</text>
         </view>
       </view>
     </view>

@@ -42,7 +42,7 @@
   width: 200rpx;
   height: 200rpx;
   position: relative;
-  margin-right: 20px;
+  margin-right: 15px;
   overflow: visible;
 }
 .DeleteBar{

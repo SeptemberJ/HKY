@@ -19,7 +19,7 @@
 </view>
 
 <view class='BottomBox'>
-  <image src='../../images/picture/SignBg.png'></image>
+  <image src='../../images/picture/SignBgBlue.png'></image>
 </view>
 
 <loading hidden="{{loadingHidden}}">

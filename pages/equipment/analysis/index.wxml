@@ -11,8 +11,8 @@
       </view>
       <view class='rightBox'>
         <text class='Bold MarginB_10'>{{Data.kind}}</text>
-        <text>{{Data.value}}</text>
-        <!-- <text>{{Data.unit}}</text> -->
+        <text>{{Data.value}}{{Data.unit}}</text>
+        <!-- <text></text>  -->
       </view>
     </view>
   </view>

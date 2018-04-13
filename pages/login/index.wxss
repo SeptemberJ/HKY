@@ -14,13 +14,16 @@ input{
   margin-top: 40px;
 }
 .BorderBottom{
-  border-bottom: 2px solid #398e3d;
+  border-bottom: 2px solid #3498db;
+  /*
+  #398e3d
+  */
 }
 .circleBtn{
   width: 120rpx;
   height: 120rpx;
   margin: 30px auto 0 auto;
-  background: #398e3d;
+  background: #3498db;
   border-radius: 50%;
   color: #fff;
   font-size: 16px;
@@ -39,7 +42,8 @@ input{
   text-align: right;
 }
 .operationBox text{
-  font-size: 14px;
+  font-size: 30rpx;
+  color: #333;
 }
 .ImgBlock{
   width: 100%;

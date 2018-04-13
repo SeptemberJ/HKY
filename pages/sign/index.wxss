@@ -21,13 +21,13 @@ input{
   width: 400rpx;
   padding: 2rpx 5px;
   font-size: 14px;
-  border-bottom: 1px solid #398e3d;
+  border-bottom: 1px solid #3498db;
 }
 .SignBt{
   width: 200rpx;
   height: 80rpx;
   line-height: 80rpx;
-  background: #398e3d;
+  background: #3498db;
   color: #fff;
   text-align: center;
   margin: 40px auto 0 auto;

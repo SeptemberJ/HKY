@@ -331,6 +331,7 @@ Page({
 
   data: {
     Kind:'PM2.5',
+    Unit:'',
     EquipmentId:'',
     ec: {
       // 将 lazyLoad 设为 true 后，需要手动初始化图表
@@ -352,12 +353,45 @@ Page({
     wx.getStorage({
       key: 'equipmentInfo',
       success: (res)=> {
+        switch (res.data.Kind){
+          case 'PM2.5':
+            this.setData({
+              Unit: 'μg/m³',
+            })
+          break
+          case 'CO2':
+            this.setData({
+              Unit: 'ppm',
+            })
+            break
+          case 'CO':
+            this.setData({
+              Unit: 'ppm',
+            })
+            break
+          case '甲醛':
+            this.setData({
+              Unit: 'mg/m³',
+            })
+            break
+          case '温度':
+            this.setData({
+              Unit: '℃',
+            })
+            break
+          case 'VOCs':
+            this.setData({
+              Unit: 'mg/m³',
+            })
+            break
+        }
         this.setData({
           Kind : res.data.Kind,
           EquipmentId: res.data.EquipmentId
         })
       }
     })
+    //let unit = ['PM2.5','CO2','CO','甲醛','温度','VOCs']
   },
 
   // 点击按钮后初始化图表
@@ -444,7 +478,7 @@ Page({
             case 1:
               this.setData({
                 EquipmentName: res.data.malist[0].second_name,
-                unit: res.data.malist[0].unit,
+                // unit: res.data.malist[0].unit,
                 Number: res.data.malist[0].number
               })
               break

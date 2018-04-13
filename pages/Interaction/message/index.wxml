@@ -19,7 +19,7 @@
       </view>
       <!--原始动态  -->
       <view class='releaseContentBlock' data-fabu-id='{{Message.dynamic.f_id}}' data-id='{{Message.interaction.f_id}}' data-name-t='{{Message.interaction.f_name}}' data-ftelphone='{{Message.dynamic.f_telphone}}' bindtap='ToDetail'>
-        <image wx:if='{{Message.dynamic.f_picture.length>0}}' class='thumbnail' src='{{Message.dynamic.f_picture[0]}}'></image>
+        <image wx:if='{{Message.dynamic.f_pic.length>0}}' class='thumbnail' src='{{Message.dynamic.f_pic[0]}}'></image>
         <text style='padding:10rpx 20rpx;'><text style='color:#00376a;'>{{Message.dynamic.f_name}}</text>: {{Message.dynamic.f_remark}}</text>
       </view>
 
@@ -36,7 +36,7 @@
         </view>
       </view> -->
     </view>
-    <view class='Blank'></view>
+    <view wx:if="{{MessageIdx != MessageList.length-1}}" class='Blank'></view>
   </view>
   <view class="InfoNull" wx:if="{{MessageList.length == 0}}">
     <image src="../../../images/icon/box-empty.png" />

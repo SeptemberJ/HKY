@@ -14,10 +14,9 @@ Page({
     CurReleaseInfo:''
   },
   onLoad(options) {
-    this.GetAllMessage()
   },
   onShow(){
-    console.log('onshow---')
+    this.GetAllMessage()
   },
   ChangeReply(e){
     this.setData({
@@ -130,7 +129,7 @@ Page({
       title: '加载中',
     })
     requestPromisified({
-      url: h.main + '/selectratinginfonew?ftelphone=' + app.globalData.User_Phone,
+      url: h.main + '/selectratinginfonew1?ftelphone=' + app.globalData.User_Phone,
       data: {
       },
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT

@@ -24,18 +24,17 @@
 }
 .peopleInfo{
   width: 710rpx;
-  height: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 .peopleInfo .Info{
-  width: calc(710rpx - 100rpx - 100rpx - 40rpx);
+  width: calc(710rpx - 100rpx - 40rpx);
   padding: 0 20rpx;
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: flex-start;
 }
 .peopleInfo .Info .topBar{
