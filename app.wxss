@@ -7,7 +7,7 @@
   justify-content: space-between;
   padding: 0;
   box-sizing: border-box;
-   position: relative;  
+  position: relative;  
 }
 page text{
   font-size: 30rpx;
@@ -29,6 +29,9 @@ page text{
 }
 .Block{
   display: block;
+}
+.MarginTB_10{
+  margin: 10px auto;
 }
 .MarginB_10{
   margin-bottom: 10px;
@@ -141,4 +144,13 @@ page text{
 }
 .borderL{
   border-left: 1px solid #ddd;
+}
+
+/* /loadMore */
+.loadMore{
+  width: 100%;
+  height: 35px;
+  text-align: center;
+  line-height: 35px;
+  color: #999;
 }

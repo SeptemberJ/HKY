@@ -56,7 +56,7 @@ Page({
       title: '加载中',
     })
     requestPromisified({
-      url: h.main + '/selectratingno1?ratingid=' + ID,
+      url: h.main + '/selectratingno1new?ratingid=' + ID,  //  selectratingno1
       data: {
       },
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT

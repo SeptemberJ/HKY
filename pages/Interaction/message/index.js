@@ -8,20 +8,44 @@ const app = getApp()
 Page({
   data: {
     MessageList:[],
+    CurOperationIdx: '',
     RelpyContentSingle: '',
     ifReadyReply: false,
     RecordTopDistance:0,
-    CurReleaseInfo:''
+    CurReleaseInfo:'',
+    TipText: '加载中...',
+    isLoading: false,
+    Page: 1
   },
   onLoad(options) {
   },
   onShow(){
-    this.GetAllMessage()
+    this.setData({
+      MessageList: []
+    })
+    this.GetAllMessage(1)
   },
   ChangeReply(e){
     this.setData({
       ReplyContent:e.detail.value
     })
+  },
+  //上拉刷新
+  onPullDownRefresh() {
+    this.setData({
+      Page: 1,
+      MessageList: []
+    })
+    this.GetAllMessage(1)
+  },
+  //加载更多
+  onReachBottom() {
+    console.log('到底了-----')
+    console.log(this.data.Page)
+    this.setData({
+      isLoading: true,
+    })
+    this.GetAllMessage(this.data.Page)
   },
   //跳转动态详情页
   ToDetail(e){
@@ -124,12 +148,21 @@ Page({
 
   },
   //获取所有消息
-  GetAllMessage() {
+  GetAllMessage(Page) {
     wx.showLoading({
       title: '加载中',
     })
+    let ID
+    let ListTemp = this.data.MessageList
+    if (ListTemp.length > 0 && this.data.Page != 1) {
+      ID = ListTemp[ListTemp.length - 1].interaction.f_id
+    } else {
+      ID = ''
+    }
+    // console.log([ListTemp.length - 1])
+    // console.log(ListTemp)
     requestPromisified({
-      url: h.main + '/selectratinginfonew1?ftelphone=' + app.globalData.User_Phone,
+      url: h.main + '/selectratinginfonew1?ftelphone=' + app.globalData.User_Phone + '&page_num=' + Page + '&lastid=' + ID,
       data: {
       },
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
@@ -140,10 +173,24 @@ Page({
     }).then((res) => {
       switch (res.data.result) {
         case 1:
-          this.setData({
-            MessageList: res.data.MessageList
-          })
+          let CurPage = this.data.Page
+          let temp = res.data.MessageList
+          if (temp.length > 0) {
+            this.setData({
+              MessageList: this.data.MessageList.concat(temp),
+              Page: CurPage + 1,
+              isLoading: false
+            })
+          } else {
+            this.setData({
+              TipText: '到底了'
+            })
+          }
           wx.hideLoading()
+          // this.setData({
+          //   MessageList: res.data.MessageList
+          // })
+          // wx.hideLoading()
           break
         case 0:
           wx.showToast({

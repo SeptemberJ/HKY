@@ -73,8 +73,23 @@ Page({
     })
   },
   ToAdd() {
-    wx.navigateTo({
+    wx.switchTab({
       url: '../equipment/index/index'
+    })
+  },
+  ToTemperature() {
+    wx.navigateTo({
+      url: '../temperature/index?weaid=' + this.data.airQuality.weaid
+    })
+  },
+  ToWeight() {
+    wx.navigateTo({
+      url: '../weight/index'
+    })
+  },
+  ToDiet() {
+    wx.navigateTo({
+      url: '../diet/index'
     })
   },
   //时钟
@@ -125,6 +140,8 @@ Page({
     requestPromisified({
       url: h.main + '/selecttemperature',
       data: {
+        latitude: app.globalData.latitude,
+        longitude: app.globalData.longitude,
       },
       method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
       // header: {
@@ -135,7 +152,7 @@ Page({
       switch (res.data.result) {
         case 1:
           this.setData({
-            airQuality: res.data.temperaturelist[0]
+            airQuality: res.data.temperaturelist
           })
           break
         case 0:

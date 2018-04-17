@@ -8,20 +8,44 @@ const app = getApp()
 Page({
   data: {
     DynamicList:[],
+    CurOperationIdx: '',
     ReleaseContentSingle: '',
     RelpyContentSingle: '',
     ifReadyRelease: false,
     ifReadyReply: false,
     RecordTopDistance: 0,
-    CurReleaseInfo: ''
+    CurReleaseInfo: '',
+    TipText: '加载中...',
+    isLoading: false,
+    Page: 1
   },
   onShow(){
-    this.GetMyRelease()
+    this.setData({
+      DynamicList: []
+    })
+    this.GetMyRelease(1)
   },
   ToRelease() {
     wx.navigateTo({
       url: '../release/index'
     })
+  },
+  //上拉刷新
+  onPullDownRefresh() {
+    this.setData({
+      Page: 1,
+      DynamicList: []
+    })
+    this.GetMyRelease(1)
+  },
+  //加载更多
+  onReachBottom() {
+    console.log('到底了-----')
+    console.log(this.data.Page)
+    this.setData({
+      isLoading: true,
+    })
+    this.GetMyRelease(this.data.Page)
   },
   //点赞
   Zan(e) {
@@ -146,7 +170,8 @@ Page({
       ifReadyRelease: true,
       RecordTopDistance: e.target.offsetTop,
       ReleaseContentSingle: '',  //清空之前输入
-      CurReleaseInfo: Data
+      CurReleaseInfo: Data,
+      CurOperationIdx: e.currentTarget.dataset.dynamicIdx
     })
   },
   //调起回复框
@@ -163,7 +188,8 @@ Page({
         ifReadyReply: true,
         RecordTopDistance: e.target.offsetTop,
         ReplyContentSingle: '',  //清空之前输入
-        CurReleaseInfo: Data
+        CurReleaseInfo: Data,
+        CurOperationIdx: e.currentTarget.dataset.dynamicIdx
       })
     } else {
       return false
@@ -174,22 +200,22 @@ Page({
     this.setData({
       ifReadyRelease: false
     })
-    this.GetMyRelease()
-    wx.pageScrollTo({
-      scrollTop: this.data.RecordTopDistance - 30,
-      duration: 300
-    })
+    // this.GetMyRelease()
+    // wx.pageScrollTo({
+    //   scrollTop: this.data.RecordTopDistance - 30,
+    //   duration: 300
+    // })
   },
   //关闭回复框
   CloseReplyModal() {
     this.setData({
       ifReadyReply: false
     })
-    this.GetMyRelease()
-    wx.pageScrollTo({
-      scrollTop: this.data.RecordTopDistance - 30,
-      duration: 300
-    })
+    // this.GetMyRelease()
+    // wx.pageScrollTo({
+    //   scrollTop: this.data.RecordTopDistance - 30,
+    //   duration: 300
+    // })
   },
   // ChangeRelease
   ChangeRelease(e) {
@@ -243,16 +269,26 @@ Page({
       console.log(res.data)
       switch (res.data.result) {
         case 1:
-          // this.setData({
-          //   ReleaseContentList:[]
-          // })
+          let temp = this.data.DynamicList  //CurOperationIdx
           wx.showToast({
             title: '评论成功！',
             icon: 'success',
             duration: 1500
           })
           //刷新
-          this.GetMyRelease()
+          //this.GetMyRelease()
+          //不全局刷新，直接插入一条
+          let NewObj = {
+            'hf_content': Remark,
+            'id': res.data.id,
+            'name_F': Name_F,
+            'name_Z': app.globalData.User_name,
+            'ratinginfoid': Ratinginfoid,
+          }
+          temp[this.data.CurOperationIdx].comment_list.reply.push(NewObj)
+          this.setData({
+            DynamicList: temp
+          })
           break
         case 0:
           wx.showToast({
@@ -288,12 +324,19 @@ Page({
     })
   },
   //获取我的发布
-  GetMyRelease() {
+  GetMyRelease(Page) {
     wx.showLoading({
       title: '加载中',
     })
+    let ID
+    let ListTemp = this.data.DynamicList
+    if (ListTemp.length > 0 && this.data.Page != 1) {
+      ID = ListTemp[ListTemp.length - 1].id
+    } else {
+      ID = ''
+    }
     requestPromisified({
-      url: h.main + '/selectratingno?ftelphone=' + app.globalData.User_Phone,
+      url: h.main + '/selectratingnonew?ftelphone=' + app.globalData.User_Phone +'&page_num='+ Page + '&lastid=' + ID, //  selectratingno
       data: {
       },
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
@@ -304,9 +347,30 @@ Page({
     }).then((res) => {
       switch (res.data.result) {
         case 1:
-          this.setData({
-            DynamicList: res.data.ratinglist
-          })
+          let CurPage = this.data.Page
+          let temp = res.data.ratinglist
+          if (temp.length > 0) {
+            let ReleaseContentList = []
+            temp.map((Item, Idx) => {
+              ReleaseContentList.push('')
+              Item.ifHasZan = false
+              Item.comment_zan.map((item_zan, item_IDX) => {
+                if (item_zan.phone == app.globalData.User_Phone) {
+                  Item.ifHasZan = true
+                }
+              })
+            })
+            this.setData({
+              DynamicList: this.data.DynamicList.concat(temp),
+              ReleaseContentList: ReleaseContentList,
+              Page: CurPage + 1,
+              isLoading: false
+            })
+          } else {
+            this.setData({
+              TipText: '到底了'
+            })
+          }
           wx.hideLoading()
           break
         case 0:

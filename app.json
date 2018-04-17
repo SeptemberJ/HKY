@@ -2,6 +2,9 @@
   "pages":[
     "pages/login/index",
     "pages/index/index",
+    "pages/diet/index",
+    "pages/weight/index",
+    "pages/temperature/index",
     "pages/Interaction/release/index",
     "pages/Interaction/index/index",
     "pages/Interaction/my/index",
@@ -26,7 +29,8 @@
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "white",
     "navigationBarTitleText": "环科院",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle":"black",
+    "enablePullDownRefresh": true
   },
   "tabBar": {
     "color": "#000",
@@ -45,6 +49,12 @@
         "iconPath": "images/icon/releaseBar.png",
         "selectedIconPath": "images/icon/releaseBar_acitve.png",
         "text": "圈子"
+      },
+      {
+        "pagePath": "pages/equipment/index/index",
+        "iconPath": "images/icon/trend.png",
+        "selectedIconPath": "images/icon/trend_active.png",
+        "text": "趋势"
       },
       {
         "pagePath": "pages/my/index/index",

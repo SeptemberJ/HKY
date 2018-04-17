@@ -1,0 +1,50 @@
+<view class='diet'>
+  <image class='topBlock' src='../../images/picture/diet.png'></image>
+  <view class='overlay'></view>
+  <!--dataCircle  -->
+  <view class='dataCircle'>
+    <view class="wrap">  
+      <view class="circle {{percent>50?'clip-auto':''}}">  
+          <view class="percent left" style="transform:rotate({{(18/5)*percent+'deg'}})"></view>  
+          <view class="percent right {{percent>50?'':'wth0'}}"></view>  
+      </view>  
+        <view class="dataInfo">
+          <view><text class='samllSize'>你还可以吃/千卡</text></view>
+          <view><text class='bigSize'>1352</text></view>
+          <view><text class='samllSize'>摄入未达标</text></view>
+       </view>    
+    </view>
+  </view>
+  <!--columnBlock  -->
+  <view class='columnBlock'>
+    <view class='columnItem'>
+      <text>碳水(克)</text>
+      <text>0.0/169.0</text>
+    </view>
+    <view class='columnItem'>
+      <text>脂肪(克)</text>
+      <text>0.0/45.1</text>
+    </view>
+    <view class='columnItem'>
+      <text>蛋白质(克)</text>
+      <text>0.0/67.6</text>
+    </view>
+  </view>
+  <!--tab  -->
+  <view class='tabWrap'>
+    <view class='tabBox'>
+      <text class='active'>摄入</text>
+      <text>消耗</text>
+    </view>
+  </view>
+  <!--list  -->
+  <view class='dietList'>
+    <view class='deitItem'>
+      <text class='deitItem_tit'>早餐</text>
+      <text class='deitItem_text'>建议早餐摄入364-446千卡</text>
+    </view>
+  </view>
+</view>
+
+
+ 

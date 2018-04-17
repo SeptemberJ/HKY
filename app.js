@@ -38,6 +38,18 @@ App({
         }
       }
     })
+    //定位
+    this.GetLocation()
+  },
+  GetLocation(){
+    wx.getLocation({
+      type: 'wgs84',
+      success:(res)=> {
+        console.log(res)
+        this.globalData.latitude = res.latitude
+        this.globalData.longitude = res.longitude
+      }
+    })
   },
   globalData: {
     width:'',
@@ -45,6 +57,8 @@ App({
     User_Phone: '18234567890', //18234567890',
     User_name:'',
     AQI:'',
-    MessageCount:0
+    MessageCount:0,
+    latitude:'',
+    longitude:''
   }
 })

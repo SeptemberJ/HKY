@@ -30,18 +30,25 @@
           </view>
         </view>
         <!--点赞评论显示  -->
-        <view class='SharpBlock' wx:if="{{Dynamic.comment_zan.length>0 || Dynamic.comment_list.length>0}}">
+        <view class='SharpBlock' wx:if="{{Dynamic.comment_zan.length>0 || Dynamic.comment_list.reply.length>0}}">
             <view class='Sharp'></view>
           </view>
-        <view class='interactionBlock' wx:if="{{Dynamic.comment_zan.length>0 || Dynamic.comment_list.length>0}}">
+        <view class='interactionBlock' wx:if="{{Dynamic.comment_zan.length>0 || Dynamic.comment_list.reply.length>0}}">
           <view class='zanList'  wx:if="{{Dynamic.comment_zan.length>0}}">
             <image style="width:20px; height:20px;display:block; margin-right:5px;" src='../../../images/icon/zan_active.png'></image>
             <view class='peopleList'>
               <text wx:for="{{Dynamic.comment_zan}}" wx:for-index="ZanIdx" wx:for-item="Zan" wx:key="ZanIdx">{{Zan.name}},</text>
             </view> 
           </view>
-          <view class='commentList' wx:if="{{Dynamic.comment_list.length>0}}">
-            <view class='commentItem' wx:for="{{Dynamic.comment_list}}" wx:for-index="CommentIdx" wx:for-item="Comment" wx:key="CommentIdx">
+          <view class='commentList' wx:if="{{Dynamic.comment_list.reply.length>0}}">
+          <view style='display:block;margin-bottom:5px;' wx:for="{{Dynamic.comment_list.reply}}" wx:for-index="ReplyIdx" wx:for-item="Reply" wx:key="ReplyIdx" data-target-name='{{Reply.name_Z}}' data-name-f='{{Dynamic.comment_name}}' data-name-z='{{Reply.name_F}}' bindtap='ShowReplyModal' data-fabu-id='{{Dynamic.id}}' data-idx='{{Reply.id}}' data-fabu-phone='{{Dynamic.comment_telphone}}'>
+                  <text style='color:#00376a; margin-right:20x;'>{{Reply.name_Z}}</text>
+                  <text wx:if="{{Reply.ratinginfoid != ''}}" style='margin:0 2px;'>回复</text>
+                  <text wx:if="{{Reply.ratinginfoid != ''}}" style='color:#00376a; margin-right:20x;'>{{Reply.name_F}} </text>
+                  <text>：{{Reply.hf_content}}</text>
+                </view>   
+
+            <!-- <view class='commentItem' wx:for="{{Dynamic.comment_list}}" wx:for-index="CommentIdx" wx:for-item="Comment" wx:key="CommentIdx">
               <view class='comment_content'>
                 <view wx:if="{{Comment.main.people_name}}" style='display:block;margin-bottom:5px;' bindtap='ShowReplyModal' data-target-name='{{Comment.main.people_name}}' data-name-f='{{Dynamic.comment_name}}' data-name-z='{{Dynamic.comment_name}}' data-fabu-id='{{Dynamic.id}}' data-idx='{{Comment.main.id}}' data-fabu-phone='{{Dynamic.comment_telphone}}'>
                 <text style='color:#00376a; margin-right:20x;'>{{Comment.main.people_name}}</text>
@@ -54,7 +61,7 @@
                 <text>：{{Reply.hf_content}}</text>
                 </view>
               </view>
-            </view>
+            </view> -->
           </view>
         </view>
         <!--评论框  -->

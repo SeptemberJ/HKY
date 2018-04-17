@@ -6,6 +6,9 @@
         {{AccountName}}的控
       </view>
       <view class='operation'>
+        <text class='operationText'>环境</text>
+        <text class='operationText' bindtap='ToWeight'>体重</text>
+        <text class='operationText' bindtap='ToDiet'>饮食</text>
         <image class='operationIcon messageIocn' bindtap='ToMyMessage' src='../../images/icon/message.png'></image>
         <view class='TipDot' wx:if='{{MessageCount>0}}'></view>
       <image class='operationIcon' src='../../images/icon/add.png' bindtap='ToAdd'></image>
@@ -13,20 +16,29 @@
     </view>
     <view class='info'>
       <view class='info_Left'>
-        <view class='Left_item' style='margin-top:30rpx;'>
+        <view class='Left_item_first'><image class='locationIcon' src='../../images/icon/location.png' bindtap='ToAdd'></image><text>{{airQuality.citynm}}</text></view>
+        <view class='Left_item' style='margin-top:0rpx;'>
           <text>{{DateInfo.Hour}}:{{DateInfo.Minute}}:{{DateInfo.Second}}</text>
           <text class='smallFont'>{{DateInfo.Month}}/{{DateInfo.Day}} 星期{{DateInfo.Week}}</text>
         </view>
         <view class='Left_item'>
-          <image class='temperatureIcon' src='../../images/icon/cloud.png' bindtap='ToAdd'></image>
-          <text class='smallFont'>{{airQuality.weathertype}}</text>
-          <text class='smallFont'>{{airQuality.mintemperature}}/{{airQuality.temperature}}</text>
+          <view class='SpaceBettween'>
+            <image class='temperatureIcon' src='{{airQuality.weather_icon}}' bindtap='ToAdd'></image>
+            <text class='smallFont'>{{airQuality.weather}}</text>
+            <text class='smallFont'>{{airQuality.temperature}}</text>
+          </view>
+          <view>
+            <text class='smallFont'>AQI:{{airQuality.aqi}}/{{airQuality.aqi_levnm}}</text>
+          </view>
+          <view>
+            <text class='smallFont' bindtap='ToTemperature'>查看详情 >></text>
+          </view>
         </view>
       </view>
       <view class='info_Right'>
         <view class='Right_item'>
           <text class='smallFont'>PM2.5</text>
-          <text class='smallFont'>{{airQuality.PM25}}μg/m³</text>
+          <text class='smallFont'>{{airQuality.pm25}}μg/m³</text>
         </view>
         <view class='Right_item'>
           <text class='smallFont'>VOCs</text>
