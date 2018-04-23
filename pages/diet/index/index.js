@@ -4,9 +4,12 @@ const app = getApp()
 
 Page({
   data: {
-    percent: 60,
+    chooseDate:''
     
   },
   onLoad: function () {
   },
+  DateChange(){
+
+  }
 })

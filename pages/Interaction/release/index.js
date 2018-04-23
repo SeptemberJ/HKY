@@ -7,11 +7,109 @@ const app = getApp()
 
 Page({
   data: {
+    foodName:'',
+    startTime:'--',
+    endTime:'--',
+    cookWay:'',
+    foodList: [],
+    cookDetailList:[],
     releaseContent:'',
     tempFilePaths: [],
     copyTempFilePaths: [],
     Canwork: false,
     loadingHidden:true
+  },
+  onShow(){
+  },
+  // 时间
+  StartTimeChange(e){
+    this.setData({
+      startTime: e.detail.value
+    })
+  },
+ EndTimeChange(e) {
+    this.setData({
+      endTime: e.detail.value
+    })
+  },
+  // 料理名字
+ ChangefoodName(e){
+   this.setData({
+     foodName: e.detail.value
+   })
+ },
+  // 烹饪方式
+ ChangeCookWay(e){
+   this.setData({
+     cookWay: e.detail.value
+   })
+ },
+  // 添加用料
+ AddFoodList(){
+   let emptyObj = {
+     'food_name':'',
+     'food_amount':''
+   }
+   let temp = this.data.foodList
+   temp.push(emptyObj)
+   this.setData({
+     foodList: temp
+   })
+ },
+ // 添加步骤
+ AddDetailList() {
+   let temp = this.data.cookDetailList
+   temp.push("")
+   this.setData({
+     cookDetailList: temp
+   })
+ },
+//  删除用料
+  DeleteFood(e){
+    let temp = this.data.foodList
+    let Idx = e.currentTarget.dataset.idx
+    temp.splice(Idx,1)
+    this.setData({
+      foodList: temp
+    })
+  },
+  // 删除步骤
+  DeleteDetail(e){
+    let temp = this.data.cookDetailList
+    let Idx = e.currentTarget.dataset.idx
+    temp.splice(Idx, 1)
+    this.setData({
+      cookDetailList: temp
+    })
+  },
+  // 输入食材名称
+  ChangeFoodName(e) {
+    let temp = this.data.foodList
+    let Idx = e.currentTarget.dataset.idx
+    temp[Idx]['food_name'] = e.detail.value
+    this.setData({
+      foodList: temp
+    })
+  },
+  // 输入食材用量
+  ChangeFoodAmount(e) {
+    let temp = this.data.foodList
+    let Idx = e.currentTarget.dataset.idx
+    temp[Idx]['food_amount'] = e.detail.value
+    this.setData({
+      foodList: temp
+    })
+  },
+  // 输入步骤
+  ChangeDetail(e){
+    let temp = this.data.cookDetailList
+    let Idx = e.currentTarget.dataset.idx
+    console.log(Idx)
+    console.log(temp)
+    temp[Idx] = e.detail.value
+    this.setData({
+      cookDetailList: temp
+    })
   },
   ChangeContent(e){
     this.setData({
@@ -155,6 +253,7 @@ Page({
   },
   //没有图片
   ReleaseNoImage(){
+    let DateStrimg = util.formatTime(new Date())
     let DATA = {
       ftelphone: app.globalData.User_Phone,
       fname: app.globalData.User_name,

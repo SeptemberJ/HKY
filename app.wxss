@@ -36,6 +36,9 @@ page text{
 .MarginB_10{
   margin-bottom: 10px;
 }
+.MarginT_10{
+  margin-top: 10px !important;
+}
 .MarginB_20{
   margin-bottom: 20px;
 }
@@ -43,8 +46,9 @@ page text{
   font-size: 40rpx;
 }
 .smallIcon{
-  width: 80rpx;
-  height: 80rpx;
+  width: 50rpx;
+  height: 50rpx;
+  margin: 0 5rpx;
   display: block;
 }
 .smallIcon_arrow{

@@ -1,15 +1,17 @@
 {
   "pages":[
+    "pages/diet/index/index",
     "pages/login/index",
     "pages/index/index",
-    "pages/diet/index",
     "pages/weight/index",
     "pages/temperature/index",
-    "pages/Interaction/release/index",
     "pages/Interaction/index/index",
     "pages/Interaction/my/index",
     "pages/Interaction/message/index",
     "pages/Interaction/detail/index",
+    "pages/Interaction/release/index",
+    "pages/add/index",
+    "pages/diet/list/index",
    
     
 
@@ -20,9 +22,10 @@
     "pages/equipment/detail/index",
 
     "pages/questionnaire/index",
+    "pages/my/index/index",
+    "pages/my/integral/index",
 
     "pages/sign/index",
-    "pages/my/index/index",
     "pages/bar/index"
   ],
   "window":{
@@ -48,7 +51,7 @@
         "pagePath": "pages/Interaction/index/index",
         "iconPath": "images/icon/releaseBar.png",
         "selectedIconPath": "images/icon/releaseBar_acitve.png",
-        "text": "圈子"
+        "text": "酷玩"
       },
       {
         "pagePath": "pages/equipment/index/index",

@@ -16,6 +16,18 @@ Page({
   },
   onLoad: function () {
     console.log('onLoad---')
+    wx.getStorage({
+      key: 'UserInfo',
+      success: (res) => {
+        app.globalData.User_Phone = res.data.User_Phone
+        app.globalData.User_name = res.data.User_name
+        console.log(res)
+        console.log(app.globalData.User_Phone)
+        wx.switchTab({
+          url: '../index/index'
+        })
+      }
+    })
     wx.getUserInfo({
       success: res => {
         app.globalData.userInfo = res.userInfo
@@ -109,19 +121,24 @@ Page({
       // }, // 设置请求的 header
     }).then((res) => {
       switch (res.data.result) {
-        case 1:
-          wx.showToast({
-            title: '登录成功！',
-            icon: 'success',
-            duration: 1500
+        case 1: 
+          let temp_accountInfo = {
+            User_Phone: this.data.User_Phone,
+            User_Psd: this.data.User_Psd,
+            User_name: res.data.registerlist[0].fname
+          }
+          wx.setStorage({
+            key: "UserInfo",
+            data: temp_accountInfo
           })
           if (res.data.collectionlist.length>0){
             this.ToQuestionnaire(res.data.collectionlist[0].id)
           }else{
             this.SkipQuestionnaire()
           }
-          app.globalData.User_Phone = this.data.User_Phone
-          app.globalData.User_name = res.data.registerlist[0].fname
+          // app.globalData.User_Phone = this.data.User_Phone
+          // app.globalData.User_name = res.data.registerlist[0].fname
+          app.globalData.Add_count = res.data.integral
           break
         case 2:
           wx.showToast({

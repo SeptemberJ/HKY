@@ -1,3 +1,6 @@
+import h from './utils/url.js'
+var util = require('./utils/util.js')
+var requestPromisified = util.wxPromisify(wx.request)
 //app.js
 App({
   onLaunch: function () {
@@ -54,11 +57,13 @@ App({
   globalData: {
     width:'',
     userInfo: null,
-    User_Phone: '18234567890', //18234567890',
+    User_Phone: '', //18234567890',
     User_name:'',
+    Add_count:'',
     AQI:'',
     MessageCount:0,
     latitude:'',
-    longitude:''
+    longitude:'',
+    ifHasInfo:false,  //是否填写过身高体重
   }
 })

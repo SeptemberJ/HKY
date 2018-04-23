@@ -2,13 +2,14 @@
 <view class='Wrap'>
   <view class='dataInfo'>
     <view class='topBar'>
-      <view class='nickNmae'>
+      <image class="Avatar" src="{{userInfo.avatarUrl}}"></image>
+      <!-- <view class='nickNmae'>
         {{AccountName}}的控
-      </view>
+      </view> -->
       <view class='operation'>
-        <text class='operationText'>环境</text>
+        <!-- <text class='operationText'>环境</text>
         <text class='operationText' bindtap='ToWeight'>体重</text>
-        <text class='operationText' bindtap='ToDiet'>饮食</text>
+        <text class='operationText' bindtap='ToDiet'>饮食</text> -->
         <image class='operationIcon messageIocn' bindtap='ToMyMessage' src='../../images/icon/message.png'></image>
         <view class='TipDot' wx:if='{{MessageCount>0}}'></view>
       <image class='operationIcon' src='../../images/icon/add.png' bindtap='ToAdd'></image>
@@ -22,15 +23,15 @@
           <text class='smallFont'>{{DateInfo.Month}}/{{DateInfo.Day}} 星期{{DateInfo.Week}}</text>
         </view>
         <view class='Left_item'>
-          <view class='SpaceBettween'>
+          <view class='height_20 SpaceBettween'>
             <image class='temperatureIcon' src='{{airQuality.weather_icon}}' bindtap='ToAdd'></image>
             <text class='smallFont'>{{airQuality.weather}}</text>
             <text class='smallFont'>{{airQuality.temperature}}</text>
           </view>
-          <view>
+          <view class='height_20'>
             <text class='smallFont'>AQI:{{airQuality.aqi}}/{{airQuality.aqi_levnm}}</text>
           </view>
-          <view>
+          <view class='height_20'>
             <text class='smallFont' bindtap='ToTemperature'>查看详情 >></text>
           </view>
         </view>
