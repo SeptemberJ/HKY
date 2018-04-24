@@ -197,8 +197,9 @@ Page({
                 loadingHidden: true,
                 //Canwork: true
               })
+              console.log(res.data)
               wx.showToast({
-                title: '提交成功',
+                title: '发布成功',
                 icon: 'success',
                 duration: 1500
               })

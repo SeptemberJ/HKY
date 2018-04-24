@@ -424,8 +424,11 @@ Page({
                   duration: 1500
                 })
                 setTimeout(()=>{
-                  this.GetMyRelease()
+                  this.GetMyRelease(1)
                 },1500)
+                this.setData({
+                  DynamicList:[]
+                })
                 break
               case 0:
                 wx.showToast({
