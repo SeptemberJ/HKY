@@ -9,12 +9,16 @@
   </view>
 </view>
 <view class='InfoItem'>
+  <text class='label'>年龄：</text>
+  <input type='number' placeholder='您的年龄' bindinput='ChangeAge'></input>
+</view>
+<view class='InfoItem'>
   <text class='label'>身高：</text>
-  <input placeholder='单位：厘米' bindinput='ChangeHeight'></input>
+  <input type='digit' placeholder='单位：厘米' bindinput='ChangeHeight'></input>
 </view>
 <view class='InfoItem'>
   <text class='label'>体重：</text>
-  <input placeholder='单位：千克' bindinput='ChangeWeight'></input>
+  <input type='digit' placeholder='单位：千克' bindinput='ChangeWeight'></input>
 </view>
 
 <view class='submitBlock'>

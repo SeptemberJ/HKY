@@ -7,59 +7,69 @@ import * as echarts from '../../../ec-canvas/echarts';
 const app = getApp();
 
 function initChart(canvas, width, height) {
-  const chart = echarts.init(canvas, null, {
-    width: width,
-    height: height
-  });
-  canvas.setChart(chart);
 
-  var option = {
-    color: ['#91c7ae', '#c23531','#ffdb5c'],
-    tooltip: {
-      trigger: 'item',
-      formatter: "{a} <br/>{b}: {c} ({d}%)"
-    },
-    // legend: {
-    //   orient: 'vertical',
-    //   x: 'left',
-    //   data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
-    // },
-    series: [
-      {
-        name: '访问来源',
-        type: 'pie',
-        radius: ['50%', '70%'],
-        avoidLabelOverlap: false,
-        label: {
-          normal: {
-            show: false,
-            position: 'center'
-          },
-          emphasis: {
-            show: true,
-            textStyle: {
-              fontSize: '30',
-              fontWeight: 'bold'
-            }
-          }
+  wx.getStorage({
+    key: 'DietDetail',
+    success: (res) => {
+      var NutrientElementData = res.data
+      const chart = echarts.init(canvas, null, {
+        width: width,
+        height: height
+      });
+      canvas.setChart(chart);
+      var option = {
+        color: ['#91c7ae', '#c23531', '#ffdb5c'],
+        tooltip: {
+          trigger: 'item',
+          formatter: "{a} <br/>{b}: {c} ({d}%)"
         },
-        labelLine: {
-          normal: {
-            show: false
+        // legend: {
+        //   orient: 'vertical',
+        //   x: 'left',
+        //   data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+        // },
+        series: [
+          {
+            name: '访问来源',
+            type: 'pie',
+            radius: ['50%', '70%'],
+            avoidLabelOverlap: false,
+            label: {
+              normal: {
+                show: false,
+                position: 'center'
+              },
+              emphasis: {
+                show: true,
+                textStyle: {
+                  fontSize: '30',
+                  fontWeight: 'bold'
+                }
+              }
+            },
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
+            data: [
+              { value: NutrientElementData.NutrientElements.carbohydrate, name: '碳水化合物' },
+              { value: NutrientElementData.NutrientElements.fat, name: '脂肪' },
+              { value: NutrientElementData.NutrientElements.protein, name: '蛋白质' }
+            ]
           }
-        },
-        data: [
-          { value: 335, name: '直接访问' },
-          { value: 310, name: '邮件营销' },
-          { value: 234, name: '联盟广告' }
         ]
-      }
-    ]
-  };
+      };
 
-  chart.setOption(option, true);
+      chart.setOption(option, true);
 
-  return chart;
+      return chart;
+
+    }
+  })
+
+
+
 }
 
 Page({
@@ -73,6 +83,11 @@ Page({
     Carbohydrate: '',
     Fat: '',
     Protein: '',
+  },
+  onLoad(options){
+    this.setData({
+      sourceType: options.sourceType
+    })
   },
   onShow(){
     wx.getStorage({
@@ -101,7 +116,7 @@ Page({
     })
   },
   // 对应日期摄入信息
-  AddFood(){
+  AddFood2(){
     let DATA = {
       'eatname': this.data.DietDetail.food_name,
       'eatcalories': this.data.Calorie,
@@ -119,7 +134,7 @@ Page({
     }
     wx.navigateBack()
   },
-  AddFood2() {
+  AddFood() {
     let DATA = {
       'eatname': this.data.DietDetail.food_name,
       'eatcalories': this.data.Calorie,   
@@ -152,13 +167,18 @@ Page({
             icon: 'success',
             duration: 1500
           })
-          //返回食物列表
-          var pages = getCurrentPages();
-          if (pages.length > 1) {
-            var prePage = pages[pages.length - 2];
-            prePage.ShowChoosed(this.datta.DietDetail.idx)
+          if(this.data.sourceType == 0){
+            //返回食物列表
+            var pages = getCurrentPages();
+            if (pages.length > 1) {
+              var prePage = pages[pages.length - 2];
+              prePage.ShowChoosed(this.data.DietDetail.idx, DATA)
+            }
+            wx.navigateBack()
+          }else{
+            wx.navigateBack()
           }
-          wx.navigateBack()
+          
 
           break
         case 0:

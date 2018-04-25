@@ -1,6 +1,6 @@
  <view class='top_addFood'>
   <view class='searchBar'>
-    <input placeholder='输入食物名称,搜索食物'></input>
+    <input placeholder='输入食物名称,搜索食物' bindfocus='ToSearch'></input>
   </view>
   <view class='kindBar'>
     <scroll-view class="listWrap" scroll-x="true" bindscroll="scroll" style="height:auto;">

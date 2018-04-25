@@ -25,19 +25,6 @@
        </view>    
     </view>
   </view>
-  <!-- <view class='dataCircle'>
-    <view class="wrap">  
-      <view class="circle {{(dietInfo.diet_sum/dietInfo.diet_standard)*100>50?'clip-auto':''}}">  
-          <view class="percent left" style="transform:rotate({{(18/5)*(dietInfo.diet_sum/dietInfo.diet_standard*100)+'deg'}})"></view>  
-          <view class="percent right {{(dietInfo.diet_sum/dietInfo.diet_standard)*100>50?'':'wth0'}}"></view>  
-      </view>  
-        <view class="dataInfo">
-          <view><text class='samllSize'>还可以摄入</text></view>
-          <view><text class='bigSize'>{{dietInfo.diet_standard - dietInfo.diet_sum}}</text></view>
-          <view><text class='samllSize'>千卡</text></view>
-       </view>    
-    </view>
-  </view> -->
   <!--columnBlock  -->
   <view class='columnBlock'>
     <view class='columnItem'>
@@ -86,6 +73,10 @@
         <text>{{Breakfast.food_contain}}千卡</text>
       </view>
     </view>
+    <!--add continue  -->
+    <view wx:if="{{ifShow_B && dietInfo.breakfast.list.length>0}}" class='addContinue'>
+      <view class='addContinue_bt' bindtap='Add_B'>添加早餐</view>
+    </view>
 
 
 
@@ -112,6 +103,10 @@
       <view class='deitItem_contain_count'>
         <text>{{Lunch.food_contain}}千卡</text>
       </view>
+    </view>
+    <!--add continue  -->
+    <view wx:if="{{ifShow_L && dietInfo.lunch.list.length>0}}" class='addContinue'>
+      <view class='addContinue_bt' bindtap='Add_L'>添加午餐</view>
     </view>
 
 
@@ -140,7 +135,20 @@
       </view>
     </view>
   </view>
+  <!--add continue  -->
+    <view wx:if="{{ifShow_D && dietInfo.dinner.list.length>0}}" class='addContinue'>
+      <view class='addContinue_bt' bindtap='Add_D'>添加晚餐</view>
+    </view>
   <!--./dietList  -->
+
+  <!--report  -->
+   <view wx:if="{{dietInfo.diet_sum != 0}}" class='DietReport' bindtap='ToDietReport'>
+    <text>查看饮食报告</text>
+  </view>
+
+    <view wx:if="{{dietInfo.diet_sum == 0}}" class='DietReport_cannot'>
+    <text>查看饮食报告</text>
+  </view> 
 
 </view>
 

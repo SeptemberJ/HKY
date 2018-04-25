@@ -1,4 +1,4 @@
- <view class="top_SumBlock">
+<view class="top_SumBlock">
   <view class='top_SumBlock_sum'>{{Calorie}}<text>千卡</text></view>
   <view class='top_SumBlock_food'><text>{{DietDetail.food_name}}，{{IngestionAmount}}克</text></view>
 </view>
@@ -12,17 +12,17 @@
     <view class='Legend'>
       <view class='LegendItem'>
         <view class='LegendColor ColorGreen'></view>
-        <text class='LegendColumn'>碳水化合物({{DietDetail.NutrientElements.carbohydrate * 100}}%)</text>
+        <text class='LegendColumn'>碳水化合物({{DietDetail.NutrientElementsPercent.carbohydrate}}%)</text>
         <text class='LegendCount'>{{Carbohydrate}}克</text>
       </view>
       <view class='LegendItem'>
         <view class='LegendColor ColorRed'></view>
-        <text class='LegendColumn'>脂肪({{DietDetail.NutrientElements.fat * 100}}%)</text>
+        <text class='LegendColumn'>脂肪({{DietDetail.NutrientElementsPercent.fat}}%)</text>
         <text class='LegendCount'>{{Fat}}克</text>
       </view>
       <view class='LegendItem'>
         <view class='LegendColor ColorYellow'></view>
-        <text class='LegendColumn'>蛋白质({{DietDetail.NutrientElements.protein * 100}}%)</text>
+        <text class='LegendColumn'>蛋白质({{DietDetail.NutrientElementsPercent.protein}}%)</text>
         <text class='LegendCount'>{{Protein}}克</text>
       </view>
     </view>

@@ -1,9 +1,7 @@
 {
   "pages":[
-    "pages/diet/index/index",
     "pages/login/index",
     "pages/index/index",
-    "pages/weight/index",
     "pages/temperature/index",
     "pages/Interaction/index/index",
     "pages/Interaction/my/index",
@@ -13,6 +11,10 @@
     "pages/add/index",
     "pages/diet/add/index",
     "pages/diet/list/index",
+    "pages/diet/search/index",
+    "pages/diet/index/index",
+    "pages/diet/report/index",
+    "pages/weight/index/index",
    
     
 

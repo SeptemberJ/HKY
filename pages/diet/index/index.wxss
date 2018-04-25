@@ -250,3 +250,42 @@ page{
   align-items: center;
   justify-content: flex-end;
 }
+/*addContinue  */
+.addContinue{
+  width: 710rpx;
+  height: 60px;
+  background: #fff;
+  border-bottom: 1px solid #efefef;
+}
+.addContinue_bt{
+  width: 200rpx;
+  height: 30px;
+  margin: 15px auto;
+  background: #53405c;
+  color: #fff;
+  text-align: center;
+  line-height: 30px;
+}
+
+/*DietReport  */
+.DietReport{
+  width: 300rpx;
+  height: 35px;
+  margin: 20px auto;
+  background: #3498db;
+  color: #fff;
+  border-radius: 25px;
+  text-align: center;
+  line-height: 35px;
+}
+.DietReport_cannot{
+  width: 300rpx;
+  height: 35px;
+  margin: 20px auto;
+  background: #ccc;
+  color: #fff;
+  border-radius: 25px;
+  text-align: center;
+  line-height: 35px;
+
+}

@@ -50,13 +50,14 @@ Page({
     })
   },
   onShow(){
-    this.GetDietInfo()
+    this.GetDietInfo(this.data.chooseDate)
   },
   //choose date
   DateChange(e){
     this.setData({
       chooseDate: e.detail.value
     })
+    this.GetDietInfo(e.detail.value)
   },
   //Toggles
   Toggle_B(){
@@ -91,12 +92,12 @@ Page({
     })
   },
   // 对应日期摄入信息
-  GetDietInfo() {
+  GetDietInfo(CurDate) {
     wx.showLoading({
       title: '加载中',
     })
     requestPromisified({
-      url: h.main + '/selectweighttype1?ftelphone=' + app.globalData.User_Phone + '&faddtime=' + this.data.chooseDate,
+      url: h.main + '/selectweighttype1?ftelphone=' + app.globalData.User_Phone + '&faddtime=' + CurDate,
       data: {
       },
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
@@ -135,4 +136,10 @@ Page({
       console.log(res)
     })
   },
+  // ToDietReport
+  ToDietReport(){
+    wx.navigateTo({
+      url: '../report/index?date=' + this.data.chooseDate,
+    })
+  }
 })

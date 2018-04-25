@@ -1,11 +1,11 @@
-.top_addFood{
+.searchBlock{
   width: 100%;
-  height: 300rpx;
+  height: 150rpx;
   background: #3498db;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
 }
 .searchBar{
   width: 710rpx;
@@ -21,39 +21,6 @@
   height: calc(80rpx - 20rpx);
   padding: 10 30rpx;
   font-size: 32rpx;
-}
-.kindBar{
-  width: 710rpx;
-  height: 150rpx;
-  display: flex; 
-  overflow: hidden;
-}
-.kindItem{
-  width: 130rpx;
-  height: 150rpx;
-  display: inline-block;
-  text-align: center;
-}
-.listWrap{
-  white-space: nowrap; 
-  display: flex;
-}
-.kindIcon , .kindIcon_active{
-  width: 80rpx;
-  height: 80rpx;
-  display: block;
-  margin: 0 auto;
-  opacity: .3;
-}
-.kindIcon_active{
-  opacity: 1;
-}
-.kindAcitve{
-  font-size: 32rpx;
-  color: #fff;
-}
-.kindNoraml{
-  color: #efefef;
 }
 /*foodList  */
 .foodList{

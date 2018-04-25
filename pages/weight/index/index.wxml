@@ -1,0 +1,11 @@
+<view class='Weight_ClockDial'>
+  <view class="container">
+    <ec-canvas id="mychart-dom-gauge" canvas-id="mychart-gauge" ec="{{ ec }}"></ec-canvas>
+  </view>
+</view>
+
+<view class='Weight_data'>
+  <text class='Weight_data_BMI'>BMI: 19.5</text>
+  <text class='Weight_data_BFR'>体脂率: --</text>
+</view>
+

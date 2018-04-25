@@ -9,6 +9,7 @@ Page({
   data: {
     Type:0,
     Sex:0,
+    Age:'',
     Height:'',
     Weight:''
   },
@@ -20,6 +21,11 @@ Page({
   ChooseSex(e){
     this.setData({
       Sex: e.currentTarget.dataset.sex
+    })
+  },
+  ChangeAge(e){
+    this.setData({
+      Age: e.detail.value
     })
   },
   ChangeHeight(e){
@@ -51,6 +57,7 @@ Page({
       title: ' 加载中',
     })
     let DATA = {
+      age: this.data.Age,
       weight: this.data.Weight,
       height: this.data.Height,
       sex: this.data.Sex,

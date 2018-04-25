@@ -37,18 +37,24 @@ Page({
   onShow(){
     
   },
-  onUnload(){
-    wx.showModal({
-      title: '提示',
-      content: '是否要保存?',
-      success: (res)=> {
-        if (res.confirm) {
-          //添加
-          this.AddFood()
-        } else if (res.cancel) {
-          wx.navigateBack()
-        }
-      }
+  // onUnload(){
+  //   wx.showModal({
+  //     title: '提示',
+  //     content: '是否要保存?',
+  //     success: (res)=> {
+  //       if (res.confirm) {
+  //         //添加
+  //         this.AddFood()
+  //       } else if (res.cancel) {
+  //         wx.navigateBack()
+  //       }
+  //     }
+  //   })
+  // },
+  //搜索框
+  ToSearch(){
+    wx.navigateTo({
+      url: '../search/index?type=' + this.data.AddType,
     })
   },
   //改变当前食物栏目
@@ -56,7 +62,9 @@ Page({
     this.setData({
       CurKind: e.currentTarget.dataset.idx
     })
-  },  //去添加食物
+  },  
+
+  //去添加食物
   ToAddFood(e) {
     let FoodInfo = this.data.foodList[e.currentTarget.dataset.idx]
     let DietDetail = {
@@ -69,7 +77,13 @@ Page({
                           'fat': FoodInfo.eatfat,
                           'protein': FoodInfo.eatprotein,
                         },
-                        DailyTarget: {
+                        "NutrientElementsPercent":{
+                          'calorie': (FoodInfo.eatcalories * 100).toFixed(0),
+                          'carbohydrate': (FoodInfo.carbohydrate * 100).toFixed(0),
+                          'fat': (FoodInfo.eatfat * 100).toFixed(0),
+                          'protein': (FoodInfo.eatprotein * 100).toFixed(0),
+                        },
+                        "DailyTarget": {
                           'calorie': this.data.DailyTarget.calories,
                           'carbohydrate': this.data.DailyTarget.carbohydrate,
                           'fat': this.data.DailyTarget.fat,
@@ -81,7 +95,7 @@ Page({
       data: DietDetail,
       success: (res)=>{
         wx.navigateTo({
-          url: '../add/index'
+          url: '../add/index?sourcetype=' + 0
         })
       },
     })
@@ -152,10 +166,6 @@ Page({
       foodList: tempFoodList,
       ChoosedList: tempChoosedList//ifHas ? tempChoosedList : tempChoosedList.push(FOOD)
     })
-    debugger
-    console.log(ifHas+'-----------')
-    console.log(FOOD)
-    console.log(this.data.ChoosedList)
   },
 
   AddFood(){

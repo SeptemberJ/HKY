@@ -33,9 +33,9 @@ Page({
     })
   },
   MyIntegral() {
-    wx.navigateTo({
-      url: '../integral/index'
-    })
+    // wx.navigateTo({
+    //   url: '../integral/index'
+    // })
   },
   MyMessage() {
     wx.navigateTo({
@@ -45,7 +45,7 @@ Page({
   MyWeight() {
     if (app.globalData.ifHasInfo) {
       wx.navigateTo({
-        url: '../../weight/index'
+        url: '../../weight/index/index'
       })
     } else {
       wx.navigateTo({

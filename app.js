@@ -57,8 +57,8 @@ App({
   globalData: {
     width:'',
     userInfo: null,
-    User_Phone: '18234567890', //18234567890',
-    User_name:'留白',
+    User_Phone: '', //18234567890',
+    User_name:'',
     Add_count:'',
     AQI:'',
     MessageCount:0,
