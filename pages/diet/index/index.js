@@ -8,7 +8,10 @@ Page({
   data: {
     chooseDate:'',
     percent:100,
-    dietInfo:{
+    ifOver: false,
+    Surplus: '',
+    dietInfo:'',
+    dietInfo2:{
       'diet_id': 1,
       'diet_standard':1300,  //当天建议值
       'diet_sum': 543,       //当天目前摄入总值
@@ -57,6 +60,7 @@ Page({
     this.setData({
       chooseDate: e.detail.value
     })
+    app.globalData.Add_date = e.detail.value
     this.GetDietInfo(e.detail.value)
   },
   //Toggles
@@ -108,10 +112,21 @@ Page({
     }).then((res) => {
       switch (res.data.result) {
         case 1:
+          let Temp = res.data.dietInfo[0]
+          if (Temp.diet_standard >= Temp.diet_sum){
+            this.setData({
+              dietInfo: Temp,
+              ifOver: false,
+              Surplus: (Temp.diet_standard - Temp.diet_sum).toFixed(2)
+            })
+          }else{
+            this.setData({
+              dietInfo: Temp,
+              ifOver: true,
+              Surplus: (Temp.diet_sum - Temp.diet_standard).toFixed(2)
+            })
+          }
           wx.hideLoading()
-          this.setData({
-            dietInfo: res.data.dietInfo[0]
-          })
           break
         case 0:
           wx.hideLoading()
@@ -139,7 +154,7 @@ Page({
   // ToDietReport
   ToDietReport(){
     wx.navigateTo({
-      url: '../report/index?date=' + this.data.chooseDate,
+      url: '../report/index?',
     })
   }
 })

@@ -60,7 +60,7 @@ Page({
       data: DietDetail,
       success: (res) => {
         wx.navigateTo({
-          url: '../add/index?sourcetype=' + 1
+          url: '../add/index?sourcetype=' + 1  //查询界面进入添加
         })
       },
     })

@@ -1,101 +1,166 @@
 import * as echarts from '../../../ec-canvas/echarts';
-
+import h from '../../../utils/url.js'
+var util = require('../../../utils/util.js')
+var MD5 = require('../../../utils/md5.js')
+var requestPromisified = util.wxPromisify(wx.request)
 const app = getApp();
 
 function initChart_Calorie(canvas, width, height) {
-  const chart = echarts.init(canvas, null, {
-    width: width,
-    height: height
-  });
-  canvas.setChart(chart);
-
-  var option = {
-    color: ['#91c7ae', '#c23531', '#ffdb5c'],
-    tooltip: {
-      trigger: 'item',
-      formatter: "{a} <br/>{b}: {c} ({d}%)"
+  requestPromisified({
+    url: h.main + '/selectreport?report_date=' + app.globalData.Add_date + '&ftelphone=' + app.globalData.User_Phone,
+    data: {
     },
-    // legend: {
-    //   orient: 'vertical',
-    //   x: 'left',
-    //   data: ['直达']
-    // },
-    series: [
-      {
-        name: '访问来源',
-        type: 'pie',
-        // selectedMode: 'single',
-        radius: [15, '80%'],
+    method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+    // header: {
+    //   'content-type': 'application/x-www-form-urlencoded',
+    //   'Accept': 'application/json'
+    // }, // 设置请求的 header
+  }).then((res) => {
+    switch (res.data.result) {
+      case 1:
+        let ChartData_C = res.data.reportData[0]
+        const chart = echarts.init(canvas, null, {
+          width: width,
+          height: height
+        });
+        canvas.setChart(chart);
 
-        label: {
-          normal: {
-            position: 'inner'
-          }
-        },
-        labelLine: {
-          normal: {
-            show: false
-          }
-        },
-        data: [
-          { value: 335, name: '早餐', selected: false },
-          { value: 679, name: '午餐' },
-          { value: 1548, name: '晚餐' }
-        ]
-      },
-    ]
-  };
+        var option = {
+          color: ['#91c7ae', '#c23531', '#ffdb5c'],
+          tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b}: {c} ({d}%)"
+          },
+          series: [
+            {
+              name: '',
+              type: 'pie',
+              radius: [15, '80%'],
 
-  chart.setOption(option);
-  return chart;
+              label: {
+                normal: {
+                  position: 'inner'
+                }
+              },
+              labelLine: {
+                normal: {
+                  show: false
+                }
+              },
+              data: [
+                { value: ChartData_C.report_calorie.calorie_breakfast.amount, name: '', selected: false },
+                { value: ChartData_C.report_calorie.calorie_lunch.amount, name: '' },
+                { value: ChartData_C.report_calorie.calorie_dinner.amount, name: '' }
+              ]
+            },
+          ]
+        };
+
+        chart.setOption(option);
+        return chart;
+        break
+      case 0:
+        wx.hideLoading()
+        wx.showToast({
+          image: '../../../images/icon/attention.png',
+          title: '获取失败'
+        });
+        break
+      default:
+        wx.hideLoading()
+        wx.showToast({
+          image: '../../../images/icon/attention.png',
+          title: '服务器繁忙！'
+        });
+    }
+  }).catch((res) => {
+    wx.hideLoading()
+    wx.showToast({
+      image: '../../../images/icon/attention.png',
+      title: '服务器繁忙！'
+    });
+    console.log(res)
+  })
+  
+
 }
 
 function initChart_Nutrient(canvas, width, height) {
-  const chart = echarts.init(canvas, null, {
-    width: width,
-    height: height
-  });
-  canvas.setChart(chart);
-
-  var option = {
-    color: ['#91c7ae', '#c23531', '#ffdb5c'],
-    tooltip: {
-      trigger: 'item',
-      formatter: "{a} <br/>{b}: {c} ({d}%)"
+  requestPromisified({
+    url: h.main + '/selectreport?report_date=' + app.globalData.Add_date + '&ftelphone=' + app.globalData.User_Phone,
+    data: {
     },
-    // legend: {
-    //   orient: 'vertical',
-    //   x: 'left',
-    //   data: ['直达']
-    // },
-    series: [
-      {
-        name: '访问来源',
-        type: 'pie',
-        // selectedMode: 'single',
-        radius: [15, '80%'],
+    method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+    // header: {
+    //   'content-type': 'application/x-www-form-urlencoded',
+    //   'Accept': 'application/json'
+    // }, // 设置请求的 header
+  }).then((res) => {
+    switch (res.data.result) {
+      case 1:
+        let ChartData_N = res.data.reportData[0]
+        const chart = echarts.init(canvas, null, {
+          width: width,
+          height: height
+        });
+        canvas.setChart(chart);
 
-        label: {
-          normal: {
-            position: 'inner'
-          }
-        },
-        labelLine: {
-          normal: {
-            show: false
-          }
-        },
-        data: [
-          { value: 1548, name: '', selected: false },
-          { value: 679, name: '' },
-          { value: 120, name: '' }
-        ]
-      },
-    ]
-  };
+        var option = {
+          color: ['#91c7ae', '#c23531', '#ffdb5c'],
+          tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b}: {c} ({d}%)"
+          },
+          series: [
+            {
+              name: '',
+              type: 'pie',
+              radius: [15, '80%'],
 
-  chart.setOption(option);
-  return chart;
+              label: {
+                normal: {
+                  position: 'inner'
+                }
+              },
+              labelLine: {
+                normal: {
+                  show: false
+                }
+              },
+              data: [
+                { value: ChartData_N.report_nutrient.nutrient_carbohydrate.amount, name: '', selected: false },
+                { value: ChartData_N.report_nutrient.nutrient_fat.amount, name: '' },
+                { value: ChartData_N.report_nutrient.nutrient_protein.amount, name: '' }
+              ]
+            },
+          ]
+        };
+
+        chart.setOption(option);
+        return chart;
+        break
+      case 0:
+        wx.hideLoading()
+        wx.showToast({
+          image: '../../../images/icon/attention.png',
+          title: '获取失败'
+        });
+        break
+      default:
+        wx.hideLoading()
+        wx.showToast({
+          image: '../../../images/icon/attention.png',
+          title: '服务器繁忙！'
+        });
+    }
+  }).catch((res) => {
+    wx.hideLoading()
+    wx.showToast({
+      image: '../../../images/icon/attention.png',
+      title: '服务器繁忙！'
+    });
+    console.log(res)
+  })
 }
 
 Page({
@@ -106,8 +171,8 @@ Page({
     ec_Nutrient: {
       onInit: initChart_Nutrient
     },
-    reportData: {
-      'report_date':'2018-01-01',  //报告日期
+    reportData: '', 
+    reportData2: {
       'report_calorie':{           //卡路里分析
         'calorie_amount': 1235,    //卡路里摄入总量
         'calorie_breakfast':{'amount':60,'percent':'25'}, //早餐 摄入总量 三餐中占比（%号不带）
@@ -138,7 +203,57 @@ Page({
 
   onLoad(options) {
     this.setData({
-      reporDate: options.date
+      reporDate: app.globalData.Add_date
     })
-  }
+    this.GetReport()
+  },
+  //获取报告
+  GetReport() {
+    wx.showLoading({
+      title: '加载中',
+    })
+    requestPromisified({
+      url: h.main + '/selectreport?report_date=' + app.globalData.Add_date + '&ftelphone=' + app.globalData.User_Phone,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          let Temp = res.data.reportData[0]
+          Temp.report_ranking.rank_carbohydrate = res.data.reportData[0].report_ranking.rank_carbohydrate.reverse().slice(0,3)
+          Temp.report_ranking.rank_fat = res.data.reportData[0].report_ranking.rank_fat.reverse().slice(0, 3)
+          Temp.report_ranking.rank_protein = res.data.reportData[0].report_ranking.rank_protein.reverse().slice(0, 3)
+          wx.hideLoading()
+          this.setData({
+            reportData: Temp,
+          })
+          break
+        case 0:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../../images/icon/attention.png',
+            title: '获取失败'
+          });
+          break
+        default:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.hideLoading()
+      wx.showToast({
+        image: '../../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+      console.log(res)
+    })
+  },
 });

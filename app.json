@@ -14,7 +14,9 @@
     "pages/diet/search/index",
     "pages/diet/index/index",
     "pages/diet/report/index",
+
     "pages/weight/index/index",
+    "pages/weight/report/index",
    
     
 

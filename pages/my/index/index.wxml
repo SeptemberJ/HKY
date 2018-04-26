@@ -57,7 +57,7 @@
     <image class='smallIcon_arrow' src='../../../images/icon/arrow_black.png'></image>
   </view>
 
-  <view class='optionItem' bindtap=''>
+  <view class='optionItem' bindtap='ToEquipment'>
     <image class='smallIcon' src='../../../images/icon/equipment.png'></image>
     <view class='optionTit'>
       <text>设备管理</text>
@@ -72,7 +72,13 @@
       <text>智控客服</text>
       <text class='MessageCount' style='color:red;'>{{MessageCount>0?MessageCount:''}}</text>
     </view>
-    <image class='smallIcon_arrow' src='../../../images/icon/arrow_black.png'></image>
+    
+    <!-- <contact-button class="goService"
+  type="default-dark" 
+  size="27"
+  session-from="柏田商城系统"
+></contact-button> -->
+     <image class='smallIcon_arrow' src='../../../images/icon/icon_tele.png' bindtap='MakeCall'></image> 
   </view>
 
 </view>

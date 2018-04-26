@@ -86,8 +86,9 @@ Page({
   },
   onLoad(options){
     this.setData({
-      sourceType: options.sourceType
+      sourceType: options.sourcetype
     })
+    console.log('options---' + options.sourcetype)
   },
   onShow(){
     wx.getStorage({
@@ -136,6 +137,7 @@ Page({
   },
   AddFood() {
     let DATA = {
+      'faddtime': app.globalData.Add_date,
       'eatname': this.data.DietDetail.food_name,
       'eatcalories': this.data.Calorie,   
       'eatweight': this.data.IngestionAmount,

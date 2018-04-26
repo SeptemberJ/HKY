@@ -83,7 +83,7 @@
     <!--Analysis list  -->
     <view class='Report_Analysis'>
       <view class='Report_Analysis_columnTit'>
-        碳水化合物摄入在食物中的含量排名
+        碳水化合物摄入在食物中的含量排名(前三)
       </view>
       <view class='Report_Analysis_ranking' wx:for="{{reportData.report_ranking.rank_carbohydrate}}" wx:for-item="CarbohydrateItem" wx:for-key="CarbohydrateIdx" wx:for-index="CarbohydrateIdx">
         <text class='Index'>{{CarbohydrateIdx + 1}}</text>
@@ -92,7 +92,7 @@
       </view>
 
       <view class='Report_Analysis_columnTit'>
-        脂肪摄入在食物中的含量排名
+        脂肪摄入在食物中的含量排名(前三)
       </view>
       <view class='Report_Analysis_ranking' wx:for="{{reportData.report_ranking.rank_fat}}" wx:for-item="FatItem" wx:for-key="FatIdx" wx:for-index="FatIdx">
         <text class='Index'>{{FatIdx + 1}}</text>
@@ -100,7 +100,7 @@
         <text class='Amount'>{{FatItem.food_amount}}克</text>
       </view>
       <view class='Report_Analysis_columnTit'>
-        蛋白质摄入在食物中的含量排名
+        蛋白质摄入在食物中的含量排名(前三)
       </view>
       <view class='Report_Analysis_ranking' wx:for="{{reportData.report_ranking.rank_protein}}" wx:for-item="ProteinItem" wx:for-key="ProteinIdx" wx:for-index="ProteinIdx">
         <text class='Index'>{{ProteinIdx + 1}}</text>

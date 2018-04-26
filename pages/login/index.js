@@ -135,8 +135,8 @@ Page({
           }else{
             this.SkipQuestionnaire()
           }
-          // app.globalData.User_Phone = this.data.User_Phone
-          // app.globalData.User_name = res.data.registerlist[0].fname
+          app.globalData.User_Phone = this.data.User_Phone
+          app.globalData.User_name = res.data.registerlist[0].fname
           app.globalData.Add_count = res.data.integral
           break
         case 2:

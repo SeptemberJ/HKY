@@ -57,9 +57,10 @@ App({
   globalData: {
     width:'',
     userInfo: null,
-    User_Phone: '', //18234567890',
+    User_Phone: '18234567893', //18234567890',
     User_name:'',
     Add_count:'',
+    Add_date: util.formatTime(new Date()),
     AQI:'',
     MessageCount:0,
     latitude:'',

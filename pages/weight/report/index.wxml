@@ -1,0 +1,60 @@
+ <view class='report_tab'>
+  <view class="switchWrap">
+      <view class="switchItem {{CurSwitch == 0?'active':''}}"></view>
+      <span class="label" bindtap="Switch"><text>数据指标</text></span>
+      <view class="switchItem {{CurSwitch == 1?'active':''}}"></view>
+      <span class="label" bindtap="Switch"><text>身体测评</text></span>
+      <view class="switchBar"><text>{{CurSwitch == 0?'数据指标':'身体测评'}}</text></view>
+  </view>
+</view> 
+
+<view wx:if="{{CurSwitch == 0}}" class='DataIndex'>
+  <text>当前体重（公斤）</text>
+  <view class='report_data'>
+    <text class='report_data_weight'>{{HeathDataIndex.weight}}</text>
+    <text class='report_data_BMI'>BMI:{{HeathDataIndex.BMI}}</text>
+  </view>
+
+  <view class='report_data_weight_level'>
+    <view class='level_typeData'>
+      <text>18.5</text>
+      <text>24.0</text>
+      <text>28.0</text>
+      <text>30.0</text>
+    </view>
+    <view class='level_bar'>
+      <text class='level_1'></text>
+      <text class='level_2'></text>
+      <text class='level_3'></text>
+      <text class='level_4'></text>
+      <text class='level_5'></text>
+      <image class='triangleIndex' style="left:{{distance}}rpx" src='../../../images/icon/triangleIndex.png'></image>
+    </view>
+    <view class='level_text' style='margin-top:30rpx;'>
+      <text class='text_center'>偏瘦</text>
+      <text class='text_center'>标准</text>
+      <text class='text_center'>偏胖</text>
+      <text class='text_center'>肥胖</text>
+      <text class='text_center'>重度</text>
+    </view>
+  </view>
+
+  <view class='Blank'></view>
+
+  <view class='report_data_weight_bar'>
+    <image src='../../../images/icon/称.png'></image>
+    <text class='weight_bar_tit'>体重</text>
+    <text class='weight_bar_data'>{{HeathDataIndex.weight}}公斤</text>
+    <text class="{{'weight_bar_level_' + HeathDataIndex.type}}">{{HeathDataIndex.type == 1?'偏瘦':(HeathDataIndex.type == 2?'标准':(HeathDataIndex.type == 3?'偏胖':(HeathDataIndex.type == 4?'肥胖':'重度')))}}</text>
+  </view>
+
+  <view class='report_data_weight_bar'>
+    <image src='../../../images/icon/B.png'></image>
+    <text class='weight_bar_tit'>BMI</text>
+    <text class='weight_bar_data'>{{HeathDataIndex.BMI}}</text>
+    <text class="{{'weight_bar_level_' + HeathDataIndex.type}}">{{HeathDataIndex.type == 1?'偏瘦':(HeathDataIndex.type == 2?'标准':(HeathDataIndex.type == 3?'偏胖':(HeathDataIndex.type == 4?'肥胖':'重度')))}}</text>
+  </view>
+
+</view>
+
+<view wx:if="{{CurSwitch == 1}}"></view>

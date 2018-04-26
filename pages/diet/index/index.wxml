@@ -19,8 +19,8 @@
           <view class="percent right {{percent>50?'':'wth0'}}"></view>  
       </view>  
         <view class="dataInfo">
-          <view><text class='samllSize'>还可以摄入</text></view>
-          <view><text class='bigSize'>{{dietInfo.diet_standard - dietInfo.diet_sum}}</text></view>
+          <view><text class='samllSize'>{{ifOver?'已超出':'还可以摄入'}}</text></view>
+          <view><text class='bigSize'>{{Surplus}}</text></view>
           <view><text class='samllSize'>千卡</text></view>
        </view>    
     </view>
@@ -48,7 +48,7 @@
   </view>
   
   <!--dietList  -->
-  <view class='dietList'>
+  <view wx:if="{{dietInfo.diet_standard != 0}}" class='dietList'>
     <!--早餐  -->
     <view class='deitItem' bindtap='Toggle_B'>
       <view class='deit_Icon'>
@@ -142,7 +142,7 @@
   <!--./dietList  -->
 
   <!--report  -->
-   <view wx:if="{{dietInfo.diet_sum != 0}}" class='DietReport' bindtap='ToDietReport'>
+   <view wx:if="{{dietInfo.diet_sum != 0 && dietInfo.diet_standard != 0}}" class='DietReport' bindtap='ToDietReport'>
     <text>查看饮食报告</text>
   </view>
 

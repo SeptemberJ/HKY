@@ -1,11 +1,62 @@
-<view class='Weight_ClockDial'>
+<view class='Weight_ClockDial' bindtap='ToWeightReport'>
   <view class="container">
     <ec-canvas id="mychart-dom-gauge" canvas-id="mychart-gauge" ec="{{ ec }}"></ec-canvas>
   </view>
 </view>
 
 <view class='Weight_data'>
-  <text class='Weight_data_BMI'>BMI: 19.5</text>
-  <text class='Weight_data_BFR'>体脂率: --</text>
+  <text class='Weight_data_BMI'>BMI: {{HeathData.BMI}}</text>
+  <text class='Weight_data_BFR'>体型: {{HeathData.type == 1?'偏瘦':(HeathData.type == 2?'标准':(HeathData.type == 3?'偏胖':(HeathData.type == 4?'肥胖':'重度')))}}</text>
 </view>
 
+<view class='Weight_shape'>
+  <image src="{{HeathData.type == 1?'../../../images/icon/shape_Thin_active.png':'../../../images/icon/shape_Thin.png'}}"></image>
+  <image src="{{HeathData.type == 2?'../../../images/icon/shape_Normal_active.png':'../../../images/icon/shape_Normal.png'}}"></image>
+  <image src="{{HeathData.type == 3?'../../../images/icon/shape_Overweight_active.png':'../../../images/icon/shape_Overweight.png'}}"></image>
+  <image src="{{HeathData.type == 4?'../../../images/icon/shape_Obesity_active.png':'../../../images/icon/shape_Obesity.png'}}"></image>
+  <image src="{{HeathData.type == 5?'../../../images/icon/shape_Veryfat_active.png':'../../../images/icon/shape_Veryfat.png'}}"></image>
+</view>
+
+<view class='Weight_disease'>
+  <view class='disease_item'>
+    <image class='disease_icon' src='../../../images/icon/Sphygmomanometer.png'></image>
+    <text class='disease_name'>高血压</text>
+    <progress class="progress" percent="10"  stroke-width="3"  backgroundColor="#ccc" active="true" >
+    </progress>
+    <view class='levelBlock'>
+      <text>低风险</text>
+      <view class='Sharp_left'></view>
+    </view>
+  </view>
+  <view class='disease_item'>
+    <image class='disease_icon' src='../../../images/icon/Liver.png'></image>
+    <text class='disease_name'>脂肪肝</text>
+    <progress class="progress" percent="10"  stroke-width="3"  backgroundColor="#ccc" active="true" >
+    </progress>
+    <view class='levelBlock'>
+      <text>低风险</text>
+      <view class='Sharp_left'></view>
+    </view>
+  </view>
+  <view class='disease_item'>
+    <image class='disease_icon' src='../../../images/icon/bloodFat.png'></image>
+    <text class='disease_name'>高血脂</text>
+    <progress class="progress" percent="0"  stroke-width="3"  backgroundColor="#ccc" active="true" >
+    </progress>
+    <view class='levelBlock'>
+      <text>低风险</text>
+      <view class='Sharp_left'></view>
+    </view>
+  </view>
+  <view class='disease_item'>
+    <image class='disease_icon' src='../../../images/icon/bloodSugar.png'></image>
+    <text class='disease_name'>糖尿病</text>
+    <progress class="progress" percent="0"  stroke-width="3"  backgroundColor="#ccc" active="true" >
+    </progress>
+    <view class='levelBlock'>
+      <text>低风险</text>
+      <view class='Sharp_left'></view>
+    </view>
+  </view>
+  <text class='ColorOrage'>以上数据仅供参考，不可作为诊断依据</text>
+</view>

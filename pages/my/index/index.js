@@ -33,9 +33,9 @@ Page({
     })
   },
   MyIntegral() {
-    // wx.navigateTo({
-    //   url: '../integral/index'
-    // })
+    wx.navigateTo({
+      url: '../integral/index'
+    })
   },
   MyMessage() {
     wx.navigateTo({
@@ -64,6 +64,17 @@ Page({
       })
     }
   },
+  ToEquipment(){
+    wx.switchTab({
+      url: '../../equipment/index/index',
+    })
+  },
+  //客服
+  MakeCall(){
+    wx.makePhoneCall({
+      phoneNumber: '021-3100-7227' 
+    })
+  },
   //获取消息
   GetMessage() {
     requestPromisified({
@@ -86,19 +97,19 @@ Page({
           break
         case 0:
           wx.showToast({
-            image: '../../images/icon/attention.png',
+            image: '../../../images/icon/attention.png',
             title: '消息获取失败!'
           });
           break
         default:
           wx.showToast({
-            image: '../../images/icon/attention.png',
+            image: '../../../images/icon/attention.png',
             title: '服务器繁忙！'
           });
       }
     }).catch((res) => {
       wx.showToast({
-        image: '../../images/icon/attention.png',
+        image: '../../../images/icon/attention.png',
         title: '服务器繁忙！'
       });
     })
@@ -125,19 +136,19 @@ Page({
           break
         case 0:
           wx.showToast({
-            image: '../../images/icon/attention.png',
+            image: '../../../images/icon/attention.png',
             title: '消息获取失败!'
           });
           break
         default:
           wx.showToast({
-            image: '../../images/icon/attention.png',
+            image: '../../../images/icon/attention.png',
             title: '服务器繁忙！'
           });
       }
     }).catch((res) => {
       wx.showToast({
-        image: '../../images/icon/attention.png',
+        image: '../../../images/icon/attention.png',
         title: '服务器繁忙！'
       });
     })

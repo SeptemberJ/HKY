@@ -95,7 +95,7 @@ Page({
       data: DietDetail,
       success: (res)=>{
         wx.navigateTo({
-          url: '../add/index?sourcetype=' + 0
+          url: '../add/index?sourcetype=' + 0  //食物列表界面进入添加
         })
       },
     })
