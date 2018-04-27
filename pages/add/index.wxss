@@ -31,7 +31,7 @@
   align-items: center;
 }
 .label{
-  width: 100rpx;
+  width: 160rpx;
   font-size: 32rpx;
 }
 .InfoItem input{

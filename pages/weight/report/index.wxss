@@ -1,7 +1,13 @@
 page{
-  /* background: #efefef; */
+   background: #efefef; 
 }
+ec-canvas {
+  width: 660rpx;
+  height: 550rpx;
+}
+/*report_tab  */
 .report_tab{
+    padding: 20rpx  0rpx 40rpx 0;
     text-align: center;
     background: #fff;
 }
@@ -60,15 +66,32 @@ page{
 }
 /*DataIndex  */
 .DataIndex{
+  width: 750rpx;
+  margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.DataIndex_item{
   width: 710rpx;
-  margin: 20px auto;
+  padding: 40rpx 0;
+  margin: 10rpx 0;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15rpx;
+}
+.DataIndex_item_inner{
+  width: 660rpx;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
 }
 .report_data{
-  width: 710rpx;
+  width: 660rpx;
   margin: 10px auto;
   display: flex;
   align-items: flex-end;
@@ -83,7 +106,7 @@ page{
 }
 /*report_data_weight_level  */
 .report_data_weight_level{
-  width: 710rpx;
+  width: 660rpx;
   margin: 20px auto;
   display: flex;
   flex-direction: column;
@@ -91,33 +114,33 @@ page{
   justify-content: flex-start;
 }
 .level_text{
-  width: 710rpx;
+  width: 660rpx;
   height: 60rpx;
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
 .level_text text{
-  width: 142rpx;
+  width: 132rpx;
   height: 60rpx;
   line-height: 60rpx;
   text-align: center;
 }
 .level_typeData{
-  width: 710rpx;
+  width: 660rpx;
   height: 60rpx;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .level_typeData text{
-  width: 140rpx;
+  width: 130rpx;
   height: 60rpx;
   line-height: 60rpx;
   text-align: center;
 }
 .level_bar{
-  width: 710rpx;
+  width: 660rpx;
   height: 20rpx;
   position: relative;
   display: flex;
@@ -125,7 +148,7 @@ page{
   justify-content: flex-start;
 }
 .level_bar text{
-  width: 142rpx;
+  width: 132rpx;
   height: 20rpx;
 }
 .level_1{
@@ -171,7 +194,7 @@ page{
   width: 100rpx;
 }
 .weight_bar_data{
-  width: 430rpx;
+  width: 400rpx;
   text-align: right;
   padding-right: 20rpx;
 }
@@ -197,4 +220,202 @@ page{
 }
 .weight_bar_level_5{
   background: #c83a3a;
+}
+/*HeathEvaluation  */
+.HeathEvaluation{
+  width: 750rpx;
+  margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.HeathEvaluation_item{
+  width: 710rpx;
+  padding: 40rpx 0;
+  margin: 10px 0;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15rpx;
+}
+.HeathEvaluation_item_inner{
+  width: 660rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.HeathEvaluation_process{
+  width: 660rpx;
+  height: 100rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+ .HeathEvaluation_process_tit{
+  width: 100rpx;
+}
+.process_block{
+  width: 300rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.process_block text{
+  font-size: 26rpx;
+}
+.HeathEvaluation_process .progress{
+  width: 300rpx;
+  position: relative;
+}
+.HalfLine{
+  width: 2px;
+  height: 25rpx;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background: #ccc;
+}
+.HeathEvaluation_process_data{
+  width: 200rpx;
+  text-align: right;
+}
+/*Target  */
+.Target{
+  width: 660rpx;
+  height: 300rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.Target_icon{
+  width: 660rpx;
+  height: 150rpx;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.Target_icon image{
+  width: 150rpx;
+  height: 150rpx;
+  display: block;
+  position: absolute;
+  top: 0;
+}
+.Target_process{
+  width: 660rpx;
+  height: 35rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Target_process .progress{
+  width: 600rpx;
+}
+.Target_text{
+  width: 660rpx;
+  height: 100rpx;
+  text-align: center;
+}
+.Chart_weight{
+
+}
+.Chart_weight_trend{
+  width: 660rpx;
+  height: 100rpx;
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.compare_item{
+  width: 300rpx;
+  height: 100rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.compare_item image{
+  width: 30rpx;
+  height: 30rpx;
+  display: block;
+}
+.compare_item_Number{
+  font-size: 50rpx;
+  font-weight: bold;
+}
+.compare_Date{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.compare_Date text{
+  font-size: 22rpx;
+}
+/*disease  */
+.disease_item{
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.progress{
+  width: 300rpx;
+  margin: 10rpx 50rpx 10rpx 0;
+}
+.disease_icon{
+  width: 60rpx;
+  height: 60rpx;
+}
+.disease_name{
+  width: 150rpx;
+  text-align: center;
+}
+.levelBlock{
+  width: 130rpx;
+  height: 21px;
+  position: relative;
+  background: green;
+  color: #fff;
+  text-align: center;
+  line-height: 6px;
+  z-index: 999;
+}
+.levelBlock_1 , .Sharp_left_1{
+  background: #8ce1fa;
+}
+.levelBlock_2 , .Sharp_left_2{
+  background: #78cd78;
+}
+.levelBlock_3 , .Sharp_left_3{
+  background: #ffdc78;
+}
+.levelBlock_4 , .Sharp_left_4{
+  background: #ff4b5a;
+}
+.levelBlock_5 , .Sharp_left_5{
+  background: #c83a3a;
+}
+.levelBlock text{
+  font-size: 24rpx;
+}
+.Sharp_left{
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: -3px;
+  left: -5px;
+  transform: rotate(45deg) translate(70%,55%);
+  z-index: 9;
+}
+.ColorOrage{
+  text-align: center;
+  color: #f60;
 }

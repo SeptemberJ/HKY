@@ -17,8 +17,12 @@
   <input type='digit' placeholder='单位：厘米' bindinput='ChangeHeight'></input>
 </view>
 <view class='InfoItem'>
-  <text class='label'>体重：</text>
-  <input type='digit' placeholder='单位：千克' bindinput='ChangeWeight'></input>
+  <text class='label'>目前体重：</text>
+  <input type='digit' placeholder='单位：千克' bindinput='ChangeWeight_now'></input>
+</view>
+<view class='InfoItem'>
+  <text class='label'>目标体重：</text>
+  <input type='digit' placeholder='单位：千克' bindinput='ChangeWeight_target'></input>
 </view>
 
 <view class='submitBlock'>

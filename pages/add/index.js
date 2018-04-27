@@ -11,7 +11,8 @@ Page({
     Sex:0,
     Age:'',
     Height:'',
-    Weight:''
+    Weight_now:'',
+    Weight_target: ''
   },
   onLoad: function (options) {
     this.setData({
@@ -33,12 +34,26 @@ Page({
       Height: e.detail.value
     })
   },
-  ChangeWeight(e) {
+  ChangeWeight_now(e) {
     this.setData({
-      Weight: e.detail.value
+      Weight_now: e.detail.value
     })
   },
+  ChangeWeight_target(e) {
+    this.setData({
+      Weight_target: e.detail.value
+    })
+  },
+
+  
   Submit() {
+    if (this.data.Age.trim() == '') {
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '请写年龄！'
+      });
+      return false
+    }
     if (this.data.Height.trim() == ''){
       wx.showToast({
         image: '../../images/icon/attention.png',
@@ -46,10 +61,17 @@ Page({
       });
       return false
     }
-    if (this.data.Weight.trim() == '') {
+    if (this.data.Weight_now.trim() == '') {
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '请写体重！'
+        title: '请写目前体重！'
+      });
+      return false
+    }
+    if (this.data.Weight_target.trim() == '') {
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '请写目标体重！'
       });
       return false
     }
@@ -58,7 +80,8 @@ Page({
     })
     let DATA = {
       age: this.data.Age,
-      weight: this.data.Weight,
+      weight: this.data.Weight_now,
+      target_weight: this.data.Weight_target,
       height: this.data.Height,
       sex: this.data.Sex,
       ftelphone: app.globalData.User_Phone

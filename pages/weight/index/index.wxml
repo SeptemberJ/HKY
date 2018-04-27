@@ -1,3 +1,7 @@
+<view class='SetInfo'>
+  <image src='../../../images/icon/delete.png' bindtap='ToSetInfo'></image>
+</view>
+<!--体重显示  -->
 <view class='Weight_ClockDial' bindtap='ToWeightReport'>
   <view class="container">
     <ec-canvas id="mychart-dom-gauge" canvas-id="mychart-gauge" ec="{{ ec }}"></ec-canvas>

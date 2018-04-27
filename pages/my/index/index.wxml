@@ -1,7 +1,6 @@
 <view class='InfoBlock'>
   <image class="Avatar" src="{{userInfo.avatarUrl}}"></image>
   <text class="nickName">{{AccountName}}</text>
-  <!-- <text class="Accumulation">当前积分： 100</text> -->
   <view class='HorizontalColumn'>
     <view class='HorizontalItem RightBoder' bindtap='MyIntegral'>
       <image class='smallIcon' src='../../../images/icon/integral.png'></image>

@@ -105,6 +105,12 @@ Page({
   onShow() {
     this.GetHeath()
   },
+  // 跳转修改体重，体围
+  ToSetInfo(){
+    wx.navigateTo({
+      url: '../../setInfo/index',
+    })
+  },
   //跳转健康报告
   ToWeightReport(){
     wx.navigateTo({

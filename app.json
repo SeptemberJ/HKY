@@ -1,5 +1,6 @@
 {
   "pages":[
+    "pages/setInfo/index",
     "pages/login/index",
     "pages/index/index",
     "pages/temperature/index",
@@ -14,8 +15,8 @@
     "pages/diet/search/index",
     "pages/diet/index/index",
     "pages/diet/report/index",
-
     "pages/weight/index/index",
+
     "pages/weight/report/index",
    
     
