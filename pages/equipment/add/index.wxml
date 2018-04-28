@@ -5,11 +5,11 @@
   </view>
   <view class='Inputitem'>
     <input placeholder='请输入主控条码' bindinput='ChangeEquipment_Code_F' value='{{Equipment_Code_F}}'></input>
-    <image class='Icon' src='../../../images/icon/QR_code_black.png' bindtap='Scan_Code_F'></image>
+    <image class='Icon' src='../../../images/icon/scan.png' bindtap='Scan_Code_F'></image>
   </view>
   <view class='Inputitem'>
     <input placeholder='请输入设备条码' bindinput='ChangeEquipment_Code_S'  value='{{Equipment_Code_S}}'></input>
-    <image class='Icon' src='../../../images/icon/QR_code_black.png' bindtap='Scan_Code_S'></image>
+    <image class='Icon' src='../../../images/icon/scan.png' bindtap='Scan_Code_S'></image>
   </view>
   <view class='Btn' bindtap='AddEquipment'>保存</view> 
 </view>

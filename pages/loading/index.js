@@ -6,5 +6,31 @@ var requestPromisified = util.wxPromisify(wx.request)
 const app = getApp()
 
 Page({
-  data: {}
+  data: {
+
+  },
+  onLoad(){
+    wx.showLoading({
+      title: '加载中',
+    })
+    wx.getStorage({
+      key: 'UserInfo',
+      success: (res) => {
+        app.globalData.User_Phone = res.data.User_Phone
+        app.globalData.User_name = res.data.User_name
+        console.log(app.globalData.User_Phone)
+        wx.switchTab({
+          url: '../index/index'
+        })
+      },
+      fail: (res) => {
+        wx.navigateTo({
+          url: '../login/index'
+        })
+      },
+      complete: (res) => {
+        wx.hideLoading()
+      },
+    })
+  }
 })

@@ -16,17 +16,17 @@ Page({
   },
   onLoad: function () {
     console.log('onLoad---')
-    wx.getStorage({
-      key: 'UserInfo',
-      success: (res) => {
-        app.globalData.User_Phone = res.data.User_Phone
-        app.globalData.User_name = res.data.User_name
-        console.log(app.globalData.User_Phone)
-        wx.switchTab({
-          url: '../index/index'
-        })
-      }
-    })
+    // wx.getStorage({
+    //   key: 'UserInfo',
+    //   success: (res) => {
+    //     app.globalData.User_Phone = res.data.User_Phone
+    //     app.globalData.User_name = res.data.User_name
+    //     console.log(app.globalData.User_Phone)
+    //     wx.switchTab({
+    //       url: '../index/index'
+    //     })
+    //   }
+    // })
     wx.getUserInfo({
       success: res => {
         app.globalData.userInfo = res.userInfo

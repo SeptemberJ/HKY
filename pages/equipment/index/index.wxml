@@ -17,7 +17,7 @@
   <view class='columnBar'><text>最近添加设备</text></view>
   <view class='equipmentList' wx:if="{{equipmentList.length > 0}}">
     <view class='equipmentItem' wx:for="{{equipmentList}}" wx:for-index="EquipmentIdx" wx:for-item="Equipment" wx:key="EquipmentIdx">
-      <image class='operationIcon' src='../../../images/icon/QR_code.png' ></image>
+      <image class='operationIcon' src='../../../images/icon/equipmentIcon.png' ></image>
       <text class='equipmentName' data-id='{{Equipment.id}}'>{{Equipment.second_name}}</text>
       <image class='operationIcon' src='../../../images/icon/arrow_black.png' data-id='{{Equipment.id}}' data-name='{{Equipment.second_name}}' bindtap='LookData'></image>
     </view>

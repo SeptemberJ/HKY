@@ -99,7 +99,8 @@ Page({
     ec: {
       onInit: initChart
     },
-    HeathData:''
+    HeathData:'',
+    ShapType:''
   },
 
   onShow() {
@@ -119,6 +120,9 @@ Page({
   },
   GetHeath(){
       //获取消息
+      wx.showLoading({
+        title: '加载中',
+      })
       requestPromisified({
         url: h.main + '/selecthealthreport?ftelphone=' + app.globalData.User_Phone,
         data: {
@@ -131,24 +135,84 @@ Page({
       }).then((res) => {
         switch (res.data.result) {
           case 1:
-            this.setData({
-              HeathData: res.data.healthreport[0]
-            })
+            if (res.data.healthreport[0].size == 0){
+              this.setData({
+                ShapType:'信息不够，无法判断出您的体型哦'
+              })
+            }else{
+              switch (res.data.healthreport[0].sex){
+                case '1':   //女
+                  switch (res.data.healthreport[0].size){
+                    case '1':
+                      this.setData({
+                        ShapType: '梨型'
+                      })
+                      break
+                    case '2':
+                      this.setData({
+                        ShapType: '轻度梨型'
+                      })
+                      break
+                    case '3':
+                      this.setData({
+                        ShapType: '正常'
+                      })
+                      break
+                    case '4':
+                      this.setData({
+                        ShapType: '轻度苹果型'
+                      })
+                      break
+                    case '5':
+                      this.setData({
+                        ShapType: '苹果型'
+                      })
+                      break
+                  }
+                break
+                case '0':  //男
+                  switch (res.data.healthreport[0].size) {
+                    case '1':
+                      this.setData({
+                        ShapType: '正常'
+                      })
+                      break
+                    case '2':
+                      this.setData({
+                        ShapType: '轻度苹果型'
+                      })
+                      break
+                    case '3':
+                      this.setData({
+                        ShapType: '苹果型'
+                      })
+                  }
+                break
+              }
 
+            }
+            this.setData({
+              HeathData: res.data.healthreport[0],
+            })
+            
+            wx.hideLoading()
             break
           case 0:
+            wx.hideLoading()
             wx.showToast({
               image: '../../../images/icon/attention.png',
               title: '消息获取失败!'
             });
             break
           default:
+            wx.hideLoading()
             wx.showToast({
               image: '../../../images/icon/attention.png',
               title: '服务器繁忙！'
             });
         }
       }).catch((res) => {
+        wx.hideLoading()
         wx.showToast({
           image: '../../../images/icon/attention.png',
           title: '服务器繁忙！'

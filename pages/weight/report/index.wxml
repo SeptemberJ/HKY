@@ -1,3 +1,5 @@
+<!-- <button bindtap="init" >加载图表2</button> -->
+<!-- <button bindtap="dispose" >卸载</button> -->
  <view class='report_tab'>
   <view class="switchWrap">
       <view class="switchItem {{CurSwitch == 0?'active':''}}"></view>
@@ -8,7 +10,9 @@
   </view>
 </view> 
 
-<view wx:if="{{CurSwitch == 0}}" class='DataIndex'>
+
+<!-- <view wx:if="{{CurSwitch == 0}}" class='DataIndex'> -->
+<view hidden="{{CurSwitch == 1}}" class='DataIndex'>
   <!--first  -->
   <view class='DataIndex_item'>
     <view class='DataIndex_item_inner'>
@@ -67,7 +71,8 @@
   </view>
 </view>
 
-<view wx:if="{{CurSwitch == 1}}" class='HeathEvaluation'>
+<!-- <view wx:if="{{CurSwitch == 1}}" class='HeathEvaluation'> -->
+<view hidden="{{CurSwitch == 0}}" class='DataIndex'>
   <!--weight control  -->
   <view class='HeathEvaluation_item'>
      <view class='HeathEvaluation_item_inner'>
@@ -94,7 +99,7 @@
         <progress class="progress" percent="{{HeathEvaluation.fat.fat_differ_i>0 ?50 - HeathEvaluation.fat.fat_differ_i :50 - HeathEvaluation.fat.fat_differ_i }}"  stroke-width="3"  backgroundColor="#ccc" activeColor="#f60" active="true" >
         <text class='HalfLine'></text>
         </progress>
-        <text class='HeathEvaluation_process_data'>需 {{HeathEvaluation.fat.fat_differ}}公斤</text>
+        <text class='HeathEvaluation_process_data'>需 {{HeathEvaluation.fat.fat_differ_i}}公斤</text>
       </view>
      </view> 
   </view>
@@ -138,8 +143,8 @@
             </view>
           </view>
         </view>
-        <view class="container">
-          <ec-canvas id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
+        <view hidden="{{isDisposed}}" class="container">
+          <ec-canvas  id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
         </view>
       </view>
      </view>
@@ -172,7 +177,7 @@
           <view class="Sharp_left {{'Sharp_left_' + HeathEvaluation.disease.fattyLiver}}"></view>
         </view>
       </view>
-      <view class='disease_item'>
+      <!-- <view class='disease_item'>
         <image class='disease_icon' src='../../../images/icon/bloodFat.png'></image>
         <text class='disease_name'>高血脂</text>
         <progress class="progress" percent="{{HeathEvaluation.disease.bloodFat / 5 * 100}}"  stroke-width="3"  activeColor="{{HeathEvaluation.disease.bloodFat == 1?'#8ce1fa':(HeathEvaluation.disease.bloodFat == 2?'#78cd78':(HeathEvaluation.disease.bloodFat == 3?'#ffdc78':(HeathEvaluation.disease.bloodFat == 4?'#ff4b5a':'#c83a3a')))}}" active="true" >
@@ -195,7 +200,7 @@
           </text>
           <view class="Sharp_left {{'Sharp_left_' + HeathEvaluation.disease.diabetes}}"></view>
         </view>
-      </view>
+      </view> -->
     </view>
   </view>
 </view>

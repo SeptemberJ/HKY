@@ -8,7 +8,7 @@ const app = getApp()
 Page({
   data: {
     Type:0,
-    Sex:0,
+    Sex:0,  //0男 1女
     Age:'',
     Height:'',
     Weight_now:'',
@@ -117,7 +117,7 @@ Page({
         case 0:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '评论失败!'
+            title: '提交失败!'
           });
           break
         default:

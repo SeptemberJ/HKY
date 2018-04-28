@@ -16,11 +16,13 @@
 }
 input{
   width: 550rpx;
-  border-bottom: 1px solid #398e3d;
+  font-size: 30rpx;
+  padding: 10rpx;
+  border-bottom: 1px solid #efefef;
 }
 .Icon{
-  width: 80rpx;
-  height: 80rpx;
+  width: 60rpx;
+  height: 60rpx;
 }
 .Btn{
   width: 100px;

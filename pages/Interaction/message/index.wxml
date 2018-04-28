@@ -6,11 +6,9 @@
           <view class='Info'>
             <view class='topBar'>
               <text>{{Message.interaction.f_name}}</text>
-              <!-- <image class='deleteIcon' src='../../../images/icon_delete.png'  bindtap='DeleteMessage' data-msg-id='{{}}'></image> -->
             </view>
             <text>{{Message.interaction.p_time}}</text>
           </view>
-          <!-- <view class='reply' bindtap='ShowReplyModal' data-target-name='{{Message.interaction.f_name}}'data-name-z='{{Reply.name_F}}' data-fabu-id='{{Message.dynamic.f_id}}' data-idx='{{Message.interaction.f_id}}' data-fabu-phone='{{Message.dynamic.f_telphone}}'><text style='color:#00376a;'>回复</text></view>  -->
       </view> 
       <!--点赞或评论  -->
       <view class='detailBlock'>
@@ -22,24 +20,11 @@
         <image wx:if='{{Message.dynamic.f_pic.length>0}}' class='thumbnail' src='{{Message.dynamic.f_pic[0]}}'></image>
         <text style='padding:10rpx 20rpx;'><text style='color:#00376a;'>{{Message.dynamic.f_name}}</text>: {{Message.dynamic.f_remark}}</text>
       </view>
-
-      <!-- <view class='interactionList' wx:if='{{Message.replyList.length>0}}'>
-        <view class='listItem'>
-          <text style='color:#00376a;'>{{Message.interaction.f_name}}</text>
-          <text> : {{Message.interaction.f_remark}}</text>
-        </view>
-        <view class='listItem' wx:for="{{Message.replyList}}" wx:for-index="ReplyIdx" wx:for-item="Reply" wx:key="ReplyIdx">
-        <text style='color:#00376a;'>{{Reply.h_name_z}}</text>
-        <text style='margin:0 2px;'>回复</text>
-        <text style='color:#00376a;'>{{Reply.h_name_t}}</text>
-        <text> : {{Reply.h_remark}}</text>
-        </view>
-      </view> -->
     </view>
     <view wx:if="{{MessageIdx != MessageList.length-1}}" class='Blank'></view>
   </view>
   <view class="InfoNull" wx:if="{{MessageList.length == 0}}">
-    <image src="../../../images/icon/box-empty.png" />
+     <image src="../../../images/icon/box-empty.png" /> 
     <text>您还没有发布过动态！</text>
   </view>
 </view>

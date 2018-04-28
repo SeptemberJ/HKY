@@ -64,7 +64,7 @@
       </view>
     </view>
     <!--list  -->
-    <view wx:if="{{ifShow_B}}" class='deitItem_contain' wx:for="{{dietInfo.breakfast.list}}" wx:for-index="BreakfastIdx" wx:for-item="Breakfast" wx:key="BreakfastIdx">
+    <view wx:if="{{ifShow_B}}" class='deitItem_contain' wx:for="{{dietInfo.breakfast.list}}" wx:for-index="BreakfastIdx" wx:for-item="Breakfast" wx:key="BreakfastIdx" >
       <view class='deit_Text'>
         <text class='deitItem_contain_Tit'>{{Breakfast.food_name}}</text>
         <text class='deitItem_contain_Text'>{{Breakfast.food_amount}}</text>

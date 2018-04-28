@@ -1,6 +1,6 @@
 {
   "pages":[
-    "pages/setInfo/index",
+    "pages/loading/index",
     "pages/login/index",
     "pages/index/index",
     "pages/temperature/index",
@@ -16,7 +16,7 @@
     "pages/diet/index/index",
     "pages/diet/report/index",
     "pages/weight/index/index",
-
+    "pages/setInfo/index",
     "pages/weight/report/index",
    
     
@@ -37,7 +37,7 @@
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "white",
-    "navigationBarTitleText": "环科院",
+    "navigationBarTitleText": "SmartHox",
     "navigationBarTextStyle":"black",
     "enablePullDownRefresh": true
   },

@@ -52,7 +52,7 @@
   align-items: flex-start;
 }
 .colorfulBlock{
-  width: 80rpx;
+  width: 150rpx;
   display: flex;
   justify-content: center;
   align-items: center;

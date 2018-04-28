@@ -47,14 +47,14 @@
 
 
 <view class='optionList MarginT_10'>
-  <view class='optionItem' bindtap=''>
+  <!-- <view class='optionItem' bindtap=''>
     <image class='smallIcon' src='../../../images/icon/Invitation.png'></image>
     <view class='optionTit'>
       <text>邀请好友</text>
       <text class='MessageCount' style='color:red;'>{{MessageCount>0?MessageCount:''}}</text>
     </view>
     <image class='smallIcon_arrow' src='../../../images/icon/arrow_black.png'></image>
-  </view>
+  </view> -->
 
   <view class='optionItem' bindtap='ToEquipment'>
     <image class='smallIcon' src='../../../images/icon/equipment.png'></image>
