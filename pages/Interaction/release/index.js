@@ -168,7 +168,7 @@ Page({
       formData: {
         id: ID ? ID : '',
         ftelphone: app.globalData.User_Phone,
-        fname: app.globalData.userInfo.nickName,
+        fname: app.globalData.User_name,
         remark: this.data.releaseContent,
       },
       header: {

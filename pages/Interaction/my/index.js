@@ -423,11 +423,13 @@ Page({
                   icon: 'success',
                   duration: 1500
                 })
-                setTimeout(()=>{
-                  this.GetMyRelease(1)
-                },1500)
+                let tempDynamicList = this.data.DynamicList
+                tempDynamicList.splice(e.currentTarget.dataset.idx,1)
+                // setTimeout(()=>{
+                //   this.GetMyRelease(1)
+                // },1500)
                 this.setData({
-                  DynamicList:[]
+                  DynamicList: tempDynamicList
                 })
                 break
               case 0:

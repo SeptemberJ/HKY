@@ -414,6 +414,8 @@ Page({
   //发布
   SendRelease(Name_F, Remark, Ratingid, Ratinginfoid, Ftelphone){
     // let Idx = e.currentTarget.dataset.idx
+    // console.log(this.data.DynamicList)
+    // debugger
     requestPromisified({
       url: h.main + '/insertrating1',
       data: {
@@ -450,7 +452,13 @@ Page({
             'name_Z': app.globalData.User_name,
             'ratinginfoid': Ratinginfoid,
           }
-          temp[this.data.CurOperationIdx].comment_list.reply.push(NewObj)
+          if (temp[this.data.CurOperationIdx].comment_list.reply){
+            temp[this.data.CurOperationIdx].comment_list.reply.push(NewObj)
+          }else{
+            temp[this.data.CurOperationIdx].comment_list.reply = []
+            temp[this.data.CurOperationIdx].comment_list.reply.push(NewObj)
+          }
+          //temp[this.data.CurOperationIdx].comment_list.reply.push(NewObj)
           this.setData({
             DynamicList: temp
           })

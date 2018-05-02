@@ -57,28 +57,28 @@ Page({
   },
   SubmitWeightCircumference(){
     //校验
-    if (this.data.BodyCircumference.age.trim() == ''){
+    if (this.data.BodyCircumference.age == ''){
       wx.showToast({
         image: '../../images/icon/attention.png',
         title: '请写年龄！'
       });
       return false
     }
-    if (this.data.BodyCircumference.weight_now.trim() == '') {
+    if (this.data.BodyCircumference.weight_now == '') {
       wx.showToast({
         image: '../../images/icon/attention.png',
         title: '请写目前体重！'
       });
       return false
     }
-    if (this.data.BodyCircumference.weight_target.trim() == '') {
+    if (this.data.BodyCircumference.weight_target == '') {
       wx.showToast({
         image: '../../images/icon/attention.png',
         title: '请写目标体重！'
       });
       return false
     }
-    if (this.data.BodyCircumference.height.trim() == '') {
+    if (this.data.BodyCircumference.height == '') {
       wx.showToast({
         image: '../../images/icon/attention.png',
         title: '请写身高！'

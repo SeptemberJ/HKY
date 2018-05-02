@@ -25,10 +25,10 @@
   </view>
   <view class="InfoNull" wx:if="{{MessageList.length == 0}}">
      <image src="../../../images/icon/box-empty.png" /> 
-    <text>您还没有发布过动态！</text>
+    <text>暂无消息！</text>
   </view>
 </view>
-
+<view class='loadMore' wx:if="{{isLoading}}"><text class='LoadMore'>{{TipText}}</text></view>
 <!--回复  -->
 <view wx:if='{{ifReadyReply}}' style="width:calc(100% - 10px);padding:10px 5px; border-top:1px solid #ccc;background:#fff;position:fixed;bottom:10px;left:0;z-index:999999;display: flex;justify-content: space-between;">
   <input show-confirm-bar='{{false}}' cursor-spacing='5' focus='{{true}}' bindblur='CloseReplyModal' bindinput='ChangeRelpyContent' placeholder="{{'回复' + CurReleaseInfo.name_F}}" style='border:1px solid #ccc;border-radius:2px;'></input>

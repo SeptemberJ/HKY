@@ -7,7 +7,7 @@
       <view class='recordItem_right'>
         <view class='recordItem_right_top'>
           <text class='nickName'>{{Dynamic.comment_name}}</text>
-          <image class='deleteIcon' src='../../../images/icon_delete.png'  bindtap='DeleteMyRelease' data-fabu-id='{{Dynamic.id}}'></image>
+          <image class='deleteIcon' src='../../../images/icon_delete.png'  bindtap='DeleteMyRelease' data-idx='{{DynamicIdx}}' data-fabu-id='{{Dynamic.id}}'></image>
         </view>
         <text class='content'>{{Dynamic.comment_content}}</text>
         <!--图片  -->

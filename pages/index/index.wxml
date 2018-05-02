@@ -17,7 +17,11 @@
     </view>
     <view class='info'>
       <view class='info_Left'>
-        <view class='Left_item_first'><image class='locationIcon' src='../../images/icon/location.png' bindtap='ToAdd'></image><text>{{airQuality.citynm}}</text></view>
+        <view class='Left_item_first'><image class='locationIcon' src='../../images/icon/location.png' bindtap='ToAdd'></image>
+         <text>{{airQuality.citynm}}</text> 
+        <!-- <text>{{city}}</text> -->
+        
+        </view>
         <view class='Left_item' style='margin-top:0rpx;'>
           <text>{{DateInfo.Hour}}:{{DateInfo.Minute}}:{{DateInfo.Second}}</text>
           <text class='smallFont'>{{DateInfo.Month}}/{{DateInfo.Day}} 星期{{DateInfo.Week}}</text>

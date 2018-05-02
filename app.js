@@ -4,6 +4,20 @@ var requestPromisified = util.wxPromisify(wx.request)
 //app.js
 App({
   onLaunch: function () {
+    // wx.getSetting({
+    //   success(res) {
+    //     if (!res.authSetting['scope.userLocation']) {
+    //       wx.openSetting({
+    //         success: (res) => {
+    //           res.authSetting = {
+    //             "scope.userInfo": true,
+    //             "scope.userLocation": true
+    //           }
+    //         }
+    //       })
+    //     }
+    //   }
+    // })
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -14,7 +28,6 @@ App({
         this.globalData.width = res.windowWidth
       }
     })
-
     // 登录
     wx.login({
       success: res => {
@@ -51,7 +64,31 @@ App({
         console.log(res)
         this.globalData.latitude = res.latitude
         this.globalData.longitude = res.longitude
+        //this.convertCity(res.latitude, res.longitude, this)
+      },
+      fail: (res) => {
+        wx.showToast({
+          image: '../images/icon/attention.png',
+          title: '定位未授权!'
+        });
       }
+    })
+  },
+  // 经纬度转换城市
+  convertCity: function (Lat, Lng, _this) {
+    var requestConvertPromisified = util.wxPromisify(wx.request);
+    requestConvertPromisified({
+      url: 'https://api.map.baidu.com/geocoder/v2/?ak=2ojY8H4BNgtoDyzXfNKTE87OCpNNm1yH&location=' + Lat + ',' + Lng + '&output=json',
+      // url: 'https://api.map.baidu.com/telematics/v3/weather?ak=2ojY8H4BNgtoDyzXfNKTE87OCpNNm1yH&location=上海市普陀区' + '&output=json',
+      data: {},
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json',
+      },
+    }).then((res) => {
+      _this.globalData.city = res.data.result.addressComponent.city
+    }).catch((res) => {
     })
   },
   globalData: {
@@ -60,6 +97,7 @@ App({
     User_Phone: '18234567893', //18234567890',
     User_name:'',
     Add_count:'',
+    city:'',
     Add_date: util.formatTime(new Date()),
     AQI:'',
     MessageCount:0,

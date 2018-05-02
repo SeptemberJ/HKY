@@ -33,6 +33,7 @@ Page({
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({
+        // city: app.globalData.city,
         userInfo: app.globalData.userInfo,
         AccountName: app.globalData.User_name,
         hasUserInfo: true
@@ -141,7 +142,9 @@ Page({
       url: h.main + '/selecttemperature',
       data: {
         latitude: app.globalData.latitude,
-        longitude: app.globalData.longitude,
+        longitude: app.globalData.longitude
+        // latitude: 31.23603, //app.globalData.latitude,
+        // longitude: 121.38541, //app.globalData.longitude
       },
       method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
       // header: {

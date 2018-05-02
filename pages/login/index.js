@@ -106,7 +106,7 @@ Page({
     let DATA = {
       ftelphone: this.data.User_Phone,
       password: MD5.hexMD5(this.data.User_Psd),
-      head_img: this.data.userInfo.avatarUrl
+      head_img: this.data.userInfo.avatarUrl ? this.data.userInfo.avatarUrl:''
     }
     requestPromisified({
       url: h.main + '/login',

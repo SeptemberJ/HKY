@@ -106,11 +106,11 @@ Page({
           })
           if (this.data.Type == '0') {
             wx.navigateTo({
-              url: '../weight/index'
+              url: '../weight/index/index'
             })
           } else {
             wx.navigateTo({
-              url: '../diet/index/index'
+              url: '../diet/index/index/index'
             })
           }
           break

@@ -123,7 +123,7 @@
   <!--weight chart  -->
   <view class='HeathEvaluation_item'>
      <view class='HeathEvaluation_item_inner'>
-      <view class='Chart_weight'>
+      <view hidden="{{HeathEvaluation.weight_trend.weight_trend_data.length<2}}" class='Chart_weight'>
         <text class='Bold'>近期（一个月）体重变化</text>
         <view class='Chart_weight_trend'>
           <view class='compare_item compare_lately'>
@@ -138,7 +138,7 @@
             <image src="{{HeathEvaluation.weight_trend.weight_month_number > 0?'../../../images/icon/weightUp.png':'../../../images/icon/weightDown.png'}}"></image>
             <text class='compare_item_Number'>{{HeathEvaluation.weight_trend.weight_month_number}}</text>
             <view class='compare_Date'>
-              <text>比2天前</text>
+              <text>比最近一个月</text>
               <text>{{HeathEvaluation.weight_trend.weight_month_date}}</text>
             </view>
           </view>
@@ -147,6 +147,12 @@
           <ec-canvas  id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
         </view>
       </view>
+      <!--记录少于两条  -->
+      <view hidden="{{HeathEvaluation.weight_trend.weight_trend_data.length>=2}}" class='Chart_weight'>
+        <text class='Bold'>近期（一个月）体重变化</text>
+        <text class='recordLess'>记录太少，多记录几次在来吧</text>
+      </view>
+
      </view>
   </view>
   <!--disease  -->
