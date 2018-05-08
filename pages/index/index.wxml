@@ -1,91 +1,185 @@
+
 <!--index.wxml-->
 <view class='Wrap'>
+  <!--temperatureInfo top  -->
   <view class='dataInfo'>
     <view class='topBar'>
-      <image class="Avatar" src="{{userInfo.avatarUrl}}"></image>
-      <!-- <view class='nickNmae'>
-        {{AccountName}}的控
-      </view> -->
+      <!-- <image class="Avatar" src="{{userInfo.avatarUrl}}"></image> -->
+      <view class='nickName'>
+        {{CurHomeName == ''?'':CurHomeName}}
+         <image class="ArrowDown" wx:if="{{CurHomeName != ''}}" src="../../images/icon/arrow.png"></image> 
+      </view>
+      <view class='city'>
+        <text>{{airQuality.cityname}}</text>
+        <!-- <image class="location" src="../../images/icon/location.png"></image> -->
+      </view>
       <view class='operation'>
-        <!-- <text class='operationText'>环境</text>
-        <text class='operationText' bindtap='ToWeight'>体重</text>
-        <text class='operationText' bindtap='ToDiet'>饮食</text> -->
         <image class='operationIcon messageIocn' bindtap='ToMyMessage' src='../../images/icon/message.png'></image>
         <view class='TipDot' wx:if='{{MessageCount>0}}'></view>
       <image class='operationIcon' src='../../images/icon/add.png' bindtap='ToAdd'></image>
       </view>
     </view>
-    <view class='info'>
-      <view class='info_Left'>
-        <view class='Left_item_first'><image class='locationIcon' src='../../images/icon/location.png' bindtap='ToAdd'></image>
-         <text>{{airQuality.citynm}}</text> 
-        <!-- <text>{{city}}</text> -->
-        
+    <view class='temperatureInfo'>
+      <view class='temperature_conclusion'>
+        <view class='conclusion_item'>
+          <image class='temperatureIcon' src='{{airQuality.weather_icon}}'></image>
+          <text class='conclusion_temp_curr'>{{airQuality.temp}} </text>
+          <text>℃</text>
         </view>
-        <view class='Left_item' style='margin-top:0rpx;'>
-          <text>{{DateInfo.Hour}}:{{DateInfo.Minute}}:{{DateInfo.Second}}</text>
-          <text class='smallFont'>{{DateInfo.Month}}/{{DateInfo.Day}} 星期{{DateInfo.Week}}</text>
+        <view class='conclusion_item'>
+          <view class="colorfulBlock {{'level_' + airQuality.aqi_levid}}"></view>
+          <text>{{airQuality.aqi_levnm}}</text>
+          <text>{{airQuality.aqi}}</text>
         </view>
-        <view class='Left_item'>
-          <view class='height_20 SpaceBettween'>
-            <image class='temperatureIcon' src='{{airQuality.weather_icon}}' bindtap='ToAdd'></image>
-            <text class='smallFont'>{{airQuality.weather}}</text>
-            <text class='smallFont'>{{airQuality.temperature}}</text>
-          </view>
-          <view class='height_20'>
-            <text class='smallFont'>AQI:{{airQuality.aqi}}/{{airQuality.aqi_levnm}}</text>
-          </view>
-          <view class='height_20'>
-            <text class='smallFont' bindtap='ToTemperature'>查看详情 >></text>
-          </view>
+        <view class='conclusion_item'>
+          <text>{{airQuality.aqi_remark}}</text>
         </view>
       </view>
-      <view class='info_Right'>
-        <view class='Right_item'>
-          <text class='smallFont'>PM2.5</text>
-          <text class='smallFont'>{{airQuality.pm25}}μg/m³</text>
+      <view class='left_add'>
+        <view class='left_add_item'>
+          <text>{{airQuality.wind}}{{airQuality.winp}}</text>
         </view>
-        <view class='Right_item'>
-          <text class='smallFont'>VOCs</text>
-          <text class='smallFont'>{{airQuality.VOCs}}mg/m³</text>
-        </view>
-        <view class='Right_item'>
-          <text class='smallFont'>CO2</text>
-          <text class='smallFont'>{{airQuality.CO2}}ppm</text>
-        </view>
-        <view class='Right_item'>
-          <text class='smallFont'>CO</text>
-          <text class='smallFont'>{{airQuality.CO}}ppm</text>
-        </view>
-        <view class='Right_item'>
-          <text class='smallFont'>甲醛</text>
-          <text class='smallFont'>{{airQuality.maxformaldehyde}}mg/m³</text>
-        </view>
-        <view class='Right_item'>
-          <text class='smallFont'>湿度</text>
-          <text class='smallFont'>{{airQuality.temhum}}%RH</text>
+        <view class='left_add_item'>
+          <text>{{airQuality.SD}}</text>
         </view>
       </view>
     </view>
   </view>
+  <!--./temperatureInfo top  -->
 
-  <view class='carousel'>
-    <swiper indicator-dots="{{indicatorDots}}"
+  <!--temperatureInfo detail  -->
+  <!--open  -->
+  <view class='ToggleArrow_Down' bindtap='Toggle' wx:if="{{Toggle_show != 1}}">
+    <image src='../../images/icon/double-arrow-down.png'></image>
+  </view>
+  <!--detail  -->
+  <view  class="TemperatureDetail {{Toggle_show == 0?'':(Toggle_show == 1?'Toggle_show':'Toggle_close')}}">
+    <view class='TemperatureDetail_block'>
+      <view class='TemperatureDetail_block_columnTit'>
+        <text>室外污染物浓度(μg/m³)</text>
+      </view>
+      <view class='TemperatureDetail_block_data'>
+        <view class='data_item'>
+          <text class='BigSize'>{{airQuality.CO2}}</text>
+          <text>CO2</text>
+        </view>
+        <view class='data_item'>
+          <text class='BigSize'>{{airQuality.CO}}</text>
+          <text>CO</text>
+        </view>
+        <view class='data_item'>
+          <text class='BigSize'>{{airQuality.VOCs}}</text>
+          <text>VOCs</text>
+        </view>
+        <view class='data_item'>
+          <text class='BigSize'>{{airQuality.pm25}}</text>
+          <text>PM2.5</text>
+        </view>
+        <view class='data_item'>
+          <text class='BigSize'>{{airQuality.maxformaldehyde}}</text>
+          <text>甲醛</text>
+        </view>
+        <view class='data_item'>
+          <text class='BigSize'>{{airQuality.SD}}</text>
+          <text>湿度</text>
+        </view>
+      </view>
+    </view>
+    <view class='TemperatureDetail_block'>
+      <view class='TemperatureDetail_block_data'>
+      <scroll-view class="listWrap" scroll-x="true" bindscroll="scroll" style="height:auto;">
+        <view class='data_item_scroll' wx:for="{{airQuality.jsonTemp2}}" wx:for-index="DayIdx" wx:for-item="DayData" wx:key="DayIdx">
+          <text>{{DayData.week}}</text>
+          <text>{{DayData.days}}</text>
+          <image src="{{DayData.weather_icon}}"></image>
+          <text>{{DayData.temperature}}</text>
+          <text>{{DayData.wind}}</text>
+        </view>
+        </scroll-view>
+      </view>
+    </view>
+
+  </view>
+  <!--close  -->
+  <view class='ToggleArrow_Up' bindtap='Toggle' wx:if="{{Toggle_show == 1}}">
+    <image src='../../images/icon/double-arrow-down.png'></image>
+  </view>
+  <!--./temperatureInfo detail  -->
+
+  <view style='width:100%;' wx:if="{{EQList.length<=0}}">
+    <!-- carousel -->
+    <view class='carousel'>
+      <swiper indicator-dots="{{indicatorDots}}"
   autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-      <block wx:for="{{imgUrls}}">
-        <swiper-item>
-          <!-- <text>{{item.title}}</text>
-          <text>{{item.content}}</text> -->
-           <image src="{{item}}" class="slide-image"/> 
-        </swiper-item>
-      </block>
-    </swiper>
+        <block wx:for="{{imgUrls}}">
+          <swiper-item>
+            <image src="{{item}}" class="slide-image"/> 
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+    <!-- ./carousel -->
+
+    <!-- diet -->
+    <view class='Card_diet' bindtap='MyDiet'>
+      <view class='Card_column'>
+        <view class='Card_circle'>
+          饮食
+        </view>
+        <view class='Card_right_data'>
+          <text>{{ifOver?'已超出':'还可以吃'}}</text>
+          <text>{{Surplus}}</text>
+          <text>千卡</text>
+        </view>
+      </view>
+      <view class='Card_body'>
+        <view class='Card_body_item'>
+          <view class='BorderImage'>
+            <image src='../../images/icon/tanshui.png'></image>
+          </view>
+          <text>碳水</text>
+          <text>{{DietInfo.carbohydrate.sum?DietInfo.carbohydrate.sum:'--'}} / {{DietInfo.carbohydrate.standard?DietInfo.carbohydrate.standard:'--'}}</text>
+          <text class='ColorGray'>已摄入 / 目标</text>
+        </view>
+        <view class='Card_body_item'>
+          <view class='BorderImage'>
+            <image src='../../images/icon/zhifang.png'></image>
+          </view>
+          <text>脂肪</text>
+          <text>{{DietInfo.fat.sum?DietInfo.fat.sum:'--'}} / {{DietInfo.fat.standard?DietInfo.fat.standard:'--'}}</text>
+          <text class='ColorGray'>已摄入 / 目标</text>
+        </view>
+        <view class='Card_body_item'>
+          <view class='BorderImage'>
+            <image src='../../images/icon/danbaizhi.png'></image>
+          </view>
+          <text>蛋白质</text>
+          <text>{{DietInfo.protein.sum?DietInfo.protein.sum:'--'}} / {{DietInfo.protein.standard?DietInfo.protein.standard:'--'}}</text>
+          <text class='ColorGray'>已摄入 / 目标</text>
+        </view>
+      </view>
+    </view>
+    <!-- ./diet -->
+
+    <!-- addBlock -->
+    <view class='addBlock'>
+      <text class='Bold smallFont MarginB_20'>不再关心设备，更多是设备开始在关心我们</text>
+      <text class='smallFont'>无论何时何地，系统学习感知且节能，让你感受和享受智控,酷玩带来的价值</text>
+      <view wx:if="{{HomeList.length<=0}}" class='Btn smallFont' bindtap="FirstAdd">新建家+</view>
+      <view class='Btn smallFont' bindtap="AddEquipment">添加设备+</view>
+    </view>
+    <!-- ./addBlock -->
   </view>
 
-  <view class='addBlock'>
-    <text class='Bold smallFont MarginB_20'>不再关心设备，更多是设备开始在关心我们</text>
-    <text class='smallFont'>无论何时何地，系统学习感知且节能，让你感受和享受智控,酷玩带来的价值</text>
-    <view class='Btn smallFont' bindtap='ToAdd'>添加设备+</view>
-    <!-- <button class='MarginT_10 smallFont' type="default" bindtap='ToAdd'>添加设备+</button> -->
+
+  <!--设备列表  -->
+  <view class='EQList' wx:if="{{EQList.length>0}}">
+    <view class='EQList_tab'>
+      <text>设备</text>
+      <text>场景</text>
+      <text>房间</text>
+    </view>
   </view>
+
+
 </view>

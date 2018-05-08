@@ -12,7 +12,7 @@
         <text class='content'>{{Dynamic.comment_content}}</text>
         <!--图片  -->
         <view class='imgList'>
-          <image class='imgList_item' src='{{Picture}}' wx:for="{{Dynamic.comment_picture}}" wx:for-index="PictureIdx" wx:for-item="Picture" wx:key="PictureIdx"></image>
+          <image class='imgList_item' src='{{Picture}}' wx:for="{{Dynamic.comment_picture}}" wx:for-index="PictureIdx" wx:for-item="Picture" wx:key="PictureIdx" bindtap='PreviewImage' data-pictures='{{Dynamic.comment_picture}}' data-picture-idx='{{PictureIdx}}'></image>
         </view>
         <!--操作框  -->
         <view class='zanBlock'>

@@ -8,11 +8,13 @@ const app = getApp()
 Page({
   data: {
     userInfo: {},
+    CurHomeName:'',
     AccountName:'',
     MessageCount:0,
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     DateInfo:'',
+    Toggle_show: 0,  //0初始 1展开 -1关闭
     airQuality:'',
     imgUrls: [
       '../../images/picture/carousel_1.png',
@@ -21,7 +23,11 @@ Page({
     indicatorDots: true,
     autoplay: false,
     interval: 2000,
-    duration: 1000
+    duration: 1000,
+    HomeList:[],
+    CurHomeName:null,
+    CurHomeId:null,
+    EQList:[]
 
   },
   //事件处理函数
@@ -44,6 +50,7 @@ Page({
       app.userInfoReadyCallback = res => {
         this.setData({
           userInfo: res.userInfo,
+          AccountName: app.globalData.User_name,
           hasUserInfo: true
         })
       }
@@ -64,18 +71,89 @@ Page({
     this.GetAirQuality()
     this.StartClock()
     this.GetMessage()
+    this.GetDietInfo(util.formatTime(new Date()))
+    this.IfHasInfo()
+    this.setData({
+      HomeList: app.globalData.HomeList,
+      CurHomeName: app.globalData.CurHomeName,
+      CurHomeId: app.globalData.CurHomeId,
+    })
+    if (app.globalData.CurHomeId){
+      this.GetCurEQList()
+    }
   },
   getUserInfo: function(e) {
-    console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
   },
+  //Toggle temperature
+  Toggle(){
+    this.setData({
+      Toggle_show: this.data.Toggle_show == 0 ? 1 : (this.data.Toggle_show == 1?-1:1)
+    })
+  },
   ToAdd() {
     wx.switchTab({
       url: '../equipment/index/index'
+    })
+  },
+  //第一次从家开始添加
+  FirstAdd(){
+    wx.navigateTo({
+      url: '../my/home/add/index'
+    })
+  },
+  //添加设备
+  AddEquipment(){
+    wx.navigateTo({
+      url: '../equipment/add/index'
+    })
+  },
+  //获取饮食信息
+  GetDietInfo(CurDate){
+    requestPromisified({
+      url: h.main + '/selectweighttype1?ftelphone=' + app.globalData.User_Phone + '&faddtime=' + CurDate,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          let temp = res.data.dietInfo[0]
+          this.setData({
+            DietInfo: temp,
+            ifOver: temp.diet_standard < temp.diet_sum ? true : false,
+            Surplus: Math.abs(temp.diet_standard - temp.diet_sum).toFixed(2)
+          })
+          break
+        case 3:
+          this.setData({
+            DietInfo: '',
+            ifOver: false,
+            Surplus: '--'
+          })
+          break
+        case 0:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '获取失败'
+          });
+          break
+        default:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+      }).catch((res)=>{
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+      console.log(res)
     })
   },
   ToTemperature() {
@@ -91,6 +169,56 @@ Page({
   ToDiet() {
     wx.navigateTo({
       url: '../diet/index'
+    })
+  },
+  //进入我的饮食
+  MyDiet() {
+    if (app.globalData.ifHasInfo) {
+      wx.navigateTo({
+        url: '../diet/index/index?type=1' //1身高
+      })
+    } else {
+      wx.navigateTo({
+        url: '../add/index'
+      })
+    }
+  },
+  //是否填写过身高体重
+  IfHasInfo() {
+    requestPromisified({
+      url: h.main + '/selectweighttype?ftelphone=' + app.globalData.User_Phone,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          app.globalData.ifHasInfo = true
+          break
+        case 3:
+          app.globalData.ifHasInfo = false
+          break
+        case 0:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '消息获取失败!'
+          });
+          break
+        default:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
     })
   },
   //时钟
@@ -208,6 +336,44 @@ Page({
           wx.showToast({
             image: '../../images/icon/attention.png',
             title: '消息获取失败!'
+          });
+          break
+        default:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+    })
+  },
+  //获取当前家下设备列表
+  GetCurEQList() {
+    requestPromisified({
+      url: h.main + '/selectregisteruser?homeid=' + app.globalData.CurHomeId,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      console.log(res.data)
+      switch (res.data.result) {
+        case 1:
+          this.setData({
+            EQList: res.data.registermachine
+          })
+          break
+        case 0:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '设备获取失败!'
           });
           break
         default:

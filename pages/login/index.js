@@ -138,6 +138,7 @@ Page({
           app.globalData.User_Phone = this.data.User_Phone
           app.globalData.User_name = res.data.registerlist[0].fname
           app.globalData.Add_count = res.data.integral
+          this.GetHomeList()
           break
         case 2:
           wx.showToast({
@@ -178,4 +179,41 @@ Page({
     })
     
   },
+  GetHomeList(){
+    //获取home list
+    requestPromisified({
+      url: h.main + '/selectallhome?ftelphone=' + this.data.User_Phone,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          app.globalData.HomeList = res.data.homelist
+          app.globalData.CurHomeName = res.data.homelist1[0].fname
+          app.globalData.CurHomeId = res.data.homelist1[0].id
+          break
+        case 0:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '获取家失败！'
+          });
+          break
+        default:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+    })
+  }
 })

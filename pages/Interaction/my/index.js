@@ -19,11 +19,17 @@ Page({
     isLoading: false,
     Page: 1
   },
-  onShow(){
+  onLoad() {
     this.setData({
       DynamicList: []
     })
     this.GetMyRelease(1)
+  },
+  onShow(){
+    // this.setData({
+    //   DynamicList: []
+    // })
+    // this.GetMyRelease(1)
   },
   ToRelease() {
     wx.navigateTo({

@@ -66,7 +66,12 @@ page{
     box-sizing: border-box;  
     border:10rpx solid #30415b;  
     clip:rect(0,300px,300px,150px);  
-}  
+}
+.circle_over{
+  box-sizing: border-box;  
+  border:10rpx solid red;  
+  clip:rect(0,300px,300px,150px);  
+}
 .clip-auto{  
     clip:rect(auto, auto, auto, auto);  
 }  
@@ -79,9 +84,18 @@ page{
     transition:transform ease;  
     border:10rpx solid #49d7c1;  
     clip: rect(0,150rpx,300rpx,0);  
+}
+.dataCircle .left_over{  
+    transition:transform ease;  
+    border:10rpx solid red;  
+    clip: rect(0,150rpx,300rpx,0);  
 }  
 .dataCircle .right{  
     border:10rpx solid #49d7c1;  
+    clip: rect(0,300rpx,300rpx,150rpx);  
+}
+.dataCircle .right_over{ 
+    border:10rpx solid red;  
     clip: rect(0,300rpx,300rpx,150rpx);  
 }  
 .wth0{  

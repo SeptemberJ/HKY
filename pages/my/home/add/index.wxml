@@ -1,0 +1,8 @@
+<view class="inputBar">
+  <input placeholder='输入家的名称' bindinput='ChangeHomeName'></input>
+</view>
+<view class='SaveBt'>
+  <button class='ColorWhite BgRed' bindtap='CreateHome'>保存</button>
+</view>
+  
+

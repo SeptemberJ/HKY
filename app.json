@@ -18,6 +18,8 @@
     "pages/weight/index/index",
     "pages/setInfo/index",
     "pages/weight/report/index",
+
+    "pages/my/home/add/index",
    
     
 
@@ -44,7 +46,7 @@
   "tabBar": {
     "color": "#000",
     "selectedColor": "#3498db",
-    "borderStyle": "white",
+    "borderStyle": "#efefef",
     "backgroundColor": "#fff",
     "list": [
       {

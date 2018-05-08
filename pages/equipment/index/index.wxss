@@ -37,6 +37,11 @@
   height: 60rpx;
   display: block;
 }
+.operationIcon_s{
+  width: 50rpx;
+  height: 50rpx;
+  display: block;
+}
 .colorGreen{
   color: #259b6c;
 }
@@ -45,6 +50,7 @@
 }
 .equipmentList{
   width: 100%;
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -52,7 +58,7 @@
 }
 .equipmentItem{
   width: 100%;
-  margin-bottom: 10rpx;
+  margin-bottom: 25rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;

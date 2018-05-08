@@ -97,9 +97,9 @@ Page({
         this.setData({
           DietDetail: res.data,
           Calorie: (res.data.NutrientElements.calorie * this.data.IngestionAmount / 100).toFixed(0),
-          Carbohydrate: (res.data.NutrientElements.carbohydrate * this.data.IngestionAmount / 100).toFixed(0),
+          Carbohydrate: (res.data.NutrientElements.carbohydrate * this.data.IngestionAmount / 100).toFixed(2),
           Fat: (res.data.NutrientElements.fat * this.data.IngestionAmount / 100).toFixed(2),
-          Protein: (res.data.NutrientElements.protein * this.data.IngestionAmount / 100).toFixed(0),
+          Protein: (res.data.NutrientElements.protein * this.data.IngestionAmount / 100).toFixed(2),
         })
       },
     })

@@ -204,6 +204,11 @@ Page({
                 duration: 1500
               })
               setTimeout(() => {
+                var pages = getCurrentPages();
+                if (pages.length > 1) {
+                  var prePage = pages[pages.length - 2];
+                  prePage.GetAllRelease(1)
+                }
                 wx.navigateBack()
               }, 1500)
             }
@@ -285,6 +290,11 @@ Page({
             loadingHidden: true
           })
           setTimeout(() => {
+            var pages = getCurrentPages();
+            if (pages.length > 1) {
+              var prePage = pages[pages.length - 2];
+              prePage.onPullDownRefresh()
+            }
             wx.navigateBack()
           }, 1500)
           break

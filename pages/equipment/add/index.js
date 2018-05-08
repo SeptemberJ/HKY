@@ -61,7 +61,8 @@ Page({
       second_name: this.data.Equipment_Name,
       master_control: this.data.Equipment_Code_F,
       second_qrcode: this.data.Equipment_Code_S,
-      ftelphone: app.globalData.User_Phone
+      ftelphone: app.globalData.User_Phone,
+      homeid: app.globalData.CurHomeId,
     }
     wx.showLoading({
       title: '加载中',

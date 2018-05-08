@@ -7,6 +7,7 @@ const app = getApp()
 Page({
   data: {
     chooseDate:'',
+    nowDate:'',
     percent:100,
     ifOver: false,
     Surplus: '',
@@ -49,7 +50,8 @@ Page({
   },
   onLoad(){
     this.setData({
-      chooseDate: util.formatTime(new Date())
+      chooseDate: util.formatTime(new Date()),
+      nowDate: util.formatTime(new Date()),
     })
   },
   onShow(){

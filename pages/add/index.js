@@ -110,7 +110,7 @@ Page({
             })
           } else {
             wx.navigateTo({
-              url: '../diet/index/index/index'
+              url: '../diet/index/index'
             })
           }
           break

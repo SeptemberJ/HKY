@@ -164,4 +164,56 @@ Page({
       url: '../analysis/index?id=' + e.currentTarget.dataset.id + '&name=' + e.currentTarget.dataset.name
     })
   },
+  //删除设备
+  Delete(e) {
+    let ID = e.currentTarget.dataset.id
+    wx.showModal({
+      title: '提示',
+      content: '确定删除该设备?',
+      success: (res) => {
+        if (res.confirm) {
+          requestPromisified({
+            url: h.main + '/deletenoqrcode?qrcodeid=' + ID,
+            data: {
+            },
+            method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+            // header: {
+            //   'content-type': 'application/x-www-form-urlencoded',
+            //   'Accept': 'application/json'
+            // }, // 设置请求的 header
+          }).then((res) => {
+            switch (res.data.result) {
+              case 1:
+                wx.showToast({
+                  title: '删除成功！',
+                  icon: 'success',
+                  duration: 1500
+                })
+                this.GetEquipmentList()
+                break
+              case 0:
+                wx.showToast({
+                  image: '../../../images/icon/attention.png',
+                  title: '删除失败'
+                });
+                break
+              default:
+                wx.showToast({
+                  image: '../../../images/icon/attention.png',
+                  title: '服务器繁忙！'
+                });
+            }
+          }).catch((res) => {
+            wx.showToast({
+              image: '../../../images/icon/attention.png',
+              title: '服务器繁忙！'
+            });
+            console.log(res)
+          })
+        } else if (res.cancel) {
+          return false
+        }
+      }
+    })
+  },
 })

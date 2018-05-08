@@ -4,21 +4,6 @@ var requestPromisified = util.wxPromisify(wx.request)
 //app.js
 App({
   onLaunch: function () {
-    // wx.getSetting({
-    //   success(res) {
-    //     if (!res.authSetting['scope.userLocation']) {
-    //       wx.openSetting({
-    //         success: (res) => {
-    //           res.authSetting = {
-    //             "scope.userInfo": true,
-    //             "scope.userLocation": true
-    //           }
-    //         }
-    //       })
-    //     }
-    //   }
-    // })
-    // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
@@ -29,11 +14,11 @@ App({
       }
     })
     // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
+    // wx.login({
+    //   success: res => {
+    //     // 发送 res.code 到后台换取 openId, sessionKey, unionId
+    //   }
+    // })
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -104,5 +89,9 @@ App({
     latitude:'',
     longitude:'',
     ifHasInfo:false,  //是否填写过身高体重
+    HomeList:[],
+    CurHomeName:null,
+    CurHomeId: null,
+
   }
 })

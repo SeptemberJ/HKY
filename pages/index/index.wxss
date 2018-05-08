@@ -1,6 +1,6 @@
 /**index.wxss**/
 page{
-  background: #f1f6f8;
+   background: #f1f6f8; 
 }
 .Wrap{
   width: 100%;
@@ -11,7 +11,7 @@ page{
 }
 .dataInfo{
   width: 750rpx;
-  height: 190px;
+  /* height: 150px; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,6 +33,22 @@ page{
   width: 25px;
   height: 25px;
   border-radius: 50%;
+}
+.ArrowDown{
+  width: 35rpx;
+  height: 35rpx;
+  margin-left: 10rpx; 
+  transform: rotate(90deg);
+}
+.city{
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.location{
+  width: 35rpx;
+  height: 35rpx;
+  margin-left: 10rpx; 
 }
 .operation{
   display: flex;
@@ -61,7 +77,116 @@ page{
   top: -2px;
   left: -4px;
 }
-.info{
+.temperatureInfo{
+  width: 710rpx;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.temperature_conclusion{
+  width: 710rpx;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+}
+.left_add{
+  width: 280rpx;
+  height: 400rpx;
+  position: absolute;
+  top: 40px;
+  right: 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  color: #fff;
+}
+.conclusion_item{
+  width: 710rpx;
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* .left_add_item{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+.conclusion_item text{
+  margin: 0 10rpx;
+  color: #fff;
+}
+/* .conclusion_left{
+  width: 500rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.conclusion_right{
+  width: 210rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.conclusion_left_topbar{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+} */
+.temperatureIcon{
+  width: 50rpx;
+  height: 50rpx;
+  margin-right: 10rpx;
+  display: inline-block;
+}
+.conclusion_temp_curr{
+  font-size: 80rpx;
+  color: #fff;
+  font-weight: bold;
+}
+/* .conclusion_left_middle , .conclusion_left_bottom{
+  margin-bottom: 10rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.conclusion_left_middle text{
+  padding: 0 10rpx;
+} */
+.colorfulBlock{
+  width: 20rpx;
+  height: 20rpx;
+  border: 2px solid #fff;
+  border-radius: 50%;
+}
+.level_1{
+  background: #01e400;
+}
+.level_2{
+  background: yellow;
+}
+.level_3{
+  background: #fea500;
+}
+.level_4{
+  background: #fe0000;
+}
+.level_5{
+  background: #81007f;
+}
+.level_6{
+  background: #7e0123;
+}
+/* .info{
   width: 710rpx;
   padding: 0 20rpx;
   height: 140px;
@@ -134,7 +259,158 @@ page{
   align-items: center;
   justify-content: center;
   color: #fff;
+} */
+
+.ToggleArrow_Down{
+  width: 100%;
+  height: 60rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #3498db;
 }
+.ToggleArrow_Up{
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #3498db;
+}
+.ToggleArrow_Down image{
+  width: 50rpx;
+  height: 50rpx;
+  animation:breath 1s;
+  -webkit-animation:breath 1s infinite; /*Safari and Chrome*/
+}
+.ToggleArrow_Up image{
+  width: 50rpx;
+  height: 50rpx;
+  transform: rotate(180deg);
+  animation:breath 1s;
+  -webkit-animation:breath 1s infinite; /*Safari and Chrome*/
+}
+@keyframes breath /*Safari and Chrome*/
+{
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.TemperatureDetail{
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+}
+.Toggle_show{
+  width: 100%;
+  animation:Toggle_show 1s forwards; 
+  -webkit-animation:Toggle_show 1s forwards;/*Safari and Chrome*/
+}
+@keyframes Toggle_show /*Safari and Chrome*/
+{
+    from {height:0px;}
+    to {height:230px;}
+}
+.Toggle_close{
+  width: 100%;
+  animation:Toggle_close 2s  forwards;
+  -webkit-animation:Toggle_close 2s  forwards; /*Safari and Chrome*/
+}
+@keyframes Toggle_close /*Safari and Chrome*/
+{
+    from {height:230px;}
+    to {height:0px;}
+}
+.Toggle_show .TemperatureDetail_block{
+  position:relative;
+  animation:Up 2s 0s forwards; 
+  -webkit-animation:Up 2s 0s forwards;/*Safari and Chrome*/
+}
+@keyframes Up /*Safari and Chrome*/
+{
+    from {top:500px;}
+    to {top:0px;}
+}
+.Toggle_close .TemperatureDetail_block{
+  position:relative;
+  animation:Down 1.5s  forwards; 
+  -webkit-animation:Down 1.5s  forwards;/*Safari and Chrome*/
+}
+@keyframes Down /*Safari and Chrome*/
+{
+    from {top:0px;}
+    to {top:500px;}
+}
+.TemperatureDetail{
+  background-color: #3498db;
+  background-image: linear-gradient(180deg, #3498db 25%, #ffffff 100%);
+}
+.TemperatureDetail_block{
+  width: 710rpx;
+  padding: 20rpx 10rpx;
+  margin: 10rpx auto;
+  position: relative;
+  top: 500px;
+  border-radius: 25rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: space-around;
+  background: rgba(0, 0, 0, 0.2)
+}
+.TemperatureDetail_block_columnTit{
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.TemperatureDetail_block_data{
+  width: 710rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.listWrap{
+  white-space: nowrap; 
+  display: flex;
+}
+.listWrap .data_item_scroll{
+  width: 177.5rpx;
+  display: inline-block;
+  text-align: center;
+}
+.data_item{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.data_item_scroll image{
+  width: 30rpx;
+  height: 30rpx;
+  margin: 10rpx auto;
+  display: block;
+}
+.data_item_scroll text{
+  width: 100%;
+  margin-bottom: 10rpx;
+  display: block;
+}
+.data_item .BigSize{
+  font-size: 38rpx;
+  font-weight: bold;
+}
+
+/*carousel  */
 .carousel{
   width: 750rpx;
   margin: 20px 0;
@@ -166,23 +442,91 @@ swiper {
   border-radius: 5px;
   margin: 20px auto;
 }
-/* .userinfo {
+
+/*Card_diet  */
+.Card_diet{
+  width: 700rpx;
+  margin: 50px auto 20px auto;
+}
+.Card_column{
+  width: 100%;
+  height: 100rpx;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #55CDA7;
+}
+.Card_circle{
+  width: 200rpx;
+  height: 200rpx;
+  text-align: center;
+  line-height: 200rpx;
+  border-radius: 50%;
+  position: absolute;
+  top: -50%;
+  left: -15rpx;
+  background: #55CDA7;
+  color: #fff;
+  font-weight: bold;
+}
+.Card_right_data{
+  height: 100rpx;
+  line-height: 100rpx;
+  position: absolute;
+  top: 0;
+  right: 20rpx;
+  color: #fff;
+}
+.Card_body{
+  width: 700rpx;
+  padding-top: 60rpx;
+  padding-bottom: 30rpx;
+  display: flex;
+  justify-content: space-around;
+  background: #fff;
+}
+.Card_body_item{
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
 }
-
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
+.BorderImage{
+  width: 100rpx;
+  height: 100rpx;
+  padding: 10rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 50%;
+  border: 1px solid #dedede;
+  margin: 10px auto;
+}
+.Card_body_item image{
+  width: 80rpx;
+  height: 80rpx;
+  display: block;
+}
+.Card_body_item text{
+  margin: 10rpx auto;
+}
+.ColorGray{
+  font-size: 26rpx;
+  color: #ccc;
 }
 
-.userinfo-nickname {
-  color: #aaa;
+/*EQList  */
+.EQList{
+  width: 750rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
 }
-
-.usermotto {
-  margin-top: 200px;
-} */
+.EQList_tab{
+  width: 750rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}

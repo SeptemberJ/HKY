@@ -4,7 +4,7 @@
   <!--calendar  -->
   <view class='Calendar'>
     <text>{{chooseDate}}</text>
-    <picker class='picker' mode="date" value="{{date}}" bindchange="DateChange">
+    <picker class='picker' mode="date" end="{{nowDate}}" bindchange="DateChange">
       <image class='smallIcon' src='../../../images/icon/calendar.png'></image>
       <!-- <view class="picker">
         日期{{chooseDate}}
@@ -14,9 +14,9 @@
   <!--dataCircle  -->
     <view class='dataCircle'>
     <view class="wrap">  
-      <view class="circle {{percent>50?'clip-auto':''}}">  
-          <view class="percent left" style="transform:rotate({{(18/5)*percent+'deg'}})"></view>  
-          <view class="percent right {{percent>50?'':'wth0'}}"></view>  
+      <view class="{{ifOver?'circle':'circle'}}  {{percent>50?'clip-auto':''}}">  
+          <view class="percent {{ifOver?'left_over':'left'}}" style="transform:rotate({{(18/5)*percent+'deg'}})"></view>  
+          <view class="percent {{ifOver?'right_over':'right'}} {{percent>50?'':'wth0'}}"></view>  
       </view>  
         <view class="dataInfo">
           <view><text class='samllSize'>{{ifOver?'已超出':'还可以摄入'}}</text></view>

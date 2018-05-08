@@ -68,7 +68,8 @@ Page({
     let DATA = {
       fname: this.data.User_Name,
       ftelphone: this.data.User_Phone,
-      password: MD5.hexMD5(this.data.User_Psd)
+      password: MD5.hexMD5(this.data.User_Psd),
+      laiyuan :1
     }
     this.setData({
       loadingHidden: false

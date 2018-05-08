@@ -7,7 +7,7 @@ const app = getApp()
 
 Page({
   data: {
-    ifHasData:true,
+    ifHasData:false,
     EquipmentId:'',
     dataList:[
       { 'kind': 'PM2.5', 'value': '', 'img': '../../../images/icon/pm2.5.png', 'unit':'μg/m³'},

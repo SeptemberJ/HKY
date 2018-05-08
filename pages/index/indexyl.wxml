@@ -1,0 +1,103 @@
+
+<!--index.wxml-->
+<view class='Wrap'>
+  <view class='dataInfo'>
+    <view class='topBar'>
+      <!-- <image class="Avatar" src="{{userInfo.avatarUrl}}"></image> -->
+      <view class='nickNmae'>
+        {{AccountName}}的控
+        <image class="ArrowDown" src="../../images/icon/arrow.png"></image>
+      </view> 
+      <view class='operation'>
+        <image class='operationIcon messageIocn' bindtap='ToMyMessage' src='../../images/icon/message.png'></image>
+        <view class='TipDot' wx:if='{{MessageCount>0}}'></view>
+      <image class='operationIcon' src='../../images/icon/add.png' bindtap='ToAdd'></image>
+      </view>
+    </view>
+    <view class='info'>
+      <view class='info_Left'>
+        <view class='Left_item_first'><image class='locationIcon' src='../../images/icon/location.png' bindtap='ToAdd'></image>
+         <text>{{airQuality.citynm}}</text> 
+        <!-- <text>{{city}}</text> -->
+        
+        </view>
+        <view class='Left_item' style='margin-top:0rpx;'>
+          <text>{{DateInfo.Hour}}:{{DateInfo.Minute}}:{{DateInfo.Second}}</text>
+          <text class='smallFont'>{{DateInfo.Month}}/{{DateInfo.Day}} 星期{{DateInfo.Week}}</text>
+        </view>
+        <view class='Left_item'>
+          <view class='height_20 SpaceBettween'>
+            <!-- <image class='temperatureIcon' src='{{airQuality.weather_icon}}' bindtap='ToAdd'></image> -->
+            <text class='smallFont'>{{airQuality.weather}}</text>
+             <text class='smallFont'>{{airQuality.temperature}}</text> 
+          </view>
+          <!-- <view class='height_20'>
+            <text class='smallFont'>{{airQuality.temperature}}</text>
+          </view> -->
+          <view class='height_20'>
+            <text class='smallFont'>AQI:{{airQuality.aqi}}/{{airQuality.aqi_levnm}}</text>
+          </view>
+          <view class='height_20'>
+            <text class='smallFont' bindtap='ToTemperature'>查看详情 >></text>
+          </view>
+        </view>
+      </view>
+      <view class='info_Right'>
+        <view class='Right_item'>
+          <text class='smallFont'>PM2.5</text>
+          <text class='smallFont'>{{airQuality.pm25}}μg/m³</text>
+        </view>
+        <view class='Right_item'>
+          <text class='smallFont'>VOCs</text>
+          <text class='smallFont'>{{airQuality.VOCs}}mg/m³</text>
+        </view>
+        <view class='Right_item'>
+          <text class='smallFont'>CO2</text>
+          <text class='smallFont'>{{airQuality.CO2}}ppm</text>
+        </view>
+        <view class='Right_item'>
+          <text class='smallFont'>CO</text>
+          <text class='smallFont'>{{airQuality.CO}}ppm</text>
+        </view>
+        <view class='Right_item'>
+          <text class='smallFont'>甲醛</text>
+          <text class='smallFont'>{{airQuality.maxformaldehyde}}mg/m³</text>
+        </view>
+        <view class='Right_item'>
+          <text class='smallFont'>湿度</text>
+          <text class='smallFont'>{{airQuality.temhum}}%RH</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+<view class='ToggleArrow_Down' bindtap='Toggle' wx:if="{{!Toggle_show}}">
+  <image src='../../images/icon/double-arrow-down.png'></image>
+</view>
+
+<view class="TemperatureDetail {{Toggle_show?'Toggle_show':'Toggle_close'}}"></view>
+
+ <view class='ToggleArrow_Up' bindtap='Toggle' wx:if="{{Toggle_show}}">
+  <image src='../../images/icon/double-arrow-down.png'></image>
+</view> 
+
+  <view class='carousel'>
+    <swiper indicator-dots="{{indicatorDots}}"
+  autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <block wx:for="{{imgUrls}}">
+        <swiper-item>
+          <!-- <text>{{item.title}}</text>
+          <text>{{item.content}}</text> -->
+           <image src="{{item}}" class="slide-image"/> 
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+
+  <view class='addBlock'>
+    <text class='Bold smallFont MarginB_20'>不再关心设备，更多是设备开始在关心我们</text>
+    <text class='smallFont'>无论何时何地，系统学习感知且节能，让你感受和享受智控,酷玩带来的价值</text>
+    <view class='Btn smallFont' bindtap='ToAdd'>添加设备+</view>
+
+  </view>
+</view>

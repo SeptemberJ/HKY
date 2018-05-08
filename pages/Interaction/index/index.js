@@ -45,12 +45,19 @@ Page({
   },
   onLoad() {
     console.log('onLoad---')
-  },
-  onShow(){
     this.setData({
-      DynamicList:[]
+      DynamicList: []
     })
     this.GetAllRelease(1)
+  },
+  onShow(){
+    // this.setData({
+    //   DynamicList: []
+    // })
+    // this.GetAllRelease(1)
+  },
+  Handle(e){
+    console.log(e.detail)
   },
   //我要发布
   ToRelease(){
@@ -303,7 +310,7 @@ Page({
     })
     let ID
     let ListTemp = this.data.DynamicList
-    if (ListTemp.length>0 && this.data.Page != 1){
+    if (ListTemp.length>0 && Page != 1){
       ID = ListTemp[ListTemp.length - 1].id
     }else{
       ID = ''
