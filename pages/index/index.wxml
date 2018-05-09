@@ -1,17 +1,13 @@
 
 <!--index.wxml-->
 <view class='Wrap'>
-  <!--temperatureInfo top  -->
+  <!--top  -->
   <view class='dataInfo'>
     <view class='topBar'>
       <!-- <image class="Avatar" src="{{userInfo.avatarUrl}}"></image> -->
       <view class='nickName'>
-        {{CurHomeName == ''?'':CurHomeName}}
-         <image class="ArrowDown" wx:if="{{CurHomeName != ''}}" src="../../images/icon/arrow.png"></image> 
-      </view>
-      <view class='city'>
-        <text>{{airQuality.cityname}}</text>
-        <!-- <image class="location" src="../../images/icon/location.png"></image> -->
+        {{CurHomeName?CurHomeName:''}}
+         <image class="ArrowDown" wx:if="{{CurHomeName}}" src="../../images/icon/arrow.png"></image> 
       </view>
       <view class='operation'>
         <image class='operationIcon messageIocn' bindtap='ToMyMessage' src='../../images/icon/message.png'></image>
@@ -19,37 +15,109 @@
       <image class='operationIcon' src='../../images/icon/add.png' bindtap='ToAdd'></image>
       </view>
     </view>
-    <view class='temperatureInfo'>
-      <view class='temperature_conclusion'>
-        <view class='conclusion_item'>
-          <image class='temperatureIcon' src='{{airQuality.weather_icon}}'></image>
-          <text class='conclusion_temp_curr'>{{airQuality.temp}} </text>
-          <text>℃</text>
-        </view>
-        <view class='conclusion_item'>
-          <view class="colorfulBlock {{'level_' + airQuality.aqi_levid}}"></view>
-          <text>{{airQuality.aqi_levnm}}</text>
-          <text>{{airQuality.aqi}}</text>
-        </view>
-        <view class='conclusion_item'>
-          <text>{{airQuality.aqi_remark}}</text>
-        </view>
-      </view>
-      <view class='left_add'>
-        <view class='left_add_item'>
-          <text>{{airQuality.wind}}{{airQuality.winp}}</text>
-        </view>
-        <view class='left_add_item'>
-          <text>{{airQuality.SD}}</text>
-        </view>
-      </view>
-    </view>
+    <!--切换模块  -->
+     <swiper class='swiper' bindchange="SwiperChnage">
+      <block>
+        <swiper-item>
+          <view class="swiper-item">
+            <!--当地天气  -->
+            <view class='temperatureInfo'>
+              <view class='temperature_conclusion'>
+                <view class='conclusion_item'>
+                  <text>{{airQuality.cityname}}</text>
+                  <image class="location" src="../../images/icon/location.png"></image> 
+                </view>
+                <view class='conclusion_item'>
+                  <image class='temperatureIcon' src='{{airQuality.weather_icon}}'></image>
+                  <text class='conclusion_temp_curr'>{{airQuality.temp}} </text>
+                  <text>℃</text>
+                </view>
+                <view class='conclusion_item'>
+                  <view class="colorfulBlock {{'level_' + airQuality.aqi_levid}}"></view>
+                  <text>{{airQuality.aqi_levnm}}</text>
+                  <text>{{airQuality.aqi}}</text>
+                </view>
+                <view class='conclusion_item'>
+                  <text>{{airQuality.aqi_remark}}</text>
+                </view>
+              </view>
+              <view class='left_add'>
+                <view class='left_add_item'>
+                  <text>{{airQuality.wind}}</text>
+                </view>
+                <view class='left_add_item'>
+                  <text>{{airQuality.winp}}</text>
+                </view>
+                <view class='left_add_item'>
+                  <image src='../../images/icon/shidu.png'></image>
+                  <text>{{airQuality.SD}}</text>
+                </view>
+              </view>
+            </view>   
+          </view>
+        </swiper-item>
+        <swiper-item>
+          <view class="swiper-item">
+            <!--室内空气质量  -->
+            <view class='IndoorAirQuality'>
+              <text class='tit'>室内实时空气质量</text>
+              <view class='IndoorAirQuality_top'>
+                <view style=''>
+                  <view class="colorfulBlock {{'level_' + air_level}}"></view>
+                  <text>{{airQuality_inside.apitype}}</text>
+                </view>
+                <text>温度:{{airQuality_inside.temperature}}℃  湿度:{{airQuality_inside.humidity}}%</text>
+              </view>
+              <view class='IndoorAirQuality_bottom'>
+                <text>健康影响:{{airQuality_inside.health_effects}}</text>
+              </view>
+              <view class='IndoorAirQuality_bottom'>
+                <text>建议措施:{{airQuality_inside.suggest_measures}}</text>
+              </view>
+              <view class='AirQuality_level'>
+                <view class='level_typeData'>
+                  <text class='One'>50</text>
+                  <text class='One'>100</text>
+                  <text class='One'>150</text>
+                  <text class='One'>200</text>
+                  <text class='Double'>300</text>
+                  <text class='Fourfold'>500</text>
+                </view>
+                <view class='level_bar'>
+                  <text class='level_1 level_One'></text>
+                  <text class='level_2 level_One'></text>
+                  <text class='level_3 level_One'></text>
+                  <text class='level_4 level_One'></text>
+                  <text class='level_5 level_Double'></text>
+                  <text class='level_6 level_Fourfold'></text>
+                  <view class='triangleIndex' style="left:{{distance}}rpx">
+                    <image src="{{'../../../images/icon/airQuality_'+ air_level +'.png'}}"></image>
+                    <text class=''>{{AQI}}</text>
+                  </view>
+                  
+                </view>
+                <!-- <view class='level_text' style='margin-top:30rpx;'>
+                  <text class='text_center'>偏瘦</text>
+                  <text class='text_center'>标准</text>
+                  <text class='text_center'>偏胖</text>
+                  <text class='text_center'>肥胖</text>
+                  <text class='text_center'>重度</text>
+                </view> -->
+              </view>
+              
+            </view>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+    
+    
   </view>
-  <!--./temperatureInfo top  -->
+  <!--./top  -->
 
   <!--temperatureInfo detail  -->
   <!--open  -->
-  <view class='ToggleArrow_Down' bindtap='Toggle' wx:if="{{Toggle_show != 1}}">
+  <view class='ToggleArrow_Down' bindtap='Toggle' wx:if="{{Toggle_show != 1 && SwiperCur == 0}}">
     <image src='../../images/icon/double-arrow-down.png'></image>
   </view>
   <!--detail  -->
@@ -101,7 +169,7 @@
 
   </view>
   <!--close  -->
-  <view class='ToggleArrow_Up' bindtap='Toggle' wx:if="{{Toggle_show == 1}}">
+  <view class='ToggleArrow_Up' bindtap='Toggle' wx:if="{{Toggle_show == 1 && SwiperCur == 0}}">
     <image src='../../images/icon/double-arrow-down.png'></image>
   </view>
   <!--./temperatureInfo detail  -->
@@ -121,7 +189,7 @@
     <!-- ./carousel -->
 
     <!-- diet -->
-    <view class='Card_diet' bindtap='MyDiet'>
+    <!-- <view class='Card_diet' bindtap='MyDiet'>
       <view class='Card_column'>
         <view class='Card_circle'>
           饮食
@@ -158,6 +226,78 @@
           <text class='ColorGray'>已摄入 / 目标</text>
         </view>
       </view>
+    </view> -->
+    <view class='Card_diet' bindtap='MyDiet'>
+      <view class='Card_column'>
+        <view class='Card_circle'>
+          今日好菜
+        </view>
+      </view>
+      <!--Card_body  -->
+      <view class='Card_body'>
+        <view wx:if="{{dietInfo.diet_standard != 0}}" class='dietList'>
+          <!--早餐  -->
+    <view class='deitItem' bindtap='Toggle_B'>
+      <view class='deit_Icon'>
+        <image class='topBlock' src='../../../images/icon/breakfast.png'></image>
+      </view>
+      <view class='deit_Text'>
+        <text class='deitItem_tit'>早餐</text>
+        <text class='deitItem_text'>建议摄入{{dietInfo.breakfast.suggestion_min}}-{{dietInfo.breakfast.suggestion_max}}千卡</text> 
+      </view>
+      <view class='deit_Add'>
+        <image wx:if="{{dietInfo.breakfast.list.length == 0}}" class='topBlock' bindtap='Add_B' src='../../../images/icon/blueAdd.png'></image>
+        <text wx:else>{{dietInfo.breakfast.sum}}千卡</text>
+      </view>
+    </view>
+    <!--list  -->
+    <view wx:if="{{ifShow_B}}" class='deitItem_contain' wx:for="{{dietInfo.breakfast.list}}" wx:for-index="BreakfastIdx" wx:for-item="Breakfast" wx:key="BreakfastIdx" >
+      <view class='deit_Text'>
+        <text class='deitItem_contain_Tit'>{{Breakfast.food_name}}{{Breakfast.food_amount}}克</text>
+        <text class='deitItem_contain_Text'>烹饪方式:{{Breakfast.cooktype}}</text>
+        <text class='deitItem_contain_Text'>菜式:{{Breakfast.dishes}}</text>
+      </view>
+      <view class='deitItem_contain_count'>
+        <text>{{Breakfast.food_contain}}千卡</text>
+      </view>
+    </view>
+    <!--add continue  -->
+    <view wx:if="{{ifShow_B && dietInfo.breakfast.list.length>0}}" class='addContinue'>
+      <view class='addContinue_bt' bindtap='Add_B'>添加早餐</view>
+    </view>
+    <!--午餐  -->
+    <view class='deitItem' bindtap='Toggle_L'>
+      <view class='deit_Icon'>
+        <image class='topBlock' src='../../../images/icon/lunch.png'></image>
+      </view>
+      <view class='deit_Text'>
+        <text class='deitItem_tit'>午餐</text>
+        <text class='deitItem_text'>建议午餐摄入{{dietInfo.lunch.suggestion_min}}-{{dietInfo.lunch.suggestion_max}}千卡</text> 
+      </view>
+      <view class='deit_Add'>
+        <image wx:if="{{dietInfo.lunch.list.length == 0}}" class='topBlock' bindtap='Add_L' src='../../../images/icon/blueAdd.png'></image>
+        <text wx:else>{{dietInfo.lunch.sum}}千卡</text>
+      </view>
+    </view>
+    <!--list  -->
+    <view wx:if="{{ifShow_L}}" class='deitItem_contain' wx:for="{{dietInfo.lunch.list}}" wx:for-index="LunchIdx" wx:for-item="Lunch" wx:key="LunchIdx">
+      <view class='deit_Text'>
+        <text class='deitItem_contain_Tit'>{{Lunch.food_name}}{{Lunch.food_amount}}克</text>
+        <text class='deitItem_contain_Text'>烹饪方式:{{Lunch.cooktype}}</text>
+        <text class='deitItem_contain_Text'>菜式:{{Lunch.dishes}}</text>
+      </view>
+      <view class='deitItem_contain_count'>
+        <text>{{Lunch.food_contain}}千卡</text>
+      </view>
+    </view>
+    <!--add continue  -->
+    <view wx:if="{{ifShow_L && dietInfo.lunch.list.length>0}}" class='addContinue'>
+      <view class='addContinue_bt' bindtap='Add_L'>添加午餐</view>
+    </view>
+    
+        </view>
+      </view>
+      <!--./Card_body  -->
     </view>
     <!-- ./diet -->
 
@@ -166,19 +306,34 @@
       <text class='Bold smallFont MarginB_20'>不再关心设备，更多是设备开始在关心我们</text>
       <text class='smallFont'>无论何时何地，系统学习感知且节能，让你感受和享受智控,酷玩带来的价值</text>
       <view wx:if="{{HomeList.length<=0}}" class='Btn smallFont' bindtap="FirstAdd">新建家+</view>
-      <view class='Btn smallFont' bindtap="AddEquipment">添加设备+</view>
+      <view wx:if="{{HomeList.length>0}}" class='Btn smallFont' bindtap="AddEquipment">添加设备+</view>
     </view>
     <!-- ./addBlock -->
   </view>
 
 
   <!--设备列表  -->
-  <view class='EQList' wx:if="{{EQList.length>0}}">
-    <view class='EQList_tab'>
-      <text>设备</text>
-      <text>场景</text>
-      <text>房间</text>
+  <view class='EQBlock' wx:if="{{EQList.length>0}}">
+    <view class='EQBlock_tab'>
+      <text class="{{Cur_tab == 0?'tab_ative':''}}" data-idx='0' bindtap='ChangeTab'>设备</text>
+      <text class="{{Cur_tab == 1?'tab_ative':''}}" data-idx='1' bindtap='ChangeTab'>场景</text>
+      <text class="{{Cur_tab == 2?'tab_ative':''}}" data-idx='2' bindtap='ChangeTab'>房间</text>
     </view>
+    <!--EQList  -->
+    <view class='EQList' wx:if="{{Cur_tab == 0}}">
+      <view class='EQList_item' wx:for="{{EQList}}" wx:for-index="EQIdx" wx:for-item="Equipment" wx:key="EQIdx">
+        <image src="{{Equipment.machine_img}}"></image>
+        <view class='EQList_item_text'>
+          <text class='EQList_item_text_name'>{{Equipment.second_name}}</text>
+          <text class='EQList_item_text_room'>{{Equipment.room_name}}</text>
+        </view>
+        <view class="ControlBt {{Equipment.on_off_status == 0?'ControlBt_off':'ControlBt_on'}}">{{Equipment.on_off_status == 0?'OFF':'ON'}}</view>
+      </view>
+    </view>
+    <!--EQScene  -->
+    <view class='EQScene' wx:if="{{Cur_tab == 1}}"></view>
+    <!--EQRoom  -->
+    <view class='EQRoom' wx:if="{{Cur_tab == 2}}"></view>
   </view>
 
 

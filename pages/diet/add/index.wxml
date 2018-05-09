@@ -70,6 +70,26 @@
   </view>
 </view>
 
+<view class='CookingMethod'>
+  <text class='CookingMethod_tit'>烹饪方式</text>
+  <view class='CookingMethod_Amount'>
+    <picker bindchange="ChangeCookingMethod" value="{{CookingMethodList[CookingMethodIndex].typename}}" range="{{CookingMethodList}}" range-key="typename">
+      <view class="picker">
+        {{CookingMethodList[CookingMethodIndex].typename}}
+      </view>
+    </picker>
+    <text></text>
+  </view>
+</view>
+
+<view class='DishStyle'>
+  <text class='DishStyle_tit'>菜式</text>
+  <view class='DishStyle_Amount'>
+    <input type='digit' value='{{DishStyle}}' bindinput='ChangeDishStyle'></input>
+    <text></text>
+  </view>
+</view>
+
 <view class='AddBlock'>
   <button class='ColorWhite BgRed' bindtap='AddFood'>添加</button> 
 </view>

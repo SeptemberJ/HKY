@@ -77,9 +77,14 @@ page{
   top: -2px;
   left: -4px;
 }
+.swiper{
+  width: 710rpx;
+  height: 180px !important;
+}
+/*天气  */
 .temperatureInfo{
   width: 710rpx;
-  height: 100px;
+  height: 180px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -91,12 +96,12 @@ page{
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   position: relative;
 }
 .left_add{
   width: 280rpx;
-  height: 400rpx;
+  height: 100px;
   position: absolute;
   top: 40px;
   right: 20rpx;
@@ -113,34 +118,19 @@ page{
   align-items: center;
   justify-content: center;
 }
-/* .left_add_item{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} */
+.left_add_item{
+   display: flex;
+   align-items: center;
+}
+.left_add_item image{
+  width: 40rpx;
+  height: 40rpx;
+  display: inline-block;
+} 
 .conclusion_item text{
-  margin: 0 10rpx;
+  margin: 0 10rpx 5rpx 0;
   color: #fff;
 }
-/* .conclusion_left{
-  width: 500rpx;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-}
-.conclusion_right{
-  width: 210rpx;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-}
-.conclusion_left_topbar{
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-} */
 .temperatureIcon{
   width: 50rpx;
   height: 50rpx;
@@ -152,21 +142,14 @@ page{
   color: #fff;
   font-weight: bold;
 }
-/* .conclusion_left_middle , .conclusion_left_bottom{
-  margin-bottom: 10rpx;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-.conclusion_left_middle text{
-  padding: 0 10rpx;
-} */
 .colorfulBlock{
   width: 20rpx;
   height: 20rpx;
+  margin-right: 10rpx;
   border: 2px solid #fff;
   border-radius: 50%;
+  display: inline-block;
 }
 .level_1{
   background: #01e400;
@@ -186,81 +169,6 @@ page{
 .level_6{
   background: #7e0123;
 }
-/* .info{
-  width: 710rpx;
-  padding: 0 20rpx;
-  height: 140px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-.info_Left{
-  width: 260rpx;
-  height: 140px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.Left_item_first{
-  width: 100%;
-  height: 20px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  color: #fff;
-}
-.height_20{
-  height: 20px;
-}
-.locationIcon{
-  width: 35rpx;
-  height: 35rpx;
-  margin-right: 5rpx;
-}
-.Left_item{
-  width: 100%;
-  height: 60px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  color: #fff;
-}
-.SpaceBettween{
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  color: #fff;
-}
-.smallFont{
-  font-size: 28rpx;
-}
-.temperatureIcon{
-  width: 30rpx;
-  height: 30rpx;
-  display: inline-block;
-}
-
-.info_Right{
-  width: 450rpx;
-  height: 140px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-}
-.Right_item{
-  width: 150rpx;
-  height: 70px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-} */
-
 .ToggleArrow_Down{
   width: 100%;
   height: 60rpx;
@@ -409,7 +317,139 @@ page{
   font-size: 38rpx;
   font-weight: bold;
 }
-
+/*室内空气质量  */
+.IndoorAirQuality{
+  width: 710rpx;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  color: #fff;
+}
+.IndoorAirQuality .tit{
+  margin-bottom: 10rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+.IndoorAirQuality_top , .IndoorAirQuality_bottom{
+  width: 660rpx;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+.IndoorAirQuality_bottom{
+  margin-bottom: 10rpx;
+  font-size: 24rpx;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+/*report_data_weight_level  */
+.AirQuality_level{
+  width: 660rpx;
+  margin: 0px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.level_text{
+  width: 660rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.level_text text{
+  width: 132rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+}
+.level_typeData{
+  width: 660rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.level_typeData text{
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: right;
+}
+.One{
+  width: 66rpx;
+}
+.Double{
+  width: 132rpx;
+}
+.Fourfold{
+  width: 264rpx;
+}
+.level_bar{
+  width: 660rpx;
+  height: 20rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.level_bar text{
+  height: 20rpx;
+}
+.level_One{
+  width: 66rpx;
+}
+.level_Double{
+  width: 132rpx;
+}
+.level_Fourfold{
+  width: 264rpx;
+}
+.level_1{
+  background: #096;
+}
+.level_2{
+  background: #ffde33;
+}
+.level_3{
+  background: #ff9933;
+}
+.level_4{
+  background: #cc0033;
+}
+.level_5{
+  background: #7e0023;
+}
+.level_6{
+  background: #532525;
+}
+.text_center{
+  text-align: center !important;
+}
+.triangleIndex{
+  width: 80rpx;
+  height: 80rpx;
+  position: absolute;
+  top: 18rpx;
+  transform: translate(-50%,0);
+}
+.triangleIndex image{
+  width: 80rpx;
+  height: 80rpx;
+  position: relative;
+}
+.triangleIndex text{
+  font-size: 26rpx;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
 /*carousel  */
 .carousel{
   width: 750rpx;
@@ -422,7 +462,7 @@ swiper {
 }
 .slide-image{
   width: 750rpx !important;
-    height: 200rpx !important;  
+  height: 200rpx !important;  
 }
 .addBlock{
   width: calc(100% - 80rpx);
@@ -515,18 +555,184 @@ swiper {
   font-size: 26rpx;
   color: #ccc;
 }
+/*dietList  */
+.dietList{
+  width: 100%;
+  margin: 20px auto;
+  background: #f0eff4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.deitItem{
+  width: 680rpx;
+  padding: 15rpx 15rpx;
+  border-radius: 10rpx;
+  height: 60px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-bottom: 1px solid #ccc;
+}
+.deit_Icon , .deit_Icon image{
+  width: 80rpx;
+  height: 80rpx;
+}
+.deit_Text{
+  width: calc(680rpx - 80rpx - 150rpx - 60rpx);
+  height: 50rpx;
+  padding: 0 30rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.deit_Add{
+  width: 150rpx;
+  height: 50rpx;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.deit_Add image{
+  width: 50rpx;
+  height: 50rpx;
+  display: block;
+}
+.deitItem_tit{
+  font-size: 40rpx;
+  /* color: #626262; */
+}
+.deitItem_text{
+  font-size: 30rpx;
+  color: #999;
+}
+/*deitItem_contain  */
+.deitItem_contain{
+  width: 680rpx;
+  padding: 15rpx 15rpx;
+  border-radius: 10rpx;
+  height: 40px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #efefef;
+}
+.deitItem_contain_Tit{
+  font-size: 30rpx;
+  color: #626262;
+}
+.deitItem_contain_Text{
+  font-size: 26rpx;
+  color: #999;
+}
+.deitItem_contain_count{
+  height: 40px;
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+/*addContinue  */
+.addContinue{
+  width: 710rpx;
+  height: 60px;
+  background: #fff;
+  border-bottom: 1px solid #efefef;
+}
+.addContinue_bt{
+  width: 200rpx;
+  height: 30px;
+  margin: 15px auto;
+  background: #53405c;
+  color: #fff;
+  text-align: center;
+  line-height: 30px;
+}
 
-/*EQList  */
-.EQList{
+/*EQBlock  */
+.EQBlock{
   width: 750rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
 }
-.EQList_tab{
+.EQBlock_tab{
   width: 750rpx;
+  height: 80rpx;
+  background: #fff;
   display: flex;
+  flex-grow: 1;
   align-items: center;
   justify-content: space-around;
+}
+.EQBlock_tab text{
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height:  80rpx;
+}
+.tab_ative{
+  color: #3498db;
+  font-weight: bold;
+  border-bottom: 2px solid #3498db;
+}
+.EQList , .EQScene , .EQRoom{
+  width: calc(750rpx - 20rpx);
+  padding: 10rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+  justify-content: center;
+}
+.EQList_item{
+  width: 710rpx;
+  height: 130rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  background: #fff;
+  border-bottom: 1px solid #efefef;
+}
+.EQList_item image{
+  width: 80rpx;
+  height: 80rpx;
+  margin: 0 10rpx;
+  border-radius: 50%;
+  display: inline-block;
+}
+.EQList_item_text{
+  width: calc(710rpx - 100rpx - 150rpx);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.EQList_item_text_name{
+  font-size: 32rpx;
+  font-weight: bold;
+}
+.EQList_item_text_room{
+  font-size: 30rpx;
+  color: #ddd;
+}
+.ControlBt{
+  width: 150rpx;
+  height: 70rpx;
+  text-align: center;
+  line-height: 70rpx;
+  border: 1px solid green;
+  border-radius: 10rpx;
+}
+.ControlBt_off{
+  color: green;
+}
+.ControlBt_on{
+  color: #fff;
+  background: green;
 }

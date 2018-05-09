@@ -83,6 +83,9 @@ Page({
     Carbohydrate: '',
     Fat: '',
     Protein: '',
+    DishStyle:'',
+    CookingMethodIndex:0,
+    CookingMethodList:[]
   },
   onLoad(options){
     this.setData({
@@ -91,6 +94,7 @@ Page({
     console.log('options---' + options.sourcetype)
   },
   onShow(){
+    this.GetCookingMethod()
     wx.getStorage({
       key: 'DietDetail',
       success: (res)=>{
@@ -116,6 +120,18 @@ Page({
       Protein: (this.data.DietDetail.NutrientElements.protein * AMOUNT / 100).toFixed(2),
     })
   },
+  //菜式
+  ChangeDishStyle(e){
+    this.setData({
+      DishStyle: e.detail.value
+    })
+  },
+  //烹饪方式
+  ChangeCookingMethod(e){
+    this.setData({
+      CookingMethodIndex: e.detail.value
+    })
+  },
   // 对应日期摄入信息
   AddFood2(){
     let DATA = {
@@ -135,9 +151,12 @@ Page({
     }
     wx.navigateBack()
   },
+  //添加食物
   AddFood() {
     let DATA = {
       'faddtime': app.globalData.Add_date,
+      'cooktype': this.data.CookingMethodList[this.data.CookingMethodIndex].typename,
+      'dishes': this.data.DishStyle,
       'eatname': this.data.DietDetail.food_name,
       'eatcalories': this.data.Calorie,   
       'eatweight': this.data.IngestionAmount,
@@ -206,4 +225,45 @@ Page({
       console.log(res)
     })
   },
+  //获取烹饪方式
+  GetCookingMethod(){
+    requestPromisified({
+      url: h.main + '/selectcookingtype',
+      data: {
+      },
+      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          wx.hideLoading()
+          this.setData({
+            CookingMethodList: res.data.cooklist
+          })
+          break
+        case 0:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../../images/icon/attention.png',
+            title: '烹饪方式获取失败'
+          });
+          break
+        default:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.hideLoading()
+      wx.showToast({
+        image: '../../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      })
+    });
+  }
 });

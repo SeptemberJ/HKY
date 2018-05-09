@@ -254,7 +254,7 @@ page{
   color: #626262;
 }
 .deitItem_contain_Text{
-  font-size: 22rpx;
+  font-size: 26rpx;
   color: #999;
 }
 .deitItem_contain_count{

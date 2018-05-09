@@ -14,6 +14,7 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     DateInfo:'',
+    SwiperCur:0, //当地天气0 室内空气质量1
     Toggle_show: 0,  //0初始 1展开 -1关闭
     airQuality:'',
     imgUrls: [
@@ -27,7 +28,13 @@ Page({
     HomeList:[],
     CurHomeName:null,
     CurHomeId:null,
-    EQList:[]
+    EQList:[],
+    Cur_tab:2,
+    airQuality_inside:'', //室内空气质量
+    Distance_width:66,
+    distance:0,
+    AQI:0,
+    air_level:1
 
   },
   //事件处理函数
@@ -69,7 +76,8 @@ Page({
   },
   onShow: function () {
     this.GetAirQuality()
-    this.StartClock()
+    this.GetAirQuality_inside()
+    //this.StartClock()
     this.GetMessage()
     this.GetDietInfo(util.formatTime(new Date()))
     this.IfHasInfo()
@@ -82,12 +90,25 @@ Page({
       this.GetCurEQList()
     }
   },
+  //userinfo
   getUserInfo: function(e) {
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+  },
+  //左右切换
+  SwiperChnage(e){
+    console.log(e)
+    if (e.detail.source == 'touch'){
+      this.setData({
+        SwiperCur: e.detail.current
+      })
+    }
+    if (e.detail.current == 1 && this.data.Toggle_show == 1){
+      this.Toggle()
+    }
   },
   //Toggle temperature
   Toggle(){
@@ -112,6 +133,12 @@ Page({
       url: '../equipment/add/index'
     })
   },
+  //ChangeTab
+  ChangeTab(e){
+    this.setData({
+      Cur_tab: e.currentTarget.dataset.idx
+    })
+  },
   //获取饮食信息
   GetDietInfo(CurDate){
     requestPromisified({
@@ -124,7 +151,7 @@ Page({
         case 1:
           let temp = res.data.dietInfo[0]
           this.setData({
-            DietInfo: temp,
+            dietInfo: temp,
             ifOver: temp.diet_standard < temp.diet_sum ? true : false,
             Surplus: Math.abs(temp.diet_standard - temp.diet_sum).toFixed(2)
           })
@@ -312,6 +339,46 @@ Page({
       console.log(res)
     })
   },
+  //获取室内空气质量
+  //当前空气质量
+  GetAirQuality_inside() {
+    requestPromisified({
+      url: h.main + '/selectindoorair',
+      data: {
+      },
+      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          this.Judge(res.data.indoorairlist[0].api)
+          this.setData({
+            airQuality_inside: res.data.indoorairlist[0],
+            AQI: res.data.indoorairlist[0].api,
+          })
+          break
+        case 0:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '获取室内空气信息失败'
+          });
+          break
+        default:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+      this.setData({
+        loadingHidden: true
+      })
+      console.log(res)
+    })
+  },
   //获取消息
   GetMessage() {
     requestPromisified({
@@ -394,5 +461,42 @@ Page({
     wx.navigateTo({
       url: '../Interaction/message/index',
     })
+  },
+  //判断室内空气
+  Judge(AQI){
+    let Width = this.data.Distance_width
+    this.setData({
+      distance: (AQI * (Width / 50)) > 660 ? 660 : (AQI * (Width / 50))
+    })
+    if (AQI >= 0 && AQI <= 50) {
+      this.setData({
+        air_level: 1
+      })
+    }
+    else if (AQI > 50 && AQI <= 100) {
+      this.setData({
+        air_level: 2
+      })
+    }
+    else if (AQI > 100 && AQI <= 150) {
+      this.setData({
+        air_level: 3
+      })
+    }
+    else if (AQI > 150 && AQI <= 200) {
+      this.setData({
+        air_level: 4
+      })
+    }
+    else if (AQI > 200 && AQI <= 300) {
+      this.setData({
+        air_level: 5
+      })
+    }
+    else if (AQI > 300) {
+      this.setData({
+        air_level: 6
+      })
+    }
   }
 })

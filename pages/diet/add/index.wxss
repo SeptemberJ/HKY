@@ -109,7 +109,7 @@ ec-canvas {
   /* margin: 10rpx auto; */
 }
 /*Ingestion  */
-.Ingestion{
+.Ingestion , .DishStyle , .CookingMethod{
   width: calc(100% - 40rpx);
   margin: 30px auto;
   padding: 0rpx 20rpx;
@@ -117,10 +117,10 @@ ec-canvas {
   align-items: center;
   justify-content: space-between;
 }
-.Ingestion_tit{
+.Ingestion_tit , .DishStyle_tit , .CookingMethod_tit{
   width: 150rpx;
 }
-.Ingestion_Amount{
+.Ingestion_Amount , .DishStyle_Amount , .CookingMethod_Amount{
   width: (100% - 150rpx);
   display: flex;
   align-items: center;
@@ -132,6 +132,19 @@ ec-canvas {
   padding: 0 10rpx;
   margin-right: 20rpx;
   border-bottom: 1px solid #ccc;
+}
+.DishStyle_Amount input{
+  width: 170rpx;
+  text-align: center;
+  padding: 0 10rpx;
+  margin-right: 20rpx;
+  border-bottom: 1px solid #ccc;
+}
+.CookingMethod_Amount picker{
+  width: 170rpx;
+  text-align: center;
+  padding: 0 10rpx;
+  margin-right: 20rpx;
 }
 
 .AddBlock{
