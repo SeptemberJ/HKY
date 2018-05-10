@@ -64,6 +64,11 @@ Page({
       })
     }
   },
+  ToHome() {
+    wx.navigateTo({
+      url: '../home/list/index',
+    })
+  },
   ToEquipment(){
     wx.switchTab({
       url: '../../equipment/index/index',

@@ -193,9 +193,11 @@ Page({
     }).then((res) => {
       switch (res.data.result) {
         case 1:
-          app.globalData.HomeList = res.data.homelist
-          app.globalData.CurHomeName = res.data.homelist1[0].fname
-          app.globalData.CurHomeId = res.data.homelist1[0].id
+          if (res.data.homelist.length>0){
+            app.globalData.HomeList = res.data.homelist
+            app.globalData.CurHomeName = res.data.homelist1[0].fname
+            app.globalData.CurHomeId = res.data.homelist1[0].id
+          }
           break
         case 0:
           wx.showToast({

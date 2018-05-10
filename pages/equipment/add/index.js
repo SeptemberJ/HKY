@@ -16,7 +16,7 @@ Page({
   },
   onLoad(options){
     this.setData({
-      RoomId: options.roomid
+      RoomId: options.roomid,
     })
     this.GetIconList()
   },
@@ -147,7 +147,8 @@ Page({
       switch (res.data.result) {
         case 1:
           this.setData({
-            IconList: res.data.machineimglist
+            IconList: res.data.machineimglist,
+            Equipment_Icon: res.data.machineimglist[0].img,
           })
           wx.hideLoading()
           break

@@ -137,19 +137,21 @@
         <text>{{Dinner.food_contain}}千卡</text>
       </view>
     </view>
-  </view>
     <!--add continue  -->
     <view wx:if="{{ifShow_D && dietInfo.dinner.list.length>0}}" class='addContinue'>
       <view class='addContinue_bt' bindtap='Add_D'>添加晚餐</view>
     </view>
+    
+  </view>
   <!--./dietList  -->
 
+
   <!--report  -->
-   <view wx:if="{{dietInfo.diet_sum != 0 && dietInfo.diet_standard != 0}}" class='DietReport' bindtap='ToDietReport'>
+  <view wx:if="{{dietInfo.diet_sum != 0 && dietInfo.diet_standard != 0}}" class='DietReport' bindtap='ToDietReport'>
     <text>查看饮食报告</text>
   </view>
 
-    <view wx:if="{{dietInfo.diet_sum == 0}}" class='DietReport_cannot'>
+  <view wx:if="{{dietInfo.diet_sum == 0}}" class='DietReport_cannot'>
     <text>查看饮食报告</text>
   </view> 
 

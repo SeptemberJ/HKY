@@ -28,21 +28,25 @@ Page({
     HomeList:[],
     CurHomeName:null,
     CurHomeId:null,
-    EQList:[],
-    Cur_tab:2,
+    EQList:[],   //设备
+    Roomlist:[], //房间
+    Cur_tab:0,
     airQuality_inside:'', //室内空气质量
     Distance_width:66,
     distance:0,
     AQI:0,
-    air_level:1
+    air_level:1,
+    ifShow_B: false,
+    ifShow_L: false,
+    ifShow_D: false,
 
   },
   //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
+  // bindViewTap: function() {
+  //   wx.navigateTo({
+  //     url: '../logs/logs'
+  //   })
+  // },
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({
@@ -117,8 +121,46 @@ Page({
     })
   },
   ToAdd() {
-    wx.switchTab({
+    wx.navigateTo({
+      url: '../equipment/add/index'
+    })
+  },
+  ToTrend(){
+    wx.navigateTo({
       url: '../equipment/index/index'
+    })
+  },
+
+  //Toggles
+  Toggle_B() {
+    this.setData({
+      ifShow_B: !this.data.ifShow_B
+    })
+  },
+  Toggle_L() {
+    this.setData({
+      ifShow_L: !this.data.ifShow_L
+    })
+  },
+  Toggle_D() {
+    this.setData({
+      ifShow_D: !this.data.ifShow_D
+    })
+  },
+  // Adds
+  Add_B() {
+    wx.navigateTo({
+      url: '../diet/list/index?type=0',
+    })
+  },
+  Add_L() {
+    wx.navigateTo({
+      url: '../diet/list/index?type=1',
+    })
+  },
+  Add_D() {
+    wx.navigateTo({
+      url: '../diet/list/index?type=2',
     })
   },
   //第一次从家开始添加
@@ -133,10 +175,76 @@ Page({
       url: '../equipment/add/index'
     })
   },
+  ToAddRoom(){
+    wx.navigateTo({
+      url: '../my/room/add/index?type=0'
+    })
+  },
   //ChangeTab
   ChangeTab(e){
+    switch (e.currentTarget.dataset.idx){
+      case '0':
+        this.GetCurEQList
+      break
+      case '1':
+        
+        break
+      case '2':
+        this.GetCurRoomList()
+        break
+    }
     this.setData({
       Cur_tab: e.currentTarget.dataset.idx
+    })
+  },
+  //去修改房间信息
+  ToEditRoom(e){
+    wx.navigateTo({
+      url: '../my/room/add/index?type=1&roomname=' + e.currentTarget.dataset.name + '&roomicon=' + e.currentTarget.dataset.icon + '&roomid=' + e.currentTarget.dataset.roomid
+    })
+  },
+  //删除房间
+  DeleteRoom(e){
+    wx.showLoading({
+      title: '加载中',
+    })
+    requestPromisified({
+      url: h.main + '/deleteuserroom?roomid=' + e.currentTarget.dataset.roomid,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          wx.showToast({
+            title: '删除成功！',
+            icon: 'success',
+            duration: 1500
+          })
+          this.GetCurRoomList()
+          wx.hideLoading()
+          break
+        case 0:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '删除失败'
+          });
+          break
+        default:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.hideLoading()
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+      console.log(res)
     })
   },
   //获取饮食信息
@@ -195,7 +303,7 @@ Page({
   },
   ToDiet() {
     wx.navigateTo({
-      url: '../diet/index'
+      url: '../diet/index/index'
     })
   },
   //进入我的饮食
@@ -340,7 +448,6 @@ Page({
     })
   },
   //获取室内空气质量
-  //当前空气质量
   GetAirQuality_inside() {
     requestPromisified({
       url: h.main + '/selectindoorair',
@@ -441,6 +548,44 @@ Page({
           wx.showToast({
             image: '../../images/icon/attention.png',
             title: '设备获取失败!'
+          });
+          break
+        default:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+    })
+  },
+  //获取当前家下房间列表
+  GetCurRoomList() {
+    requestPromisified({
+      url: h.main + '/selectuserroom?familyid=' + app.globalData.CurHomeId,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      console.log(res.data)
+      switch (res.data.result) {
+        case 1:
+          this.setData({
+            Roomlist: res.data.roomlist
+          })
+          break
+        case 0:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '设备房间失败!'
           });
           break
         default:

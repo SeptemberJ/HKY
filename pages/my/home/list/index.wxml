@@ -1,8 +1,13 @@
-<view class="inputBar">
-  <input placeholder='输入家的名称' bindinput='ChangeHomeNmae'></input>
+<view class="HomeList" wx:if="{{HomeList.length>0}}">
+  <view class='HomeItem' wx:for="{{HomeList}}" wx:for-index="HomeIdx" wx:for-item="Home" wx:key="HomeIdx">
+    <text class='HomeItem_name'>{{Home.fname}}</text>
+    <text class='HomeItem_role'>{{Home.memberstype == 1?'管理员':'家庭成员'}}</text>
+    <image class='smallIcon' src='../../../../images/icon/arrow_black.png'></image>
+  </view>
 </view>
-<view class='SaveBt'>
-  <button class='ColorWhite BgRed' bindtap='CreateHome'>保存</button>
+
+<view class="InfoNull" wx:if="{{HomeList.length == 0}}">
+  <view class='Btn smallFont' bindtap="FirstAdd">新建家+</view>
 </view>
   
 

@@ -10,18 +10,29 @@
          <image class="ArrowDown" wx:if="{{CurHomeName}}" src="../../images/icon/arrow.png"></image> 
       </view>
       <view class='operation'>
+        <image class='operationIcon messageIocn' bindtap='ToTrend' src='../../images/icon/qushi.png'></image>
         <image class='operationIcon messageIocn' bindtap='ToMyMessage' src='../../images/icon/message.png'></image>
         <view class='TipDot' wx:if='{{MessageCount>0}}'></view>
       <image class='operationIcon' src='../../images/icon/add.png' bindtap='ToAdd'></image>
       </view>
     </view>
     <!--切换模块  -->
-     <swiper class='swiper' bindchange="SwiperChnage">
+     <swiper class='swiper' indicator-dots="{{indicatorDots}}" bindchange="SwiperChnage">
       <block>
         <swiper-item>
           <view class="swiper-item">
             <!--当地天气  -->
             <view class='temperatureInfo'>
+              <view class='left_add'>
+                <view class='TipBlock' bindtap='ToDiet'>
+                  <text>加饮食</text>
+                </view>
+                <view class='SwingBlock'>
+                  <view class='SwingLine'></view>
+                  <view class='SwingDot'></view>
+                </view>
+                
+              </view>
               <view class='temperature_conclusion'>
                 <view class='conclusion_item'>
                   <text>{{airQuality.cityname}}</text>
@@ -30,7 +41,6 @@
                 <view class='conclusion_item'>
                   <image class='temperatureIcon' src='{{airQuality.weather_icon}}'></image>
                   <text class='conclusion_temp_curr'>{{airQuality.temp}} </text>
-                  <text>℃</text>
                 </view>
                 <view class='conclusion_item'>
                   <view class="colorfulBlock {{'level_' + airQuality.aqi_levid}}"></view>
@@ -41,14 +51,14 @@
                   <text>{{airQuality.aqi_remark}}</text>
                 </view>
               </view>
-              <view class='left_add'>
-                <view class='left_add_item'>
+              <view class='right_add'>
+                <view class='right_add_item'>
                   <text>{{airQuality.wind}}</text>
                 </view>
-                <view class='left_add_item'>
+                <view class='right_add_item'>
                   <text>{{airQuality.winp}}</text>
                 </view>
-                <view class='left_add_item'>
+                <view class='right_add_item'>
                   <image src='../../images/icon/shidu.png'></image>
                   <text>{{airQuality.SD}}</text>
                 </view>
@@ -91,7 +101,7 @@
                   <text class='level_5 level_Double'></text>
                   <text class='level_6 level_Fourfold'></text>
                   <view class='triangleIndex' style="left:{{distance}}rpx">
-                    <image src="{{'../../../images/icon/airQuality_'+ air_level +'.png'}}"></image>
+                    <image src="{{'../../images/icon/airQuality_'+ air_level +'.png'}}"></image>
                     <text class=''>{{AQI}}</text>
                   </view>
                   
@@ -188,136 +198,27 @@
     </view>
     <!-- ./carousel -->
 
-    <!-- diet -->
-    <!-- <view class='Card_diet' bindtap='MyDiet'>
-      <view class='Card_column'>
-        <view class='Card_circle'>
-          饮食
-        </view>
-        <view class='Card_right_data'>
-          <text>{{ifOver?'已超出':'还可以吃'}}</text>
-          <text>{{Surplus}}</text>
-          <text>千卡</text>
-        </view>
-      </view>
-      <view class='Card_body'>
-        <view class='Card_body_item'>
-          <view class='BorderImage'>
-            <image src='../../images/icon/tanshui.png'></image>
-          </view>
-          <text>碳水</text>
-          <text>{{DietInfo.carbohydrate.sum?DietInfo.carbohydrate.sum:'--'}} / {{DietInfo.carbohydrate.standard?DietInfo.carbohydrate.standard:'--'}}</text>
-          <text class='ColorGray'>已摄入 / 目标</text>
-        </view>
-        <view class='Card_body_item'>
-          <view class='BorderImage'>
-            <image src='../../images/icon/zhifang.png'></image>
-          </view>
-          <text>脂肪</text>
-          <text>{{DietInfo.fat.sum?DietInfo.fat.sum:'--'}} / {{DietInfo.fat.standard?DietInfo.fat.standard:'--'}}</text>
-          <text class='ColorGray'>已摄入 / 目标</text>
-        </view>
-        <view class='Card_body_item'>
-          <view class='BorderImage'>
-            <image src='../../images/icon/danbaizhi.png'></image>
-          </view>
-          <text>蛋白质</text>
-          <text>{{DietInfo.protein.sum?DietInfo.protein.sum:'--'}} / {{DietInfo.protein.standard?DietInfo.protein.standard:'--'}}</text>
-          <text class='ColorGray'>已摄入 / 目标</text>
-        </view>
-      </view>
-    </view> -->
-    <view class='Card_diet' bindtap='MyDiet'>
-      <view class='Card_column'>
-        <view class='Card_circle'>
-          今日好菜
-        </view>
-      </view>
-      <!--Card_body  -->
-      <view class='Card_body'>
-        <view wx:if="{{dietInfo.diet_standard != 0}}" class='dietList'>
-          <!--早餐  -->
-    <view class='deitItem' bindtap='Toggle_B'>
-      <view class='deit_Icon'>
-        <image class='topBlock' src='../../../images/icon/breakfast.png'></image>
-      </view>
-      <view class='deit_Text'>
-        <text class='deitItem_tit'>早餐</text>
-        <text class='deitItem_text'>建议摄入{{dietInfo.breakfast.suggestion_min}}-{{dietInfo.breakfast.suggestion_max}}千卡</text> 
-      </view>
-      <view class='deit_Add'>
-        <image wx:if="{{dietInfo.breakfast.list.length == 0}}" class='topBlock' bindtap='Add_B' src='../../../images/icon/blueAdd.png'></image>
-        <text wx:else>{{dietInfo.breakfast.sum}}千卡</text>
-      </view>
-    </view>
-    <!--list  -->
-    <view wx:if="{{ifShow_B}}" class='deitItem_contain' wx:for="{{dietInfo.breakfast.list}}" wx:for-index="BreakfastIdx" wx:for-item="Breakfast" wx:key="BreakfastIdx" >
-      <view class='deit_Text'>
-        <text class='deitItem_contain_Tit'>{{Breakfast.food_name}}{{Breakfast.food_amount}}克</text>
-        <text class='deitItem_contain_Text'>烹饪方式:{{Breakfast.cooktype}}</text>
-        <text class='deitItem_contain_Text'>菜式:{{Breakfast.dishes}}</text>
-      </view>
-      <view class='deitItem_contain_count'>
-        <text>{{Breakfast.food_contain}}千卡</text>
-      </view>
-    </view>
-    <!--add continue  -->
-    <view wx:if="{{ifShow_B && dietInfo.breakfast.list.length>0}}" class='addContinue'>
-      <view class='addContinue_bt' bindtap='Add_B'>添加早餐</view>
-    </view>
-    <!--午餐  -->
-    <view class='deitItem' bindtap='Toggle_L'>
-      <view class='deit_Icon'>
-        <image class='topBlock' src='../../../images/icon/lunch.png'></image>
-      </view>
-      <view class='deit_Text'>
-        <text class='deitItem_tit'>午餐</text>
-        <text class='deitItem_text'>建议午餐摄入{{dietInfo.lunch.suggestion_min}}-{{dietInfo.lunch.suggestion_max}}千卡</text> 
-      </view>
-      <view class='deit_Add'>
-        <image wx:if="{{dietInfo.lunch.list.length == 0}}" class='topBlock' bindtap='Add_L' src='../../../images/icon/blueAdd.png'></image>
-        <text wx:else>{{dietInfo.lunch.sum}}千卡</text>
-      </view>
-    </view>
-    <!--list  -->
-    <view wx:if="{{ifShow_L}}" class='deitItem_contain' wx:for="{{dietInfo.lunch.list}}" wx:for-index="LunchIdx" wx:for-item="Lunch" wx:key="LunchIdx">
-      <view class='deit_Text'>
-        <text class='deitItem_contain_Tit'>{{Lunch.food_name}}{{Lunch.food_amount}}克</text>
-        <text class='deitItem_contain_Text'>烹饪方式:{{Lunch.cooktype}}</text>
-        <text class='deitItem_contain_Text'>菜式:{{Lunch.dishes}}</text>
-      </view>
-      <view class='deitItem_contain_count'>
-        <text>{{Lunch.food_contain}}千卡</text>
-      </view>
-    </view>
-    <!--add continue  -->
-    <view wx:if="{{ifShow_L && dietInfo.lunch.list.length>0}}" class='addContinue'>
-      <view class='addContinue_bt' bindtap='Add_L'>添加午餐</view>
-    </view>
-    
-        </view>
-      </view>
-      <!--./Card_body  -->
-    </view>
     <!-- ./diet -->
 
     <!-- addBlock -->
     <view class='addBlock'>
       <text class='Bold smallFont MarginB_20'>不再关心设备，更多是设备开始在关心我们</text>
       <text class='smallFont'>无论何时何地，系统学习感知且节能，让你感受和享受智控,酷玩带来的价值</text>
-      <view wx:if="{{HomeList.length<=0}}" class='Btn smallFont' bindtap="FirstAdd">新建家+</view>
+      <!-- <view wx:if="{{HomeList.length<=0}}" class='Btn smallFont' bindtap="FirstAdd">新建家+</view> -->
       <view wx:if="{{HomeList.length>0}}" class='Btn smallFont' bindtap="AddEquipment">添加设备+</view>
     </view>
     <!-- ./addBlock -->
-  </view>
+    </view>
 
 
   <!--设备列表  -->
   <view class='EQBlock' wx:if="{{EQList.length>0}}">
     <view class='EQBlock_tab'>
       <text class="{{Cur_tab == 0?'tab_ative':''}}" data-idx='0' bindtap='ChangeTab'>设备</text>
-      <text class="{{Cur_tab == 1?'tab_ative':''}}" data-idx='1' bindtap='ChangeTab'>场景</text>
       <text class="{{Cur_tab == 2?'tab_ative':''}}" data-idx='2' bindtap='ChangeTab'>房间</text>
+      <text class="{{Cur_tab == 1?'tab_ative':''}}" data-idx='1' bindtap='ChangeTab'>场景</text>
+      <text class="{{Cur_tab == 3?'tab_ative':''}}" data-idx='3' bindtap='ChangeTab'>联动</text>
+      
     </view>
     <!--EQList  -->
     <view class='EQList' wx:if="{{Cur_tab == 0}}">
@@ -333,7 +234,23 @@
     <!--EQScene  -->
     <view class='EQScene' wx:if="{{Cur_tab == 1}}"></view>
     <!--EQRoom  -->
-    <view class='EQRoom' wx:if="{{Cur_tab == 2}}"></view>
+    <view class='EQRoom' wx:if="{{Cur_tab == 2}}">
+      <view class=''wx:if="{{Roomlist.length>0}}">
+        <view class='Roomlist_item' wx:for="{{Roomlist}}" wx:for-index="RoomIdx" wx:for-item="Room" wx:key="RoomIdx">
+          <image src="{{Room.room_img}}"></image>
+          <view class='Roomlist_item_name'>
+            <text>{{Room.fname}}</text>
+          </view>
+          <view class='ControlBts'>
+            <image src='../../images/icon_edit.png' bindtap='ToEditRoom' data-name="{{Room.fname}}" data-icon="{{Room.room_img}}" data-roomid="{{Room.id}}"></image>
+            <image src='../../images/icon_delete.png' data-roomid="{{Room.id}}" bindtap='DeleteRoom'></image>
+          </view>
+        </view>
+      </view>
+      <view class="InfoNull">
+        <view class='Btn smallFont' bindtap="ToAddRoom">新建房间+</view>
+      </view>
+    </view>
   </view>
 
 

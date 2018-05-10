@@ -1,21 +1,28 @@
 page{
   background: #efefef;
 }
-.inputBar{
+.HomeList{
   width: 100%;
-  height: 100rpx;
-  padding: 10rpx;
-  margin: 10px auto;
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.HomeItem{
+  width: calc(100% - 20rpx);
+  height: 80rpx;
+  padding: 10rpx;
+  display: flex;
+  justify-content: flex-start;
   align-items: center;
   background: #fff;
+  border-bottom: 1px solid #efefef;
 }
-.inputBar input{
-  width: calc(100% - 20rpx);
-  padding: 0 10rpx;
-  font-size: 30rpx;
+.HomeItem_name{
+  width: calc(100% - 150rpx - 60rpx)
 }
-.SaveBt{
-  width: 50%;
-  margin: 40px auto;
+.HomeItem_role{
+  width: 150rpx;
+  color: #ccc;
+  text-align: right;
 }

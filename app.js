@@ -41,6 +41,8 @@ App({
     })
     //定位
     this.GetLocation()
+
+    this.GetIconList()
   },
   GetLocation(){
     wx.getLocation({
@@ -79,7 +81,7 @@ App({
   globalData: {
     width:'',
     userInfo: null,
-    User_Phone: '18234567893', //18234567890',
+    User_Phone: '', //18234567890',
     User_name:'',
     Add_count:'',
     city:'',
@@ -92,6 +94,46 @@ App({
     HomeList:[],
     CurHomeName:null,
     CurHomeId: null,
+    RoomIconList:[], //房间icon
 
+  },
+  //获取房间图标
+  GetIconList() {
+    wx.showLoading({
+      title: '加载中',
+    })
+    requestPromisified({
+      url: h.main + '/selectroomimg',
+      data: {
+      },
+      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          this.globalData.RoomIconList = res.data.roomimglist,
+          wx.hideLoading()
+          break
+        case 0:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../../../images/icon/attention.png',
+            title: '获取图标失败'
+          });
+          break
+        default:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.hideLoading()
+      wx.showToast({
+        image: '../../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+      console.log(res)
+    })
   }
 })

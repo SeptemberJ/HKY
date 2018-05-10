@@ -85,7 +85,7 @@
 <view class='DishStyle'>
   <text class='DishStyle_tit'>菜式</text>
   <view class='DishStyle_Amount'>
-    <input type='digit' value='{{DishStyle}}' bindinput='ChangeDishStyle'></input>
+    <input value='{{DishStyle}}' bindinput='ChangeDishStyle'></input>
     <text></text>
   </view>
 </view>

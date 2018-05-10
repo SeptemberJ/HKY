@@ -20,6 +20,10 @@
     "pages/weight/report/index",
 
     "pages/my/home/add/index",
+    "pages/my/home/list/index",
+    "pages/my/room/add/index",
+
+    "pages/sport/index",
    
     
 
@@ -62,10 +66,10 @@
         "text": "酷玩"
       },
       {
-        "pagePath": "pages/equipment/index/index",
-        "iconPath": "images/icon/trend.png",
-        "selectedIconPath": "images/icon/trend_active.png",
-        "text": "趋势"
+        "pagePath": "pages/sport/index",
+        "iconPath": "images/icon/sport.png",
+        "selectedIconPath": "images/icon/sport_active.png",
+        "text": "热动"
       },
       {
         "pagePath": "pages/my/index/index",

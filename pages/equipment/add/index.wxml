@@ -1,6 +1,6 @@
 <view class='add'>
   <view class='Inputitem'>
-    <text style='padding-left:10rpx;color:ddd;'>设备图图片：</text>
+    <text style='padding-left:10rpx;color:ddd;'>设备图片：</text>
     <picker-view indicator-style="height: 30px;" style="width: 30px; height: 30px;" bindchange="bindChange">
       <picker-view-column>
         <view wx:for="{{IconList}}" wx:for-index="IconIdx" wx:for-item="Icon" wx:key="IconIdx" style="line-height: 30px">
