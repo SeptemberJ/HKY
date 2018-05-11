@@ -17,7 +17,7 @@
         <label class="radio" wx:for="{{Question.answer}}" wx:for-index="AnswerIdx" wx:for-item="Answer" wx:key="AnswerIdx">
           <radio value="{{Answer.value}}" checked=""/>{{Answer.value}}
           <view wx-if="{{Answer.img}}">
-            <image src='{{Answer.img}}'></image>
+            <image style='width:100%;' mode="aspectFit" src='{{Answer.img}}'></image>
           </view>
         </label>
       </radio-group> 

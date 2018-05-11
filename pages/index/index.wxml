@@ -5,7 +5,7 @@
   <view class='dataInfo'>
     <view class='topBar'>
       <!-- <image class="Avatar" src="{{userInfo.avatarUrl}}"></image> -->
-      <view class='nickName'>
+      <view class='nickName' bindtap='ToggleCurHome'>
         {{CurHomeName?CurHomeName:''}}
          <image class="ArrowDown" wx:if="{{CurHomeName}}" src="../../images/icon/arrow.png"></image> 
       </view>
@@ -13,7 +13,7 @@
         <image class='operationIcon messageIocn' bindtap='ToTrend' src='../../images/icon/qushi.png'></image>
         <image class='operationIcon messageIocn' bindtap='ToMyMessage' src='../../images/icon/message.png'></image>
         <view class='TipDot' wx:if='{{MessageCount>0}}'></view>
-      <image class='operationIcon' src='../../images/icon/add.png' bindtap='ToAdd'></image>
+      <image class='operationIcon' src='../../images/icon/add.png' bindtap='ToAddOptions'></image>
       </view>
     </view>
     <!--切换模块  -->
@@ -215,10 +215,9 @@
   <view class='EQBlock' wx:if="{{EQList.length>0}}">
     <view class='EQBlock_tab'>
       <text class="{{Cur_tab == 0?'tab_ative':''}}" data-idx='0' bindtap='ChangeTab'>设备</text>
-      <text class="{{Cur_tab == 2?'tab_ative':''}}" data-idx='2' bindtap='ChangeTab'>房间</text>
-      <text class="{{Cur_tab == 1?'tab_ative':''}}" data-idx='1' bindtap='ChangeTab'>场景</text>
-      <text class="{{Cur_tab == 3?'tab_ative':''}}" data-idx='3' bindtap='ChangeTab'>联动</text>
-      
+      <text class="{{Cur_tab == 1?'tab_ative':''}}" data-idx='1' bindtap='ChangeTab'>房间</text>
+      <text class="{{Cur_tab == 2?'tab_ative':''}}" data-idx='2' bindtap='ChangeTab'>自动化</text>
+      <text class="{{Cur_tab == 3?'tab_ative':''}}" data-idx='3' bindtap='ChangeTab'>场景</text>
     </view>
     <!--EQList  -->
     <view class='EQList' wx:if="{{Cur_tab == 0}}">
@@ -231,14 +230,13 @@
         <view class="ControlBt {{Equipment.on_off_status == 0?'ControlBt_off':'ControlBt_on'}}">{{Equipment.on_off_status == 0?'OFF':'ON'}}</view>
       </view>
     </view>
-    <!--EQScene  -->
-    <view class='EQScene' wx:if="{{Cur_tab == 1}}"></view>
+    
     <!--EQRoom  -->
-    <view class='EQRoom' wx:if="{{Cur_tab == 2}}">
+    <view class='EQRoom' wx:if="{{Cur_tab == 1}}">
       <view class=''wx:if="{{Roomlist.length>0}}">
         <view class='Roomlist_item' wx:for="{{Roomlist}}" wx:for-index="RoomIdx" wx:for-item="Room" wx:key="RoomIdx">
-          <image src="{{Room.room_img}}"></image>
-          <view class='Roomlist_item_name'>
+          <image src="{{Room.room_img}}" data-roomid="{{Room.id}}" bindtap='ToRoom' data-roomname="{{Room.fname}}"></image>
+          <view class='Roomlist_item_name' data-roomid="{{Room.id}}" bindtap='ToRoom' data-roomname="{{Room.fname}}">
             <text>{{Room.fname}}</text>
           </view>
           <view class='ControlBts'>
@@ -251,7 +249,19 @@
         <view class='Btn smallFont' bindtap="ToAddRoom">新建房间+</view>
       </view>
     </view>
+    <!--EQScene  -->
+    <view class='EQScene' wx:if="{{Cur_tab == 3}}"></view>
   </view>
 
 
+</view>
+
+
+<!--二维码  -->
+<view class='CodeBlock' wx:if="{{IfShowCode}}">
+  <image src='{{Code_imgres}}'></image>
+  <text class='Tip'>请使用SmartHox内'扫一扫'功能扫描</text>
+  <view class='closeBt' bindtap='CloseCode'>
+    <image src='../../images/icon/clear.png'></image>
+  </view>
 </view>

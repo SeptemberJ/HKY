@@ -7,53 +7,69 @@ const app = getApp()
 
 Page({
   data: {
-    HomeList:[]   //1管理员  0家庭成员
+    Cur_tab: 0,
+    EQList:[],
+    RoomName:'',
+    RoomId:null,
   },
-  onShow(){
-    this.GetHomeList()
-  },
-  //第一次从家开始添加
-  FirstAdd() {
-    wx.navigateTo({
-      url: '../add/index'
+  onLoad(options){
+    this.setData({
+      RoomId: options.roomid,
+      RoomName: options.roomname
     })
   },
-  GetHomeList(){
-    //获取home list
+  onShow(){
+    this.GetRoomEQlIST()
+  },
+  ChangeTab(e){
+    this.setData({
+      Cur_tab: e.currentTarget.dataset.idx
+    })
+  },
+  AddEquipment(){
+    wx.navigateTo({
+      url: '../../../equipment/add/index?roomid=' + this.data.RoomId,
+    })
+  },
+  //获取房间设备
+  GetRoomEQlIST(e) {
+    wx.showLoading({
+      title: '加载中',
+    })
     requestPromisified({
-      url: h.main + '/selectallhome?ftelphone=' + app.globalData.User_Phone,
+      url: h.main + '/selectroommachine?roomid=' + this.data.RoomId,
       data: {
       },
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {
-      //   'content-type': 'application/x-www-form-urlencoded',
-      //   'Accept': 'application/json'
-      // }, // 设置请求的 header
     }).then((res) => {
       switch (res.data.result) {
         case 1:
           this.setData({
-            HomeList: res.data.homelist
+            EQList: res.data.roommachine
           })
-          app.globalData.HomeList = res.data.homelist
+          wx.hideLoading()
           break
         case 0:
+          wx.hideLoading()
           wx.showToast({
             image: '../../../../images/icon/attention.png',
-            title: '获取家失败！'
+            title: '删除失败'
           });
           break
         default:
+          wx.hideLoading()
           wx.showToast({
             image: '../../../../images/icon/attention.png',
             title: '服务器繁忙！'
           });
       }
     }).catch((res) => {
+      wx.hideLoading()
       wx.showToast({
         image: '../../../../images/icon/attention.png',
         title: '服务器繁忙！'
       });
+      console.log(res)
     })
-  }
+  },
 })

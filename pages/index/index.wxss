@@ -79,7 +79,7 @@ page{
 }
 .swiper{
   width: 710rpx;
-  height: 180px !important;
+  height: 200px !important;
 }
 /*天气  */
 .temperatureInfo{
@@ -297,7 +297,7 @@ page{
 @keyframes Toggle_show /*Safari and Chrome*/
 {
     from {height:0px;}
-    to {height:250px;}
+    to {height:300px;}
 }
 .Toggle_close{
   width: 100%;
@@ -306,7 +306,7 @@ page{
 }
 @keyframes Toggle_close /*Safari and Chrome*/
 {
-    from {height:250px;}
+    from {height:300px;}
     to {height:0px;}
 }
 .Toggle_show .TemperatureDetail_block{
@@ -842,4 +842,38 @@ swiper {
   width: 70rpx;
   height: 70rpx;
   display: inline-block;
+}
+/*CodeBlock  */
+.CodeBlock{
+  width: 500rpx;
+  height: 500rpx;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: #fff;
+  transform: translate(-50%,-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.CodeBlock image{
+  width: 450rpx;
+  height: 450rpx;
+  display: block;
+}
+.CodeBlock .Tip{
+  font-size: 28rpx;
+  color: #ddd;
+}
+.closeBt{
+  width: 50rpx;
+  height: 50rpx;
+  position: absolute;
+  top: -10rpx;
+  right: -10rpx;
+}
+.closeBt image{
+  width: 100%;
+  height: 100%;
 }

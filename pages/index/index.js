@@ -39,6 +39,8 @@ Page({
     ifShow_B: false,
     ifShow_L: false,
     ifShow_D: false,
+    Code_imgres:'',
+    IfShowCode:false,  //二维码显示
 
   },
   //事件处理函数
@@ -79,6 +81,7 @@ Page({
     }
   },
   onShow: function () {
+    this.GetHomeList()
     this.GetAirQuality()
     this.GetAirQuality_inside()
     //this.StartClock()
@@ -120,9 +123,195 @@ Page({
       Toggle_show: this.data.Toggle_show == 0 ? 1 : (this.data.Toggle_show == 1?-1:1)
     })
   },
+  //调起切换
+  ToggleCurHome(){
+    let temp = []
+    app.globalData.HomeList.map((Item,Idx)=>{
+      temp.push(Item.fname)
+    })
+    wx.showActionSheet({
+      itemList: temp,
+      success: (res) => {
+        this.ChangeCurHome(app.globalData.HomeList[res.tapIndex].id, app.globalData.HomeList[res.tapIndex].fname)
+      },
+      fail: function (res) {
+        console.log(res.errMsg)
+      }
+    })
+  },
+  //切换家
+  ChangeCurHome(ID,NAME){
+    requestPromisified({
+      url: h.main + '/updatehomeid?id=' + ID + '&ftelphone=' + app.globalData.User_Phone,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          wx.showToast({
+            title: '切换成功！',
+            icon: 'success',
+            duration: 1500
+          })
+          this.setData({
+            CurHomeName: NAME
+          })
+          app.globalData.CurHomeName = NAME
+          app.globalData.CurHomeId = ID
+          this.GetHomeList()
+          this.GetCurEQList()
+          wx.hideLoading()
+          break
+        case 0:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '切换失败'
+          });
+          break
+        default:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: 'D切换服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.hideLoading()
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '切换服务器繁忙！'
+      });
+      console.log(res)
+    })
+  },
   ToAdd() {
     wx.navigateTo({
       url: '../equipment/add/index'
+    })
+  },
+  //获取二维码
+  ToGetCodeImg(){
+    requestPromisified({
+      url: h.main + '/selecthomecode?homeid=' + app.globalData.CurHomeId,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          this.setData({
+            Code_imgres:res.data.homelist[0].user_code,
+            IfShowCode:true
+          })
+          wx.hideLoading()
+          break
+        case 0:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '切换失败'
+          });
+          break
+        default:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '获取码服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.hideLoading()
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '获取码服务器繁忙！'
+      });
+      console.log(res)
+    })
+  },
+  //扫描后添加
+  AfterScanAddHome(ScanHomeId,ScanHomeName){
+    wx.showLoading({
+      title: '加载中',
+    })
+    requestPromisified({
+      url: h.main + '/insertregisterappusercode?register_appid=' + ScanHomeId + '&ftelphone=' + app.globalData.User_Phone,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          wx.showToast({
+            title: '添加成功！',
+            icon: 'success',
+            duration: 1500
+          })
+          this.ChangeCurHome(ScanHomeId, ScanHomeName)
+          wx.hideLoading()
+          break
+        case 0:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '添加失败!'
+          });
+          break
+        default:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '添加失败!'
+          });
+      }
+    }).catch((res) => {
+      wx.hideLoading()
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: 'S服务器繁忙！'
+      });
+      console.log(res)
+    })
+  },
+  //关闭二维码
+  CloseCode(){
+    this.setData({
+      IfShowCode: false
+    })
+  },
+  //扫一扫
+  Scan(){
+    wx.scanCode({
+      onlyFromCamera: true,
+      success: (res) => {
+        let Info = JSON.parse(res.result)
+        this.AfterScanAddHome(Info.id, Info.fname)
+      }
+    })
+  },
+  //弹起操作列表
+  ToAddOptions(){
+    wx.showActionSheet({
+      itemList: ['扫一扫','添加设备', '添加场景', '添加家庭成员'],
+      success: (res)=> {
+        switch (res.tapIndex){
+          case 0:
+            this.Scan()
+            break
+          case 1:
+            this.ToAdd()
+            break
+          case 2:
+            break
+          case 3:
+            this.ToGetCodeImg()
+            break
+        }
+      },
+      fail: function (res) {
+        console.log(res.errMsg)
+      }
     })
   },
   ToTrend(){
@@ -187,10 +376,10 @@ Page({
         this.GetCurEQList
       break
       case '1':
-        
+        this.GetCurRoomList()
         break
       case '2':
-        this.GetCurRoomList()
+        
         break
     }
     this.setData({
@@ -235,14 +424,14 @@ Page({
           wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '服务器繁忙！'
+            title: '删除服务器繁忙！'
           });
       }
     }).catch((res) => {
       wx.hideLoading()
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '服务器繁忙！'
+        title: '删除服务器繁忙！'
       });
       console.log(res)
     })
@@ -553,13 +742,13 @@ Page({
         default:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '服务器繁忙！'
+            title: 'D家设备服务器繁忙！'
           });
       }
     }).catch((res) => {
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '服务器繁忙！'
+        title: '家设备服务器繁忙！'
       });
     })
   },
@@ -599,6 +788,12 @@ Page({
         image: '../../images/icon/attention.png',
         title: '服务器繁忙！'
       });
+    })
+  },
+  //跳转具体房间
+  ToRoom(e){
+    wx.navigateTo({
+      url: '../my/room/list/index?roomid=' + e.currentTarget.dataset.roomid + '&roomname=' + e.currentTarget.dataset.roomname,
     })
   },
   //跳转到我的消息页面
@@ -643,5 +838,46 @@ Page({
         air_level: 6
       })
     }
+  },
+  GetHomeList(){
+    //获取home list
+    requestPromisified({
+      url: h.main + '/selectallhome?ftelphone=' + app.globalData.User_Phone,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          if (res.data.homelist.length > 0) {
+            app.globalData.HomeList = res.data.homelist
+            app.globalData.CurHomeName = res.data.homelist1[0].fname
+            app.globalData.CurHomeId = res.data.homelist1[0].id
+          }
+          break
+        case 0:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '获取家失败！'
+          });
+          break
+        default:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: 'D获取家服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      console.log(res)
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '获取家服务器繁忙！'
+      });
+    })
   }
+  
 })

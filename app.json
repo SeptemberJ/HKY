@@ -22,6 +22,7 @@
     "pages/my/home/add/index",
     "pages/my/home/list/index",
     "pages/my/room/add/index",
+    "pages/my/room/list/index",
 
     "pages/sport/index",
    
@@ -37,8 +38,7 @@
     "pages/my/index/index",
     "pages/my/integral/index",
 
-    "pages/sign/index",
-    "pages/bar/index"
+    "pages/sign/index"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -69,7 +69,7 @@
         "pagePath": "pages/sport/index",
         "iconPath": "images/icon/sport.png",
         "selectedIconPath": "images/icon/sport_active.png",
-        "text": "热动"
+        "text": "乐动"
       },
       {
         "pagePath": "pages/my/index/index",

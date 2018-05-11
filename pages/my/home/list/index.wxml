@@ -6,7 +6,7 @@
   </view>
 </view>
 
-<view class="InfoNull" wx:if="{{HomeList.length == 0}}">
+<view class="InfoNull">
   <view class='Btn smallFont' bindtap="FirstAdd">新建家+</view>
 </view>
   

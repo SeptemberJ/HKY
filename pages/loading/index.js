@@ -50,13 +50,14 @@ Page({
             default:
               wx.showToast({
                 image: '../../images/icon/attention.png',
-                title: '服务器繁忙！'
+                title: 'HLD服务器繁忙！'
               });
           }
         }).catch((res) => {
+          console.log(res)
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '服务器繁忙！'
+            title: 'HL服务器繁忙！'
           });
         })
         

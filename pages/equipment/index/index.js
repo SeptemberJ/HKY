@@ -118,7 +118,7 @@ Page({
       title: '加载中',
     })
     requestPromisified({
-      url: h.main + '/selectallqrcode?ftelphone=' + app.globalData.User_Phone,
+      url: h.main + '/selectregisteruser?homeid=' + app.globalData.CurHomeId,
       data: {
       },
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
@@ -131,7 +131,7 @@ Page({
         case 1:
           //刷新列表
           this.setData({
-            equipmentList: res.data.qrcodelist
+            equipmentList: res.data.registermachine
           })
           wx.hideLoading()
           break

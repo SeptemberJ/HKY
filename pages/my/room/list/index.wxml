@@ -1,0 +1,23 @@
+<view class="RoomTop">
+  <view class='RoomAddInfo'>
+    <text>{{RoomName}}</text>
+    <image src='../../../../images/icon/add.png' bindtap='AddEquipment'></image>
+  </view>
+</view>
+<view class='Room_tab'>
+  <text class="{{Cur_tab == 0?'tab_ative':''}}" data-idx='0' bindtap='ChangeTab'>设备</text>
+  <text class="{{Cur_tab == 1?'tab_ative':''}}" data-idx='1' bindtap='ChangeTab'>自动化</text>
+  <text class="{{Cur_tab == 2?'tab_ative':''}}" data-idx='2' bindtap='ChangeTab'>场景</text>
+</view>
+
+<!--EQList  -->
+    <view class='EQList' wx:if="{{Cur_tab == 0}}">
+      <view class='EQList_item' wx:for="{{EQList}}" wx:for-index="EQIdx" wx:for-item="Equipment" wx:key="EQIdx">
+        <image src="{{Equipment.machine_img}}"></image>
+        <view class='EQList_item_text'>
+          <text class='EQList_item_text_name'>{{Equipment.second_name}}</text>
+          <text class='EQList_item_text_room'>{{Equipment.room_name}}</text>
+        </view>
+        <view class="ControlBt {{Equipment.on_off_status == 0?'ControlBt_off':'ControlBt_on'}}">{{Equipment.on_off_status == 0?'OFF':'ON'}}</view>
+      </view>
+    </view>
