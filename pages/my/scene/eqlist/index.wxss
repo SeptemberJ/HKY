@@ -1,0 +1,50 @@
+.Scene_EQList{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.Scene_EQ_item{
+  width: 710rpx;
+  height: 100rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+}
+.Scene_EQ_item_info{
+  width: 410rpx;
+  padding: 0 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.Scene_EQ_item_status , .Scene_EQ_item_when{
+  width: 100rpx;
+}
+.Scene_EQ_FixedCircle{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background: #3498db;
+  position: fixed;
+  top: 50%;
+  right: 20rpx;
+  z-index: 999;
+  transform: translateY(-50%);
+}
+.Scene_EQ_innerCircle{
+  width: 80rpx;
+  height: 80rpx;
+  margin: 5rpx;
+  border: 5rpx dotted #fff;
+  border-radius: 50%;
+  background: #3498db;
+  color: #fff;
+  font-size: 30rpx;
+  font-weight: blod;
+  text-align: center;
+  line-height: 80rpx;
+}

@@ -40,6 +40,9 @@ page text{
 .MarginT_10{
   margin-top: 10px !important;
 }
+.MarginT_40{
+  margin-top: 40px !important;
+}
 .MarginB_20{
   margin-bottom: 20px;
 }
@@ -61,6 +64,12 @@ page text{
   width: 100%;
   height: 5px;
   background: #efefef;
+}
+.HarfLongBt{
+  width: 200rpx;
+  height: 32px;
+  line-height: 32px;
+  font-size: 16px;
 }
 /*InfoNull  */
 .InfoNull{

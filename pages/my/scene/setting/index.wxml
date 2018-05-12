@@ -1,0 +1,54 @@
+<view class='SceneItem' style='height:120rpx;'>
+  <picker-view indicator-style="height: 180rpx;" style="width: 60px; height: 30px;" value="{{Room_Icon_index}}" bindchange="bindChange">
+    <picker-view-column>
+      <view wx:for="{{IconList}}" wx:for-index="IconIdx" wx:for-item="Icon" wx:key="IconIdx" style="line-height: 50px;margin-left:20rpx;">
+        <image style='width:30px;height:30px;' src="{{Icon.roomimg}}"></image>
+      </view>
+    </picker-view-column>
+  </picker-view>
+  <input placeholder='场景名称'></input>
+</view>
+
+<view class='SceneItem' bindtap='ToTiming'>
+  <view class='SceneItem_icon'>
+    <image src='../../../../images/icon/scene_timing.png'></image>
+  </view>
+  <text class='SceneItem_tit'>定时</text>
+  <text class='SceneItem_count'>1个</text>
+  <view class='SceneItem_arrow'>
+    <image src='../../../../images/icon-arrowdown.png'></image>
+  </view>
+</view>
+
+<view class='SceneItem' bindtap='ToEQList'>
+  <view class='SceneItem_icon'>
+    <image src='../../../../images/icon/scene_eq.png'></image>
+  </view>
+  <text class='SceneItem_tit'>设备组合</text>
+  <text class='SceneItem_count'>1个</text>
+  <view class='SceneItem_arrow'>
+    <image src='../../../../images/icon-arrowdown.png'></image>
+  </view>
+</view>
+
+<view class='SceneItem' bindtap='ToLinkage'>
+  <view class='SceneItem_icon'>
+    <image src='../../../../images/icon/scene_ld.png'></image>
+  </view>
+  <text class='SceneItem_tit'>联动组合</text>
+  <text class='SceneItem_count'>1个</text>
+  <view class='SceneItem_arrow'>
+    <image src='../../../../images/icon-arrowdown.png'></image>
+  </view>
+</view>
+
+<view class='SceneItem' bindtap='ToLog'>
+  <view class='SceneItem_icon'>
+    <image src='../../../../images/icon/scene_log.png'></image>
+  </view>
+  <text class='SceneItem_tit'>日志</text>
+  <text class='SceneItem_count'></text>
+  <view class='SceneItem_arrow'>
+    <image src='../../../../images/icon-arrowdown.png'></image>
+  </view>
+</view>

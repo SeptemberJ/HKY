@@ -1,0 +1,6 @@
+<view class='Scene_log'>
+  <view class='Scene_log_item' wx:for="{{LogList}}" wx:for-index="LogIdx" wx:for-item="Log" wx:key="LogIdx">
+    <text class='Scene_log_item_main'>{{Log.text}}</text>
+    <text class='Scene_log_item_time'>{{Log.time}}</text>
+  </view>
+</view>

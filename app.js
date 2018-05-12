@@ -99,9 +99,6 @@ App({
   },
   //获取房间图标
   GetIconList() {
-    wx.showLoading({
-      title: '加载中',
-    })
     requestPromisified({
       url: h.main + '/selectroomimg',
       data: {

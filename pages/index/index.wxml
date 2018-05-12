@@ -5,10 +5,16 @@
   <view class='dataInfo'>
     <view class='topBar'>
       <!-- <image class="Avatar" src="{{userInfo.avatarUrl}}"></image> -->
-      <view class='nickName' bindtap='ToggleCurHome'>
+      <picker bindchange="ToggleCurHome"  range="{{HomeList}}" range-key="fname">
+        <view class='nickName' bindtap='ToggleCurHome'>
         {{CurHomeName?CurHomeName:''}}
          <image class="ArrowDown" wx:if="{{CurHomeName}}" src="../../images/icon/arrow.png"></image> 
       </view>
+      </picker>
+      <!-- <view class='nickName' bindtap='ToggleCurHome'>
+        {{CurHomeName?CurHomeName:''}}
+         <image class="ArrowDown" wx:if="{{CurHomeName}}" src="../../images/icon/arrow.png"></image> 
+      </view> -->
       <view class='operation'>
         <image class='operationIcon messageIocn' bindtap='ToTrend' src='../../images/icon/qushi.png'></image>
         <image class='operationIcon messageIocn' bindtap='ToMyMessage' src='../../images/icon/message.png'></image>

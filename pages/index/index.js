@@ -94,7 +94,7 @@ Page({
       CurHomeId: app.globalData.CurHomeId,
     })
     if (app.globalData.CurHomeId){
-      this.GetCurEQList()
+      this.GetCurEQList(app.globalData.CurHomeId)
     }
   },
   //userinfo
@@ -124,20 +124,22 @@ Page({
     })
   },
   //调起切换
-  ToggleCurHome(){
-    let temp = []
-    app.globalData.HomeList.map((Item,Idx)=>{
-      temp.push(Item.fname)
-    })
-    wx.showActionSheet({
-      itemList: temp,
-      success: (res) => {
-        this.ChangeCurHome(app.globalData.HomeList[res.tapIndex].id, app.globalData.HomeList[res.tapIndex].fname)
-      },
-      fail: function (res) {
-        console.log(res.errMsg)
-      }
-    })
+  ToggleCurHome(e){
+    console.log(e.detail.value)
+    this.ChangeCurHome(app.globalData.HomeList[e.detail.value].id, app.globalData.HomeList[e.detail.value].fname)
+    // let temp = []
+    // app.globalData.HomeList.map((Item,Idx)=>{
+    //   temp.push(Item.fname)
+    // })
+    // wx.showActionSheet({
+    //   itemList: temp,
+    //   success: (res) => {
+    //     this.ChangeCurHome(app.globalData.HomeList[res.tapIndex].id, app.globalData.HomeList[res.tapIndex].fname)
+    //   },
+    //   fail: function (res) {
+    //     console.log(res.errMsg)
+    //   }
+    // })
   },
   //切换家
   ChangeCurHome(ID,NAME){
@@ -160,7 +162,7 @@ Page({
           app.globalData.CurHomeName = NAME
           app.globalData.CurHomeId = ID
           this.GetHomeList()
-          this.GetCurEQList()
+          this.GetCurEQList(ID)
           wx.hideLoading()
           break
         case 0:
@@ -248,7 +250,7 @@ Page({
             icon: 'success',
             duration: 1500
           })
-          this.ChangeCurHome(ScanHomeId, ScanHomeName)
+          this.ChangeCurHome(res.data.id, ScanHomeName)
           wx.hideLoading()
           break
         case 0:
@@ -373,7 +375,7 @@ Page({
   ChangeTab(e){
     switch (e.currentTarget.dataset.idx){
       case '0':
-        this.GetCurEQList
+        this.GetCurEQList(app.globalData.CurHomeId)
       break
       case '1':
         this.GetCurRoomList()
@@ -715,9 +717,9 @@ Page({
     })
   },
   //获取当前家下设备列表
-  GetCurEQList() {
+  GetCurEQList(CurHomeId) {
     requestPromisified({
-      url: h.main + '/selectregisteruser?homeid=' + app.globalData.CurHomeId,
+      url: h.main + '/selectregisteruser?homeid=' + CurHomeId,
       data: {
       },
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
@@ -857,6 +859,9 @@ Page({
             app.globalData.HomeList = res.data.homelist
             app.globalData.CurHomeName = res.data.homelist1[0].fname
             app.globalData.CurHomeId = res.data.homelist1[0].id
+            this.setData({
+              CurHomeName: res.data.homelist1[0].fname
+            })
           }
           break
         case 0:

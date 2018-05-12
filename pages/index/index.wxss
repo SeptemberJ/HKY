@@ -29,6 +29,10 @@ page{
   font-size: 30rpx;
   margin-bottom: 10px;
 }
+.nickName{
+  position: relative;
+  z-index: 9999;
+}
 .Avatar{
   width: 25px;
   height: 25px;
@@ -864,7 +868,7 @@ swiper {
 }
 .CodeBlock .Tip{
   font-size: 28rpx;
-  color: #ddd;
+  color: #333;
 }
 .closeBt{
   width: 50rpx;
