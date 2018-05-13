@@ -93,6 +93,8 @@ page{
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  overflow: hidden;
+  position: relative;
 }
 .temperature_conclusion{
   width: 710rpx;
@@ -101,7 +103,7 @@ page{
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  position: relative;
+  
 }
 .left_add{
   width: 150rpx;
@@ -755,7 +757,7 @@ swiper {
   font-weight: bold;
   border-bottom: 2px solid #3498db;
 }
-.EQList , .EQScene , .EQRoom{
+.EQList , .EQScene , .EQRoom , .EQAutomatic{
   width: 750rpx;
   padding: 10rpx 0;
   display: flex;

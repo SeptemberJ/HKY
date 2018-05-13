@@ -45,7 +45,7 @@ Page({
             Item.choosed = false
           })
           this.setData({
-            EQList: Temp
+            SensorList: Temp
           })
           break
         case 0:

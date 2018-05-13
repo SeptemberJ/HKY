@@ -1,6 +1,5 @@
 {
   "pages":[
-    "pages/my/scene/log/index",
 
     "pages/loading/index",
     "pages/login/index",
@@ -25,13 +24,17 @@
     "pages/my/home/list/index",
     "pages/my/room/add/index",
     "pages/my/room/list/index",
-
+    "pages/my/scene/eqlist/index",
     "pages/my/scene/setting/index",
     "pages/my/scene/ldlist/index",
     "pages/my/scene/ldadd/index",
     "pages/my/scene/timing/index",
-    "pages/my/scene/eqlist/index",
     "pages/my/scene/eqadd/index",
+    "pages/my/scene/log/index",
+
+    "pages/my/automation/add/index",
+    "pages/my/automation/condition/index",
+    "pages/my/automation/action/index",
 
     "pages/sport/index",
    

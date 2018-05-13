@@ -8,9 +8,6 @@ const app = getApp()
 Page({
   data: {
     EQList: [{ 'icon': '../../../../images/icon/delete.png', 'name': '灯带', 'room': '玄关', 'status': 0, 'when': 0 }, { 'icon': '../../../../images/icon/delete.png', 'name': '水晶灯', 'room': '传统', 'status': 1, 'when': 2 }],
-    multiIndexList:[],
-    multiIndex_0: [0, 0],
-    multiIndex_1: [0, 0],
     objectMultiArray: [
       [
         {
@@ -114,10 +111,11 @@ Page({
     })
   },
   bindMultiPickerChange(e) {
-    let Temp = this.data.multiIndexList
-    Temp[e.currentTarget.dataset.idx] = e.detail.value
+    let Temp = this.data.EQList
+    Temp[e.currentTarget.dataset.idx].status = e.detail.value[0]
+    Temp[e.currentTarget.dataset.idx].when = e.detail.value[1]
     this.setData({
-      multiIndexList: Temp
+      EQList: Temp
     })
   },
   //已加入的设备列表
@@ -166,5 +164,8 @@ Page({
     wx.navigateTo({
       url: '../eqadd/index',
     })
+  },
+  Submit(){
+    console.log(this.data.EQList)
   }
 })

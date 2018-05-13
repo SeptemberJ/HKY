@@ -217,7 +217,7 @@
     </view>
 
 
-  <!--设备列表  -->
+  <!--tab  -->
   <view class='EQBlock' wx:if="{{EQList.length>0}}">
     <view class='EQBlock_tab'>
       <text class="{{Cur_tab == 0?'tab_ative':''}}" data-idx='0' bindtap='ChangeTab'>设备</text>
@@ -255,8 +255,15 @@
         <view class='Btn smallFont' bindtap="ToAddRoom">新建房间+</view>
       </view>
     </view>
+    <!--EQAutomatic  -->
+    <view class='EQAutomatic' wx:if="{{Cur_tab == 2}}">
+    
+    </view>
     <!--EQScene  -->
-    <view class='EQScene' wx:if="{{Cur_tab == 3}}"></view>
+    <view class='EQScene' wx:if="{{Cur_tab == 3}}">
+    
+    </view>
+
   </view>
 
 
