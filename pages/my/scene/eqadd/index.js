@@ -13,8 +13,7 @@ Page({
 
   },
   onShow() {
-    //this.GetCurEQList(app.globalData.CurHomeId)
-    this.GetCurEQList('68efa6a3-24f9-49de-9336-fb5cb9549ea0')
+    this.GetCurEQList(app.globalData.CurHomeId)
 
   },
   //选择切换
@@ -24,6 +23,23 @@ Page({
     this.setData({
       EQList: Temp
     })
+  },
+  //Submit
+  Submit(){
+    let ChoosedList = []
+    this.data.EQList.map((Item,Idx)=>{
+      if (Item.choosed){
+        Item.status = 0
+        Item.when = 0
+        ChoosedList.push(Item)
+      }
+    })
+    var pages = getCurrentPages();
+    if (pages.length > 1) {
+      var prePage = pages[pages.length - 2];
+      prePage.CombineChoosedEQList(ChoosedList)
+    }
+    wx.navigateBack()
   },
   //获取当前家下设备列表
   GetCurEQList(CurHomeId) {
@@ -45,7 +61,7 @@ Page({
             Item.choosed = false
           })
           this.setData({
-            SensorList: Temp
+            EQList: Temp
           })
           break
         case 0:
@@ -57,13 +73,13 @@ Page({
         default:
           wx.showToast({
             image: '../../../../images/icon/attention.png',
-            title: 'D家设备服务器繁忙！'
+            title: '服务器繁忙！'
           });
       }
     }).catch((res) => {
       wx.showToast({
         image: '../../../../images/icon/attention.png',
-        title: '家设备服务器繁忙！'
+        title: '服务器繁忙！'
       });
     })
   },

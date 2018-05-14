@@ -42,7 +42,8 @@ App({
     //定位
     this.GetLocation()
 
-    this.GetIconList()
+    this.GetRoomIconList()
+    this.GetSceneIconList()
   },
   GetLocation(){
     wx.getLocation({
@@ -95,10 +96,11 @@ App({
     CurHomeName:null,
     CurHomeId: null,
     RoomIconList:[], //房间icon
+    SceneIconList:[],//场景icon
 
   },
   //获取房间图标
-  GetIconList() {
+  GetRoomIconList() {
     requestPromisified({
       url: h.main + '/selectroomimg',
       data: {
@@ -109,6 +111,42 @@ App({
         case 1:
           this.globalData.RoomIconList = res.data.roomimglist,
           wx.hideLoading()
+          break
+        case 0:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../../../images/icon/attention.png',
+            title: '获取图标失败'
+          });
+          break
+        default:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.hideLoading()
+      wx.showToast({
+        image: '../../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+      console.log(res)
+    })
+  },
+    //获取场景图标
+  GetSceneIconList() {
+    requestPromisified({
+      url: h.main + '/selectscenarioimg',
+      data: {
+      },
+      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          this.globalData.SceneIconList = res.data.scenariolist,
+            wx.hideLoading()
           break
         case 0:
           wx.hideLoading()

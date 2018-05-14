@@ -21,3 +21,17 @@
         <view class="ControlBt {{Equipment.on_off_status == 0?'ControlBt_off':'ControlBt_on'}}">{{Equipment.on_off_status == 0?'OFF':'ON'}}</view>
       </view>
     </view>
+  <!--Scene  -->
+   <view class='EQScene' wx:if="{{Cur_tab == 2}}">
+      <view class='EQList_item' wx:for="{{SceneList}}" wx:for-index="SceneIdx" wx:for-item="Scene" wx:key="SceneIdx" bindtap='ToEdit_scene' data-sceneid='{{Scene.id}}'>
+        <image src="{{Scene.scenario_img}}"></image>
+        <view class='EQList_item_text'>
+          <text class='EQList_item_text_name'>{{Scene.fname}}</text>
+          <text class='EQList_item_text_room'></text>
+        </view>
+        <view class="ControlBt {{Scene.on_off_status == 0?'ControlBt_off':'ControlBt_on'}}" bindtap='ToggleOpenClose_scene' data-sceneid='{{Scene.id}}' data-scenestatus='{{Scene.on_off_status}}' data-idx='{{SceneIdx}}'>{{Scene.on_off_status == 0?'OFF':'ON'}}</view>
+      </view>
+      <view class="InfoNull">
+        <view class='Btn smallFont' bindtap="ToAddScene">新建场景+</view>
+      </view>
+    </view>

@@ -7,9 +7,9 @@ const app = getApp()
 
 Page({
   data: {
-    TimeStart:'请选择选择开始时间',
-    TimeEnd: '请选择选择结束时间',
-    SingleTime:true,
+    TimeStart:'00:00',
+    TimeEnd: '23:59',
+    SingleTime:true, 
     Monday:false,
     Tuesday: false,
     Wednesday: false,
@@ -93,21 +93,6 @@ Page({
     }
   },
   Submit(){
-    //校验
-    if (this.data.TimeStart == '请选择选择开始时间'){
-      wx.showToast({
-        image: '../../../../images/icon/attention.png',
-        title: '请选开始时间！'
-      });
-      return false
-    }
-    if (this.data.TimeEnd == '请选择选择结束时间') {
-      wx.showToast({
-        image: '../../../../images/icon/attention.png',
-        title: '请选结束时间！'
-      });
-      return false
-    }
     if (!this.data.SingleTime && !this.data.Monday && !this.data.Tuesday && !this.data.Wednesday && !this.data.Thursday && !this.data.Friday && !this.data.Saturday && !this.data.Sunday){
       wx.showToast({
         image: '../../../../images/icon/attention.png',
@@ -115,6 +100,26 @@ Page({
       });
       return false
     }
+    let tempInfo = {
+      time_start: this.data.TimeStart,
+      time_end: this.data.TimeEnd,
+      time_control: {
+        SingleTime: this.data.SingleTime ? '1' : '0',
+        Monday: this.data.Monday ? '1' : '0',
+        Tuesday: this.data.Tuesday ? '1' : '0',
+        Wednesday: this.data.Wednesday ? '1' : '0',
+        Thursday: this.data.Thursday ? '1' : '0',
+        Friday: this.data.Friday ? '1' : '0',
+        Saturday: this.data.Saturday ? '1' : '0',
+        Sunday: this.data.Sunday ? '1' : '0',
+      }
+    }
+    var pages = getCurrentPages();
+    if (pages.length > 1) {
+      var prePage = pages[pages.length - 2];
+      prePage.UpdateTiming(tempInfo)
+    }
+    wx.navigateBack()
     // wx.showLoading({
     //   title: '加载中',
     //   mask: true,

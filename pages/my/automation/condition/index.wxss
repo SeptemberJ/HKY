@@ -1,5 +1,5 @@
 page{
-  background: #efefef;
+  /* background: #efefef; */
 }
 .Condition_tit{
   width: calc(100% - 40rpx);

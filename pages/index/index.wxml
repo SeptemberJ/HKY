@@ -227,13 +227,13 @@
     </view>
     <!--EQList  -->
     <view class='EQList' wx:if="{{Cur_tab == 0}}">
-      <view class='EQList_item' wx:for="{{EQList}}" wx:for-index="EQIdx" wx:for-item="Equipment" wx:key="EQIdx">
-        <image src="{{Equipment.machine_img}}"></image>
-        <view class='EQList_item_text'>
+      <view class='EQList_item' wx:for="{{EQList}}" wx:for-index="EQIdx" wx:for-item="Equipment" wx:key="EQIdx" >
+        <image src="{{Equipment.machine_img}}" bindtap='ToControl' data-eqid='{{Equipment.id}}'></image>
+        <view class='EQList_item_text' bindtap='ToControl' data-eqid='{{Equipment.id}}'>
           <text class='EQList_item_text_name'>{{Equipment.second_name}}</text>
           <text class='EQList_item_text_room'>{{Equipment.room_name}}</text>
         </view>
-        <view class="ControlBt {{Equipment.on_off_status == 0?'ControlBt_off':'ControlBt_on'}}">{{Equipment.on_off_status == 0?'OFF':'ON'}}</view>
+        <view class="ControlBt {{Equipment.on_off_status == 0?'ControlBt_off':'ControlBt_on'}}" bindtap='ToggleOpenClose_EQ' data-eqid='{{Equipment.id}}' data-eqstatus='{{Equipment.on_off_status}}' data-idx='{{EQIdx}}'>{{Equipment.on_off_status == 0?'OFF':'ON'}}</view>
       </view>
     </view>
     
@@ -257,11 +257,24 @@
     </view>
     <!--EQAutomatic  -->
     <view class='EQAutomatic' wx:if="{{Cur_tab == 2}}">
-    
+
+      <view class="InfoNull">
+        <view class='Btn smallFont' bindtap="ToAddAutomatic">新建自动化+</view>
+      </view>
     </view>
     <!--EQScene  -->
     <view class='EQScene' wx:if="{{Cur_tab == 3}}">
-    
+      <view class='EQList_item' wx:for="{{SceneList}}" wx:for-index="SceneIdx" wx:for-item="Scene" wx:key="SceneIdx" bindtap='ToEdit_scene' data-sceneid='{{Scene.id}}'>
+        <image src="{{Scene.scenario_img}}"></image>
+        <view class='EQList_item_text'>
+          <text class='EQList_item_text_name'>{{Scene.fname}}</text>
+          <text class='EQList_item_text_room'></text>
+        </view>
+        <view class="ControlBt {{Scene.on_off_status == 0?'ControlBt_off':'ControlBt_on'}}" bindtap='ToggleOpenClose_scene' data-sceneid='{{Scene.id}}' data-scenestatus='{{Scene.on_off_status}}' data-idx='{{SceneIdx}}'>{{Scene.on_off_status == 0?'OFF':'ON'}}</view>
+      </view>
+      <view class="InfoNull">
+        <view class='Btn smallFont' bindtap="ToAddScene">新建场景+</view>
+      </view>
     </view>
 
   </view>

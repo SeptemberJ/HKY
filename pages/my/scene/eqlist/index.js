@@ -7,7 +7,8 @@ const app = getApp()
 
 Page({
   data: {
-    EQList: [{ 'icon': '../../../../images/icon/delete.png', 'name': '灯带', 'room': '玄关', 'status': 0, 'when': 0 }, { 'icon': '../../../../images/icon/delete.png', 'name': '水晶灯', 'room': '传统', 'status': 1, 'when': 2 }],
+    EQList:[],
+    EQList2: [{ 'icon': '../../../../images/icon/delete.png', 'name': '灯带', 'room': '玄关', 'status': 0, 'when': 0 }, { 'icon': '../../../../images/icon/delete.png', 'name': '水晶灯', 'room': '传统', 'status': 1, 'when': 2 }],
     objectMultiArray: [
       [
         {
@@ -46,15 +47,18 @@ Page({
       ]
     ],
   },
-  onLoad() {
+  onLoad(options) {
     let IndexList =[]
     this.data.EQList.map((Item,Idx)=>{
       let temp = [Item.status, Item.when]
       IndexList.push(temp)
     })
     this.setData({
-      multiIndexList: IndexList
+      multiIndexList: IndexList,
     })
+    if (options.sceneid != 'undefined'){
+      this.GetSceneInfo(options.sceneid)
+    }
   },
   onShow() {
 
@@ -119,45 +123,63 @@ Page({
     })
   },
   //已加入的设备列表
-  GetEQlist(){
-    // wx.showLoading({
-    //   title: '加载中',
-    //   mask: true,
+  GetSceneInfo(ID) {
+    requestPromisified({
+      url: h.main + '/selectnoscenario?id=' + ID,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+    }).then((res) => {
+      console.log(res.data.scenario)
+      switch (res.data.result) {
+        case 1:
+          this.setData({
+            EQList: res.data.scenario.scenarios.Scene_EQList
+          })
+          wx.hideLoading()
+          break
+        case 0:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '获取失败!'
+          });
+          break
+        default:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '服务器繁忙！!'
+          });
+      }
+    }).catch((res) => {
+      wx.hideLoading()
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+      console.log(res)
+    })
+
+  },
+  //整合设备列表
+  CombineChoosedEQList(ChoosedList){
+    //剔除重复
+    // let NoRepeatArray = []
+    // let OldTemp = this.data.EQList.slice(0)
+    // ChoosedList.map((NewItem,NewIdx)=>{
+    //   this.data.EQList.map((OldItem, OldIdx) => {
+    //     if (OldItem.id != NewItem.id) {
+    //       OldTemp.push(NewItem)
+    //       debugger
+    //     }
+    //   })
     // })
-    // requestPromisified({
-    //   url: h.main + '/insertroom?id=' + e.currentTarget.dataset.idx,
-    //   data: {
-    //     id: e.currentTarget.dataset.idx
-    //   },
-    //   method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-    // }).then((res) => {
-    //   switch (res.data.result) {
-    //     case 1:
-    //       var pages = getCurrentPages();
-    //       if (pages.length > 1) {
-    //         var prePage = pages[pages.length - 2];
-    //         prePage.GetCurRoomList()
-    //       }
-    //       wx.navigateBack()
-    //       break
-    //     case 0:
-    //       wx.showToast({
-    //         image: '../../../../images/icon/attention.png',
-    //         title: '创建房间失败!'
-    //       });
-    //       break
-    //     default:
-    //       wx.showToast({
-    //         image: '../../../../images/icon/attention.png',
-    //         title: '服务器繁忙！'
-    //       });
-    //   }
-    // }).catch((res) => {
-    //   wx.showToast({
-    //     image: '../../../../../images/icon/attention.png',
-    //     title: '服务器繁忙！'
-    //   });
-    // })
+    // console.log(this.data.EQList)
+    // console.log(OldTemp)
+    this.setData({
+      EQList: ChoosedList
+    })
   },
   //加入设备
   ToAddEq(){
@@ -167,5 +189,11 @@ Page({
   },
   Submit(){
     console.log(this.data.EQList)
+    var pages = getCurrentPages();
+    if (pages.length > 1) {
+      var prePage = pages[pages.length - 2];
+      prePage.UpdateChoosedEQList(this.data.EQList)
+    }
+    wx.navigateBack()
   }
 })

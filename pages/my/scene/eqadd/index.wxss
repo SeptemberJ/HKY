@@ -1,3 +1,17 @@
+.TopSubmitBt{
+  width: 150rpx;
+  height: 30px;
+  float: right;
+  display: block;
+  background: #3498db;
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: bold;
+  text-align: center;
+  line-height: 30px;
+  margin-right: 20rpx;
+  border-radius: 10rpx;
+}
 .Scene_EQList{
   width: 750rpx;
   padding: 10rpx 0;
@@ -33,10 +47,11 @@
 .Scene_EQList_item_text_name{
   font-size: 32rpx;
   font-weight: bold;
+  margin-bottom: 8rpx;
 }
 .Scene_EQList_item_text_room{
   font-size: 30rpx;
-  color: #ddd;
+  color: #999;
 }
 .Scene_EQList .ControlBt{
   width: 50rpx;

@@ -196,7 +196,11 @@ Page({
           if (res.data.homelist.length>0){
             app.globalData.HomeList = res.data.homelist
             app.globalData.CurHomeName = res.data.homelist1[0].fname
-            app.globalData.CurHomeId = res.data.homelist1[0].id
+            if (res.data.homelist1[0].copyid == '') {
+              app.globalData.CurHomeId = res.data.homelist1[0].id
+            } else {
+              app.globalData.CurHomeId = res.data.homelist1[0].copyid
+            }
           }
           break
         case 0:

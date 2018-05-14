@@ -9,6 +9,7 @@ Page({
   data: {
     Cur_tab: 0,
     EQList:[],
+    SceneList:[],
     RoomName:'',
     RoomId:null,
   },
@@ -29,6 +30,12 @@ Page({
   AddEquipment(){
     wx.navigateTo({
       url: '../../../equipment/add/index?roomid=' + this.data.RoomId,
+    })
+  },
+  //添加场景
+  ToAddScene() {
+    wx.navigateTo({
+      url: '../../scene/setting/index?type=0&roomid=' + this.data.RoomId   //0新增
     })
   },
   //获取房间设备

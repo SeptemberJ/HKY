@@ -30,6 +30,8 @@ Page({
     CurHomeId:null,
     EQList:[],   //设备
     Roomlist:[], //房间
+    AutomaticList:[], //自动化
+    SceneList:[], //场景
     Cur_tab:0,
     airQuality_inside:'', //室内空气质量
     Distance_width:66,
@@ -94,6 +96,7 @@ Page({
       CurHomeId: app.globalData.CurHomeId,
     })
     if (app.globalData.CurHomeId){
+      //this.ChangeTab(null, this.data.Cur_tab)
       this.GetCurEQList(app.globalData.CurHomeId)
     }
   },
@@ -126,25 +129,17 @@ Page({
   //调起切换
   ToggleCurHome(e){
     console.log(e.detail.value)
-    this.ChangeCurHome(app.globalData.HomeList[e.detail.value].id, app.globalData.HomeList[e.detail.value].fname)
-    // let temp = []
-    // app.globalData.HomeList.map((Item,Idx)=>{
-    //   temp.push(Item.fname)
-    // })
-    // wx.showActionSheet({
-    //   itemList: temp,
-    //   success: (res) => {
-    //     this.ChangeCurHome(app.globalData.HomeList[res.tapIndex].id, app.globalData.HomeList[res.tapIndex].fname)
-    //   },
-    //   fail: function (res) {
-    //     console.log(res.errMsg)
-    //   }
-    // })
+    if (app.globalData.HomeList[e.detail.value].copyid == ''){
+      this.ChangeCurHome(app.globalData.HomeList[e.detail.value].id, app.globalData.HomeList[e.detail.value].fname)
+    }else{
+      this.ChangeCurHome(app.globalData.HomeList[e.detail.value].copyid, app.globalData.HomeList[e.detail.value].fname)
+    }
+    
   },
   //切换家
   ChangeCurHome(ID,NAME){
     requestPromisified({
-      url: h.main + '/updatehomeid?id=' + ID + '&ftelphone=' + app.globalData.User_Phone,
+      url: h.main + '/updatehomeid?id=' + ID + '&ftelphone=' + app.globalData.User_Phone + '&y_id=' + app.globalData.CurHomeId,
       data: {
       },
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
@@ -252,6 +247,14 @@ Page({
           })
           this.ChangeCurHome(res.data.id, ScanHomeName)
           wx.hideLoading()
+          break
+        case 2:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '已添加过!',
+            duration: 2000
+          });
           break
         case 0:
           wx.hideLoading()
@@ -366,9 +369,22 @@ Page({
       url: '../equipment/add/index'
     })
   },
+  //添加房间
   ToAddRoom(){
     wx.navigateTo({
       url: '../my/room/add/index?type=0'
+    })
+  },
+  //添加自动化
+  ToAddAutomatic() {
+    wx.navigateTo({
+      url: '../my/automation/add/index?type=0'  //0新增
+    })
+  },
+  //添加场景
+  ToAddScene() {
+    wx.navigateTo({
+      url: '../my/scene/setting/index?type=0'   //0新增
     })
   },
   //ChangeTab
@@ -381,7 +397,10 @@ Page({
         this.GetCurRoomList()
         break
       case '2':
-        
+        //this.GetCurSceneList()
+        break
+      case '3':
+        this.GetCurSceneList()
         break
     }
     this.setData({
@@ -858,7 +877,11 @@ Page({
           if (res.data.homelist.length > 0) {
             app.globalData.HomeList = res.data.homelist
             app.globalData.CurHomeName = res.data.homelist1[0].fname
-            app.globalData.CurHomeId = res.data.homelist1[0].id
+            if (res.data.homelist1[0].copyid == '') {
+              app.globalData.CurHomeId = res.data.homelist1[0].id
+            } else {
+              app.globalData.CurHomeId = res.data.homelist1[0].copyid
+            }
             this.setData({
               CurHomeName: res.data.homelist1[0].fname
             })
@@ -883,6 +906,192 @@ Page({
         title: '获取家服务器繁忙！'
       });
     })
+  },
+  //开关设备
+  ToggleOpenClose_EQ(e){
+    let EQid = e.currentTarget.dataset.eqid
+    let EQstatus = e.currentTarget.dataset.eqstatus == '0' ? '1' : '0'
+    let EQIdx = e.currentTarget.dataset.idx
+    requestPromisified({
+      url: h.main + '/updatecurrentswitch?machineid=' + EQid + '&status=' + EQstatus,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      console.log(res.data)
+      switch (res.data.result) {
+        case 1:
+          // wx.showToast({
+          //   title: '修改成功！',
+          //   icon: 'success',
+          //   duration: 1500
+          // })
+          let temp = this.data.EQList
+          temp[EQIdx].on_off_status = EQstatus
+          this.setData({
+            EQList: temp
+          })
+          break
+        case 0:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '修改失败!'
+          });
+          break
+        default:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+    })
+
+  },
+  //开关场景
+  ToggleOpenClose_scene(e) {
+    let SceneId = e.currentTarget.dataset.sceneid
+    let SceneStatus = e.currentTarget.dataset.scenestatus == '0' ? '1' : '0'
+    let SceneIdx = e.currentTarget.dataset.idx
+    requestPromisified({
+      url: h.main + '/updatescenario?id=' + SceneId + '&status=' + SceneStatus,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      console.log(res.data)
+      switch (res.data.result) {
+        case 1:
+          // wx.showToast({
+          //   title: '修改成功！',
+          //   icon: 'success',
+          //   duration: 1500
+          // })
+          let temp = this.data.SceneList
+          temp[SceneIdx].on_off_status = SceneStatus
+          this.setData({
+            SceneList: temp
+          })
+          break
+        case 0:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '修改失败!'
+          });
+          break
+        default:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+    })
+
+  },
+  //获取当前家下自动化
+  GetCurAutomaticList(e) {
+    requestPromisified({
+      url: h.main + '/selectallautomation?id=' + app.globalData.CurHomeId,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      console.log(res.data)
+      switch (res.data.result) {
+        case 1:
+          // this.setData({
+          //   AutomaticList: temp
+          // })
+          break
+        case 0:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '获取自动化失败!'
+          });
+          break
+        default:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+    })
+
+  },
+  //获取当前家下场景
+  GetCurSceneList(e) {
+    requestPromisified({
+      url: h.main + '/selectallscenario?id=' + app.globalData.CurHomeId,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          this.setData({
+            SceneList: res.data.scenariolist
+          })
+          break
+        case 0:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '获取场景失败!'
+          });
+          break
+        default:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+    })
+
+  },
+  //控制面板
+  ToControl(e){
+    // wx.navigateTo({
+    //   url: '../control/index?eqid=' + e.currentTarget.dataset.eqid,
+    // })
+  },
+  //编辑场景
+  ToEdit_scene(e){
+    wx.navigateTo({
+      url: '../my/scene/setting/index?sceneid=' + e.currentTarget.dataset.sceneid + '&type=1',
+    })
   }
-  
 })

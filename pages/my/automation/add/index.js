@@ -143,6 +143,18 @@ Page({
       AutomaticName: e.detail.value
     })
   },
+  //AddAction
+  AddAction(){
+    wx.navigateTo({
+      url: '../action/index',
+    })
+  },
+  //AddCondition
+  AddCondition() {
+    wx.navigateTo({
+      url: '../condition/index',
+    })
+  },
   //改变时间
   bindTimeChange_start(e){
     let Temp = this.data.ConditionList
@@ -158,8 +170,6 @@ Page({
       ConditionList: Temp
     })
   },
-
-  
   bindMultiPickerChange(e) {
     let Temp = this.data.ConditionList
     Temp[e.currentTarget.dataset.idx].when = e.detail.value[0]

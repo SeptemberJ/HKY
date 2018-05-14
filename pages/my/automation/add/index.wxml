@@ -5,12 +5,12 @@
 <!--条件  -->
 <view class='Automation_addBar'>
   <text>如果</text>
-  <view class='Automation_addBar_circle' wx:if="{{ConditionList.length>0}}">
+  <view class='Automation_addBar_circle' wx:if="{{ConditionList.length>0}}" bindtap='AddCondition'>
     <image src='../../../../images/icon/blueAdd.png'></image>
   </view>
 </view>
 <view class='ListEmptyBlock' wx:if="{{ConditionList.length<=0}}">
-  <view class='ListEmptyBlock_top'>
+  <view class='ListEmptyBlock_top' bindtap='AddCondition'>
     <view class='Automation_addBar_circle' >
       <image src='../../../../images/icon/blueAdd.png'></image>
     </view>
@@ -49,12 +49,12 @@
 <!--动作  -->
 <view class='Automation_addBar'>
   <text>就</text>
-  <view class='Automation_addBar_circle' wx:if="{{ActionList.length>0}}">
+  <view class='Automation_addBar_circle' wx:if="{{ActionList.length>0}}" bindtap='AddAction'>
     <image src='../../../../images/icon/blueAdd.png'></image>
   </view>
 </view>
 <view class='ListEmptyBlock' wx:if="{{ActionList.length<=0}}">
-  <view class='ListEmptyBlock_top'>
+  <view class='ListEmptyBlock_top' bindtap='AddAction'>
     <view class='Automation_addBar_circle'>
       <image src='../../../../images/icon/blueAdd.png'></image>
     </view>

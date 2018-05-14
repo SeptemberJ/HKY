@@ -10,7 +10,7 @@ Page({
     IfchooseTime:false,
   },
   onLoad() {
-    this.GetCurSensor('68efa6a3-24f9-49de-9336-fb5cb9549ea0')
+    this.GetCurSensor(app.globalData.CurHomeId)
 
   },
   onShow() {
@@ -74,6 +74,18 @@ Page({
   },
   //Submit
   Submit(){
+    let ChoosedList = []
+    this.data.SensorList.map((Item,Idx)=>{
+      if (Item.choosed){
+        ChoosedList.push(Item)
+      }
+    })
+    if (this.data.IfchooseTime){
+      let obj = {
+        'icon': '../../../../images/icon/delete.png', 'name': '时间', 'room': '', 'when': 0, 'status': 0, 'kind': 'time', 'time_start': '00:00', 'time_end': '23:59' }
+      ChoosedList.push(obj)
+    }
+    console.log(ChoosedList)
     // requestPromisified({
     //   url: h.main + '/selectregisteruser?',
     //   data: {

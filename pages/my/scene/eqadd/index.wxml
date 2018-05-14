@@ -1,5 +1,5 @@
 <!--EQList  -->
-
+<view class='TopSubmitBt' bindtap='Submit'>确定</view>
 <view class='Scene_EQList'>
   <view class='Scene_EQList_item' wx:for="{{EQList}}" wx:for-index="EQIdx" wx:for-item="Equipment" wx:key="EQIdx" bindtap='Choose' data-idx='{{EQIdx}}'>
     <image src="{{Equipment.machine_img}}"></image>

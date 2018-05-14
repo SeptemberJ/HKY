@@ -25,6 +25,9 @@ page text{
 .BgRed{
   background: red;
 }
+.BgGray{
+  background: #333;
+}
 .TextAlignL{
   text-align: left;
 }
@@ -79,6 +82,20 @@ page text{
   left: 50%;
   bottom: 20px;
   transform: translateX(-50%);
+}
+.TopSubmitBt{
+  width: 150rpx;
+  height: 30px;
+  float: right;
+  display: block;
+  background: #3498db;
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: bold;
+  text-align: center;
+  line-height: 30px;
+  margin-right: 20rpx;
+  border-radius: 10rpx;
 }
 /*InfoNull  */
 .InfoNull{

@@ -73,7 +73,7 @@ Page({
     let DATA = {
       registerappuserid: app.globalData.CurHomeId,
       fname: this.data.Room_name,
-      room_img: this.data.Room_Icon,
+      room_img: this.data.Room_Icon == '' ? this.data.IconList[0].roomimg : this.data.Room_Icon,
     }
     wx.showLoading({
       title: '加载中',
