@@ -19,10 +19,10 @@
 </view>
 <view class='Condition_list Condition_list_Sensor'>
   <view class='Condition_Item' wx:for="{{SensorList}}" wx:for-index="SensorIdx" wx:for-item="Sensor" wx:key="SensorIdx" bindtap='Choose' data-idx='{{SensorIdx}}'>
-    <image src="{{Sensor.machine_img}}"></image>
+    <image src="{{Sensor.kind_img}}"></image>
     <view class='Condition_list_item_text'>
-      <text class='Condition_list_item_text_name'>{{Sensor.second_name}}</text>
-      <text class='Condition_list_item_text_room'>{{Sensor.room_name}}</text>
+      <text class='Condition_list_item_text_name'>{{Sensor.kind_name}}</text>
+      <text class='Condition_list_item_text_room'></text>
     </view>
     <view class="ControlBt">
       <image wx:if="{{Sensor.choosed}}" src='../../../../images/icon/foodChoosed.png'></image>

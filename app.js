@@ -93,6 +93,7 @@ App({
     longitude:'',
     ifHasInfo:false,  //是否填写过身高体重
     HomeList:[],
+    CurHomeRole:0,
     CurHomeName:null,
     CurHomeId: null,
     RoomIconList:[], //房间icon

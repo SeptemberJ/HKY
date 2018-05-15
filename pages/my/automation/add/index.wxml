@@ -1,6 +1,6 @@
 <view class='Automation_name'>
   <text>自动化名称：</text>
-  <input placeholder='请输入自动化名称' bindinput='ChangeName'></input>
+  <input placeholder='请输入自动化名称' bindinput='ChangeName' value='{{AutomaticName}}'></input>
 </view>
 <!--条件  -->
 <view class='Automation_addBar'>
@@ -21,22 +21,22 @@
 <!--条件列表  -->
 <view class="Automation_conditionList" wx:if="{{ConditionList.length>0}}">
   <view class='Automation_EQ_item' wx:for="{{ConditionList}}" wx:for-index="ConditionIdx" wx:for-item="Condition" wx:key="ConditionIdx" bindlongtap='Delete' data-idx='{{ConditionIdx}}'>
-    <image class='smallIcon' src="{{Condition.kind=='time'?'../../../../images/icon/scene_timing.png':Condition.icon}}"></image>
+    <image class='smallIcon' src="{{Condition.kind=='time'?'../../../../images/icon/scene_timing.png':Condition.kind_img}}"></image>
     <view class='Automation_EQ_item_info'>
-      <text>{{Condition.name}}</text>
-      <text>{{Condition.room}}</text>
+      <text>{{Condition.kind_name}}</text>
+      <text></text>
     </view>
     <view class='Automation_condition_when'>
-      <picker mode="multiSelector" bindchange="bindMultiPickerChange"  range="{{ConditionKind[Condition.kind]}}" range-key='name' data-idx='{{ConditionIdx}}'>
-        <text>{{ConditionKind[Condition.kind][0][Condition.when].name}}</text>
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange"  range="{{ConditionKind[Condition.kind_code]}}" range-key='name' data-idx='{{ConditionIdx}}'>
+        <text>{{ConditionKind[Condition.kind_code][0][Condition.when].name}}</text>
       </picker>
     </view>
     <view class='Automation_condition_status' wx:if="{{Condition.kind!='time'}}">
-      <picker mode="multiSelector" bindchange="bindMultiPickerChange"  range="{{ConditionKind[Condition.kind]}}" range-key='name' data-idx='{{ConditionIdx}}'>
-        <text>{{ConditionKind[Condition.kind][1][Condition.status].name}}</text>
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange"  range="{{ConditionKind[Condition.kind_code]}}" range-key='name' data-idx='{{ConditionIdx}}'>
+        <text>{{ConditionKind[Condition.kind_code][1][Condition.status].name}}</text>
       </picker>
     </view>
-    <view class='Automation_condition_status' wx:if="{{Condition.kind=='time'}}">
+    <view class='Automation_condition_status' wx:if="{{Condition.kind_code=='time'}}">
       <picker mode="time" value="{{Condition.time_start}}" bindchange="bindTimeChange_start" data-idx='{{ConditionIdx}}'>
         <text>{{Condition.time_start}}</text>
       </picker>
@@ -64,10 +64,10 @@
 <!--动作列表  -->
 <view class="Automation_conditionList" wx:if="{{ActionList.length>0}}">
   <view class='Automation_EQ_item' wx:for="{{ActionList}}" wx:for-index="ActionIdx" wx:for-item="Action" wx:key="ActionIdx" bindlongtap='Delete' data-idx='{{ActionIdx}}'>
-    <image class='smallIcon' src="{{Action.icon}}"></image>
+    <image class='smallIcon' src="{{Action.kind == 'scene'?Action.scenario_img:Action.machine_img}}"></image>
     <view class='Automation_EQ_item_info'>
-      <text>{{Action.name}}</text>
-      <text>{{Action.room}}</text>
+      <text>{{Action.kind == 'scene'?Action.fname:Action.second_name}}</text>
+      <text>{{Action.kind == 'equipment'?Action.room_name:''}}</text>
     </view>
     <view class='Automation_condition_when'>
       <picker mode="multiSelector" bindchange="bindMultiPickerChangeAction"  range="{{ActionKind[Action.kind]}}" range-key='name' data-idx='{{ActionIdx}}'>

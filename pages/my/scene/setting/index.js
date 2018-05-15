@@ -8,7 +8,7 @@ const app = getApp()
 Page({
   data: {
     Type:0,
-    CurSceneId:null,
+    CurSceneId:'',
     RoomId:'',
     IconList: [],
     Scene_Icon: '',
@@ -23,6 +23,7 @@ Page({
       },
       Scene_EQList:[],
       Scene_AutomaticList: [],
+      SceneEQCount:0,  //加入设备个数
     }
   },
   onLoad(options) {
@@ -42,22 +43,11 @@ Page({
         IconList: app.globalData.SceneIconList,
         Scene_Icon: app.globalData.SceneIconList[0].img,
         SceneInfo: temp,
+        SceneEQCount: temp.Scene_EQList.length,
         Type: options.type, //0新增  1-修改
         RoomId: options.roomid ? options.roomid:''
       })
     }
-
-
-
-    // let temp = options.sceneInfo?options.sceneInfo:this.data.SceneInfo
-    // temp.Scene_Room_Icon = app.globalData.SceneIconList[0].img
-    // this.setData({
-    //   IconList: app.globalData.SceneIconList,
-    //   Scene_Icon: app.globalData.SceneIconList[0].img,
-    //   SceneInfo: temp,
-    //   Type: options.type, //0新增  1-修改
-    //   RoomId: options.roomid ? options.roomid:''
-    // })
   },
   onShow() {
 
@@ -69,7 +59,7 @@ Page({
   },
   ToEQList() {
     wx.navigateTo({
-      url: '../eqlist/index?sceneid=' + this.data.CurSceneId,
+      url: '../eqlist/index?sceneid=' + this.data.CurSceneId + '&roomid=' + this.data.RoomId,
     })
   },
   ToLinkage() {
@@ -111,16 +101,21 @@ Page({
   UpdateChoosedEQList(ChoosedEQList){
     let temp = this.data.SceneInfo
     temp.Scene_EQList = ChoosedEQList
+    console.log(temp)
     this.setData({
-      Scene_EQList: temp
+      Scene_EQList: temp,
+      SceneEQCount: temp.Scene_EQList.length
     })
   },
-  Submit2(){
+  Submit(){
     if(this.data.Type == 0){
       this.Submit_add()
+    }else{
+      this.Submit_modify()
     }
   },
-  Submit(){
+  //新增
+  Submit_add(){
     console.log(this.data.SceneInfo)
     //校验
     if (this.data.SceneInfo.Scene_name == '') {
@@ -188,41 +183,75 @@ Page({
           wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '添加失败!'
+            title: '服务器繁忙！!'
           });
       }
     }).catch((res) => {
       wx.hideLoading()
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: 'S服务器繁忙！'
+        title: '服务器繁忙！'
       });
       console.log(res)
     })
     
   },
-  //获取创建信息
-  GetSceneInfo(ID){
+  //修改
+  Submit_modify() {
+    console.log(this.data.SceneInfo)
+    //校验
+    if (this.data.SceneInfo.Scene_name == '') {
+      wx.showToast({
+        image: '../../../../images/icon/attention.png',
+        title: '请填写名称!'
+      });
+      return false
+    }
+    if (this.data.SceneInfo.Scene_timing.time_start == '') {
+      wx.showToast({
+        image: '../../../../images/icon/attention.png',
+        title: '请先定时!'
+      });
+      return false
+    }
+    if (this.data.SceneInfo.Scene_EQList.length == 0 && this.data.SceneInfo.Scene_AutomaticList.length == 0) {
+      wx.showToast({
+        image: '../../../../images/icon/attention.png',
+        title: '请绑定设备或联动!'
+      });
+      return false
+    }
+    wx.showLoading({
+      title: '加载中',
+    })
+
+    let DATA = this.data.SceneInfo
     requestPromisified({
-      url: h.main + '/selectnoscenario?id=' + ID,
+      url: h.main + '/updatenoscenario',
       data: {
+        scenarioid: this.data.CurSceneId,
+        id: app.globalData.CurHomeId,
+        roomid: this.data.RoomId,
+        scenarios: DATA
       },
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
     }).then((res) => {
-      console.log(res.data.scenario)
       switch (res.data.result) {
         case 1:
-          this.setData({
-            SceneInfo: res.data.scenario.scenarios,
-            CurSceneId: res.data.scenario.id,
+          wx.showToast({
+            title: '修改成功！',
+            icon: 'success',
+            duration: 1500
           })
+          //this.ChangeCurHome(res.data.id, ScanHomeName)
+          wx.navigateBack()
           wx.hideLoading()
           break
         case 0:
           wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '获取失败!'
+            title: '修改失败!'
           });
           break
         default:
@@ -242,6 +271,48 @@ Page({
     })
 
   },
+  //获取创建信息
+  GetSceneInfo(ID){
+    requestPromisified({
+      url: h.main + '/selectnoscenario?id=' + ID,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+    }).then((res) => {
+      console.log(res.data.scenario)
+      switch (res.data.result) {
+        case 1:
+          this.setData({
+            SceneInfo: res.data.scenario.scenarios,
+            SceneEQCount: res.data.scenario.scenarios.Scene_EQList.length,
+            CurSceneId: res.data.scenario.id,
+          })
+          wx.hideLoading()
+          break
+        case 0:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../../../images/icon/attention.png',
+            title: '获取失败!'
+          });
+          break
+        default:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../../../images/icon/attention.png',
+            title: '服务器繁忙！!'
+          });
+      }
+    }).catch((res) => {
+      wx.hideLoading()
+      wx.showToast({
+        image: '../../../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+      console.log(res)
+    })
+
+  },
   //删除场景
   DeleteScene(){
     wx.showModal({
@@ -250,7 +321,7 @@ Page({
       success: (res)=> {
         if (res.confirm) {
           requestPromisified({
-            url: h.main + '/?id=' + this.data.CurSceneId,
+            url: h.main + '/deletescenario?id=' + this.data.CurSceneId,
             data: {
             },
             method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
@@ -262,6 +333,7 @@ Page({
                   icon: 'success',
                   duration: 1500,
                 })
+                wx.navigateBack()
                 break
               case 0:
                 wx.hideLoading()

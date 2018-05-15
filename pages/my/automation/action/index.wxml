@@ -7,11 +7,11 @@
     </view>
     <!--list  -->
     <view class='EQList_list' wx:if="{{Toggle_Scene}}">
-      <view class='EQList_list_Item' wx:for="{{EQList}}" wx:for-index="EQIdx" wx:for-item="Equipment" wx:key="EQIdx" bindtap='ChooseEQ' data-idx='{{EQIdx}}'>
-        <image src="{{Equipment.machine_img}}"></image>
+      <view class='EQList_list_Item' wx:for="{{SceneList}}" wx:for-index="EQIdx" wx:for-item="Equipment" wx:key="EQIdx" bindtap='ChooseScene' data-idx='{{EQIdx}}'>
+        <image src="{{Equipment.scenario_img}}"></image>
         <view class='EQList_list_text'>
-          <text class='EQList_list_text_name'>{{Equipment.second_name}}</text>
-          <text class='EQList_list_text_room'>{{Equipment.room_name}}</text>
+          <text class='EQList_list_text_name'>{{Equipment.fname}}</text>
+          <text class='EQList_list_text_room'></text>
         </view>
         <view class="ControlBt">
           <image wx:if="{{Equipment.choosed}}" src='../../../../images/icon/foodChoosed.png'></image>

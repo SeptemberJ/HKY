@@ -7,6 +7,7 @@ const app = getApp()
 
 Page({
   data: {
+    CurHomeRole:1,
     userInfo: {},
     CurHomeName:'',
     AccountName:'',
@@ -32,7 +33,7 @@ Page({
     Roomlist:[], //房间
     AutomaticList:[], //自动化
     SceneList:[], //场景
-    Cur_tab:0,
+    Cur_tab:'0',
     airQuality_inside:'', //室内空气质量
     Distance_width:66,
     distance:0,
@@ -91,13 +92,26 @@ Page({
     this.GetDietInfo(util.formatTime(new Date()))
     this.IfHasInfo()
     this.setData({
+      CurHomeRole: app.globalData.CurHomeRole,
       HomeList: app.globalData.HomeList,
       CurHomeName: app.globalData.CurHomeName,
       CurHomeId: app.globalData.CurHomeId,
     })
     if (app.globalData.CurHomeId){
-      //this.ChangeTab(null, this.data.Cur_tab)
-      this.GetCurEQList(app.globalData.CurHomeId)
+      switch (this.data.Cur_tab) {
+        case '0':
+          this.GetCurEQList(app.globalData.CurHomeId)
+          break
+        case '1':
+          this.GetCurRoomList()
+          break
+        case '2':
+          this.GetCurAutomaticList()
+          break
+        case '3':
+          this.GetCurSceneList()
+          break
+      }
     }
   },
   //userinfo
@@ -109,14 +123,14 @@ Page({
     })
   },
   //左右切换
-  SwiperChnage(e){
+  SwiperChange(e){
     console.log(e)
     if (e.detail.source == 'touch'){
       this.setData({
         SwiperCur: e.detail.current
       })
     }
-    if (e.detail.current == 1 && this.data.Toggle_show == 1){
+    if (e.detail.current == 0 && this.data.Toggle_show == 1){
       this.Toggle()
     }
   },
@@ -298,7 +312,7 @@ Page({
   //弹起操作列表
   ToAddOptions(){
     wx.showActionSheet({
-      itemList: ['扫一扫','添加设备', '添加场景', '添加家庭成员'],
+      itemList: ['扫一扫', '添加设备', '添加房间', '添加自动化','添加场景', '添加家庭成员'],
       success: (res)=> {
         switch (res.tapIndex){
           case 0:
@@ -308,8 +322,15 @@ Page({
             this.ToAdd()
             break
           case 2:
+            this.ToAddRoom()
             break
           case 3:
+            this.ToAddAutomatic()
+            break
+          case 4:
+            this.ToAddScene()
+            break
+          case 5:
             this.ToGetCodeImg()
             break
         }
@@ -369,6 +390,61 @@ Page({
       url: '../equipment/add/index'
     })
   },
+  //删除设备
+  DeleteEQ(e){
+    if (app.globalData.CurHomeRole == 1){
+      return false
+    }
+    let ID = e.currentTarget.dataset.id
+    wx.showModal({
+      title: '提示',
+      content: '确定删除该设备?',
+      success: (res) => {
+        if (res.confirm) {
+          requestPromisified({
+            url: h.main + '/deletenoqrcode?qrcodeid=' + ID,
+            data: {
+            },
+            method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+            // header: {
+            //   'content-type': 'application/x-www-form-urlencoded',
+            //   'Accept': 'application/json'
+            // }, // 设置请求的 header
+          }).then((res) => {
+            switch (res.data.result) {
+              case 1:
+                wx.showToast({
+                  title: '删除成功！',
+                  icon: 'success',
+                  duration: 1500
+                })
+                this.GetCurEQList(app.globalData.CurHomeId)
+                break
+              case 0:
+                wx.showToast({
+                  image: '../../../images/icon/attention.png',
+                  title: '删除失败'
+                });
+                break
+              default:
+                wx.showToast({
+                  image: '../../../images/icon/attention.png',
+                  title: '服务器繁忙！'
+                });
+            }
+          }).catch((res) => {
+            wx.showToast({
+              image: '../../../images/icon/attention.png',
+              title: '服务器繁忙！'
+            });
+            console.log(res)
+          })
+        } else if (res.cancel) {
+          return false
+        }
+      }
+    })
+  },
   //添加房间
   ToAddRoom(){
     wx.navigateTo({
@@ -389,7 +465,8 @@ Page({
   },
   //ChangeTab
   ChangeTab(e){
-    switch (e.currentTarget.dataset.idx){
+    let Idx = e.currentTarget.dataset.idx ? e.currentTarget.dataset.idx:'3'
+    switch (Idx){
       case '0':
         this.GetCurEQList(app.globalData.CurHomeId)
       break
@@ -397,7 +474,7 @@ Page({
         this.GetCurRoomList()
         break
       case '2':
-        //this.GetCurSceneList()
+        this.GetCurAutomaticList()
         break
       case '3':
         this.GetCurSceneList()
@@ -736,9 +813,9 @@ Page({
     })
   },
   //获取当前家下设备列表
-  GetCurEQList(CurHomeId) {
+  GetCurEQList(HomeID) {
     requestPromisified({
-      url: h.main + '/selectregisteruser?homeid=' + CurHomeId,
+      url: h.main + '/selectregisteruser?homeid=' + HomeID,
       data: {
       },
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
@@ -876,6 +953,7 @@ Page({
         case 1:
           if (res.data.homelist.length > 0) {
             app.globalData.HomeList = res.data.homelist
+            app.globalData.CurHomeRole = res.data.homelist1[0].memberstype
             app.globalData.CurHomeName = res.data.homelist1[0].fname
             if (res.data.homelist1[0].copyid == '') {
               app.globalData.CurHomeId = res.data.homelist1[0].id
@@ -1020,9 +1098,9 @@ Page({
       console.log(res.data)
       switch (res.data.result) {
         case 1:
-          // this.setData({
-          //   AutomaticList: temp
-          // })
+          this.setData({
+            AutomaticList: res.data.automationlist
+          })
           break
         case 0:
           wx.showToast({
@@ -1045,7 +1123,7 @@ Page({
 
   },
   //获取当前家下场景
-  GetCurSceneList(e) {
+  GetCurSceneList() {
     requestPromisified({
       url: h.main + '/selectallscenario?id=' + app.globalData.CurHomeId,
       data: {
@@ -1088,8 +1166,14 @@ Page({
     //   url: '../control/index?eqid=' + e.currentTarget.dataset.eqid,
     // })
   },
+  //编辑自动化
+  ToEdit_automatic(e){
+    wx.navigateTo({
+      url: '../my/automation/add/index?automaticid=' + e.currentTarget.dataset.automaticid + '&type=1',
+    })
+  },
   //编辑场景
-  ToEdit_scene(e){
+  ToEdit_scene(e) {
     wx.navigateTo({
       url: '../my/scene/setting/index?sceneid=' + e.currentTarget.dataset.sceneid + '&type=1',
     })

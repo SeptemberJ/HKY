@@ -425,6 +425,7 @@ page{
 /*report_data_weight_level  */
 .AirQuality_level{
   width: 660rpx;
+  height: 180rpx;
   margin: 0px auto;
   display: flex;
   flex-direction: column;
@@ -784,6 +785,7 @@ swiper {
 .EQList_item_text{
   width: calc(750rpx - 100rpx - 150rpx);
   height: 100%;
+  padding-left: 10rpx;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -819,7 +821,7 @@ swiper {
   width: 750rpx;
   height: 130rpx;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center; 
   background: #fff;
   border-bottom: 1px solid #efefef;

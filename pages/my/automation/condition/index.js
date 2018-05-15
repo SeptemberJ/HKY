@@ -8,6 +8,7 @@ const app = getApp()
 Page({
   data: {
     IfchooseTime:false,
+    SensorList:[]
   },
   onLoad() {
     this.GetCurSensor(app.globalData.CurHomeId)
@@ -30,8 +31,50 @@ Page({
       SensorList: Temp
     })
   },
-  //获取当前家下传感器列表
+  //获取当前家下主控列表
   GetCurSensor(CurHomeId) {
+    requestPromisified({
+      url: h.main + '/selectmastercontrol',
+      data: {
+      },
+      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      console.log(res.data)
+      switch (res.data.result) {
+        case 1:
+          let Temp = res.data.controllist
+          Temp.map((Item, Idx) => {
+            Item.choosed = false
+          })
+          this.setData({
+            SensorList: Temp
+          })
+          break
+        case 0:
+          wx.showToast({
+            image: '../../../../images/icon/attention.png',
+            title: '传感器获取失败!'
+          });
+          break
+        default:
+          wx.showToast({
+            image: '../../../../images/icon/attention.png',
+            title: 'D传感器服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.showToast({
+        image: '../../../../images/icon/attention.png',
+        title: '传感器服务器繁忙！'
+      });
+    })
+  },
+  //获取当前家下传感器列表
+  GetCurSensor2(CurHomeId) {
     requestPromisified({
       url: h.main + '/selectregisteruser?homeid=' + CurHomeId,
       data: {
@@ -75,53 +118,25 @@ Page({
   //Submit
   Submit(){
     let ChoosedList = []
-    this.data.SensorList.map((Item,Idx)=>{
-      if (Item.choosed){
+    this.data.SensorList.map((Item, Idx) => {
+      if (Item.choosed) {
+        Item.status = 0
+        Item.when = 0
         ChoosedList.push(Item)
       }
     })
     if (this.data.IfchooseTime){
       let obj = {
-        'icon': '../../../../images/icon/delete.png', 'name': '时间', 'room': '', 'when': 0, 'status': 0, 'kind': 'time', 'time_start': '00:00', 'time_end': '23:59' }
+        'kind_img': '../../../../images/icon/scene_timing.png', 'kind_name': '时间', 'room': '', 'when': 0, 'status': 0, 'kind_code': 'time', 'time_start': '00:00', 'time_end': '23:59' }
       ChoosedList.push(obj)
     }
     console.log(ChoosedList)
-    // requestPromisified({
-    //   url: h.main + '/selectregisteruser?',
-    //   data: {
-    //   },
-    //   method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-    //   // header: {
-    //   //   'content-type': 'application/x-www-form-urlencoded',
-    //   //   'Accept': 'application/json'
-    //   // }, // 设置请求的 header
-    // }).then((res) => {
-    //   console.log(res.data)
-    //   switch (res.data.result) {
-    //     case 1:
-    //       wx.showToast({
-    //         title: '保存成功！',
-    //         icon: 'success',
-    //         duration: 1500
-    //       })
-    //       break
-    //     case 0:
-    //       wx.showToast({
-    //         image: '../../../../images/icon/attention.png',
-    //         title: '条件保存失败!'
-    //       });
-    //       break
-    //     default:
-    //       wx.showToast({
-    //         image: '../../../../images/icon/attention.png',
-    //         title: '服务器繁忙！'
-    //       });
-    //   }
-    // }).catch((res) => {
-    //   wx.showToast({
-    //     image: '../../../../images/icon/attention.png',
-    //     title: '服务器繁忙！'
-    //   });
-    // })
+    var pages = getCurrentPages();
+    if (pages.length > 1) {
+      var prePage = pages[pages.length - 2];
+      prePage.UpdateCondition(ChoosedList)
+    }
+    wx.navigateBack()
+    
   }
 })

@@ -9,11 +9,16 @@ Page({
   data: {
     EQList:[]
   },
-  onLoad(){
+  onLoad(options){
+    if (options.roomid != ''){
+      this.GetCurEQList_room(options.roomid)
+    }else{
+      this.GetCurEQList(app.globalData.CurHomeId)
+    }
 
   },
   onShow() {
-    this.GetCurEQList(app.globalData.CurHomeId)
+    
 
   },
   //选择切换
@@ -83,4 +88,45 @@ Page({
       });
     })
   },
+  //当前房间下设备
+  GetCurEQList_room(RoomId){
+    requestPromisified({
+      url: h.main + '/selectroommachine?roomid=' + RoomId,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          let Temp = res.data.roommachine
+          Temp.map((Item, Idx) => {
+            Item.choosed = false
+          })
+          this.setData({
+            EQList: Temp
+          })
+          break
+        case 0:
+          wx.showToast({
+            image: '../../../../images/icon/attention.png',
+            title: '获取场景失败!'
+          });
+          break
+        default:
+          wx.showToast({
+            image: '../../../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.showToast({
+        image: '../../../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+    })
+  }
 })

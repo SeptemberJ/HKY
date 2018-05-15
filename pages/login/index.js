@@ -195,6 +195,7 @@ Page({
         case 1:
           if (res.data.homelist.length>0){
             app.globalData.HomeList = res.data.homelist
+            app.globalData.CurHomeRole = res.data.homelist1[0].memberstype
             app.globalData.CurHomeName = res.data.homelist1[0].fname
             if (res.data.homelist1[0].copyid == '') {
               app.globalData.CurHomeId = res.data.homelist1[0].id
