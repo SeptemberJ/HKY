@@ -11,9 +11,11 @@ page{
   background: #fff;
 }
 .Automation_name text{
+  width: 180rpx;
   padding: 10rpx 20rpx;
 }
 .Automation_name input{
+  width: calc(100% - 220rpx - 20rpx);
   padding: 10rpx;
   font-size: 32rpx;
 }

@@ -77,6 +77,27 @@ Page({
             name: '明亮'
           }
         ]
+      ],
+      'd003': [
+        [
+          {
+            id: 0,
+            name: '变为'
+          },
+          {
+            id: 1,
+            name: '此时正好'
+          }
+        ], [
+          {
+            id: 0,
+            name: '有人'
+          },
+          {
+            id: 1,
+            name: '无人'
+          }
+        ]
       ]
     },
     ActionKind: {
@@ -179,8 +200,9 @@ Page({
     }
   },
   onShow() {
-    
-
+    this.setData({
+      CurHomeRole: app.globalData.CurHomeRole,
+    })
   },
   ChangeName(e){
     this.setData({
@@ -254,12 +276,16 @@ Page({
       this.data.ActionList.map((OldItem, OldIdx) => {
         if (OldItem.id == NewItem.id) {
           ifSame = true
+        }else{
+          console.log(OldItem.id)
+          console.log(NewItem.id)
         }
       })
       if (!ifSame) {
         OldTemp.push(NewItem)
       }
     })
+    console.log(OldTemp)
     this.setData({
       ActionList: OldTemp
     })
@@ -322,30 +348,30 @@ Page({
   //新增
   Submit_add() {
     //校验
-    // if (this.data.SceneInfo.Scene_name == '') {
-    //   wx.showToast({
-    //     image: '../../../../images/icon/attention.png',
-    //     title: '请填写名称!'
-    //   });
-    //   return false
-    // }
-    // if (this.data.SceneInfo.Scene_timing.time_start == '') {
-    //   wx.showToast({
-    //     image: '../../../../images/icon/attention.png',
-    //     title: '请先定时!'
-    //   });
-    //   return false
-    // }
-    // if (this.data.SceneInfo.Scene_EQList.length == 0 && this.data.SceneInfo.Scene_AutomaticList.length == 0) {
-    //   wx.showToast({
-    //     image: '../../../../images/icon/attention.png',
-    //     title: '请绑定设备或联动!'
-    //   });
-    //   return false
-    // }
-    // wx.showLoading({
-    //   title: '加载中',
-    // })
+    if (this.data.AutomaticName == '') {
+      wx.showToast({
+        image: '../../../../images/icon/attention.png',
+        title: '请填写名称!'
+      });
+      return false
+    }
+    if (this.data.ConditionList.length == 0) {
+      wx.showToast({
+        image: '../../../../images/icon/attention.png',
+        title: '请添加条件!'
+      });
+      return false
+    }
+    if (this.data.ActionList.length == 0) {
+      wx.showToast({
+        image: '../../../../images/icon/attention.png',
+        title: '请添加动作!'
+      });
+      return false
+    }
+    wx.showLoading({
+      title: '加载中',
+    })
 
     let DATA = {
       AutomaticName: this.data.AutomaticName,
@@ -405,32 +431,31 @@ Page({
   },
   //修改
   Submit_modify() {
-    console.log(this.data.SceneInfo)
     //校验
-    // if (this.data.SceneInfo.Scene_name == '') {
-    //   wx.showToast({
-    //     image: '../../../../images/icon/attention.png',
-    //     title: '请填写名称!'
-    //   });
-    //   return false
-    // }
-    // if (this.data.SceneInfo.Scene_timing.time_start == '') {
-    //   wx.showToast({
-    //     image: '../../../../images/icon/attention.png',
-    //     title: '请先定时!'
-    //   });
-    //   return false
-    // }
-    // if (this.data.SceneInfo.Scene_EQList.length == 0 && this.data.SceneInfo.Scene_AutomaticList.length == 0) {
-    //   wx.showToast({
-    //     image: '../../../../images/icon/attention.png',
-    //     title: '请绑定设备或联动!'
-    //   });
-    //   return false
-    // }
-    // wx.showLoading({
-    //   title: '加载中',
-    // })
+    if (this.data.AutomaticName == '') {
+      wx.showToast({
+        image: '../../../../images/icon/attention.png',
+        title: '请填写名称!'
+      });
+      return false
+    }
+    if (this.data.ConditionList.length == 0) {
+      wx.showToast({
+        image: '../../../../images/icon/attention.png',
+        title: '请添加条件!'
+      });
+      return false
+    }
+    if (this.data.ActionList.length == 0) {
+      wx.showToast({
+        image: '../../../../images/icon/attention.png',
+        title: '请添加动作!'
+      });
+      return false
+    }
+    wx.showLoading({
+      title: '加载中',
+    })
 
     let DATA = {
       AutomaticName: this.data.AutomaticName,
@@ -481,4 +506,53 @@ Page({
     })
 
   },
+  //删除场景
+  DeleteAutomatic() {
+    wx.showModal({
+      title: '提示',
+      content: '确定删除该自动化?',
+      success: (res) => {
+        if (res.confirm) {
+          requestPromisified({
+            url: h.main + '/deleteautomation?id=' + this.data.CurAutomaticId,
+            data: {
+            },
+            method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+          }).then((res) => {
+            switch (res.data.result) {
+              case 1:
+                wx.showToast({
+                  title: '删除成功!',
+                  icon: 'success',
+                  duration: 1500,
+                })
+                wx.navigateBack()
+                break
+              case 0:
+                wx.hideLoading()
+                wx.showToast({
+                  image: '../../../../images/icon/attention.png',
+                  title: '删除失败!'
+                });
+                break
+              default:
+                wx.hideLoading()
+                wx.showToast({
+                  image: '../../../../images/icon/attention.png',
+                  title: '服务器繁忙！!'
+                });
+            }
+          }).catch((res) => {
+            wx.hideLoading()
+            wx.showToast({
+              image: '../../../../images/icon/attention.png',
+              title: '服务器繁忙！'
+            });
+            console.log(res)
+          })
+        } else if (res.cancel) {
+        }
+      }
+    })
+  }
 })

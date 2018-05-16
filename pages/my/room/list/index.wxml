@@ -1,7 +1,7 @@
 <view class="RoomTop">
   <view class='RoomAddInfo'>
     <text>{{RoomName}}</text>
-    <image src='../../../../images/icon/add.png' bindtap='AddEquipment'></image>
+    <!-- <image src='../../../../images/icon/add.png' bindtap='AddEquipment'></image> -->
   </view>
 </view>
 <view class='Room_tab'>
@@ -20,6 +20,9 @@
         </view>
         <view class="ControlBt {{Equipment.on_off_status == 0?'ControlBt_off':'ControlBt_on'}}" bindtap='ToggleOpenClose_EQ' data-eqid='{{Equipment.id}}' data-eqstatus='{{Equipment.on_off_status}}' data-idx='{{EQIdx}}'>{{Equipment.on_off_status == 0?'OFF':'ON'}}</view>
       </view>
+      <view class="InfoNull" wx:if="{{CurHomeRole == 1}}">
+        <view class='Btn smallFont' bindtap="AddEquipment">添加设备+</view>
+      </view>
     </view>
     <!--EQAutomatic  -->
     <view class='EQAutomatic' wx:if="{{Cur_tab == 1}}">
@@ -29,9 +32,9 @@
           <text class='EQList_item_text_name'>{{Automatic.fname}}</text>
           <text class='EQList_item_text_room'></text>
         </view>
-        <view class="ControlBt {{Automatic.on_off_status == 0?'ControlBt_off':'ControlBt_on'}}" bindtap='ToggleOpenClose_scene' data-automaticid='{{Automatic.id}}' data-scenestatus='{{Automatic.on_off_status}}' data-idx='{{AutomaticIdx}}'>{{Automatic.on_off_status == 0?'OFF':'ON'}}</view>
+        <view class="ControlBt {{Automatic.on_off_status == 0?'ControlBt_off':'ControlBt_on'}}" bindtap='ToggleOpenClose_automatic' data-automaticid='{{Automatic.id}}' data-automaticstatus='{{Automatic.on_off_status}}' data-idx='{{AutomaticIdx}}'>{{Automatic.on_off_status == 0?'OFF':'ON'}}</view>
       </view>
-      <view class="InfoNull">
+      <view class="InfoNull" wx:if="{{CurHomeRole == 1}}">
         <view class='Btn smallFont' bindtap="ToAddAutomatic">新建自动化+</view>
       </view>
     </view>
@@ -45,7 +48,7 @@
         </view>
         <view class="ControlBt {{Scene.on_off_status == 0?'ControlBt_off':'ControlBt_on'}}" bindtap='ToggleOpenClose_scene' data-sceneid='{{Scene.id}}' data-scenestatus='{{Scene.on_off_status}}' data-idx='{{SceneIdx}}'>{{Scene.on_off_status == 0?'OFF':'ON'}}</view>
       </view>
-      <view class="InfoNull">
+      <view class="InfoNull" wx:if="{{CurHomeRole == 1}}">
         <view class='Btn smallFont' bindtap="ToAddScene">新建场景+</view>
       </view>
     </view>

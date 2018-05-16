@@ -7,9 +7,18 @@ const app = getApp()
 
 Page({
   data: {
-    Home_name:''
+    Type:0, //0-新增 1-修改
+    Home_name:'',
+    Home_id:'',
+    Membertype:1
   },
-  onLoad: function () {
+  onLoad (options) {
+    this.setData({
+      Home_name: options.homename,
+      Home_id: options.homeid,
+      Type: options.type,
+      Membertype: options.membertype
+    })
    
   },
   onShow() {
@@ -20,10 +29,107 @@ Page({
       Home_name: e.detail.value
     })
   },
+  SaveHome(){
+    if (this.data.Type == 0){
+      this.CreateHome()
+    }else{
+      this.ModifyHome()
+    }
+  },
+  //DeleteHome
+  DeleteHome(){
+    wx.showLoading({
+      title: '加载中',
+    })
+    requestPromisified({
+      url: h.main + '/deletehome?id=' + this.data.Home_id + '&memberstype=' + this.data.Membertype + '&ftelphone=' + app.globalData.User_Phone,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+        wx.showToast({
+          title: this.data.Membertype == 1?'删除成功!':'退出成功!',
+          icon: 'success',
+          duration: 1500,
+        })
+          wx.navigateBack()
+          wx.hideLoading()
+          break
+        case 0:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../../../images/icon/attention.png',
+            title: this.data.Membertype == 1 ? '删除失败!' : '退出失败!'
+          });
+          break
+        default:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.hideLoading()
+      wx.showToast({
+        image: '../../../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+      console.log(res)
+    })
+  },
+  //OutHome
+  OutHome(){
+    this.DeleteHome()
+  },
   //新增家
   CreateHome() {
     requestPromisified({
       url: h.main + '/insertregisterappuser?register_appid=' + app.globalData.User_Phone + '&fname=' + this.data.Home_name,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          wx.showToast({
+            title: '新增家成功!',
+            icon: 'success',
+            duration: 1500
+          })
+          //app.globalData.CurHomeName = this.data.Home_name
+          //app.globalData.CurHomeId = res.data.id
+          this.ChangeCurHome(res.data.id, this.data.Home_name,1)
+          break
+        case 0:
+          wx.showToast({
+            image: '../../../images/icon/attention.png',
+            title: '创建新家失败!'
+          });
+          break
+        default:
+          wx.showToast({
+            image: '../../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.showToast({
+        image: '../../../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+    })
+  },
+  //修改家
+  ModifyHome() {
+    requestPromisified({
+      url: h.main + '/updatehome?id=' + this.data.Home_id + '&fname=' + this.data.Home_name,
       data: {
       },
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
@@ -65,9 +171,9 @@ Page({
   },
 
   //切换家
-  ChangeCurHome(ID, NAME) {
+  ChangeCurHome(ID, NAME, MEMBERTYPE) {
     requestPromisified({
-      url: h.main + '/updatehomeid?id=' + ID + '&ftelphone=' + app.globalData.User_Phone,
+      url: h.main + '/updatehomeid?id=' + ID + '&ftelphone=' + app.globalData.User_Phone + '&y_id=' + app.globalData.CurHomeId + '&memberstype=' + MEMBERTYPE + '&y_memberstype=' + app.globalData.CurHomeRole,
       data: {
       },
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
@@ -76,6 +182,8 @@ Page({
         case 1:
           app.globalData.CurHomeName = NAME
           app.globalData.CurHomeId = ID
+          app.globalData.CurHomeRole = MEMBERTYPE
+          wx.navigateBack()
           wx.hideLoading()
           break
         case 0:

@@ -44,6 +44,7 @@ App({
 
     this.GetRoomIconList()
     this.GetSceneIconList()
+    this.GetCookingMethod()
   },
   GetLocation(){
     wx.getLocation({
@@ -98,6 +99,7 @@ App({
     CurHomeId: null,
     RoomIconList:[], //房间icon
     SceneIconList:[],//场景icon
+    CookingMethodList:[]
 
   },
   //获取房间图标
@@ -171,5 +173,44 @@ App({
       });
       console.log(res)
     })
+  },
+  //获取烹饪方式
+  GetCookingMethod() {
+    requestPromisified({
+      url: h.main + '/selectcookingtype',
+      data: {
+      },
+      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          wx.hideLoading()
+          this.globalData.CookingMethodList = res.data.cooklist
+          break
+        case 0:
+          wx.hideLoading()
+          wx.showToast({
+            image: './images/icon/attention.png',
+            title: '烹饪方式获取失败'
+          });
+          break
+        default:
+          wx.hideLoading()
+          wx.showToast({
+            image: './images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.hideLoading()
+      wx.showToast({
+        image: './images/icon/attention.png',
+        title: '服务器繁忙！'
+      })
+    });
   }
 })

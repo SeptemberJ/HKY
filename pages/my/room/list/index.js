@@ -17,7 +17,8 @@ Page({
   onLoad(options){
     this.setData({
       RoomId: options.roomid,
-      RoomName: options.roomname
+      RoomName: options.roomname,
+      CurHomeRole: app.globalData.CurHomeRole,
     })
   },
   onShow(){
@@ -220,6 +221,55 @@ Page({
     })
 
   },
+  //开关自动化
+  ToggleOpenClose_automatic(e) {
+    let AutomaticId = e.currentTarget.dataset.automaticid
+    let AutomaticStatus = e.currentTarget.dataset.automaticstatus == '0' ? '1' : '0'
+    let AutomaticIdx = e.currentTarget.dataset.idx
+    requestPromisified({
+      url: h.main + '/updatenoautomation?id=' + AutomaticId + '&status=' + AutomaticStatus,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      console.log(res.data)
+      switch (res.data.result) {
+        case 1:
+          // wx.showToast({
+          //   title: '修改成功！',
+          //   icon: 'success',
+          //   duration: 1500
+          // })
+          let temp = this.data.AutomaticList
+          temp[AutomaticIdx].on_off_status = AutomaticStatus
+          this.setData({
+            AutomaticList: temp
+          })
+          break
+        case 0:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '修改失败!'
+          });
+          break
+        default:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+    })
+
+  },
   //获取房间设备
   GetRoomEQList() {
     wx.showLoading({
@@ -347,7 +397,7 @@ Page({
   //编辑自动化
   ToEdit_automatic(e){
     wx.navigateTo({
-      url: '../..//automation/add/index?automaticid=' + e.currentTarget.dataset.automaticid + '&type=1',
+      url: '../../automation/add/index?automaticid=' + e.currentTarget.dataset.automaticid + '&type=1' + '&roomid=' + this.data.RoomId,
     })
 
   }

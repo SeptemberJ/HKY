@@ -12,11 +12,24 @@ Page({
   onShow(){
     this.GetHomeList()
   },
-  //第一次从家开始添加
+  //添加家
   FirstAdd() {
     wx.navigateTo({
-      url: '../add/index'
+      url: '../add/index?type=0'
     })
+  },
+  Edit_home(e){
+    // if (e.currentTarget.dataset.membertype == 1){
+    //   wx.navigateTo({
+    //     url: '../add/index?type=1' + '&homename=' + e.currentTarget.dataset.homename + '&homeid=' + e.currentTarget.dataset.homeid + '&membertype=' + e.currentTarget.dataset.membertype
+    //   })
+    // }else{
+    //   return false
+    // }
+    wx.navigateTo({
+      url: '../add/index?type=1' + '&homename=' + e.currentTarget.dataset.homename + '&homeid=' + e.currentTarget.dataset.homeid + '&membertype=' + e.currentTarget.dataset.membertype
+    })
+    
   },
   GetHomeList(){
     //获取home list

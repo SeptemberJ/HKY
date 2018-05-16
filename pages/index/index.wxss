@@ -563,7 +563,7 @@ swiper {
 /*Card_diet  */
 .Card_diet{
   width: 700rpx;
-  margin: 50px auto 20px auto;
+   margin: 50px auto 20px auto; 
 }
 .Card_column{
   width: 100%;
@@ -608,6 +608,39 @@ swiper {
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+}
+.Card_body_item_record{
+  width: 400rpx;
+  height: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Card_body_item_record text{
+  padding: 0;
+  text-align: left;
+}
+.Card_body_item_record picker{
+  width: 200rpx;
+  border-bottom: 1px solid #ccc;
+  padding: 10rpx;
+}
+.Card_body_item_record input{
+  width: 200rpx;
+  border-bottom: 1px solid #ccc;
+  padding: 10rpx;
+}
+.ReocrdSubmit{
+  width: 100rpx;
+  /* width: 100rpx;
+  height: 40rpx; */
+  padding: 15rpx 20rpx;
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #3498db;
+  color: #fff;
 }
 .BorderImage{
   width: 100rpx;

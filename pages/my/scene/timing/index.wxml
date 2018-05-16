@@ -24,4 +24,4 @@
   <view bindtap='ChooseControl' data-idx='7' class="Timing_control_item {{Sunday?'Timing_control_choosed':''}}">日</view>
 </view>
 
-<button class='MarginT_40 HarfLongBt ColorWhite BgRed' bindtap='Submit'>确定</button> 
+<button wx:if="{{CurHomeRole == 1}}" class='MarginT_40 HarfLongBt ColorWhite BgRed' bindtap='Submit'>确定</button> 

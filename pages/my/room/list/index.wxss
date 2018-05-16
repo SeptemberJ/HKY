@@ -1,7 +1,7 @@
 .RoomTop{
   width: 100%;
   height: 180px;
-  background: url('http://118.25.47.123:8080/upload/roomBg.jpg') no-repeat top center/contain ;
+  background: url('http://118.25.47.123:8080/upload/roomBg.jpg') no-repeat top center/cover ;
   position: relative;
 }
 .RoomAddInfo{
@@ -71,8 +71,9 @@
   display: inline-block;
 }
 .EQList_item_text{
-  width: calc(750rpx - 100rpx - 150rpx);
+  width: calc(750rpx - 100rpx - 150rpx - 10rpx);
   height: 100%;
+  padding-left: 10rpx;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

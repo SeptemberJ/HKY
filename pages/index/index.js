@@ -7,7 +7,7 @@ const app = getApp()
 
 Page({
   data: {
-    CurHomeRole:1,
+    // CurHomeRole:1,
     userInfo: {},
     CurHomeName:'',
     AccountName:'',
@@ -44,6 +44,8 @@ Page({
     ifShow_D: false,
     Code_imgres:'',
     IfShowCode:false,  //二维码显示
+    CookingMethodIndex: 0,
+    CookStyle:''
 
   },
   //事件处理函数
@@ -96,6 +98,7 @@ Page({
       HomeList: app.globalData.HomeList,
       CurHomeName: app.globalData.CurHomeName,
       CurHomeId: app.globalData.CurHomeId,
+      CookingMethodList: app.globalData.CookingMethodList
     })
     if (app.globalData.CurHomeId){
       switch (this.data.Cur_tab) {
@@ -122,6 +125,66 @@ Page({
       hasUserInfo: true
     })
   },
+  //烹饪方式
+  ChangeCookingMethod(e) {
+    this.setData({
+      CookingMethodIndex: e.detail.value
+    })
+  },
+  ChangeCookStyle(e) {
+    this.setData({
+      CookStyle: e.detail.value
+    })
+  },
+  //ReocrdSubmit
+  ReocrdSubmit(){
+    let DATA = {
+      ftelphone: app.globalData.User_Phone,
+      cookname: this.data.CookStyle,
+      cooktype: this.data.CookingMethodList[this.data.CookingMethodIndex].typename
+    }
+    wx.showLoading({
+      title: '加载中',
+    })
+    requestPromisified({
+      url: h.main + '/insertcook',
+      data: {
+        cooks: DATA
+      },
+      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          wx.showToast({
+            title: '提交成功!',
+            icon: 'success',
+            duration: 1500,
+          })
+          wx.hideLoading()
+          break
+        case 0:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '提交失败'
+          });
+          break
+        default:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.hideLoading()
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+      console.log(res)
+    })
+  },
   //左右切换
   SwiperChange(e){
     console.log(e)
@@ -144,16 +207,16 @@ Page({
   ToggleCurHome(e){
     console.log(e.detail.value)
     if (app.globalData.HomeList[e.detail.value].copyid == ''){
-      this.ChangeCurHome(app.globalData.HomeList[e.detail.value].id, app.globalData.HomeList[e.detail.value].fname)
+      this.ChangeCurHome(app.globalData.HomeList[e.detail.value].id, app.globalData.HomeList[e.detail.value].fname, app.globalData.HomeList[e.detail.value].memberstype)
     }else{
-      this.ChangeCurHome(app.globalData.HomeList[e.detail.value].copyid, app.globalData.HomeList[e.detail.value].fname)
+      this.ChangeCurHome(app.globalData.HomeList[e.detail.value].copyid, app.globalData.HomeList[e.detail.value].fname,app.globalData.HomeList[e.detail.value].memberstype)
     }
     
   },
   //切换家
-  ChangeCurHome(ID,NAME){
+  ChangeCurHome(ID,NAME,MEMBERTYPE){
     requestPromisified({
-      url: h.main + '/updatehomeid?id=' + ID + '&ftelphone=' + app.globalData.User_Phone + '&y_id=' + app.globalData.CurHomeId,
+      url: h.main + '/updatehomeid?id=' + ID + '&ftelphone=' + app.globalData.User_Phone + '&y_id=' + app.globalData.CurHomeId + '&memberstype=' + MEMBERTYPE + '&y_memberstype=' + app.globalData.CurHomeRole,
       data: {
       },
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
@@ -166,10 +229,13 @@ Page({
             duration: 1500
           })
           this.setData({
-            CurHomeName: NAME
+            CurHomeName: NAME,
+            CurHomeRole: MEMBERTYPE,
+            Cur_tab:'0'
           })
           app.globalData.CurHomeName = NAME
           app.globalData.CurHomeId = ID
+          app.globalData.CurHomeRole = MEMBERTYPE
           this.GetHomeList()
           this.GetCurEQList(ID)
           wx.hideLoading()
@@ -319,19 +385,59 @@ Page({
             this.Scan()
             break
           case 1:
-            this.ToAdd()
+            if (this.data.CurHomeRole == 1){
+              this.ToAdd()
+            }else{
+              wx.showToast({
+                image: '../../images/icon/attention.png',
+                title: '您非管理员！',
+                duration: 2000
+              });
+            }
             break
           case 2:
-            this.ToAddRoom()
+            if (this.data.CurHomeRole == 1) {
+              this.ToAddRoom()
+            } else {
+              wx.showToast({
+                image: '../../images/icon/attention.png',
+                title: '您非管理员！',
+                duration: 2000
+              });
+            }
             break
           case 3:
-            this.ToAddAutomatic()
+            if (this.data.CurHomeRole == 1) {
+              this.ToAddAutomatic()
+            } else {
+              wx.showToast({
+                image: '../../images/icon/attention.png',
+                title: '您非管理员！',
+                duration: 2000
+              });
+            }
             break
           case 4:
-            this.ToAddScene()
+            if (this.data.CurHomeRole == 1) {
+              this.ToAddScene()
+            } else {
+              wx.showToast({
+                image: '../../images/icon/attention.png',
+                title: '您非管理员！',
+                duration: 2000
+              });
+            }
             break
           case 5:
-            this.ToGetCodeImg()
+            if (this.data.CurHomeRole == 1) {
+              this.ToGetCodeImg()
+            } else {
+              wx.showToast({
+                image: '../../images/icon/attention.png',
+                title: '您非管理员！',
+                duration: 2000
+              });
+            }
             break
         }
       },
@@ -814,6 +920,9 @@ Page({
   },
   //获取当前家下设备列表
   GetCurEQList(HomeID) {
+    wx.showLoading({
+      title: '加载中',
+    })
     requestPromisified({
       url: h.main + '/selectregisteruser?homeid=' + HomeID,
       data: {
@@ -824,26 +933,30 @@ Page({
       //   'Accept': 'application/json'
       // }, // 设置请求的 header
     }).then((res) => {
-      console.log(res.data)
       switch (res.data.result) {
         case 1:
           this.setData({
             EQList: res.data.registermachine
           })
+          wx.hideLoading()
           break
         case 0:
+          wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
             title: '设备获取失败!'
           });
           break
         default:
+          wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
             title: 'D家设备服务器繁忙！'
           });
       }
     }).catch((res) => {
+      console.log(res)
+      wx.hideLoading()
       wx.showToast({
         image: '../../images/icon/attention.png',
         title: '家设备服务器繁忙！'
@@ -954,6 +1067,7 @@ Page({
           if (res.data.homelist.length > 0) {
             app.globalData.HomeList = res.data.homelist
             app.globalData.CurHomeRole = res.data.homelist1[0].memberstype
+            app.globalData.CurHomeRole = res.data.homelist1[0].memberstype
             app.globalData.CurHomeName = res.data.homelist1[0].fname
             if (res.data.homelist1[0].copyid == '') {
               app.globalData.CurHomeId = res.data.homelist1[0].id
@@ -961,7 +1075,8 @@ Page({
               app.globalData.CurHomeId = res.data.homelist1[0].copyid
             }
             this.setData({
-              CurHomeName: res.data.homelist1[0].fname
+              CurHomeName: res.data.homelist1[0].fname,
+              HomeList: res.data.homelist
             })
           }
           break
@@ -1061,6 +1176,55 @@ Page({
           temp[SceneIdx].on_off_status = SceneStatus
           this.setData({
             SceneList: temp
+          })
+          break
+        case 0:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '修改失败!'
+          });
+          break
+        default:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+    })
+
+  },
+  //开关自动化
+  ToggleOpenClose_automatic(e) {
+    let AutomaticId = e.currentTarget.dataset.automaticid
+    let AutomaticStatus = e.currentTarget.dataset.automaticstatus == '0' ? '1' : '0'
+    let AutomaticIdx = e.currentTarget.dataset.idx
+    requestPromisified({
+      url: h.main + '/updatenoautomation?id=' + AutomaticId + '&status=' + AutomaticStatus,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {
+      //   'content-type': 'application/x-www-form-urlencoded',
+      //   'Accept': 'application/json'
+      // }, // 设置请求的 header
+    }).then((res) => {
+      console.log(res.data)
+      switch (res.data.result) {
+        case 1:
+          // wx.showToast({
+          //   title: '修改成功！',
+          //   icon: 'success',
+          //   duration: 1500
+          // })
+          let temp = this.data.AutomaticList
+          temp[AutomaticIdx].on_off_status = AutomaticStatus
+          this.setData({
+            AutomaticList: temp
           })
           break
         case 0:

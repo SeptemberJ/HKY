@@ -65,7 +65,9 @@ Page({
     }
   },
   onShow() {
-
+    this.setData({
+      CurHomeRole: app.globalData.CurHomeRole,
+    })
   },
   Delete(e){
     wx.showModal({

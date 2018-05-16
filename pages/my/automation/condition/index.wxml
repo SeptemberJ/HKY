@@ -1,4 +1,7 @@
-<view class='TopSubmitBt' bindtap='Submit'>确定</view>
+<view class='TopSubmitBt'>
+  <view class='TopFixedSubmitBt' bindtap='Submit'>确定</view>
+</view>
+
 <view class='Condition_tit'>
   <text>系统条件</text>
 </view>

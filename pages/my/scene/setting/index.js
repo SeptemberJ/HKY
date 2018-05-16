@@ -24,6 +24,7 @@ Page({
       Scene_EQList:[],
       Scene_AutomaticList: [],
       SceneEQCount:0,  //加入设备个数
+      SceneAutomaticCount: 0,  //加入联动个数
     }
   },
   onLoad(options) {
@@ -50,11 +51,14 @@ Page({
     }
   },
   onShow() {
+    this.setData({
+      CurHomeRole: app.globalData.CurHomeRole,
+    })
 
   },
   ToTiming(){
     wx.navigateTo({
-      url: '../timing/index',
+      url: '../timing/index?sceneid=' + this.data.CurSceneId + '&roomid=' + this.data.RoomId,
     })
   },
   ToEQList() {
@@ -64,7 +68,7 @@ Page({
   },
   ToLinkage() {
     wx.navigateTo({
-      url: '../ldlist/index',
+      url: '../ldlist/index?sceneid=' + this.data.CurSceneId + '&roomid=' + this.data.RoomId,
     })
   },
   ToLog() {
@@ -86,7 +90,8 @@ Page({
     let temp = this.data.SceneInfo
     temp.Scene_name = e.detail.value
     this.setData({
-      Scene_EQList: temp
+      Scene_EQList: temp,
+      SceneInfo:temp
     })
   },
   //更新定时
@@ -94,7 +99,8 @@ Page({
     let temp = this.data.SceneInfo
     temp.Scene_timing = TimingInfo
     this.setData({
-      Scene_EQList: temp
+      Scene_EQList: temp,
+      SceneInfo: temp
     })
   },
   //更新设备组合
@@ -104,7 +110,19 @@ Page({
     console.log(temp)
     this.setData({
       Scene_EQList: temp,
+      SceneInfo: temp,
       SceneEQCount: temp.Scene_EQList.length
+    })
+  },
+  //更新联动组合
+  UpdateChoosedAutomaticList(AutomaticList) {
+    let temp = this.data.SceneInfo
+    temp.Scene_AutomaticList = AutomaticList
+    console.log(temp)
+    this.setData({
+      Scene_EQList: temp,
+      SceneInfo: temp,
+      SceneAutomaticCount: temp.Scene_AutomaticList.length
     })
   },
   Submit(){
@@ -167,7 +185,7 @@ Page({
         case 2:
           wx.hideLoading()
           wx.showToast({
-            image: '../../images/icon/attention.png',
+            image: '../../../../images/icon/attention.png',
             title: '已添加过!',
             duration: 2000
           });
@@ -175,21 +193,21 @@ Page({
         case 0:
           wx.hideLoading()
           wx.showToast({
-            image: '../../images/icon/attention.png',
+            image: '../../../../images/icon/attention.png',
             title: '添加失败!'
           });
           break
         default:
           wx.hideLoading()
           wx.showToast({
-            image: '../../images/icon/attention.png',
+            image: '../../../../images/icon/attention.png',
             title: '服务器繁忙！!'
           });
       }
     }).catch((res) => {
       wx.hideLoading()
       wx.showToast({
-        image: '../../images/icon/attention.png',
+        image: '../../../../images/icon/attention.png',
         title: '服务器繁忙！'
       });
       console.log(res)
@@ -250,21 +268,21 @@ Page({
         case 0:
           wx.hideLoading()
           wx.showToast({
-            image: '../../images/icon/attention.png',
+            image: '../../../../images/icon/attention.png',
             title: '修改失败!'
           });
           break
         default:
           wx.hideLoading()
           wx.showToast({
-            image: '../../images/icon/attention.png',
+            image: '../../../../images/icon/attention.png',
             title: '服务器繁忙！!'
           });
       }
     }).catch((res) => {
       wx.hideLoading()
       wx.showToast({
-        image: '../../images/icon/attention.png',
+        image: '../../../../images/icon/attention.png',
         title: '服务器繁忙！'
       });
       console.log(res)
@@ -338,21 +356,21 @@ Page({
               case 0:
                 wx.hideLoading()
                 wx.showToast({
-                  image: '../../images/icon/attention.png',
+                  image: '../../../../images/icon/attention.png',
                   title: '删除失败!'
                 });
                 break
               default:
                 wx.hideLoading()
                 wx.showToast({
-                  image: '../../images/icon/attention.png',
+                  image: '../../../../images/icon/attention.png',
                   title: '服务器繁忙！!'
                 });
             }
           }).catch((res) => {
             wx.hideLoading()
             wx.showToast({
-              image: '../../images/icon/attention.png',
+              image: '../../../../images/icon/attention.png',
               title: '服务器繁忙！'
             });
             console.log(res)

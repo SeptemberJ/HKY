@@ -9,9 +9,9 @@ page{
   justify-content: flex-start;
 }
 .HomeItem{
-  width: calc(100% - 20rpx);
+  width: calc(100% - 40rpx);
   height: 80rpx;
-  padding: 10rpx;
+  padding: 10rpx 20rpx;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -23,6 +23,6 @@ page{
 }
 .HomeItem_role{
   width: 150rpx;
-  color: #ccc;
+  color: #999;
   text-align: right;
 }
