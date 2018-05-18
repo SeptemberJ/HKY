@@ -4,17 +4,19 @@
   <!--top  -->
   <view class='dataInfo'>
     <view class='topBar'>
-      <!-- <image class="Avatar" src="{{userInfo.avatarUrl}}"></image> -->
+      <!--left accounts  -->
       <picker bindchange="ToggleCurHome"  range="{{HomeList}}" range-key="fname">
         <view class='nickName' bindtap='ToggleCurHome'>
         {{CurHomeName?CurHomeName:''}}
          <image class="ArrowDown" wx:if="{{CurHomeName}}" src="../../images/icon/arrow.png"></image> 
       </view>
       </picker>
-      <!-- <view class='nickName' bindtap='ToggleCurHome'>
-        {{CurHomeName?CurHomeName:''}}
-         <image class="ArrowDown" wx:if="{{CurHomeName}}" src="../../images/icon/arrow.png"></image> 
-      </view> -->
+      <!--middle GPS  -->
+      <view class='MiddleGps' wx:if="{{SwiperCur == 1}}">
+        <text>{{airQuality.cityname}}</text>
+        <image class="location" src="../../images/icon/location.png"></image>
+      </view>
+      <!--right operations  -->
       <view class='operation'>
         <image class='operationIcon messageIocn' bindtap='ToTrend' src='../../images/icon/qushi.png'></image>
         <image class='operationIcon messageIocn' bindtap='ToMyMessage' src='../../images/icon/message.png'></image>
@@ -23,7 +25,7 @@
       </view>
     </view>
     <!--切换模块  -->
-     <swiper class='swiper' indicator-dots="{{indicatorDots}}" bindchange="SwiperChange">
+     <swiper  class='swiper swiper-box' indicator-dots="{{indicatorDots}}" bindchange="SwiperChange">
       <block>
         <swiper-item>
           <view class="swiper-item">
@@ -46,9 +48,9 @@
                   <text class='level_4 level_One'></text>
                   <text class='level_5 level_Double'></text>
                   <text class='level_6 level_Fourfold'></text>
-                  <view class='triangleIndex' style="left:{{distance}}rpx">
+                   <view class='triangleIndex' style="left:{{distance}}rpx"> 
                     <image src="{{'../../images/icon/airQuality_'+ air_level +'.png'}}"></image>
-                    <text class=''>{{AQI}}</text>
+                    <text class='AQIBlock'>{{AQI}}</text>
                   </view>
                   
                 </view>
@@ -64,7 +66,7 @@
               <view class='IndoorAirQuality_top'>
                 <view style=''>
                   <view class="colorfulBlock {{'level_' + air_level}}"></view>
-                  <text>{{airQuality_inside.apitype}}</text>
+                  <text>{{air_level_text}}</text>
                 </view>
                 <text>温度:{{airQuality_inside.temperature}}℃  湿度:{{airQuality_inside.humidity}}%</text>
               </view>
@@ -83,7 +85,7 @@
           <view class="swiper-item">
             <!--当地天气  -->
             <view class='temperatureInfo'>
-              <view class='left_add'>
+              <!-- <view class='left_add'>
                 <view class='TipBlock' bindtap='ToDiet'>
                   <text>加饮食</text>
                 </view>
@@ -92,20 +94,20 @@
                   <view class='SwingDot'></view>
                 </view>
                 
-              </view>
+              </view> -->
               <view class='temperature_conclusion'>
-                <view class='conclusion_item'>
+                <!-- <view class='conclusion_item'>
                   <text>{{airQuality.cityname}}</text>
                   <image class="location" src="../../images/icon/location.png"></image> 
-                </view>
+                </view> -->
                 <view class='conclusion_item'>
                   <image class='temperatureIcon' src='{{airQuality.weather_icon}}'></image>
                   <text class='conclusion_temp_curr'>{{airQuality.temp}} </text>
                 </view>
                 <view class='conclusion_item'>
                   <view class="colorfulBlock {{'level_' + airQuality.aqi_levid}}"></view>
-                  <text>{{airQuality.aqi_levnm}}</text>
-                  <text>{{airQuality.aqi}}</text>
+                  <text class=''>{{airQuality.aqi_levnm}}</text>
+                  <text class=''>{{airQuality.aqi}}</text>
                 </view>
                 <view class='conclusion_item'>
                   <text>{{airQuality.aqi_remark}}</text>
@@ -192,36 +194,24 @@
   </view>
   <!--./temperatureInfo detail  -->
 
-<view style='width:100%;' wx:if="{{false}}">
-  <!-- diet -->
-    <view class='Card_diet'>
-      <view class='Card_column'>
-        <view class='Card_circle'>
-          今日好菜
+  <view class='DietRecord' wx:if="{{SwiperCur == 0}}">
+    <text class='tit'>今日厨房</text>
+    <view class='CookingType'>
+      <text>烹饪方式</text>
+      <picker bindchange="ChangeCookingMethod" value="{{CookingMethodList[CookingMethodIndex].typename}}" range="{{CookingMethodList}}" range-key="typename">
+        <view class="picker">
+          {{CookingMethodList[CookingMethodIndex].typename}}
         </view>
-      </view>
-      <view class='Card_body'>
-        <view class='Card_body_item'>
-          <view class='Card_body_item_record'>
-            <text>烹饪方式</text>
-            <picker bindchange="ChangeCookingMethod" value="{{CookingMethodList[CookingMethodIndex].typename}}" range="{{CookingMethodList}}" range-key="typename">
-      <view class="picker">
-        {{CookingMethodList[CookingMethodIndex].typename}}
-      </view>
-    </picker>
-          </view>
-          <view class='Card_body_item_record'>
-            <text>菜式</text>
-            <input bindinput='ChangeCookStyle'></input>
-          </view>
-          <view class='Card_body_item_record'>
-            <view class='ReocrdSubmit' bindtap='ReocrdSubmit'><text>提交</text></view>
-          </view>
-        </view>
-      </view>
+      </picker>
     </view>
-    <!-- ./diet -->
-</view>
+    <view class='DietRecordSubmit' bindtap='ReocrdSubmit'>
+      <text>提交</text>
+    </view>
+    <view class='GoQuestionnaire' wx:if="{{IfHasWirteQuestionnaire != 1}}" bindtap='GoQuestionnaire'>
+      <text>填问卷</text>
+    </view>
+  
+  </view>
 
 
   <view style='width:100%;' wx:if="{{EQList.length<=0}}">

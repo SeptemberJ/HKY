@@ -86,6 +86,8 @@ App({
     User_Phone: '', //18234567890',
     User_name:'',
     Add_count:'',
+    IfHasWirteQuestionnaire:'',
+    QuestionnaireId:'', //问卷id
     city:'',
     Add_date: util.formatTime(new Date()),
     AQI:'',

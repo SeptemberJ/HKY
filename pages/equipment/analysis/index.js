@@ -81,7 +81,8 @@ Page({
             }
           })
           this.setData({
-            dataList: temp
+            dataList: temp,
+            ifHasData: true
           })
           wx.hideLoading()
           break

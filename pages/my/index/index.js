@@ -64,6 +64,11 @@ Page({
       })
     }
   },
+  ToCookingRecord(){
+    wx.navigateTo({
+      url: '../../cooking/index',
+    })
+  },
   ToHome() {
     wx.navigateTo({
       url: '../home/list/index',
@@ -79,6 +84,32 @@ Page({
     wx.makePhoneCall({
       phoneNumber: '021-3100-7227' 
     })
+  },
+  //商城
+  toMall() {
+    if (wx.navigateToMiniProgram) {
+      wx.navigateToMiniProgram({
+        appId: 'wx6a30d2c0aea74559',
+        path: '',
+        extraData: {
+        },
+        envVersion: 'trial',
+        success(res) {
+          // 打开成功
+          console.log(res)
+        },
+        fali(res) {
+          // 打开失败
+          console.log(res)
+        },
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
+      })
+    }
+
   },
   //获取消息
   GetMessage() {

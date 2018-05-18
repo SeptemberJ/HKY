@@ -1,6 +1,5 @@
 {
   "pages":[
-
     "pages/loading/index",
     "pages/login/index",
     "pages/index/index",
@@ -35,6 +34,9 @@
     "pages/my/automation/add/index",
     "pages/my/automation/condition/index",
     "pages/my/automation/action/index",
+    "pages/cooking/index",
+
+    
 
     "pages/control/index",
 

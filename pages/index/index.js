@@ -39,6 +39,7 @@ Page({
     distance:0,
     AQI:0,
     air_level:1,
+    air_level_text:'',
     ifShow_B: false,
     ifShow_L: false,
     ifShow_D: false,
@@ -98,7 +99,8 @@ Page({
       HomeList: app.globalData.HomeList,
       CurHomeName: app.globalData.CurHomeName,
       CurHomeId: app.globalData.CurHomeId,
-      CookingMethodList: app.globalData.CookingMethodList
+      CookingMethodList: app.globalData.CookingMethodList,
+      IfHasWirteQuestionnaire: app.globalData.IfHasWirteQuestionnaire
     })
     if (app.globalData.CurHomeId){
       switch (this.data.Cur_tab) {
@@ -123,6 +125,11 @@ Page({
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
+    })
+  },
+  GoQuestionnaire(){
+    wx.navigateTo({
+      url: '../questionnaire/index?id=' + app.globalData.QuestionnaireId
     })
   },
   //烹饪方式
@@ -156,17 +163,25 @@ Page({
       switch (res.data.result) {
         case 1:
           wx.showToast({
-            title: '提交成功!',
+            title: '+' + res.data.integral + '积分',
             icon: 'success',
-            duration: 1500,
+            duration: 2000,
           })
           wx.hideLoading()
+          break
+        case 2:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '明日再提交!'
+          });
           break
         case 0:
           wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '提交失败'
+            title: '提交失败',
+            duration: 2000,
           });
           break
         default:
@@ -850,10 +865,10 @@ Page({
     }).then((res) => {
       switch (res.data.result) {
         case 1:
-          this.Judge(res.data.indoorairlist[0].api)
+          this.Judge(res.data.indoorairlist[0].aqi)
           this.setData({
             airQuality_inside: res.data.indoorairlist[0],
-            AQI: res.data.indoorairlist[0].api,
+            AQI: res.data.indoorairlist[0].aqi,
           })
           break
         case 0:
@@ -1016,37 +1031,46 @@ Page({
   //判断室内空气
   Judge(AQI){
     let Width = this.data.Distance_width
+    let i = (AQI * (Width / 50)) > 660 ? 660 : (AQI * (Width / 50))
+
     this.setData({
-      distance: (AQI * (Width / 50)) > 660 ? 660 : (AQI * (Width / 50))
+      distance: i
+      
     })
     if (AQI >= 0 && AQI <= 50) {
       this.setData({
-        air_level: 1
+        air_level: 1,
+        air_level_text:'优'
       })
     }
     else if (AQI > 50 && AQI <= 100) {
       this.setData({
-        air_level: 2
+        air_level: 2,
+        air_level_text: '良'
       })
     }
     else if (AQI > 100 && AQI <= 150) {
       this.setData({
-        air_level: 3
+        air_level: 3,
+        air_level_text: '轻度污染'
       })
     }
     else if (AQI > 150 && AQI <= 200) {
       this.setData({
-        air_level: 4
+        air_level: 4,
+        air_level_text: '中度污染'
       })
     }
     else if (AQI > 200 && AQI <= 300) {
       this.setData({
-        air_level: 5
+        air_level: 5,
+        air_level_text: '重度污染'
       })
     }
     else if (AQI > 300) {
       this.setData({
-        air_level: 6
+        air_level: 6,
+        air_level_text: '严重污染'
       })
     }
   },

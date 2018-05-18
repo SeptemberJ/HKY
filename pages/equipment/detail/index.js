@@ -496,7 +496,7 @@ Page({
           }
         }).catch((res) => {
           wx.showToast({
-            image: '../../../images/attention.png',
+            image: '../../../images/icon/attention.png',
             title: '服务器繁忙！'
           });
           console.log(res)

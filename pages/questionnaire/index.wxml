@@ -7,7 +7,7 @@
         <image class='SmallIcon' src='../../images/icon/icon_status-two-dots.png'></image>
       </view>
       <view class='title_right'>
-        <text class='question'>您家里几口人您家里几口人您家里几口人{{Question.qusetion}} </text>
+        <text class='question'>{{Question.qusetion}} </text>
       </view>
     </view>
     
@@ -34,5 +34,5 @@
   <!-- <view class='OperationBt' bindtap='Submit'>
     提交
   </view> -->
-   <button class='ColorWhite BgRed' bindtap='Submit'>提交</button> 
+   <button wx-if="{{ifShowList[QuestionIdx]}}" class='ColorWhite BgRed' bindtap='Submit'>提交</button> 
 </view>

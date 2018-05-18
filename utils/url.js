@@ -1,4 +1,4 @@
-//var main ="http://192.168.10.121:8083";
+//var main ="http://205.168.1.117:8083";
 var main ="http://118.25.47.123:8080/zk_hky"
 var imgNetSrc="";
 

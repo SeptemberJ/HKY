@@ -81,8 +81,14 @@ Page({
   //     CurStep: Cur
   //   })
   // },
-  // 跳过问卷调查
+  //SkipQuestionnaire
   SkipQuestionnaire(){
+    wx.switchTab({
+      url: '../index/index'
+    })
+  },
+  // 跳过问卷调查
+  SkipQuestionnaire2(){
     requestPromisified({
       url: h.main + '/updateregisterstatus?ftelphone=' + app.globalData.User_Phone,
       data: {

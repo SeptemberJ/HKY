@@ -20,7 +20,7 @@
   border-radius: 50%;
 }
 .CurData text{
-  font-size: 24px;
+  font-size: 40rpx;
 }
 .additionalData{
   width: 500rpx;

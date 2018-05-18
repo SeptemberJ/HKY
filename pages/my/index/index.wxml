@@ -6,7 +6,7 @@
       <image class='smallIcon' src='../../../images/icon/integral.png'></image>
       <text>我的积分</text>
     </view>
-    <view class='HorizontalItem'>
+    <view class='HorizontalItem' bindtap='toMall'>
       <image class='smallIcon' src='../../../images/icon/shoppingMall.png'></image>
       <text>兑换商城</text>
     </view>
@@ -32,15 +32,21 @@
 </view>
 
 <view class='optionList'>
-   <view class='optionItem' bindtap='MyWeight'>
+  <view class='optionItem' bindtap='MyWeight'>
     <image class='smallIcon' src='../../../images/icon/weight.png'></image>
     <text class='optionTit'>我的体重</text>
     <image class='smallIcon_arrow' src='../../../images/icon/arrow_black.png'></image>
   </view>
 
-    <view class='optionItem' bindtap='MyDiet'>
+  <view class='optionItem' bindtap='MyDiet'>
     <image class='smallIcon' src='../../../images/icon/diet.png'></image>
     <text class='optionTit'>我的饮食</text>
+    <image class='smallIcon_arrow' src='../../../images/icon/arrow_black.png'></image>
+  </view>
+
+  <view class='optionItem' bindtap='ToCookingRecord'>
+    <image class='smallIcon' src='../../../images/icon/cookingRecord.png'></image>
+    <text class='optionTit'>烹饪记录</text>
     <image class='smallIcon_arrow' src='../../../images/icon/arrow_black.png'></image>
   </view> 
 </view>

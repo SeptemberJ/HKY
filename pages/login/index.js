@@ -15,28 +15,25 @@ Page({
     
   },
   onLoad: function () {
+    
+  },
+  onShow(){
     console.log('onLoad---')
-    // wx.getStorage({
-    //   key: 'UserInfo',
-    //   success: (res) => {
-    //     app.globalData.User_Phone = res.data.User_Phone
-    //     app.globalData.User_name = res.data.User_name
-    //     console.log(app.globalData.User_Phone)
-    //     wx.switchTab({
-    //       url: '../index/index'
+    console.log(app.globalData.userInfo)
+    this.setData({
+      userInfo: app.globalData.userInfo
+        })
+    // wx.getUserInfo({
+    //   success: res => {
+    //     app.globalData.userInfo = res.userInfo
+    //     console.log(res)
+    //     this.setData({
+    //       userInfo: res.userInfo
     //     })
     //   }
     // })
-    wx.getUserInfo({
-      success: res => {
-        app.globalData.userInfo = res.userInfo
-        console.log(res.userInfo)
-        this.setData({
-          userInfo: res.userInfo
-        })
-      }
-    })
-  },
+  }
+  ,
   //border焦点
   changeBorderColor_name(){
     this.setData({
