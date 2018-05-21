@@ -15,16 +15,16 @@ Page({
     
   },
   onLoad: function () {
-    
+    console.log('onLoad')
   },
   onShow(){
-    console.log('onLoad---')
     console.log(app.globalData.userInfo)
     this.setData({
       userInfo: app.globalData.userInfo
         })
+    console.log('onshow---')
     // wx.getUserInfo({
-    //   success: res => {
+    //   success: (res) => {
     //     app.globalData.userInfo = res.userInfo
     //     console.log(res)
     //     this.setData({
@@ -86,14 +86,16 @@ Page({
     if (!this.data.User_Phone){
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '请输入手机号!'
+        title: '请输入手机号!',
+        duration: 2000,
       });
       return false
     }
     if (!this.data.User_Psd) {
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '请输入密码!'
+        title: '请输入密码!',
+        duration: 2000,
       });
       return false
     }
@@ -103,7 +105,8 @@ Page({
     let DATA = {
       ftelphone: this.data.User_Phone,
       password: MD5.hexMD5(this.data.User_Psd),
-      head_img: this.data.userInfo.avatarUrl ? this.data.userInfo.avatarUrl:''
+      head_img: this.data.userInfo? this.data.userInfo.avatarUrl : ''
+      // head_img: this.data.userInfo.avatarUrl ? this.data.userInfo.avatarUrl:''
     }
     requestPromisified({
       url: h.main + '/login',
@@ -140,25 +143,29 @@ Page({
         case 2:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '密码错误！'
+            title: '密码错误！',
+            duration: 2000,
           });
           break
         case 3:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '用户名不存在！'
+            title: '用户名不存在！',
+            duration: 2000,
           });
           break
         case 0:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '登录失败！'
+            title: '登录失败！',
+            duration: 2000,
           });
           break
         default:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '服务器繁忙！'
+            title: '服务器繁忙！',
+            duration: 2000,
           });
       }
       this.setData({
@@ -167,7 +174,8 @@ Page({
     }).catch((res) => {
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '服务器繁忙！'
+        title: '服务器繁忙！',
+        duration: 2000,
       });
       this.setData({
         loadingHidden: true
@@ -204,19 +212,22 @@ Page({
         case 0:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '获取家失败！'
+            title: '获取家失败！',
+            duration: 2000,
           });
           break
         default:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '服务器繁忙！'
+            title: '服务器繁忙！',
+            duration: 2000,
           });
       }
     }).catch((res) => {
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '服务器繁忙！'
+        title: '服务器繁忙！',
+        duration: 2000,
       });
     })
   }

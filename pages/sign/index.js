@@ -47,21 +47,24 @@ Page({
     if (this.data.User_Name == '' || this.data.User_Psd == '' || this.data.User_PsdAgain == '' || this.data.User_Phone == ''){
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '请填写相关信息！'
+        title: '请填写相关信息！',
+        duration: 2000,
       });
       return false
     }
     if (!(/^1[34578]\d{9}$/).test(this.data.User_Phone)){
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '手机号格式不对！'
+        title: '手机号格式不对！',
+        duration: 2000,
       });
       return false
     }
     if (this.data.User_Psd != this.data.User_PsdAgain){
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '密码不一致'
+        title: '密码不一致',
+        duration: 2000,
       });
       return false
     }
@@ -90,32 +93,36 @@ Page({
           wx.showToast({
             title: '注册成功！',
             icon: 'success',
-            duration: 1500
+            duration: 2000,
           })
           this.ToLogin()
           break
         case 0:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '注册失败'
+            title: '注册失败',
+            duration: 2000,
           });
           break
         case 2:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '用户名已存在'
+            title: '用户名已存在',
+            duration: 2000,
           });
           break
         case 3:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '该手机号已注册！'
+            title: '该手机号已注册！',
+            duration: 2000,
           });
           break
         default:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '服务器繁忙！'
+            title: '服务器繁忙！',
+            duration: 2000,
           });
       }
       this.setData({
@@ -124,7 +131,8 @@ Page({
     }).catch((res) => {
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '服务器繁忙！'
+        title: '服务器繁忙！',
+        duration: 2000,
       });
       this.setData({
         loadingHidden: true

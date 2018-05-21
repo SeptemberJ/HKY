@@ -1,5 +1,5 @@
-<view class='TopSubmitBt' bindtap='ToAddLD'>
-  <view wx:if="{{CurHomeRole == 1}}" class='TopFixedSubmitBt'>选择自动化</view>
+<view class='TopSubmitBt'>
+  <view wx:if="{{CurHomeRole == 1}}"  bindtap='ToAddLD' class='TopFixedSubmitBt'>选择自动化</view>
   <view wx:if="{{CurHomeRole == 0}}" class='TopFixedSubmitBt_disabled'>选择自动化</view>
 </view>
 <!--EQList  -->

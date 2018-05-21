@@ -108,19 +108,22 @@ Page({
         case 0:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '跳过失败'
+            title: '跳过失败',
+            duration: 2000,
           });
           break
         default:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '服务器繁忙！'
+            title: '服务器繁忙！',
+            duration: 2000,
           });
       }
     }).catch((res) => {
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '服务器繁忙！'
+        title: '服务器繁忙！',
+        duration: 2000,
       });
       console.log(res)
     })
@@ -193,21 +196,24 @@ Page({
           wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '问卷获取失败'
+            title: '问卷获取失败',
+            duration: 2000,
           });
           break
         default:
           wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '服务器繁忙！'
+            title: '服务器繁忙！',
+            duration: 2000,
           });
       }
     }).catch((res) => {
       wx.hideLoading()
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '服务器繁忙！'
+        title: '服务器繁忙！',
+        duration: 2000,
       });
       console.log(res)
     })
@@ -226,11 +232,15 @@ Page({
       if (temp[i] && !this.data.submitForm[i].value){
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '请将问卷填写完整！'
+            title: '请将问卷填写完整！',
+            duration: 2000,
           });
           return false
         }
     }
+    wx.showLoading({
+      title: '加载中',
+    })
     requestPromisified({
       url: h.main + '/collection',
       data: {
@@ -244,29 +254,38 @@ Page({
     }).then((res) => {
       switch (res.data.result) {
         case 1:
+          wx.hideLoading()
           wx.showToast({
-            title: '提交成功！',
+            title: '+' + res.data.integral +'积分！',
             icon: 'success',
-            duration: 1500
+            duration: 3000
           })
-          this.SkipQuestionnaire()
+          app.globalData.IfHasWirteQuestionnaire = 1
+          setTimeout(this.SkipQuestionnaire(),3000)
+          
           break
         case 0:
+          wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '提交失败'
+            title: '提交失败',
+            duration: 2000,
           });
           break
         default:
+          wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '服务器繁忙！'
+            title: '服务器繁忙！',
+            duration: 2000,
           });
       }
     }).catch((res)=>{
+      wx.hideLoading()
       wx.showToast({
         title: '服务器繁忙',
         image: '../../images/icon/attention.png',
+        duration: 2000,
       })
       console.log(res)
     })

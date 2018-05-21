@@ -30,7 +30,11 @@
         <swiper-item>
           <view class="swiper-item">
             <!--室内空气质量  -->
-            <view class='IndoorAirQuality'>
+            <view class='IndoorAirQuality' wx:if="{{airQuality_inside == ''}}">
+            <text class='tit'>室内实时空气质量</text>
+            <text>请先绑定设备</text>
+            </view>
+            <view class='IndoorAirQuality' wx:if="{{airQuality_inside != ''}}">
               <text class='tit'>室内实时空气质量</text>
               <view class='AirQuality_level'>
                 <view class='level_typeData'>
@@ -54,28 +58,31 @@
                   </view>
                   
                 </view>
-                <!-- <view class='level_text' style='margin-top:30rpx;'>
-                  <text class='text_center'>偏瘦</text>
-                  <text class='text_center'>标准</text>
-                  <text class='text_center'>偏胖</text>
-                  <text class='text_center'>肥胖</text>
-                  <text class='text_center'>重度</text>
-                </view> -->
+              </view>
+              <view style='display:flex;align-items: center;'>
+                <view class="colorfulBlock {{'level_' + air_level}}"></view>
+                <text class='air_level_text'>{{air_level_text}}</text>
+              </view>
+              <view class='IndoorAirQuality_top'>
+                <text>温度:{{airQuality_inside.temperature}}℃</text>
+                <text>湿度:{{airQuality_inside.humidity}}%</text>
               </view>
 
-              <view class='IndoorAirQuality_top'>
-                <view style=''>
+              <!-- <view class='IndoorAirQuality_top'>
+                <text>温度:{{airQuality_inside.temperature}}℃
+                </text>
+                <view style='display:flex;align-items: center;'>
                   <view class="colorfulBlock {{'level_' + air_level}}"></view>
-                  <text>{{air_level_text}}</text>
+                  <text class='air_level_text'>{{air_level_text}}</text>
                 </view>
-                <text>温度:{{airQuality_inside.temperature}}℃  湿度:{{airQuality_inside.humidity}}%</text>
-              </view>
-              <view class='IndoorAirQuality_bottom'>
-                <text>健康影响:{{airQuality_inside.health_effects}}</text>
-              </view>
+                <text>湿度:{{airQuality_inside.humidity}}%</text>
+                </view>
+                <view class='IndoorAirQuality_bottom'>
+                  <text>健康影响:{{airQuality_inside.health_effects}}</text>
+                </view>
               <view class='IndoorAirQuality_bottom'>
                 <text>建议措施:{{airQuality_inside.suggest_measures}}</text>
-              </view>
+              </view>     -->
               
               
             </view>
@@ -194,20 +201,33 @@
   </view>
   <!--./temperatureInfo detail  -->
 
-  <view class='DietRecord' wx:if="{{SwiperCur == 0}}">
+  <view class='DietRecord' wx:if="{{SwiperCur == 0 && airQuality_inside != ''}}">
+    <!-- <view class='AddTips'>
+      <text>健康影响:{{airQuality_inside.health_effects}}</text>
+    </view> -->
+    <view class='AddTips'>
+      <text>建议措施:{{airQuality_inside.suggest_measures}}</text>
+    </view> 
     <text class='tit'>今日厨房</text>
     <view class='CookingType'>
-      <text>烹饪方式</text>
-      <picker bindchange="ChangeCookingMethod" value="{{CookingMethodList[CookingMethodIndex].typename}}" range="{{CookingMethodList}}" range-key="typename">
+      <text>烹饪方式:</text>
+      <view class='CookingTypes'>
+        <checkbox-group bindchange="ChangeCookingMethod">
+  <label class="checkbox" wx:for="{{CooktypeLists}}">
+    <checkbox value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+  </label>
+</checkbox-group>
+      </view>
+      <!-- <picker bindchange="ChangeCookingMethod" value="{{CookingMethodList[CookingMethodIndex].typename}}" range="{{CookingMethodList}}" range-key="typename">
         <view class="picker">
           {{CookingMethodList[CookingMethodIndex].typename}}
         </view>
-      </picker>
+      </picker> -->
     </view>
     <view class='DietRecordSubmit' bindtap='ReocrdSubmit'>
       <text>提交</text>
     </view>
-    <view class='GoQuestionnaire' wx:if="{{IfHasWirteQuestionnaire != 1}}" bindtap='GoQuestionnaire'>
+    <view class='GoQuestionnaire' wx:if="{{IfHasWirteQuestionnaire == 0}}" bindtap='GoQuestionnaire'>
       <text>填问卷</text>
     </view>
   

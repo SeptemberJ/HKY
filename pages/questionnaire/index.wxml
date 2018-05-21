@@ -34,5 +34,5 @@
   <!-- <view class='OperationBt' bindtap='Submit'>
     提交
   </view> -->
-   <button wx-if="{{ifShowList[QuestionIdx]}}" class='ColorWhite BgRed' bindtap='Submit'>提交</button> 
+   <button wx-if="{{ifShowList[0]}}" class='ColorWhite BgRed' bindtap='Submit'>提交</button> 
 </view>

@@ -46,7 +46,9 @@ Page({
     Code_imgres:'',
     IfShowCode:false,  //二维码显示
     CookingMethodIndex: 0,
-    CookStyle:''
+    CookStyle:'',
+    CooktypeList:[],
+    CooktypeLists:[],
 
   },
   //事件处理函数
@@ -99,7 +101,8 @@ Page({
       HomeList: app.globalData.HomeList,
       CurHomeName: app.globalData.CurHomeName,
       CurHomeId: app.globalData.CurHomeId,
-      CookingMethodList: app.globalData.CookingMethodList,
+      CooktypeLists: app.globalData.CookingMethodList,
+      // CookingMethodList: app.globalData.CookingMethodList,
       IfHasWirteQuestionnaire: app.globalData.IfHasWirteQuestionnaire
     })
     if (app.globalData.CurHomeId){
@@ -135,9 +138,15 @@ Page({
   //烹饪方式
   ChangeCookingMethod(e) {
     this.setData({
-      CookingMethodIndex: e.detail.value
+      CooktypeList: e.detail.value
     })
   },
+  //烹饪方式单选
+  // ChangeCookingMethod(e) {
+  //   this.setData({
+  //     CookingMethodIndex: e.detail.value
+  //   })
+  // },
   ChangeCookStyle(e) {
     this.setData({
       CookStyle: e.detail.value
@@ -145,10 +154,19 @@ Page({
   },
   //ReocrdSubmit
   ReocrdSubmit(){
+    if (this.data.CooktypeList.length == 0){
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '请选择方式!',
+        duration: 1500,
+      });
+      return false
+    }
     let DATA = {
       ftelphone: app.globalData.User_Phone,
       cookname: this.data.CookStyle,
-      cooktype: this.data.CookingMethodList[this.data.CookingMethodIndex].typename
+      cooktype: this.data.CooktypeList
+      // cooktype: this.data.CookingMethodList[this.data.CookingMethodIndex].typename
     }
     wx.showLoading({
       title: '加载中',
@@ -162,40 +180,53 @@ Page({
     }).then((res) => {
       switch (res.data.result) {
         case 1:
-          wx.showToast({
-            title: '+' + res.data.integral + '积分',
-            icon: 'success',
-            duration: 2000,
-          })
           wx.hideLoading()
+          setTimeout(()=>{
+            wx.showToast({
+              title: '+' + res.data.integral + '积分',
+              icon: 'success',
+              duration: 3000,
+            })
+          },1500)
+          this.setData({
+            CooktypeList: [],
+            CooktypeLists: app.globalData.CookingMethodList,
+          })
           break
         case 2:
           wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '明日再提交!'
+            title: '明日再提交!',
+            duration: 3000,
           });
+          this.setData({
+            CooktypeList: [],
+            CooktypeLists: app.globalData.CookingMethodList,
+          })
           break
         case 0:
           wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
             title: '提交失败',
-            duration: 2000,
+            duration: 3000,
           });
           break
         default:
           wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '服务器繁忙！'
+            title: '服务器繁忙！',
+            duration: 3000,
           });
       }
     }).catch((res) => {
       wx.hideLoading()
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '服务器繁忙！'
+        title: '服务器繁忙！',
+        duration: 3000,
       });
       console.log(res)
     })
@@ -259,21 +290,24 @@ Page({
           wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '切换失败'
+            title: '切换失败',
+            duration: 3000,
           });
           break
         default:
           wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: 'D切换服务器繁忙！'
+            title: 'D切换服务器繁忙！',
+            duration: 3000,
           });
       }
     }).catch((res) => {
       wx.hideLoading()
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '切换服务器繁忙！'
+        title: '切换服务器繁忙！',
+        duration: 3000,
       });
       console.log(res)
     })
@@ -303,21 +337,24 @@ Page({
           wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '切换失败'
+            title: '切换失败',
+            duration: 3000,
           });
           break
         default:
           wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '获取码服务器繁忙！'
+            title: '服务器繁忙！',
+            duration: 3000,
           });
       }
     }).catch((res) => {
       wx.hideLoading()
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '获取码服务器繁忙！'
+        title: '服务器繁忙！',
+        duration: 3000,
       });
       console.log(res)
     })
@@ -338,7 +375,7 @@ Page({
           wx.showToast({
             title: '添加成功！',
             icon: 'success',
-            duration: 1500
+            duration: 3000
           })
           this.ChangeCurHome(res.data.id, ScanHomeName)
           wx.hideLoading()
@@ -348,28 +385,31 @@ Page({
           wx.showToast({
             image: '../../images/icon/attention.png',
             title: '已添加过!',
-            duration: 2000
+            duration: 3000
           });
           break
         case 0:
           wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '添加失败!'
+            title: '添加失败!',
+            duration: 3000,
           });
           break
         default:
           wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '添加失败!'
+            title: '添加失败!',
+            duration: 3000,
           });
       }
     }).catch((res) => {
       wx.hideLoading()
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: 'S服务器繁忙！'
+        title: '服务器繁忙！',
+        duration: 3000,
       });
       console.log(res)
     })
@@ -406,7 +446,7 @@ Page({
               wx.showToast({
                 image: '../../images/icon/attention.png',
                 title: '您非管理员！',
-                duration: 2000
+                duration: 3000
               });
             }
             break
@@ -417,7 +457,7 @@ Page({
               wx.showToast({
                 image: '../../images/icon/attention.png',
                 title: '您非管理员！',
-                duration: 2000
+                duration: 3000
               });
             }
             break
@@ -428,7 +468,7 @@ Page({
               wx.showToast({
                 image: '../../images/icon/attention.png',
                 title: '您非管理员！',
-                duration: 2000
+                duration: 3000
               });
             }
             break
@@ -439,7 +479,7 @@ Page({
               wx.showToast({
                 image: '../../images/icon/attention.png',
                 title: '您非管理员！',
-                duration: 2000
+                duration: 3000
               });
             }
             break
@@ -450,7 +490,7 @@ Page({
               wx.showToast({
                 image: '../../images/icon/attention.png',
                 title: '您非管理员！',
-                duration: 2000
+                duration: 3000
               });
             }
             break
@@ -537,26 +577,29 @@ Page({
                 wx.showToast({
                   title: '删除成功！',
                   icon: 'success',
-                  duration: 1500
+                  duration: 3000
                 })
                 this.GetCurEQList(app.globalData.CurHomeId)
                 break
               case 0:
                 wx.showToast({
                   image: '../../../images/icon/attention.png',
-                  title: '删除失败'
+                  title: '删除失败',
+                  duration: 3000,
                 });
                 break
               default:
                 wx.showToast({
                   image: '../../../images/icon/attention.png',
-                  title: '服务器繁忙！'
+                  title: '服务器繁忙！',
+                  duration: 3000,
                 });
             }
           }).catch((res) => {
             wx.showToast({
               image: '../../../images/icon/attention.png',
-              title: '服务器繁忙！'
+              title: '服务器繁忙！',
+              duration: 3000,
             });
             console.log(res)
           })
@@ -627,7 +670,7 @@ Page({
           wx.showToast({
             title: '删除成功！',
             icon: 'success',
-            duration: 1500
+            duration: 3000
           })
           this.GetCurRoomList()
           wx.hideLoading()
@@ -636,21 +679,24 @@ Page({
           wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '删除失败'
+            title: '删除失败',
+            duration: 3000,
           });
           break
         default:
           wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '删除服务器繁忙！'
+            title: '服务器繁忙！',
+            duration: 3000,
           });
       }
     }).catch((res) => {
       wx.hideLoading()
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '删除服务器繁忙！'
+        title: '服务器繁忙！',
+        duration: 3000,
       });
       console.log(res)
     })
@@ -682,19 +728,22 @@ Page({
         case 0:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '获取失败'
+            title: '获取失败',
+            duration: 3000,
           });
           break
         default:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '服务器繁忙！'
+            title: '服务器繁忙！',
+            duration: 3000,
           });
       }
       }).catch((res)=>{
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '服务器繁忙！'
+        title: '服务器繁忙！',
+        duration: 3000,
       });
       console.log(res)
     })
@@ -748,19 +797,22 @@ Page({
         case 0:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '消息获取失败!'
+            title: '消息获取失败!',
+            duration: 3000,
           });
           break
         default:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '服务器繁忙！'
+            title: '服务器繁忙！',
+            duration: 3000,
           });
       }
     }).catch((res) => {
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '服务器繁忙！'
+        title: '服务器繁忙！',
+        duration: 3000,
       });
     })
   },
@@ -832,13 +884,15 @@ Page({
         case 0:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '获取空气信息失败'
+            title: '获取空气信息失败',
+            duration: 3000,
           });
           break
         default:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '服务器繁忙！'
+            title: '服务器繁忙！',
+            duration: 3000,
           });
       }
       this.setData({
@@ -847,7 +901,8 @@ Page({
     }).catch((res) => {
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '服务器繁忙！'
+        title: '服务器繁忙！',
+        duration: 3000,
       });
       this.setData({
         loadingHidden: true
@@ -871,22 +926,32 @@ Page({
             AQI: res.data.indoorairlist[0].aqi,
           })
           break
+        case 2:
+          wx.showToast({
+            image: '../../images/icon/attention.png',
+            title: '未绑定设备',
+            duration: 3000
+          });
+          break
         case 0:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '获取室内空气信息失败'
+            title: '获取室内空气信息失败',
+            duration: 3000,
           });
           break
         default:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '服务器繁忙！'
+            title: '服务器繁忙！',
+            duration: 3000,
           });
       }
     }).catch((res) => {
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '服务器繁忙！'
+        title: '服务器繁忙！',
+        duration: 3000,
       });
       this.setData({
         loadingHidden: true
@@ -917,19 +982,22 @@ Page({
         case 0:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '消息获取失败!'
+            title: '消息获取失败!',
+            duration: 3000,
           });
           break
         default:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '服务器繁忙！'
+            title: '服务器繁忙！',
+            duration: 3000,
           });
       }
     }).catch((res) => {
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '服务器繁忙！'
+        title: '服务器繁忙！',
+        duration: 3000,
       });
     })
   },
@@ -959,14 +1027,16 @@ Page({
           wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '设备获取失败!'
+            title: '设备获取失败!',
+            duration: 3000,
           });
           break
         default:
           wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: 'D家设备服务器繁忙！'
+            title: '服务器繁忙！',
+            duration: 3000,
           });
       }
     }).catch((res) => {
@@ -974,7 +1044,8 @@ Page({
       wx.hideLoading()
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '家设备服务器繁忙！'
+        title: '服务器繁忙！',
+        duration: 3000,
       });
     })
   },
@@ -1000,19 +1071,22 @@ Page({
         case 0:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '设备房间失败!'
+            title: '设备房间失败!',
+            duration: 3000,
           });
           break
         default:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '服务器繁忙！'
+            title: '服务器繁忙！',
+            duration: 3000,
           });
       }
     }).catch((res) => {
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '服务器繁忙！'
+        title: '服务器繁忙！',
+        duration: 3000,
       });
     })
   },
@@ -1107,13 +1181,15 @@ Page({
         case 0:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '获取家失败！'
+            title: '获取家失败！',
+            duration: 3000,
           });
           break
         default:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: 'D获取家服务器繁忙！'
+            title: '服务器繁忙！',
+            duration: 3000,
           });
       }
     }).catch((res) => {
@@ -1156,19 +1232,22 @@ Page({
         case 0:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '修改失败!'
+            title: '修改失败!',
+            duration: 3000,
           });
           break
         default:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '服务器繁忙！'
+            title: '服务器繁忙！',
+            duration: 3000,
           });
       }
     }).catch((res) => {
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '服务器繁忙！'
+        title: '服务器繁忙！',
+        duration: 3000,
       });
     })
 
@@ -1205,19 +1284,22 @@ Page({
         case 0:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '修改失败!'
+            title: '修改失败!',
+            duration: 3000,
           });
           break
         default:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '服务器繁忙！'
+            title: '服务器繁忙！',
+            duration: 3000,
           });
       }
     }).catch((res) => {
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '服务器繁忙！'
+        title: '服务器繁忙！',
+        duration: 3000,
       });
     })
 
@@ -1254,19 +1336,22 @@ Page({
         case 0:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '修改失败!'
+            title: '修改失败!',
+            duration: 3000,
           });
           break
         default:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '服务器繁忙！'
+            title: '服务器繁忙！',
+            duration: 3000,
           });
       }
     }).catch((res) => {
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '服务器繁忙！'
+        title: '服务器繁忙！',
+        duration: 3000,
       });
     })
 
@@ -1293,19 +1378,22 @@ Page({
         case 0:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '获取自动化失败!'
+            title: '获取自动化失败!',
+            duration: 3000,
           });
           break
         default:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '服务器繁忙！'
+            title: '服务器繁忙！',
+            duration: 3000,
           });
       }
     }).catch((res) => {
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '服务器繁忙！'
+        title: '服务器繁忙！',
+        duration: 3000,
       });
     })
 
@@ -1331,19 +1419,22 @@ Page({
         case 0:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '获取场景失败!'
+            title: '获取场景失败!',
+            duration: 3000,
           });
           break
         default:
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: '服务器繁忙！'
+            title: '服务器繁忙！',
+            duration: 3000,
           });
       }
     }).catch((res) => {
       wx.showToast({
         image: '../../images/icon/attention.png',
-        title: '服务器繁忙！'
+        title: '服务器繁忙！',
+        duration: 3000,
       });
     })
 

@@ -78,6 +78,8 @@ Page({
       },
     })
   },
+  onShow(){
+  },
   IfHasWirteQuestionnaire(PhoneNumber){
     requestPromisified({
       url: h.main + '/selectregisterstatus?ftelphone=' + PhoneNumber,
@@ -87,7 +89,7 @@ Page({
     }).then((res) => {
       switch (res.data.result) {
         case 1:
-          app.globalData.IfHasWirteQuestionnaire = res.data.registerlist[0].fstatus   //1-已填 0-未填 2-跳过
+          app.globalData.IfHasWirteQuestionnaire = res.data.registerlist[0].fstatus1   //1-已填 0-未填 2-跳过
           app.globalData.QuestionnaireId = res.data.registerlist[0].collectionid
           break
         case 0:

@@ -12,6 +12,7 @@
     <image src='../../images/icon/arrow-right.png'></image>
   </view>
 </view>
+  <!-- <button open-type="getUserInfo">授权</button>    -->
 
 <loading hidden="{{loadingHidden}}">
   加载中...

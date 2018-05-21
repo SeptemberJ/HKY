@@ -55,9 +55,12 @@ page{
   margin-left: 10rpx; 
 }
 .MiddleGps{
-  width: 100rpx;
+  width: 200rpx;
   height: 30px;
+  overflow: hidden;
   display: flex;
+  flex-grow: 1;
+  justify-content: center;
   align-items: center;
   text-align: center;
   position: absolute;
@@ -92,10 +95,10 @@ page{
   top: -2px;
   left: -4px;
 }
-.swiper{
+ .swiper{
   width: 710rpx;
-  height: 200px !important;
-}
+  /* height: 200px !important; */
+} 
 /*天气  */
 .temperatureInfo{
   width: 710rpx;
@@ -237,12 +240,15 @@ page{
 }
 
 .colorfulBlock{
-  width: 20rpx;
-  height: 20rpx;
+  width: 25rpx;
+  height: 25rpx;
   margin-right: 10rpx;
   border: 2px solid #fff;
   border-radius: 50%;
   display: inline-block;
+}
+.air_level_text{
+  font-size: 35rpx;
 }
 .level_1{
   background: #01e400;
@@ -413,7 +419,7 @@ page{
 /*室内空气质量  */
 .IndoorAirQuality{
   width: 710rpx;
-  height: 180px;
+   height: 180px;  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -431,6 +437,12 @@ page{
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
+}
+.IndoorAirQuality_top{
+  height: 50rpx;
+  margin-top: 10rpx;
+  display: flex;
+  align-items: center;
 }
 .IndoorAirQuality_bottom{
   margin-top: 8rpx;
@@ -550,8 +562,9 @@ page{
 /*DietRecord  */
 .DietRecord{
   width: 100%;
-  height: 240rpx;
+  height: 230px; 
   position: relative;
+  top: 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -561,17 +574,63 @@ page{
 }
 .DietRecord .tit{
   height: 40rpx;
-  margin-bottom: 20rpx;
+  margin-top: 20px;
+  margin-bottom: 15px;
   font-size: 32rpx;
   font-weight: bold
 }
+.AddTips{
+  width: 660rpx;
+  padding: 0rpx 10rpx 5rpx 10rpx;
+  margin: 0 auto;
+  border: 1px solid #fff;
+  text-align: left;
+}
+.AddTips text{
+  font-size: 24rpx;
+}
 .CookingType{
-  width: 400rpx;
+  width: calc(100% - 40rpx);
+  padding: 20rpx;
   height: 40rpx;
   display: flex;
   align-items: center;
   justify-content: space-around;
 }
+.CookingType text{
+  width: 150rpx;
+}
+.CookingTypes{
+  width: calc(100% - 150rpx);
+  display: flex;
+  justify-content: flex-start;
+  align-items:space-bettween;
+}
+checkbox{
+  width: 40rpx;
+  height: 40rpx;
+  overflow: hidden;
+  margin-right: 10rpx;
+  font-size: 30rpx;
+}  
+ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
+   width: 40rpx;/* 选中后对勾大小，不要超过背景的尺寸 */
+   height: 40rpx;/* 选中后对勾大小，不要超过背景的尺寸 */
+   /* line-height: 30rpx; */
+   text-align: left;
+   font-size:30rpx; /* 对勾大小 30rpx */
+   /* transform:scale(1);
+   -webkit-transform:scale(1);  */
+    transform:translate(-50%, -50%) scale(1);
+   -webkit-transform:translate(-50%, -50%) scale(1); 
+} 
+/* .checkbox{
+  width: 30rpx;
+  height: 30rpx;
+  border: 1px solid red;
+  overflow: hidden;
+} */
+
 .CookingType .picker{
   width:80rpx;
   font-size: 30rpx;
@@ -620,7 +679,7 @@ animation: Move 2s ease-in-out alternate infinite;
   overflow: hidden; */
 }
 swiper {
-  height: 150rpx !important;
+  height: 200px !important;
 }
 .slide-image{
   width: 750rpx !important;
