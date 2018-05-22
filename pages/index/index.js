@@ -102,25 +102,26 @@ Page({
       CurHomeName: app.globalData.CurHomeName,
       CurHomeId: app.globalData.CurHomeId,
       CooktypeLists: app.globalData.CookingMethodList,
+      Cur_tab: 0,
       // CookingMethodList: app.globalData.CookingMethodList,
       IfHasWirteQuestionnaire: app.globalData.IfHasWirteQuestionnaire
     })
-    if (app.globalData.CurHomeId){
-      switch (this.data.Cur_tab) {
-        case '0':
-          this.GetCurEQList(app.globalData.CurHomeId)
-          break
-        case '1':
-          this.GetCurRoomList()
-          break
-        case '2':
-          this.GetCurAutomaticList()
-          break
-        case '3':
-          this.GetCurSceneList()
-          break
-      }
-    }
+    // if (app.globalData.CurHomeId){
+    //   switch (this.data.Cur_tab) {
+    //     case '0':
+    //       this.GetCurEQList(app.globalData.CurHomeId)
+    //       break
+    //     case '1':
+    //       this.GetCurRoomList()
+    //       break
+    //     case '2':
+    //       this.GetCurAutomaticList()
+    //       break
+    //     case '3':
+    //       this.GetCurSceneList()
+    //       break
+    //   }
+    // }
   },
   //userinfo
   getUserInfo: function(e) {
@@ -1169,8 +1170,10 @@ Page({
             app.globalData.CurHomeName = res.data.homelist1[0].fname
             if (res.data.homelist1[0].copyid == '') {
               app.globalData.CurHomeId = res.data.homelist1[0].id
+              this.GetCurEQList(res.data.homelist1[0].id)
             } else {
               app.globalData.CurHomeId = res.data.homelist1[0].copyid
+              this.GetCurEQList(res.data.homelist1[0].copyid)
             }
             this.setData({
               CurHomeName: res.data.homelist1[0].fname,

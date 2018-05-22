@@ -86,6 +86,9 @@ Page({
   },
   //新增家
   CreateHome() {
+    wx.showLoading({
+      title: '加载中',
+    })
     requestPromisified({
       url: h.main + '/insertregisterappuser?register_appid=' + app.globalData.User_Phone + '&fname=' + this.data.Home_name,
       data: {
@@ -98,6 +101,7 @@ Page({
     }).then((res) => {
       switch (res.data.result) {
         case 1:
+          wx.hideLoading()
           wx.showToast({
             title: '新增家成功!',
             icon: 'success',
@@ -108,18 +112,21 @@ Page({
           this.ChangeCurHome(res.data.id, this.data.Home_name,1)
           break
         case 0:
+          wx.hideLoading()
           wx.showToast({
             image: '../../../images/icon/attention.png',
             title: '创建新家失败!'
           });
           break
         default:
+          wx.hideLoading()
           wx.showToast({
             image: '../../../images/icon/attention.png',
             title: '服务器繁忙！'
           });
       }
     }).catch((res) => {
+      wx.hideLoading()
       wx.showToast({
         image: '../../../../images/icon/attention.png',
         title: '服务器繁忙！'

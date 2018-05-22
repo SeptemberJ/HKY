@@ -13,13 +13,25 @@ Page({
   },
   onLoad: function () {
     this.setData({
-      userInfo: app.globalData.userInfo,
+      // userInfo: app.globalData.userInfo,
       AccountName: app.globalData.User_name
     })
   },
   onShow(){
     this.GetMessage()
     this.IfHasInfo()
+    wx.login({
+      success: (res) => {
+        wx.getUserInfo({
+          success: (res) => {
+            console.log(res)
+            this.setData({
+              userInfo: res.userInfo,
+            })
+          }
+        })
+      }
+    })
   },
   LogOut() {
     wx.clearStorage()
@@ -77,6 +89,11 @@ Page({
   ToEquipment(){
     wx.switchTab({
       url: '../../equipment/index/index',
+    })
+  },
+  GetAuthorize(){
+    wx.navigateTo({
+      url: '../../authorize/index',
     })
   },
   //客服

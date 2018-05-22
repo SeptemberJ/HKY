@@ -1,4 +1,3 @@
-/**index.wxss**/
 page{
    background: #f1f6f8; 
 }
@@ -102,7 +101,8 @@ page{
 /*天气  */
 .temperatureInfo{
   width: 710rpx;
-  height: 150px;
+  height: 100%;
+  /* height: 150px; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -248,7 +248,7 @@ page{
   display: inline-block;
 }
 .air_level_text{
-  font-size: 35rpx;
+  font-size: 40rpx;
 }
 .level_1{
   background: #01e400;
@@ -326,7 +326,7 @@ page{
 @keyframes Toggle_show /*Safari and Chrome*/
 {
     from {height:0px;}
-    to {height:300px;}
+    to {height:200px;}
 }
 .Toggle_close{
   width: 100%;
@@ -335,7 +335,7 @@ page{
 }
 @keyframes Toggle_close /*Safari and Chrome*/
 {
-    from {height:300px;}
+    from {height:200px;}
     to {height:0px;}
 }
 .Toggle_show .TemperatureDetail_block{
@@ -345,7 +345,7 @@ page{
 }
 @keyframes Up /*Safari and Chrome*/
 {
-    from {top:500px;}
+    from {top:250px;}
     to {top:0px;}
 }
 .Toggle_close .TemperatureDetail_block{
@@ -356,7 +356,7 @@ page{
 @keyframes Down /*Safari and Chrome*/
 {
     from {top:0px;}
-    to {top:500px;}
+    to {top:250px;}
 }
 
 .TemperatureDetail_block{
@@ -364,7 +364,7 @@ page{
   padding: 20rpx 10rpx;
   margin: 10rpx auto;
   position: relative;
-  top: 500px;
+  top: 250px;
   border-radius: 25rpx;
   display: flex;
   flex-direction: column;
@@ -391,7 +391,8 @@ page{
   display: flex;
 }
 .listWrap .data_item_scroll{
-  width: 177.5rpx;
+  /* width: 177.5rpx; */
+  width:236.6rpx;
   display: inline-block;
   text-align: center;
 }
@@ -409,9 +410,17 @@ page{
 }
 .data_item_scroll text{
   width: 100%;
+  font-size: 24rpx;
   margin-bottom: 10rpx;
   display: block;
 }
+/* .CanWrap{
+  width: 170rpx;
+  height: 20px;
+  background: pink;
+  display: flex;
+  flex-wrap: wrap;
+} */
 .data_item .BigSize{
   font-size: 38rpx;
   font-weight: bold;
@@ -423,7 +432,7 @@ page{
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   color: #fff;
 }
 .IndoorAirQuality .tit{
@@ -455,7 +464,7 @@ page{
 /*report_data_weight_level  */
 .AirQuality_level{
   width: 660rpx;
-  height: 180rpx;
+  height: calc(60rpx + 20rpx + 80rpx);
   margin: 0px auto;
   display: flex;
   flex-direction: column;
@@ -537,6 +546,14 @@ page{
 .text_center{
   text-align: center !important;
 }
+.ThreeInfoBlock{
+  width: 660rpx;
+  height: 50rpx;
+  margin-top: 10rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .triangleIndex{
   width: 130rpx;
   height: 80rpx;
@@ -562,7 +579,6 @@ page{
 /*DietRecord  */
 .DietRecord{
   width: 100%;
-  height: 230px; 
   position: relative;
   top: 0px;
   display: flex;
@@ -573,15 +589,16 @@ page{
   color: #fff;
 }
 .DietRecord .tit{
-  height: 40rpx;
-  margin-top: 20px;
-  margin-bottom: 15px;
   font-size: 32rpx;
   font-weight: bold
 }
 .AddTips{
   width: 660rpx;
-  padding: 0rpx 10rpx 5rpx 10rpx;
+  max-height: 80rpx;
+  display: flex;
+  align-items: center;
+  margin-top: 20rpx;
+  padding: 5rpx; 
   margin: 0 auto;
   border: 1px solid #fff;
   text-align: left;
@@ -590,8 +607,8 @@ page{
   font-size: 24rpx;
 }
 .CookingType{
-  width: calc(100% - 40rpx);
-  padding: 20rpx;
+  width: 750rpx;
+  padding: 20rpx 0;
   height: 40rpx;
   display: flex;
   align-items: center;
@@ -601,28 +618,32 @@ page{
   width: 150rpx;
 }
 .CookingTypes{
-  width: calc(100% - 150rpx);
+  width: 730rpx;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-around;
   align-items:space-bettween;
 }
 checkbox{
-  width: 40rpx;
-  height: 40rpx;
+  width: 30rpx;
+  height: 30rpx;
+  line-height: 30rpx;
   overflow: hidden;
-  margin-right: 10rpx;
-  font-size: 30rpx;
+   margin-right: 10rpx; 
 }  
+.checkbox{
+  font-size: 30rpx;
+}
  checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
-   width: 40rpx;/* 选中后对勾大小，不要超过背景的尺寸 */
-   height: 40rpx;/* 选中后对勾大小，不要超过背景的尺寸 */
+   width: 30rpx;/* 选中后对勾大小 */
+   height: 30rpx;/* 选中后对勾大小 */
    /* line-height: 30rpx; */
    text-align: left;
    font-size:30rpx; /* 对勾大小 30rpx */
+   
    /* transform:scale(1);
    -webkit-transform:scale(1);  */
-    transform:translate(-50%, -50%) scale(1);
-   -webkit-transform:translate(-50%, -50%) scale(1); 
+     transform:translate(-80%, -80%) scale(1);
+   -webkit-transform:translate(-80%, -80%) scale(1);  
 } 
 /* .checkbox{
   width: 30rpx;
@@ -640,11 +661,11 @@ checkbox{
 }
 .DietRecordSubmit{
   width: 100rpx;
-  height: 40rpx;
+  height: 30rpx;
   text-align: center;
-  line-height: 40rpx;
-  padding: 10rpx 15rpx;
-  margin-top: 40rpx;
+  line-height: 30rpx;
+  padding: 5rpx 15rpx;
+  margin: 20rpx;
   background: #fff;
   color: #3498db;
   border-radius: 8rpx;
@@ -657,8 +678,8 @@ checkbox{
   color: #3498db;
   font-size: 26rpx;
   position: absolute;
-  bottom: 0;
-  right: 0;
+  top: 0;
+  left: 0;
   background: url('http://118.25.47.123:8080/upload/swingCloud.png') no-repeat top center/contain ;
 animation: Move 2s ease-in-out alternate infinite;
   -webkit-animation: Move 2s ease-in-out alternate infinite; /*Safari and Chrome*/
@@ -666,8 +687,8 @@ animation: Move 2s ease-in-out alternate infinite;
 }
 @keyframes Move /*Safari and Chrome*/
 {
-    0% {right:0}
-    100%{right:30rpx}
+    0% {left:0}
+    100%{left:30rpx}
 }
 
 
@@ -678,8 +699,8 @@ animation: Move 2s ease-in-out alternate infinite;
   /* height: 100px;
   overflow: hidden; */
 }
-swiper {
-  height: 200px !important;
+.TemperatureSwpier .swiper-item{
+  height: 90%;
 }
 .slide-image{
   width: 750rpx !important;
@@ -993,7 +1014,7 @@ swiper {
   color: #fff;
   background: green;
 }
-/*  */
+/*Roomlist */
 .Roomlist_item{
   width: 750rpx;
   height: 130rpx;
@@ -1069,7 +1090,7 @@ swiper {
 .swiper-box .wx-swiper-dots.wx-swiper-dots-horizontal{
      margin-bottom: 2rpx;
      position: relative;
-     top: 20px;
+     top: 25px;
 }
  /* .swiper-box .wx-swiper-dot{
     width:40rpx;

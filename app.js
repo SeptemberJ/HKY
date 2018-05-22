@@ -13,25 +13,8 @@ App({
         this.globalData.width = res.windowWidth
       }
     }),
-    // 获取用户信息
-      wx.login({
-        success: (res)=> {
-          console.log(res)
-          //this.GetOppenid(res.code)
-          wx.getUserInfo({
-            success: (res)=> {
-              console.log(res)
-              this.globalData.userInfo = res.userInfo
-            }
-          })
-        }
-      });
-
-
-
     //定位
     this.GetLocation()
-
     this.GetRoomIconList()
     this.GetSceneIconList()
     this.GetCookingMethod()
@@ -54,27 +37,11 @@ App({
       }
     })
   },
-  GetOppenid(Code){
-    requestPromisified({
-      url: 'http://205.168.1.117:8083/page/userInsertWsc.do',
-      data: {
-        code:Code
-      },
-      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'Accept': 'application/json',
-      },
-    }).then((res) => {
-    }).catch((res) => {
-    })
-  },
   // 经纬度转换城市
   convertCity: function (Lat, Lng, _this) {
     var requestConvertPromisified = util.wxPromisify(wx.request);
     requestConvertPromisified({
       url: 'https://api.map.baidu.com/geocoder/v2/?ak=2ojY8H4BNgtoDyzXfNKTE87OCpNNm1yH&location=' + Lat + ',' + Lng + '&output=json',
-      // url: 'https://api.map.baidu.com/telematics/v3/weather?ak=2ojY8H4BNgtoDyzXfNKTE87OCpNNm1yH&location=上海市普陀区' + '&output=json',
       data: {},
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
       header: {
@@ -89,7 +56,7 @@ App({
   globalData: {
     width:'',
     userInfo: null,
-    User_Phone: '', //18234567890',
+    User_Phone: '',
     User_name:'',
     Add_count:'',
     IfHasWirteQuestionnaire:'',
@@ -107,8 +74,7 @@ App({
     CurHomeId: null,
     RoomIconList:[], //房间icon
     SceneIconList:[],//场景icon
-    CookingMethodList:[]
-
+    CookingMethodList: [] //烹饪方式
   },
   //获取房间图标
   GetRoomIconList() {
@@ -137,22 +103,22 @@ App({
             title: '服务器繁忙！'
           });
       }
-    }).catch((res) => {
-      wx.hideLoading()
-      wx.showToast({
-        image: '../../../images/icon/attention.png',
-        title: '服务器繁忙！'
-      });
-      console.log(res)
+      }).catch((res) => {
+        console.log(res)
+        wx.hideLoading()
+        wx.showToast({
+          image: '../../../images/icon/attention.png',
+          title: '服务器繁忙！'
+        });
     })
   },
-    //获取场景图标
+  //获取场景图标
   GetSceneIconList() {
     requestPromisified({
       url: h.main + '/selectscenarioimg',
       data: {
       },
-      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      method: 'POST',
     }).then((res) => {
       switch (res.data.result) {
         case 1:
@@ -173,13 +139,13 @@ App({
             title: '服务器繁忙！'
           });
       }
-    }).catch((res) => {
-      wx.hideLoading()
-      wx.showToast({
-        image: '../../../images/icon/attention.png',
-        title: '服务器繁忙！'
-      });
-      console.log(res)
+      }).catch((res) => {
+        console.log(res)
+        wx.hideLoading()
+        wx.showToast({
+          image: '../../../images/icon/attention.png',
+          title: '服务器繁忙！'
+        });
     })
   },
   //获取烹饪方式
@@ -188,11 +154,7 @@ App({
       url: h.main + '/selectcookingtype',
       data: {
       },
-      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {
-      //   'content-type': 'application/x-www-form-urlencoded',
-      //   'Accept': 'application/json'
-      // }, // 设置请求的 header
+      method: 'POST',
     }).then((res) => {
       switch (res.data.result) {
         case 1:
@@ -221,6 +183,7 @@ App({
           });
       }
     }).catch((res) => {
+      console.log(res)
       wx.hideLoading()
       wx.showToast({
         image: './images/icon/attention.png',

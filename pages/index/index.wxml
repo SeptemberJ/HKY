@@ -1,40 +1,46 @@
-
-<!--index.wxml-->
 <view class='Wrap'>
   <!--top  -->
   <view class='dataInfo'>
+    <!--topBar  -->
     <view class='topBar'>
-      <!--left accounts  -->
+      <!--left userAccounts  -->
       <picker bindchange="ToggleCurHome"  range="{{HomeList}}" range-key="fname">
         <view class='nickName' bindtap='ToggleCurHome'>
         {{CurHomeName?CurHomeName:''}}
          <image class="ArrowDown" wx:if="{{CurHomeName}}" src="../../images/icon/arrow.png"></image> 
       </view>
       </picker>
+      <!--./left userAccounts  -->
       <!--middle GPS  -->
       <view class='MiddleGps' wx:if="{{SwiperCur == 1}}">
         <text>{{airQuality.cityname}}</text>
         <image class="location" src="../../images/icon/location.png"></image>
       </view>
+      <!--./middle GPS  -->
       <!--right operations  -->
       <view class='operation'>
         <image class='operationIcon messageIocn' bindtap='ToTrend' src='../../images/icon/qushi.png'></image>
         <image class='operationIcon messageIocn' bindtap='ToMyMessage' src='../../images/icon/message.png'></image>
         <view class='TipDot' wx:if='{{MessageCount>0}}'></view>
-      <image class='operationIcon' src='../../images/icon/add.png' bindtap='ToAddOptions'></image>
+        <image class='operationIcon' src='../../images/icon/add.png' bindtap='ToAddOptions'></image>
       </view>
     </view>
+    <!--./topBar  -->
     <!--切换模块  -->
-     <swiper  class='swiper swiper-box' indicator-dots="{{indicatorDots}}" bindchange="SwiperChange">
+    <swiper  class='swiper swiper-box TemperatureSwpier' indicator-dots="{{indicatorDots}}" bindchange="SwiperChange" style='height:200px'>
       <block>
         <swiper-item>
           <view class="swiper-item">
-            <!--室内空气质量  -->
+            <!--室内空气质量 无设备  -->
             <view class='IndoorAirQuality' wx:if="{{airQuality_inside == ''}}">
-            <text class='tit'>室内实时空气质量</text>
-            <text>请先绑定设备</text>
+              <text class='tit'>室内实时空气质量</text>
+              <text>请先绑定设备</text>
             </view>
+            <!----室内空气质量 有设备  -->
             <view class='IndoorAirQuality' wx:if="{{airQuality_inside != ''}}">
+              <view class='GoQuestionnaire' wx:if="{{IfHasWirteQuestionnaire == 0}}" bindtap='GoQuestionnaire'>
+                <text>填问卷</text>
+              </view>
               <text class='tit'>室内实时空气质量</text>
               <view class='AirQuality_level'>
                 <view class='level_typeData'>
@@ -59,32 +65,18 @@
                   
                 </view>
               </view>
-              <view style='display:flex;align-items: center;'>
-                <view class="colorfulBlock {{'level_' + air_level}}"></view>
-                <text class='air_level_text'>{{air_level_text}}</text>
-              </view>
-              <view class='IndoorAirQuality_top'>
+              <view class='ThreeInfoBlock'>
                 <text>温度:{{airQuality_inside.temperature}}℃</text>
+                <view style='display:flex;align-items: center;'>
+                    <view class="colorfulBlock {{'level_' + air_level}}"></view>
+                    <text class='air_level_text'>{{air_level_text}}</text>
+                </view>
                 <text>湿度:{{airQuality_inside.humidity}}%</text>
               </view>
-
-              <!-- <view class='IndoorAirQuality_top'>
-                <text>温度:{{airQuality_inside.temperature}}℃
-                </text>
-                <view style='display:flex;align-items: center;'>
-                  <view class="colorfulBlock {{'level_' + air_level}}"></view>
-                  <text class='air_level_text'>{{air_level_text}}</text>
-                </view>
-                <text>湿度:{{airQuality_inside.humidity}}%</text>
-                </view>
-                <view class='IndoorAirQuality_bottom'>
-                  <text>健康影响:{{airQuality_inside.health_effects}}</text>
-                </view>
-              <view class='IndoorAirQuality_bottom'>
+              <view class='AddTips'>
                 <text>建议措施:{{airQuality_inside.suggest_measures}}</text>
-              </view>     -->
-              
-              
+              </view>
+              <!-- <text>健康影响:{{airQuality_inside.health_effects}}</text> -->
             </view>
           </view>
         </swiper-item>
@@ -92,21 +84,7 @@
           <view class="swiper-item">
             <!--当地天气  -->
             <view class='temperatureInfo'>
-              <!-- <view class='left_add'>
-                <view class='TipBlock' bindtap='ToDiet'>
-                  <text>加饮食</text>
-                </view>
-                <view class='SwingBlock'>
-                  <view class='SwingLine'></view>
-                  <view class='SwingDot'></view>
-                </view>
-                
-              </view> -->
               <view class='temperature_conclusion'>
-                <!-- <view class='conclusion_item'>
-                  <text>{{airQuality.cityname}}</text>
-                  <image class="location" src="../../images/icon/location.png"></image> 
-                </view> -->
                 <view class='conclusion_item'>
                   <image class='temperatureIcon' src='{{airQuality.weather_icon}}'></image>
                   <text class='conclusion_temp_curr'>{{airQuality.temp}} </text>
@@ -137,8 +115,6 @@
         </swiper-item>
       </block>
     </swiper>
-    
-    
   </view>
   <!--./top  -->
 
@@ -149,7 +125,7 @@
   </view>
   <!--detail  -->
   <view  class="TemperatureDetail {{Toggle_show == 0?'':(Toggle_show == 1?'Toggle_show':'Toggle_close')}}">
-    <view class='TemperatureDetail_block'>
+    <!-- <view class='TemperatureDetail_block'>
       <view class='TemperatureDetail_block_columnTit'>
         <text>室外污染物浓度(μg/m³)</text>
       </view>
@@ -179,21 +155,23 @@
           <text>湿度</text>
         </view>
       </view>
-    </view>
+    </view> -->
     <view class='TemperatureDetail_block'>
+      <view class='TemperatureDetail_block_columnTit'>
+        <text>一周天气预告</text>
+      </view>
       <view class='TemperatureDetail_block_data'>
-      <scroll-view class="listWrap" scroll-x="true" bindscroll="scroll" style="height:auto;">
-        <view class='data_item_scroll' wx:for="{{airQuality.jsonTemp2}}" wx:for-index="DayIdx" wx:for-item="DayData" wx:key="DayIdx">
-          <text>{{DayData.week}}</text>
-          <text>{{DayData.days}}</text>
-          <image src="{{DayData.weather_icon}}"></image>
-          <text>{{DayData.temperature}}</text>
-          <text>{{DayData.wind}}</text>
-        </view>
+        <scroll-view class="listWrap" scroll-x="true" bindscroll="scroll" style="height:auto;">
+          <view class='data_item_scroll' wx:for="{{airQuality.jsonTemp2}}" wx:for-index="DayIdx" wx:for-item="DayData" wx:key="DayIdx">
+            <text>{{DayData.week}}</text>
+            <text>{{DayData.days}}</text>
+            <image src="{{DayData.weather_icon}}"></image>
+            <text>{{DayData.temperature}}</text>
+            <text>{{DayData.wind}}</text>
+          </view>
         </scroll-view>
       </view>
     </view>
-
   </view>
   <!--close  -->
   <view class='ToggleArrow_Up' bindtap='Toggle' wx:if="{{Toggle_show == 1 && SwiperCur == 1}}">
@@ -201,44 +179,31 @@
   </view>
   <!--./temperatureInfo detail  -->
 
+  <!--cooking  -->
   <view class='DietRecord' wx:if="{{SwiperCur == 0 && airQuality_inside != ''}}">
-    <!-- <view class='AddTips'>
-      <text>健康影响:{{airQuality_inside.health_effects}}</text>
-    </view> -->
-    <view class='AddTips'>
-      <text>建议措施:{{airQuality_inside.suggest_measures}}</text>
-    </view> 
     <text class='tit'>今日厨房</text>
     <view class='CookingType'>
-      <text>烹饪方式:</text>
+      <!-- <text>烹饪方式:</text> -->
       <view class='CookingTypes'>
         <checkbox-group bindchange="ChangeCookingMethod">
-  <label class="checkbox" wx:for="{{CooktypeLists}}">
-    <checkbox value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
-  </label>
-</checkbox-group>
+          <label class="checkbox" wx:for="{{CooktypeLists}}">
+            <checkbox value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+          </label>
+        </checkbox-group>
       </view>
-      <!-- <picker bindchange="ChangeCookingMethod" value="{{CookingMethodList[CookingMethodIndex].typename}}" range="{{CookingMethodList}}" range-key="typename">
-        <view class="picker">
-          {{CookingMethodList[CookingMethodIndex].typename}}
-        </view>
-      </picker> -->
     </view>
     <view class='DietRecordSubmit' bindtap='ReocrdSubmit'>
       <text>提交</text>
     </view>
-    <view class='GoQuestionnaire' wx:if="{{IfHasWirteQuestionnaire == 0}}" bindtap='GoQuestionnaire'>
-      <text>填问卷</text>
-    </view>
-  
   </view>
+  <!--./cooking  -->
 
-
+  <!--empty EQ show  -->
   <view style='width:100%;' wx:if="{{EQList.length<=0}}">
     <!-- carousel -->
     <view class='carousel'>
       <swiper indicator-dots="{{indicatorDots}}"
-  autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+  autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" style='height:200rpx;'>
         <block wx:for="{{imgUrls}}">
           <swiper-item>
             <image src="{{item}}" class="slide-image"/> 
@@ -247,21 +212,17 @@
       </swiper>
     </view>
     <!-- ./carousel -->
-    <!-- diet -->
-    <!-- ./diet -->
-
     <!-- addBlock -->
     <view class='addBlock'>
       <text class='Bold smallFont MarginB_20'>不再关心设备，更多是设备开始在关心我们</text>
       <text class='smallFont'>无论何时何地，系统学习感知且节能，让你感受和享受智控,酷玩带来的价值</text>
-      <!-- <view wx:if="{{HomeList.length<=0}}" class='Btn smallFont' bindtap="FirstAdd">新建家+</view> -->
       <view wx:if="{{HomeList.length>0}}" class='Btn smallFont' bindtap="AddEquipment">添加设备+</view>
     </view>
     <!-- ./addBlock -->
-    </view>
+  </view>
+  <!--./empty EQ show  -->
 
-
-  <!--tab  -->
+  <!--smart control  -->
   <view class='EQBlock' wx:if="{{EQList.length>0}}">
     <view class='EQBlock_tab'>
       <text class="{{Cur_tab == 0?'tab_ative':''}}" data-idx='0' bindtap='ChangeTab'>设备</text>
@@ -283,7 +244,6 @@
         <view class='Btn smallFont' bindtap="ToAdd">新建设备+</view>
       </view>
     </view>
-    
     <!--EQRoom  -->
     <view class='EQRoom' wx:if="{{Cur_tab == 1}}">
       <view wx:if="{{Roomlist.length>0}}">
@@ -330,12 +290,10 @@
         <view class='Btn smallFont' bindtap="ToAddScene">新建场景+</view>
       </view>
     </view>
-
   </view>
-
+  <!--./smart control  -->
 
 </view>
-
 
 <!--二维码  -->
 <view class='CodeBlock' wx:if="{{IfShowCode}}">

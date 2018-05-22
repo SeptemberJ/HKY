@@ -12,16 +12,14 @@ Page({
     BordeName: false,
     BordePsd: false,
     loadingHidden:true
-    
   },
-  onLoad: function () {
-    console.log('onLoad')
+  onLoad() {
   },
   onShow(){
     console.log(app.globalData.userInfo)
     this.setData({
       userInfo: app.globalData.userInfo
-        })
+    })
     console.log('onshow---')
     // wx.getUserInfo({
     //   success: (res) => {
@@ -99,8 +97,8 @@ Page({
       });
       return false
     }
-    this.setData({
-      loadingHidden:false
+    wx.showLoading({
+      title: '加载中',
     })
     let DATA = {
       ftelphone: this.data.User_Phone,
@@ -121,6 +119,7 @@ Page({
     }).then((res) => {
       switch (res.data.result) {
         case 1: 
+          wx.hideLoading()
           let temp_accountInfo = {
             User_Phone: this.data.User_Phone,
             User_Psd: this.data.User_Psd,
@@ -141,6 +140,7 @@ Page({
           this.GetHomeList()
           break
         case 2:
+          wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
             title: '密码错误！',
@@ -148,6 +148,7 @@ Page({
           });
           break
         case 3:
+          wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
             title: '用户名不存在！',
@@ -155,6 +156,7 @@ Page({
           });
           break
         case 0:
+          wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
             title: '登录失败！',
@@ -162,25 +164,21 @@ Page({
           });
           break
         default:
+          wx.hideLoading()
           wx.showToast({
             image: '../../images/icon/attention.png',
             title: '服务器繁忙！',
             duration: 2000,
           });
       }
-      this.setData({
-        loadingHidden: true
-      })
-    }).catch((res) => {
-      wx.showToast({
-        image: '../../images/icon/attention.png',
-        title: '服务器繁忙！',
-        duration: 2000,
-      });
-      this.setData({
-        loadingHidden: true
-      })
-      console.log(res)
+      }).catch((res) => {
+        wx.hideLoading()
+        console.log(res)
+        wx.showToast({
+          image: '../../images/icon/attention.png',
+          title: '服务器繁忙！',
+          duration: 2000,
+        });
     })
     
   },
@@ -190,11 +188,7 @@ Page({
       url: h.main + '/selectallhome?ftelphone=' + this.data.User_Phone,
       data: {
       },
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {
-      //   'content-type': 'application/x-www-form-urlencoded',
-      //   'Accept': 'application/json'
-      // }, // 设置请求的 header
+      method: 'GET',
     }).then((res) => {
       switch (res.data.result) {
         case 1:

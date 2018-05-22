@@ -1,7 +1,6 @@
 <view class='ImgBlock'>
   <image src='../../images/icon/earth.png'></image>
 </view>
-
 <view class="LoginBox">
   <input class="{{BordeName?'BorderBottom active':'BorderBottom'}}" placeholder='手机号' bindfocus="changeBorderColor_name" bindblur="NormalBorder" bindinput='ChangeUser_Phone'></input>
   <input type='password' class="{{BordePsd?'BorderBottom active':'BorderBottom'}}" placeholder='密码' bindfocus="changeBorderColor_pds" bindblur="NormalBorder"  bindinput='ChangeUser_Psd'></input>
@@ -13,7 +12,3 @@
   </view>
 </view>
   <!-- <button open-type="getUserInfo">授权</button>    -->
-
-<loading hidden="{{loadingHidden}}">
-  加载中...
-</loading>

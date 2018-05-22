@@ -32,7 +32,6 @@ input{
   text-align: center;
   margin: 40px auto 0 auto;
   border-radius: 10rpx;
-  
 }
 .BottomBox{
   width: 100%;

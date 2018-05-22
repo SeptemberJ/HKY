@@ -1,5 +1,6 @@
 <view class='InfoBlock'>
-  <image class="Avatar" src="{{userInfo.avatarUrl}}"></image>
+  <image class="Avatar"  wx:if="{{userInfo.avatarUrl}}" src="{{userInfo.avatarUrl}}" ></image>
+  <image class="Avatar" wx:if="{{!userInfo.avatarUrl}}" src="../../../images/icon/unauthorized.png" bindtap='GetAuthorize'></image>
   <text class="nickName">{{AccountName}}</text>
   <view class='HorizontalColumn'>
     <view class='HorizontalItem RightBoder' bindtap='MyIntegral'>

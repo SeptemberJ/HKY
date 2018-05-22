@@ -7,7 +7,6 @@ const app = getApp()
 
 Page({
   data: {
-
   },
   onLoad(){
     wx.showLoading({
@@ -24,11 +23,7 @@ Page({
           url: h.main + '/selectallhome?ftelphone=' + res.data.User_Phone,
           data: {
           },
-          method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-          // header: {
-          //   'content-type': 'application/x-www-form-urlencoded',
-          //   'Accept': 'application/json'
-          // }, // 设置请求的 header
+          method: 'GET', 
         }).then((res) => {
           switch (res.data.result) {
             case 1:
@@ -41,7 +36,6 @@ Page({
                 }else{
                   app.globalData.CurHomeId = res.data.homelist1[0].copyid
                 }
-                
               }
               wx.switchTab({
                 url: '../index/index'
@@ -50,20 +44,20 @@ Page({
             case 0:
               wx.showToast({
                 image: '../../images/icon/attention.png',
-                title: '获取家失败！'
+                title: '服务器繁忙！'
               });
               break
             default:
               wx.showToast({
                 image: '../../images/icon/attention.png',
-                title: 'HLD服务器繁忙！'
+                title: '服务器繁忙！'
               });
           }
         }).catch((res) => {
           console.log(res)
           wx.showToast({
             image: '../../images/icon/attention.png',
-            title: 'HL服务器繁忙！'
+            title: '服务器繁忙！'
           });
         })
         
@@ -78,8 +72,7 @@ Page({
       },
     })
   },
-  onShow(){
-  },
+  //是否填过问卷
   IfHasWirteQuestionnaire(PhoneNumber){
     requestPromisified({
       url: h.main + '/selectregisterstatus?ftelphone=' + PhoneNumber,
