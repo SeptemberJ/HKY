@@ -93,7 +93,7 @@
 
 <!--评论  -->
 <view wx:if='{{ifReadyRelease}}' style='width:calc(100% - 10px);padding:10px 5px; border-top:1px solid #ccc;background:#fff;position:fixed;bottom:0px;left:0;z-index:999999;display: flex;justify-content: space-between;'>
-  <input show-confirm-bar='{{false}}' cursor-spacing='5' focus='{{true}}' bindblur='CloseReleaseModal' bindinput='ChangeReleaseContent' placeholder="评论一下。。。" style='padding:0 2px;border:1px solid #ccc;border-radius:2px;font-size:30rpx;'></input>
+  <input show-confirm-bar='{{false}}' cursor-spacing='5' focus='{{true}}' bindblur='CloseReleaseModal' bindinput='ChangeReleaseContent' placeholder="评论一下。。。" value="{{ReleaseContentSingle}}" style='padding:0 2px;border:1px solid #ccc;border-radius:2px;font-size:30rpx;'></input>
   <view class='fbBt' bindtap='Submit'>发布</view>
 </view>  
 <!--回复  -->

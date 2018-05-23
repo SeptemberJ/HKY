@@ -7,15 +7,47 @@ const app = getApp()
 
 Page({
   data: {
-    LogList:[
-      {'id':0,'text':'已启动','time':'2018-05-12'},
-      { 'id': 1, 'text': '已启动', 'time': '2018-05-12' }
-    ]
+    LogList:[]
   },
-  onLoad: function () {
+  onLoad(options) {
+    this.GetLog(options.sceneid)
 
   },
-  onShow() {
-
-  },
+  GetLog(SceneId){
+    requestPromisified({
+      url: h.main + '/selectscenariolog?id=' + SceneId,
+      data: {
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+    }).then((res) => {
+      switch (res.data.result) {
+        case 1:
+          wx.hideLoading()
+          this.setData({
+            LogList: res.data.loglist
+          })
+          break
+        case 0:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../../../images/icon/attention.png',
+            title: '获取失败!'
+          });
+          break
+        default:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../../../images/icon/attention.png',
+            title: '服务器繁忙！!'
+          });
+      }
+    }).catch((res) => {
+      console.log(res)
+      wx.hideLoading()
+      wx.showToast({
+        image: '../../../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
+    })
+  }
 })

@@ -13,6 +13,7 @@ Page({
     Equipment_Code_F: '',
     Equipment_Code_S: '',
     RoomId:null,
+    CanDo:true
   },
   onLoad(options){
     this.setData({
@@ -63,6 +64,9 @@ Page({
   },
   //新增设备
   AddEquipment() {
+    if (!this.data.CanDo){
+      return false
+    }
     //校验
     if (!this.data.Equipment_Name || !this.data.Equipment_Code_F || !this.data.Equipment_Code_S) {
       wx.showToast({
@@ -102,8 +106,19 @@ Page({
             icon: 'success',
             duration: 1500
           })
+          this.setData({
+            CanDo: true
+          })
           //返回
           wx.navigateBack();
+          break
+        case 2:
+          wx.hideLoading()
+          wx.showToast({
+            image: '../../../images/icon/attention.png',
+            title: '条码不存在!',
+            duration:2000
+          });
           break
         case 0:
           wx.hideLoading()

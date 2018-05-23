@@ -169,7 +169,8 @@ page text{
   top: 0;
   left: 0;
   background: rgb(0, 0, 0);
-  opacity: .5
+  opacity: .5;
+  z-index:99999;
 }
 .Modal{
   width: 80%;

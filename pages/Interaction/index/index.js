@@ -254,7 +254,7 @@ Page({
     this.setData({
       ifReadyRelease: true,
       RecordTopDistance: e.target.offsetTop,
-      ReleaseContentSingle:'',  //清空之前输入
+      //ReleaseContentSingle:'',  //清空之前输入
       CurReleaseInfo: Data,
       CurOperationIdx: e.currentTarget.dataset.dynamicIdx
     })
@@ -411,7 +411,6 @@ Page({
   },
   //发布评论
   Submit(){
-    console.log('Submit---')
     this.SendRelease(this.data.CurReleaseInfo.name_F, this.data.ReleaseContentSingle, this.data.CurReleaseInfo.ratingid, '', this.data.CurReleaseInfo.ftelphone)
   },
   //回复评论

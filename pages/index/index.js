@@ -91,7 +91,7 @@ Page({
   onShow: function () {
     this.GetHomeList()
     this.GetAirQuality()
-    this.GetAirQuality_inside()
+    //this.GetAirQuality_inside()
     //this.StartClock()
     this.GetMessage()
     this.GetDietInfo(util.formatTime(new Date()))
@@ -164,6 +164,7 @@ Page({
       return false
     }
     let DATA = {
+      id: app.globalData.CurHomeId,
       ftelphone: app.globalData.User_Phone,
       cookname: this.data.CookStyle,
       cooktype: this.data.CooktypeList
@@ -912,12 +913,14 @@ Page({
     })
   },
   //获取室内空气质量
-  GetAirQuality_inside() {
+  GetAirQuality_inside(HomeId) {
     requestPromisified({
-      url: h.main + '/selectindoorair',
+       //url: h.main + '/selectindoorair',
+       url: h.main + '/selectindoorair?id=' + HomeId,
       data: {
+        // id: HomeId
       },
-      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
     }).then((res) => {
       switch (res.data.result) {
         case 1:
@@ -926,13 +929,14 @@ Page({
             airQuality_inside: res.data.indoorairlist[0],
             AQI: res.data.indoorairlist[0].aqi,
           })
+          // setTimeout(() => {
+          //   this.GetAirQuality_inside(app.globalData.CurHomeId)
+          // }, 2000)
           break
         case 2:
-          wx.showToast({
-            image: '../../images/icon/attention.png',
-            title: '未绑定设备',
-            duration: 3000
-          });
+          this.setData({
+            airQuality_inside: [],
+          })
           break
         case 0:
           wx.showToast({
@@ -1171,9 +1175,11 @@ Page({
             if (res.data.homelist1[0].copyid == '') {
               app.globalData.CurHomeId = res.data.homelist1[0].id
               this.GetCurEQList(res.data.homelist1[0].id)
+              this.GetAirQuality_inside(res.data.homelist1[0].id)
             } else {
               app.globalData.CurHomeId = res.data.homelist1[0].copyid
               this.GetCurEQList(res.data.homelist1[0].copyid)
+              this.GetAirQuality_inside(res.data.homelist1[0].copyid)
             }
             this.setData({
               CurHomeName: res.data.homelist1[0].fname,

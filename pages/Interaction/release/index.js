@@ -158,7 +158,7 @@ Page({
     let DATA = {
      
       ftelphone: app.globalData.User_Phone,
-      fname: app.globalData.userInfo.nickName,
+      fname: app.globalData.User_name,
       remark: this.data.releaseContent,
     }
     wx.uploadFile({
@@ -207,42 +207,13 @@ Page({
                 var pages = getCurrentPages();
                 if (pages.length > 1) {
                   var prePage = pages[pages.length - 2];
-                  prePage.GetAllRelease(1)
+                  prePage.onPullDownRefresh()
+                  // prePage.GetAllRelease(1)
                 }
                 wx.navigateBack()
               }, 1500)
             }
         }
-        // if (res.data === '1') {
-        //   if (this.data.tempFilePaths.length > 0) {
-        //     this.UploadImg()
-        //   } else {
-        //     this.setData({
-        //       loadingHidden: true,
-        //       //Canwork: true
-        //     })
-        //     wx.showToast({
-        //       title: '提交成功',
-        //       icon: 'success',
-        //       duration: 1500
-        //     })
-        //     setTimeout(() => {
-        //       wx.navigateBack()
-        //     }, 1500)
-
-        //   }
-        // } else {
-        //   this.setData({
-        //     loadingHidden: true,
-        //     Canwork: false,
-        //     tempFilePaths: this.data.copyTempFilePaths
-        //   })
-        //   wx.showToast({
-        //     image: '/images/attention.png',
-        //     title: '图片上传失败！'
-        //   });
-        //   return false
-        // }
       },
       fail: (res) => {
         console.log('图片上传失败backInfo-----')

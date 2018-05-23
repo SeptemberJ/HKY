@@ -107,6 +107,7 @@ function setOption(chart, DAY) {
         qrcodeid: res.data.EquipmentId,
         kind: res.data.Kind,
       }
+      console.log(LimitRange[DATA.kind])
       requestPromisified({
         url: h.main + '/selectnoqrcode1',
         data: {
@@ -155,7 +156,7 @@ function setOption(chart, DAY) {
               visualMap: {
                 top: 10,
                 right: 10,
-                pieces: LimitRange[DATA.kind],
+                pieces: [],//LimitRange[DATA.kind],
                 outOfRange: {
                   color: '#999'
                 }
@@ -268,7 +269,7 @@ function initChart(canvas, width, height) {
               visualMap: {
                 top: 10,
                 right: 10,
-                pieces: LimitRange[DATA.kind],
+                pieces: [],//LimitRange[DATA.kind],
                 outOfRange: {
                   color: '#999'
                 }
@@ -345,7 +346,7 @@ Page({
     isShowFirst:true,
     DataInfo: [],
     CurTab: 0,
-    TabMenu: ['最近7天', '最近2周', '最近一个月'],
+    TabMenu: ['近7天', '近2周', '近一个月'],
     
   },
   onLoad: function (options) {
@@ -392,6 +393,8 @@ Page({
       }
     })
     //let unit = ['PM2.5','CO2','CO','甲醛','温度','VOCs']
+  },
+  onShow(){
   },
 
   // 点击按钮后初始化图表
@@ -474,6 +477,7 @@ Page({
           //   'Accept': 'application/json'
           // }, // 设置请求的 header
         }).then((res) => {
+          console.log(res)
           switch (res.data.result) {
             case 1:
               this.setData({

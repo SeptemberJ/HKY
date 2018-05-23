@@ -296,6 +296,7 @@
 </view>
 
 <!--二维码  -->
+<view class='Mask' wx:if="{{IfShowCode}}"></view>
 <view class='CodeBlock' wx:if="{{IfShowCode}}">
   <image src='{{Code_imgres}}'></image>
   <text class='Tip'>请使用SmartHox内'扫一扫'功能扫描</text>

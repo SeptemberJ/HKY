@@ -1055,9 +1055,13 @@ animation: Move 2s ease-in-out alternate infinite;
 .CodeBlock{
   width: 500rpx;
   height: 500rpx;
+  border-radius: 20rpx;
+  /* border: 1px solid #efefef; */
+  box-shadow: 0 4px 4px rgba(0,0,0,.2);
   position: absolute;
   top: 50%;
   left: 50%;
+  z-index:999999;
   background: #fff;
   transform: translate(-50%,-50%);
   display: flex;
@@ -1066,8 +1070,8 @@ animation: Move 2s ease-in-out alternate infinite;
   justify-content: space-around;
 }
 .CodeBlock image{
-  width: 450rpx;
-  height: 450rpx;
+  width: 400rpx;
+  height: 400rpx;
   display: block;
 }
 .CodeBlock .Tip{
@@ -1078,8 +1082,8 @@ animation: Move 2s ease-in-out alternate infinite;
   width: 50rpx;
   height: 50rpx;
   position: absolute;
-  top: -10rpx;
-  right: -10rpx;
+  top: -25rpx;
+  right: -25rpx;
 }
 .closeBt image{
   width: 100%;

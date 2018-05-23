@@ -73,7 +73,7 @@ Page({
   },
   ToLog() {
     wx.navigateTo({
-      url: '../log/index',
+      url: '../log/index?sceneid=' + this.data.CurSceneId
     })
   },
   //选择图片

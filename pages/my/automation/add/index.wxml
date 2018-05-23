@@ -27,16 +27,16 @@
       <text></text>
     </view>
     <view class='Automation_condition_when'>
-      <picker mode="multiSelector" bindchange="bindMultiPickerChange"  range="{{ConditionKind[Condition.kind_code]}}" range-key='name' data-idx='{{ConditionIdx}}'>
-        <text>{{ConditionKind[Condition.kind_code][0][Condition.when].name}}</text>
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange"  range="{{ConditionKind[Condition.kind_name]}}" range-key='name' data-idx='{{ConditionIdx}}'>
+        <text>{{ConditionKind[Condition.kind_name][0][Condition.when].name}}</text>
       </picker>
     </view>
     <view class='Automation_condition_status' wx:if="{{Condition.kind!='time'}}">
-      <picker mode="multiSelector" bindchange="bindMultiPickerChange"  range="{{ConditionKind[Condition.kind_code]}}" range-key='name' data-idx='{{ConditionIdx}}'>
-        <text>{{ConditionKind[Condition.kind_code][1][Condition.status].name}}</text>
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange"  range="{{ConditionKind[Condition.kind_name]}}" range-key='name' data-idx='{{ConditionIdx}}'>
+        <text>{{ConditionKind[Condition.kind_name][1][Condition.status].name}}</text>
       </picker>
     </view>
-    <view class='Automation_condition_status' wx:if="{{Condition.kind_code=='time'}}">
+    <view class='Automation_condition_status' wx:if="{{Condition.kind_name=='时间'}}">
       <picker mode="time" value="{{Condition.time_start}}" bindchange="bindTimeChange_start" data-idx='{{ConditionIdx}}'>
         <text>{{Condition.time_start}}</text>
       </picker>

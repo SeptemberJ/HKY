@@ -13,6 +13,15 @@ App({
         this.globalData.width = res.windowWidth
       }
     }),
+      wx.login({
+        success: (res) => {
+          wx.getUserInfo({
+            success: (res) => {
+              this.globalData.userInfo = res.userInfo
+            }
+          })
+        }
+      })
     //定位
     this.GetLocation()
     this.GetRoomIconList()

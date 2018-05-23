@@ -10,7 +10,8 @@ Page({
     Type:0, //0-新增 1-修改
     Home_name:'',
     Home_id:'',
-    Membertype:1
+    Membertype:1,
+    CanDo:true
   },
   onLoad (options) {
     this.setData({
@@ -30,6 +31,9 @@ Page({
     })
   },
   SaveHome(){
+    if (!this.data.CanDo){
+      return false
+    }
     if (this.data.Type == 0){
       this.CreateHome()
     }else{
@@ -114,14 +118,14 @@ Page({
         case 0:
           wx.hideLoading()
           wx.showToast({
-            image: '../../../images/icon/attention.png',
-            title: '创建新家失败!'
+            image: '../../../../images/icon/attention.png',
+            title: '创建失败!'
           });
           break
         default:
           wx.hideLoading()
           wx.showToast({
-            image: '../../../images/icon/attention.png',
+            image: '../../../../images/icon/attention.png',
             title: '服务器繁忙！'
           });
       }
@@ -148,7 +152,7 @@ Page({
       switch (res.data.result) {
         case 1:
           wx.showToast({
-            title: '新增家成功!',
+            title: '保存成功!',
             icon: 'success',
             duration: 1500
           })
@@ -159,13 +163,13 @@ Page({
           break
         case 0:
           wx.showToast({
-            image: '../../../images/icon/attention.png',
-            title: '创建新家失败!'
+            image: '../../../../images/icon/attention.png',
+            title: '保存失败!'
           });
           break
         default:
           wx.showToast({
-            image: '../../../images/icon/attention.png',
+            image: '../../../../images/icon/attention.png',
             title: '服务器繁忙！'
           });
       }
@@ -204,14 +208,14 @@ Page({
           wx.hideLoading()
           wx.showToast({
             image: '../../../../images/icon/attention.png',
-            title: '切换服务器繁忙！'
+            title: '服务器繁忙！'
           });
       }
     }).catch((res) => {
       wx.hideLoading()
       wx.showToast({
         image: '../../../../images/icon/attention.png',
-        title: '切换服务器繁忙！'
+        title: '服务器繁忙！'
       });
       console.log(res)
     })

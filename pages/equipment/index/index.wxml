@@ -10,7 +10,7 @@
     </view> -->
     <view class='addItem' bindtap='ToAdd'>
       <image class='operationIcon' src='../../../images/icon/wrench.png' bindtap='ToAdd'></image>
-      <text>手动添加</text>
+      <text>添加</text>
     </view>
   </view>
   <!--list  -->
