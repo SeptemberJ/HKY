@@ -58,6 +58,8 @@
   border-radius: 50%;
   overflow: hidden;
   display: block;
+  border: 1px solid #efefef;
+
 }
 .recordItem_right{
   width: calc(710rpx - 110rpx - 20rpx);

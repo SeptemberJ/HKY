@@ -56,6 +56,9 @@
   height: 100%;
   text-align: right;
 }
+.Avatar{
+  border: 1px solid #efefef;
+}
 .peopleInfo .Avatar{
   width: 100rpx;
   height: 100rpx;

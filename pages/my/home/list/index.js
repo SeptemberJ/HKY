@@ -32,6 +32,9 @@ Page({
     
   },
   GetHomeList(){
+    wx.showLoading({
+      title: '加载中',
+    })
     //获取home list
     requestPromisified({
       url: h.main + '/selectallhome?ftelphone=' + app.globalData.User_Phone,
@@ -45,24 +48,28 @@ Page({
     }).then((res) => {
       switch (res.data.result) {
         case 1:
+          wx.hideLoading()
           this.setData({
             HomeList: res.data.homelist
           })
           app.globalData.HomeList = res.data.homelist
           break
         case 0:
+          wx.hideLoading()
           wx.showToast({
             image: '../../../../images/icon/attention.png',
             title: '获取家失败！'
           });
           break
         default:
+          wx.hideLoading()
           wx.showToast({
             image: '../../../../images/icon/attention.png',
             title: '服务器繁忙！'
           });
       }
     }).catch((res) => {
+      wx.hideLoading()
       wx.showToast({
         image: '../../../../images/icon/attention.png',
         title: '服务器繁忙！'

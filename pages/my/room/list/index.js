@@ -52,6 +52,15 @@ Page({
     })
   },
   AddEquipment(){
+    // wx.showActionSheet({
+    //   itemList: ['导入现有设备', '新增设备'],
+    //   success: (res) => {
+    //     console.log(res.tapIndex)
+    //   },
+    //   fail:(res)=> {
+    //     console.log(res)
+    //   }
+    // })
     wx.navigateTo({
       url: '../../../equipment/add/index?roomid=' + this.data.RoomId,
     })

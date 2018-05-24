@@ -43,13 +43,13 @@ Page({
     }
     wx.navigateBack()
   },
-  //获取当前家下设备
+  //获取当前家下除了传感器以外设备
   GetCurEQList(CurHomeId) {
     wx.showLoading({
       title: '加载中',
     })
     requestPromisified({
-      url: h.main + '/selectregisteruser?homeid=' + CurHomeId,
+      url: h.main + '/selecteqlist?homeid=' + CurHomeId,
       data: {
       },
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
@@ -92,13 +92,13 @@ Page({
         });
     })
   },
-  //获取当前房间下设备
+  //获取当前房间下除了传感器以外设备
   GetCurEQList_room(RoomId){
     wx.showLoading({
       title: '加载中',
     })
     requestPromisified({
-      url: h.main + '/selectroommachine?roomid=' + RoomId,
+      url: h.main + '/selectroommachine1?roomid=' + RoomId,
       data: {
       },
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT

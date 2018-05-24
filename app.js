@@ -85,6 +85,7 @@ App({
     SceneIconList:[],//场景icon
     CookingMethodList: [] //烹饪方式
   },
+  
   //获取房间图标
   GetRoomIconList() {
     requestPromisified({

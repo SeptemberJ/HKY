@@ -36,7 +36,7 @@
           <view class='zanList' wx:if="{{Dynamic.comment_zan.length>0}}">
             <image style="width:20px; height:20px;display:block; margin-right:5px;" src='../../../images/icon/zan_active.png'></image>
             <view class='peopleList'>
-              <text wx:for="{{Dynamic.comment_zan}}" wx:for-index="ZanIdx" wx:for-item="Zan" wx:key="ZanIdx">{{Zan.name}} </text>
+              <text wx:for="{{Dynamic.comment_zan}}" wx:for-index="ZanIdx" wx:for-item="Zan" wx:key="ZanIdx">{{Zan.name}},</text>
             </view> 
           </view>
           <view class='commentList' wx:if="{{Dynamic.comment_list.reply.length>0}}">

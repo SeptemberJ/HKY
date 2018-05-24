@@ -132,10 +132,10 @@ Page({
     })
 
   },
-  //获取当前家下设备列表
+  //获取当前家下除了传感器设备列表
   GetCurEQlist(CurHomeId) {
     requestPromisified({
-      url: h.main + '/selectregisteruser?homeid=' + CurHomeId,
+      url: h.main + '/selecteqlist?homeid=' + CurHomeId,
       data: {
       },
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
@@ -174,13 +174,13 @@ Page({
       });
     })
   },
-  //获取当前房间设备
+  //获取当前房间下除了传感器设备
   GetRoomEQList(RoomId) {
     wx.showLoading({
       title: '加载中',
     })
     requestPromisified({
-      url: h.main + '/selectroommachine?roomid=' + RoomId,
+      url: h.main + '/selectroommachine1?roomid=' + RoomId,
       data: {
       },
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT

@@ -350,7 +350,7 @@ Page({
     
   },
   onLoad: function (options) {
-    this.GetEquipmentInfo()
+    //this.GetEquipmentInfo()
     wx.getStorage({
       key: 'equipmentInfo',
       success: (res)=> {
@@ -395,6 +395,15 @@ Page({
     //let unit = ['PM2.5','CO2','CO','甲醛','温度','VOCs']
   },
   onShow(){
+    wx.getStorage({
+      key: 'equipmentInfo',
+      success: (res) => {
+        this.setData({
+          EquipmentName: res.data.EquipmentName,
+          Number: res.data.Data,
+        })
+      }
+    })
   },
 
   // 点击按钮后初始化图表
@@ -451,7 +460,7 @@ Page({
       Day: DAY
     })
     this.init(DAY)
-    this.init(DAY)
+    // this.init(DAY)
     this.dispose()
     // if (!this.data.isShowFirst){
     //   this.dispose()
@@ -477,6 +486,7 @@ Page({
           //   'Accept': 'application/json'
           // }, // 设置请求的 header
         }).then((res) => {
+          console.log('GetEquipmentInfo---')
           console.log(res)
           switch (res.data.result) {
             case 1:

@@ -238,7 +238,12 @@
           <text class='EQList_item_text_name'>{{Equipment.second_name}}</text>
           <text class='EQList_item_text_room'>{{Equipment.room_name}}</text>
         </view>
-        <view class="ControlBt {{Equipment.on_off_status == 0?'ControlBt_off':'ControlBt_on'}}" bindtap='ToggleOpenClose_EQ' data-eqid='{{Equipment.id}}' data-eqstatus='{{Equipment.on_off_status}}' data-idx='{{EQIdx}}'>{{Equipment.on_off_status == 0?'OFF':'ON'}}</view>
+        <!-- 操作按钮分类显示 -->
+        <view class="ControlBt {{Equipment.on_off_status == 0?'ControlBt_off':'ControlBt_on'}}" bindtap='ToggleOpenClose_EQ' data-eqid='{{Equipment.id}}' data-eqstatus='{{Equipment.on_off_status}}' data-idx='{{EQIdx}}' wx:if="{{Equipment.sensortype != 1 && Equipment.sensortype != ''}}">{{Equipment.on_off_status == 0?'OFF':'ON'}}</view>
+        <view class="ControlBt_image" wx:if="{{Equipment.sensortype == 1}}" bindtap='LookData_EQ' data-eqid='{{Equipment.id}}' data-eqname='{{Equipment.second_name}}'>
+          <image src='../../images/icon/AnalysisBlue.png'></image>
+        </view>
+        
       </view>
       <view class="InfoNull" wx:if="{{CurHomeRole == 1}}">
         <view class='Btn smallFont' bindtap="ToAdd">新建设备+</view>
@@ -265,7 +270,7 @@
     <!--EQAutomatic  -->
     <view class='EQAutomatic' wx:if="{{Cur_tab == 2}}">
        <view class='EQList_item' wx:for="{{AutomaticList}}" wx:for-index="AutomaticIdx" wx:for-item="Automatic" wx:key="AutomaticIdx" >
-        <!-- <image src="{{Scene.scenario_img}}" bindtap='ToEdit_automatic' data-automaticid='{{Automatic.id}}'></image> -->
+         <image src="../../images/icon/automatic.png" bindtap='ToEdit_automatic' data-automaticid='{{Automatic.id}}'></image> 
         <view class='EQList_item_text' bindtap='ToEdit_automatic' data-automaticid='{{Automatic.id}}'>
           <text class='EQList_item_text_name'>{{Automatic.fname}}</text>
           <text class='EQList_item_text_room'></text>

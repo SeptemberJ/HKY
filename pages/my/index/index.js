@@ -25,12 +25,43 @@ Page({
         wx.getUserInfo({
           success: (res) => {
             console.log(res)
+            this.UpdateHeadImg(res.userInfo.avatarUrl)
             this.setData({
               userInfo: res.userInfo,
             })
           }
         })
       }
+    })
+  },
+  UpdateHeadImg(HeadImg){
+    requestPromisified({
+      url: h.main + '/updateheagimg?fmobile=' + app.globalData.User_Phone + '&head_img=' + HeadImg,
+      data: {
+      },
+      method: 'GET', 
+    }).then((res) => {
+      console.log(res.data)
+      switch (res.data.result) {
+        case 1:
+          break
+        case 0:
+          wx.showToast({
+            image: '../../../images/icon/attention.png',
+            title: '更新失败!'
+          });
+          break
+        default:
+          wx.showToast({
+            image: '../../../images/icon/attention.png',
+            title: '服务器繁忙！'
+          });
+      }
+    }).catch((res) => {
+      wx.showToast({
+        image: '../../../images/icon/attention.png',
+        title: '服务器繁忙！'
+      });
     })
   },
   LogOut() {

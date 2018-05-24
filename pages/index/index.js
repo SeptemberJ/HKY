@@ -1211,6 +1211,17 @@ Page({
   },
   //开关设备
   ToggleOpenClose_EQ(e){
+    const innerAudioContext = wx.createInnerAudioContext()
+    innerAudioContext.autoplay = true
+    innerAudioContext.src = 'https://jingshangs.com/upload/ON.mp3'
+    innerAudioContext.onPlay(() => {
+      console.log('播放')
+    })
+    innerAudioContext.onError((res) => {
+      console.log(res)
+    })
+    
+
     let EQid = e.currentTarget.dataset.eqid
     let EQstatus = e.currentTarget.dataset.eqstatus == '0' ? '1' : '0'
     let EQIdx = e.currentTarget.dataset.idx
@@ -1260,6 +1271,12 @@ Page({
       });
     })
 
+  },
+  // 查看传感器趋势数据
+  LookData_EQ(e) {
+    wx.navigateTo({
+      url: '../equipment/analysis/index?id=' + e.currentTarget.dataset.eqid + '&name=' + e.currentTarget.dataset.eqname
+    })
   },
   //开关场景
   ToggleOpenClose_scene(e) {
