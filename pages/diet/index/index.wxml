@@ -67,8 +67,8 @@
     <view wx:if="{{ifShow_B}}" class='deitItem_contain' wx:for="{{dietInfo.breakfast.list}}" wx:for-index="BreakfastIdx" wx:for-item="Breakfast" wx:key="BreakfastIdx" >
       <view class='deit_Text'>
         <text class='deitItem_contain_Tit'>{{Breakfast.food_name}}{{Breakfast.food_amount}}克</text>
-        <text class='deitItem_contain_Text'>烹饪方式:{{Breakfast.cooktype}}</text>
-        <text class='deitItem_contain_Text'>菜式:{{Breakfast.dishes}}</text>
+        <!-- <text class='deitItem_contain_Text'>烹饪方式:{{Breakfast.cooktype}}</text>
+        <text class='deitItem_contain_Text'>菜式:{{Breakfast.dishes}}</text> -->
       </view>
       <view class='deitItem_contain_count'>
         <text>{{Breakfast.food_contain}}千卡</text>
@@ -99,8 +99,8 @@
     <view wx:if="{{ifShow_L}}" class='deitItem_contain' wx:for="{{dietInfo.lunch.list}}" wx:for-index="LunchIdx" wx:for-item="Lunch" wx:key="LunchIdx">
       <view class='deit_Text'>
         <text class='deitItem_contain_Tit'>{{Lunch.food_name}}{{Lunch.food_amount}}克</text>
-        <text class='deitItem_contain_Text'>烹饪方式:{{Lunch.cooktype}}</text>
-        <text class='deitItem_contain_Text'>菜式:{{Lunch.dishes}}</text>
+        <!-- <text class='deitItem_contain_Text'>烹饪方式:{{Lunch.cooktype}}</text>
+        <text class='deitItem_contain_Text'>菜式:{{Lunch.dishes}}</text> -->
       </view>
       <view class='deitItem_contain_count'>
         <text>{{Lunch.food_contain}}千卡</text>
@@ -130,8 +130,8 @@
     <view wx:if="{{ifShow_D}}" class='deitItem_contain' wx:for="{{dietInfo.dinner.list}}" wx:for-index="DinnerIdx" wx:for-item="Dinner" wx:key="DinnerIdx">
       <view class='deit_Text'>
         <text class='deitItem_contain_Tit'>{{Dinner.food_name}}{{Dinner.food_amount}}克</text>
-        <text class='deitItem_contain_Text'>烹饪方式:{{Dinner.cooktype}}</text>
-        <text class='deitItem_contain_Text'>菜式:{{Dinner.dishes}}</text>
+        <!-- <text class='deitItem_contain_Text'>烹饪方式:{{Dinner.cooktype}}</text>
+        <text class='deitItem_contain_Text'>菜式:{{Dinner.dishes}}</text> -->
       </view>
       <view class='deitItem_contain_count'>
         <text>{{Dinner.food_contain}}千卡</text>

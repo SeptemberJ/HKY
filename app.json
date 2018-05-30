@@ -1,6 +1,7 @@
 {
   "pages":[
     "pages/loading/index",
+    "pages/Account/index",
     "pages/login/index",
     "pages/index/index",
     "pages/temperature/index",
@@ -83,9 +84,9 @@
       },
       {
         "pagePath": "pages/sport/index",
-        "iconPath": "images/icon/sport.png",
-        "selectedIconPath": "images/icon/sport_active.png",
-        "text": "乐动"
+        "iconPath": "images/icon/discover.png",
+        "selectedIconPath": "images/icon/discover-active.png",
+        "text": "发现"
       },
       {
         "pagePath": "pages/my/index/index",

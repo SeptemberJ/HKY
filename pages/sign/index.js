@@ -1,4 +1,3 @@
-// import Promise from '../../../utils/blue'
 import h from '../../utils/url.js'
 var util = require('../../utils/util.js')
 var MD5 = require('../../utils/md5.js')

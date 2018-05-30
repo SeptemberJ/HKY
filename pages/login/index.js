@@ -67,6 +67,12 @@ Page({
       url: '../sign/index'
     })
   },
+  //体验者账号
+  GoExperiencerAccount(){
+    wx.navigateTo({
+      url: '../Account/index'
+    })
+  },
   //调查问卷
   ToQuestionnaire(ID){
     wx.redirectTo({

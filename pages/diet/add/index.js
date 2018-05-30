@@ -155,8 +155,8 @@ Page({
   AddFood() {
     let DATA = {
       'faddtime': app.globalData.Add_date,
-      'cooktype': this.data.CookingMethodList[this.data.CookingMethodIndex].typename,
-      'dishes': this.data.DishStyle,
+      'cooktype': '',//this.data.CookingMethodList[this.data.CookingMethodIndex].typename,
+      'dishes': '',//this.data.DishStyle,
       'eatname': this.data.DietDetail.food_name,
       'eatcalories': this.data.Calorie,   
       'eatweight': this.data.IngestionAmount,

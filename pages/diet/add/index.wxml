@@ -70,7 +70,7 @@
   </view>
 </view>
 
-<view class='CookingMethod'>
+<!-- <view class='CookingMethod'>
   <text class='CookingMethod_tit'>烹饪方式</text>
   <view class='CookingMethod_Amount'>
     <picker bindchange="ChangeCookingMethod" value="{{CookingMethodList[CookingMethodIndex].typename}}" range="{{CookingMethodList}}" range-key="typename">
@@ -88,7 +88,7 @@
     <input value='{{DishStyle}}' bindinput='ChangeDishStyle'></input>
     <text></text>
   </view>
-</view>
+</view> -->
 
 <view class='AddBlock'>
   <button class='ColorWhite BgRed' bindtap='AddFood'>添加</button> 
