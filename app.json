@@ -1,6 +1,7 @@
 {
   "pages":[
     "pages/loading/index",
+    "pages/control/index",
     "pages/Account/index",
     "pages/login/index",
     "pages/index/index",
@@ -39,7 +40,6 @@
 
     
     "pages/authorize/index",
-    "pages/control/index",
 
     "pages/sport/index",
    

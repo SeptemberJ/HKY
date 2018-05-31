@@ -1,0 +1,25 @@
+<view class='ControlWrap'>
+  <!--AirConditioner  -->
+  <view class='ControlItem AirConditioner'>
+    <!--Temperature  -->
+    <view class='Temperature'>
+      <view class='Temperature_number'>
+        <view class='Temperature_number_item'>
+          <text>当前温度</text>
+          <text>15 ℃</text>
+        </view>
+        <view class='Temperature_number_item'>
+          <text>设定温度</text>
+          <text>25 ℃</text>
+        </view>
+      </view>
+      <view class='Temperature_add_min'>
+        <image src='../../images/icon/control_add.png'></image>
+        <image src='../../images/icon/control_min.png'></image>
+      </view>
+    </view>
+    <!--Wind  -->
+    <view class='Wind'>
+    </view>
+  </view> 
+</view>

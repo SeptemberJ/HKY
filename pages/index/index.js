@@ -49,6 +49,7 @@ Page({
     CookStyle:'',
     CooktypeList:[],
     CooktypeLists:[],
+    tipText:''
 
   },
   //事件处理函数
@@ -936,6 +937,13 @@ Page({
         case 2:
           this.setData({
             airQuality_inside: [],
+            tipText:'请先绑定设备'
+          })
+          break
+        case 3:
+          this.setData({
+            airQuality_inside: [],
+            tipText: '设备处于离线状态'
           })
           break
         case 0:
