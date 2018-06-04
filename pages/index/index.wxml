@@ -233,8 +233,8 @@
     <!--EQList  -->
     <view class='EQList' wx:if="{{Cur_tab == 0}}">
       <view class='EQList_item' wx:for="{{EQList}}" wx:for-index="EQIdx" wx:for-item="Equipment" wx:key="EQIdx" bindlongtap='DeleteEQ' data-id='{{Equipment.id}}'>
-        <image src="{{Equipment.machine_img}}" bindtap='ToControl' data-eqid='{{Equipment.id}}'></image>
-        <view class='EQList_item_text' bindtap='ToControl' data-eqid='{{Equipment.id}}'>
+        <image src="{{Equipment.machine_img}}" bindtap='ToControl' data-eqid='{{Equipment.id}}' data-eqtype='{{Equipment.sensortype}}'></image>
+        <view class='EQList_item_text' bindtap='ToControl' data-eqid='{{Equipment.id}}' data-eqtype='{{Equipment.sensortype}}'>
           <text class='EQList_item_text_name'>{{Equipment.second_name}}</text>
           <text class='EQList_item_text_room'>{{Equipment.room_name}}</text>
         </view>
@@ -246,7 +246,7 @@
         <view class="offline" wx:if="{{ Equipment.type == 0}}">offline</view>
         
       </view>
-      <view class="InfoNull" wx:if="{{CurHomeRole == 1}}">
+      <view class="InfoNull" wx:if="{{CurHomeRole != 0}}">
         <view class='Btn smallFont' bindtap="ToAdd">新建设备+</view>
       </view>
     </view>
@@ -258,13 +258,13 @@
           <view class='Roomlist_item_name' data-roomid="{{Room.id}}" bindtap='ToRoom' data-roomname="{{Room.fname}}">
             <text>{{Room.fname}}</text>
           </view>
-          <view class='ControlBts' wx:if="{{CurHomeRole == 1}}">
+          <view class='ControlBts' wx:if="{{CurHomeRole != 0}}">
             <image src='../../images/icon_edit.png' bindtap='ToEditRoom' data-name="{{Room.fname}}" data-icon="{{Room.room_img}}" data-roomid="{{Room.id}}"></image>
             <image src='../../images/icon_delete.png' data-roomid="{{Room.id}}" bindtap='DeleteRoom'></image>
           </view>
         </view>
       </view>
-      <view class="InfoNull" wx:if="{{CurHomeRole == 1}}">
+      <view class="InfoNull" wx:if="{{CurHomeRole != 0}}">
         <view class='Btn smallFont' bindtap="ToAddRoom">新建房间+</view>
       </view>
     </view>
@@ -278,7 +278,7 @@
         </view>
         <view class="ControlBt {{Automatic.on_off_status == 0?'ControlBt_off':'ControlBt_on'}}" bindtap='ToggleOpenClose_automatic' data-automaticid='{{Automatic.id}}' data-automaticstatus='{{Automatic.on_off_status}}' data-idx='{{AutomaticIdx}}'>{{Automatic.on_off_status == 0?'OFF':'ON'}}</view>
       </view>
-      <view class="InfoNull" wx:if="{{CurHomeRole == 1}}">
+      <view class="InfoNull" wx:if="{{CurHomeRole != 0}}">
         <view class='Btn smallFont' bindtap="ToAddAutomatic">新建自动化+</view>
       </view>
     </view>
@@ -292,7 +292,7 @@
         </view>
         <view class="ControlBt {{Scene.on_off_status == 0?'ControlBt_off':'ControlBt_on'}}" bindtap='ToggleOpenClose_scene' data-sceneid='{{Scene.id}}' data-scenestatus='{{Scene.on_off_status}}' data-idx='{{SceneIdx}}'>{{Scene.on_off_status == 0?'OFF':'ON'}}</view>
       </view>
-      <view class="InfoNull" wx:if="{{CurHomeRole == 1}}">
+      <view class="InfoNull" wx:if="{{CurHomeRole != 0}}">
         <view class='Btn smallFont' bindtap="ToAddScene">新建场景+</view>
       </view>
     </view>

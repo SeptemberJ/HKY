@@ -78,7 +78,7 @@ App({
     longitude:'',
     ifHasInfo:false,  //是否填写过身高体重
     HomeList:[],
-    CurHomeRole:0,
+    CurHomeRole:0,  //1-管理员 0-家庭成员 3-体验者
     CurHomeName:null,
     CurHomeId: null,
     RoomIconList:[], //房间icon

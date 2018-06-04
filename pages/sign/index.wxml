@@ -23,6 +23,6 @@
   <view class='SignBt' bindtap='Sign'>注册</view>
 </view>
 <view class='BottomBox'>
-  <image src='../../images/picture/SignBgBlue.png'></image>
+  <image src='https://jingshangs.com/upload/SignBgBlue.png'></image>
 </view>
 

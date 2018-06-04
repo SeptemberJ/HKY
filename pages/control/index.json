@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "控制面板"
+  "navigationBarTitleText": "控制面板",
+  "usingComponents": {
+    "ec-canvas": "../../ec-canvas/ec-canvas"
+  }
 }

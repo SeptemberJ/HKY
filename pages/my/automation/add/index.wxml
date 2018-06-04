@@ -83,5 +83,5 @@
 </view>
 
 
-<button wx:if="{{CurHomeRole == 1}}" class='MarginT_40 HarfLongBt ColorWhite BgRed' bindtap='Submit'>确定</button>
-<button wx:if="{{CurAutomaticId && CurHomeRole == 1}}" class='MarginT_40 HarfLongBt ColorWhite BgGray' bindtap='DeleteAutomatic'>删除</button>
+<button wx:if="{{CurHomeRole != 0}}" class='MarginT_40 HarfLongBt ColorWhite BgRed' bindtap='Submit'>确定</button>
+<button wx:if="{{CurAutomaticId && CurHomeRole != 0}}" class='MarginT_40 HarfLongBt ColorWhite BgGray' bindtap='DeleteAutomatic'>删除</button>

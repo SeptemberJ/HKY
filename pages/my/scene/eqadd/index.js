@@ -28,6 +28,14 @@ Page({
   },
   //临时保存
   Submit(){
+    if (app.globalData.CurHomeRole == 3){
+      wx.showModal({
+        title: '提示',
+        content: '权限不足！',
+        showCancel: false
+      })
+      return false
+    }
     let ChoosedList = []
     this.data.EQList.map((Item,Idx)=>{
       if (Item.choosed){

@@ -6,7 +6,7 @@
       </view>
     </picker-view-column>
   </picker-view>
-  <input placeholder='场景名称' bindinput='ChangeSceneName' value='{{SceneInfo.Scene_name}}' disabled='{{CurHomeRole == 0}}'></input>
+  <input placeholder='场景名称' bindinput='ChangeSceneName' value='{{SceneInfo.Scene_name}}' ></input>
 </view>
 
 <view class='SceneItem' bindtap='ToTiming'>
@@ -53,5 +53,5 @@
   </view>
 </view>
 
-<button wx:if="{{CurHomeRole == 1}}" class='MarginT_40 HarfLongBt ColorWhite BgRed' bindtap='Submit'>保存</button>
-<button wx:if="{{CurSceneId && CurHomeRole == 1}}" class='MarginT_40 HarfLongBt ColorWhite BgGray' bindtap='DeleteScene'>删除</button>
+<button wx:if="{{CurHomeRole != 0}}" class='MarginT_40 HarfLongBt ColorWhite BgRed' bindtap='Submit'>保存</button>
+<button wx:if="{{CurSceneId && CurHomeRole != 0}}" class='MarginT_40 HarfLongBt ColorWhite BgGray' bindtap='DeleteScene'>删除</button>

@@ -4,7 +4,7 @@
 <view class='SaveBt'wx:if="{{Membertype != 0 }}">
   <button class='ColorWhite BgRed' bindtap='SaveHome'>保存</button>
 </view>
-<view class='SaveBt' wx:if="{{Membertype == 1 && Type == 1}}">
+<view class='SaveBt' wx:if="{{Membertype != 0 && Type == 1}}">
   <button class='ColorWhite BgGray' bindtap='DeleteHome'>删除</button>
 </view>
 <view class='SaveBt'wx:if="{{Membertype == 0}}">

@@ -1,5 +1,5 @@
 <view class='diet'>
-  <image class='topBlock' src='../../../images/picture/diet.png'></image>
+  <image class='topBlock' src='https://jingshangs.com/upload/diet.png'></image>
   <view class='overlay'></view>
   <!--calendar  -->
   <view class='Calendar'>

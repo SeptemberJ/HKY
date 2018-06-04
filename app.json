@@ -1,9 +1,9 @@
 {
   "pages":[
     "pages/loading/index",
-    "pages/control/index",
-    "pages/Account/index",
     "pages/login/index",
+    "pages/Account/index",
+    "pages/control/index",
     "pages/index/index",
     "pages/temperature/index",
     "pages/Interaction/index/index",

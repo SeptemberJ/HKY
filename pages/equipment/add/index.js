@@ -67,6 +67,14 @@ Page({
     if (!this.data.CanDo){
       return false
     }
+    if (app.globalData.CurHomeRole == 3) {
+      wx.showModal({
+        title: '提示',
+        content: '权限不足！',
+        showCancel: false
+      })
+      return false
+    }
     //校验
     if (!this.data.Equipment_Name || !this.data.Equipment_Code_F || !this.data.Equipment_Code_S) {
       wx.showToast({

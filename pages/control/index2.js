@@ -13,19 +13,13 @@ var DataInfo = {
   '2': [['4', '0'], ['11', '2'], ['18', '8'], ['25', '12']],
   '3': [['1', '32'], ['2', '2'], ['3', '8'], ['4', '12'], ['5', '12'], ['6', '30'], ['7', '120'], ['8', '145'], ['9', '12'], ['10', '12'], ['11', '55'], ['12', '60']],
 }
+var data2 = [['0', '0'], ['6', '2'], ['12', '80'], ['18', '12']];
 // 延迟
 function setOption(chart, DAY) {
+  //静态
   const option = {
     title: {
-      text: '耗电量统计 (单位：kw·h)',
-      left: 'center',
-      textStyle: {
-        color: '#000',
-        fontStyle: 'normal',
-        fontWeight: 'bold',
-        fontFamily: 'sans-serif',
-　　　　 fontSize: 12
-      }
+      text: 'Beijing AQI'
     },
     tooltip: {
       trigger: 'axis'
@@ -34,7 +28,7 @@ function setOption(chart, DAY) {
       splitLine: {
         show: true
       },
-      data: DataInfo[DAY].map(function (item) {
+      data: data2.map(function (item) {
         return item[0];
       })
     },
@@ -44,18 +38,21 @@ function setOption(chart, DAY) {
       }
     },
     // toolbox: {
-    //   left: 'center',
-    //   feature: {
-    //     dataZoom: {
-    //       yAxisIndex: 'none'
-    //     },
-    //     restore: {},
-    //     saveAsImage: {}
-    //   }
+    //     left: 'center',
+    //     feature: {
+    //         dataZoom: {
+    //             yAxisIndex: 'none'
+    //         },
+    //         restore: {},
+    //         saveAsImage: {}
+    //     }
     // },
-   
+    dataZoom: [{
+      startValue: '2014-06-01'
+    }, {
+      type: 'inside'
+    }],
     visualMap: {
-      show: false,
       top: 10,
       right: 10,
       pieces: [{
@@ -87,17 +84,105 @@ function setOption(chart, DAY) {
       }
     },
     series: {
-      name: '',
+      name: 'Beijing AQI',
       type: 'line',
-      data: DataInfo[DAY].map(function (item) {
+      data: data2.map(function (item) {
         return item[1];
       }),
       markLine: {
         silent: true,
-        data: []
+        data: [{
+          yAxis: 50
+        }, {
+          yAxis: 100
+        }, {
+          yAxis: 150
+        }, {
+          yAxis: 200
+        }, {
+          yAxis: 300
+        }]
       }
     }
-  };
+  }
+  // const option = {
+  //   title: {
+  //     text: ''
+  //   },
+  //   tooltip: {
+  //     trigger: 'axis'
+  //   },
+  //   xAxis: {
+  //     splitLine: {
+  //       show: true
+  //     },
+  //     data: DataInfo[DAY].map(function (item) {
+  //       return item[0];
+  //     })
+  //   },
+  //   yAxis: {
+  //     splitLine: {
+  //       show: true
+  //     }
+  //   },
+  //   toolbox: {
+  //     left: 'center',
+  //     feature: {
+  //       dataZoom: {
+  //         yAxisIndex: 'none'
+  //       },
+  //       restore: {},
+  //       saveAsImage: {}
+  //     }
+  //   },
+  //   dataZoom: [{
+  //     startValue: '2014-06-01'
+  //   }, {
+  //     type: 'inside'
+  //   }],
+  //   visualMap: {
+  //     top: 10,
+  //     right: 10,
+  //     pieces: [{
+  //       gt: 0,
+  //       lte: 50,
+  //       color: '#096'
+  //     }, {
+  //       gt: 50,
+  //       lte: 100,
+  //       color: '#ffde33'
+  //     }, {
+  //       gt: 100,
+  //       lte: 150,
+  //       color: '#ff9933'
+  //     }, {
+  //       gt: 150,
+  //       lte: 200,
+  //       color: '#cc0033'
+  //     }, {
+  //       gt: 200,
+  //       lte: 300,
+  //       color: '#660099'
+  //     }, {
+  //       gt: 300,
+  //       color: '#7e0023'
+  //     }],
+  //     outOfRange: {
+  //       color: '#999'
+  //     }
+  //   },
+  //   series: {
+  //     name: '',
+  //     type: 'line',
+  //     data: DataInfo[DAY].map(function (item) {
+  //       return item[1];
+  //     }),
+  //     markLine: {
+  //       silent: true,
+  //       data: []
+  //     }
+  //   }
+  // };
   chart.setOption(option);
   return chart;
   //服务器
@@ -374,7 +459,7 @@ function initChart(canvas, width, height) {
 }
 Page({
   data: {
-    EquipmentType: '', //3-空调 ， 4-灯  ， 5-其他
+    EquipmentType: 1, //0-空调  1-灯
     ec: {
       // 将 lazyLoad 设为 true 后，需要手动初始化图表
       lazyLoad: true
@@ -396,11 +481,6 @@ Page({
     this.ecComponent = this.selectComponent('#mychart-dom-bar');
   },
   onLoad: function (options) {
-    this.setData({
-      EquipmentType: options.eqtype,
-      EquipmentId: options.eqid
-      
-    })
   },
   //ToggleShowChart
   ToggleShowChart() {
@@ -409,43 +489,24 @@ Page({
     })
     this.init(this.data.CurTab)
   },
-  //无权限操作
-  template(){
-    const innerAudioContext = wx.createInnerAudioContext()
-    innerAudioContext.autoplay = true
-    innerAudioContext.src = 'https://jingshangs.com/upload/ON.mp3'
-    innerAudioContext.onPlay(() => {
-      console.log('播放')
-    })
-    innerAudioContext.onError((res) => {
-      console.log(res)
-    })
-    wx.showModal({
-      title: '提示',
-      content: '控制器不在线！',
-      showCancel: false,
-      success: (res) => {
-      }
-    })
-  },
   //仅开关类设备
   OnlySwitch() {
-    const innerAudioContext = wx.createInnerAudioContext()
-    innerAudioContext.autoplay = true
-    innerAudioContext.src = 'https://jingshangs.com/upload/ON.mp3'
-    innerAudioContext.onPlay(() => {
-      console.log('播放')
-    })
-    innerAudioContext.onError((res) => {
-      console.log(res)
-    })
-    wx.showModal({
-      title: '提示',
-      content: '控制器不在线！',
-      showCancel:false,
-      success: (res)=> {
-      }
-    })
+    // const innerAudioContext = wx.createInnerAudioContext()
+    // innerAudioContext.autoplay = true
+    // innerAudioContext.src = 'https://jingshangs.com/upload/ON.mp3'
+    // innerAudioContext.onPlay(() => {
+    //   console.log('播放')
+    // })
+    // innerAudioContext.onError((res) => {
+    //   console.log(res)
+    // })
+    // wx.showModal({
+    //   title: '提示',
+    //   content: '控制器不在线！',
+    //   showCancel:false,
+    //   success: (res)=> {
+    //   }
+    // })
   },
   // 点击按钮后初始化图表
   init: function (DAY) {

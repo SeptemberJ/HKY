@@ -34,6 +34,21 @@ Page({
     if (!this.data.CanDo){
       return false
     }
+    if (this.data.Home_name == '' || this.data.Home_name == undefined){
+      wx.showToast({
+        image: '../../../../images/icon/attention.png',
+        title: '请输入名称!'
+      });
+      return false
+    }
+    if (app.globalData.CurHomeRole == 3) {
+      wx.showModal({
+        title: '提示',
+        content: '权限不足！',
+        showCancel: false
+      })
+      return false
+    }
     if (this.data.Type == 0){
       this.CreateHome()
     }else{
@@ -42,46 +57,63 @@ Page({
   },
   //DeleteHome
   DeleteHome(){
-    wx.showLoading({
-      title: '加载中',
-    })
-    requestPromisified({
-      url: h.main + '/deletehome?id=' + this.data.Home_id + '&memberstype=' + this.data.Membertype + '&ftelphone=' + app.globalData.User_Phone,
-      data: {
-      },
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-    }).then((res) => {
-      switch (res.data.result) {
-        case 1:
-        wx.showToast({
-          title: this.data.Membertype == 1?'删除成功!':'退出成功!',
-          icon: 'success',
-          duration: 1500,
-        })
-          wx.navigateBack()
-          wx.hideLoading()
-          break
-        case 0:
-          wx.hideLoading()
-          wx.showToast({
-            image: '../../../../images/icon/attention.png',
-            title: this.data.Membertype == 1 ? '删除失败!' : '退出失败!'
-          });
-          break
-        default:
-          wx.hideLoading()
-          wx.showToast({
-            image: '../../../../images/icon/attention.png',
-            title: '服务器繁忙！'
-          });
+    wx.showModal({
+      title: '提示',
+      content: '确定删除该场景?',
+      success: (res) => {
+        if (res.confirm) {
+          if (app.globalData.CurHomeRole == 3) {
+            wx.showModal({
+              title: '提示',
+              content: '权限不足！',
+              showCancel: false
+            })
+            return false
+          }
+          wx.showLoading({
+            title: '加载中',
+          })
+          requestPromisified({
+            url: h.main + '/deletehome?id=' + this.data.Home_id + '&memberstype=' + this.data.Membertype + '&ftelphone=' + app.globalData.User_Phone,
+            data: {
+            },
+            method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+          }).then((res) => {
+            switch (res.data.result) {
+              case 1:
+                wx.showToast({
+                  title: this.data.Membertype == 1 ? '删除成功!' : '退出成功!',
+                  icon: 'success',
+                  duration: 1500,
+                })
+                wx.navigateBack()
+                wx.hideLoading()
+                break
+              case 0:
+                wx.hideLoading()
+                wx.showToast({
+                  image: '../../../../images/icon/attention.png',
+                  title: this.data.Membertype == 1 ? '删除失败!' : '退出失败!'
+                });
+                break
+              default:
+                wx.hideLoading()
+                wx.showToast({
+                  image: '../../../../images/icon/attention.png',
+                  title: '服务器繁忙！'
+                });
+            }
+          }).catch((res) => {
+            wx.hideLoading()
+            wx.showToast({
+              image: '../../../../images/icon/attention.png',
+              title: '服务器繁忙！'
+            });
+            console.log(res)
+          })
+        } else if (res.cancel) {
+        }
       }
-    }).catch((res) => {
-      wx.hideLoading()
-      wx.showToast({
-        image: '../../../../images/icon/attention.png',
-        title: '服务器繁忙！'
-      });
-      console.log(res)
     })
   },
   //OutHome
@@ -168,12 +200,14 @@ Page({
           });
           break
         default:
+        console.log(res)
           wx.showToast({
             image: '../../../../images/icon/attention.png',
             title: '服务器繁忙！'
           });
       }
     }).catch((res) => {
+      console.log(res)
       wx.showToast({
         image: '../../../../images/icon/attention.png',
         title: '服务器繁忙！'

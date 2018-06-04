@@ -217,6 +217,14 @@ Page({
   },
   //Submit
   Submit() {
+    if (app.globalData.CurHomeRole == 3) {
+      wx.showModal({
+        title: '提示',
+        content: '权限不足！',
+        showCancel: false
+      })
+      return false
+    }
     let ActionList = []
     // let ChoosedList_EQ =[] 
     // let ChoosedList_Scene= [] 

@@ -62,6 +62,14 @@ Page({
   },
   //保存
   Save(){
+    if (app.globalData.CurHomeRole == 3) {
+      wx.showModal({
+        title: '提示',
+        content: '权限不足！',
+        showCancel: false
+      })
+      return false
+    }
     if(this.data.Type == 0){
       this.CreateRoom()
     }else{

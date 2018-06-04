@@ -1,5 +1,5 @@
 <view class='TopSubmitBt'>
-  <view wx:if="{{CurHomeRole == 1}}" class='TopFixedSubmitBt' bindtap='ToAddEq'>选择设备</view>
+  <view wx:if="{{CurHomeRole != 0}}" class='TopFixedSubmitBt' bindtap='ToAddEq'>选择设备</view>
   <view wx:if="{{CurHomeRole == 0}}" class='TopFixedSubmitBt_disabled'>选择设备</view>
 </view>
 
@@ -23,7 +23,7 @@
   </view>
 </view>
 
-<button wx:if="{{EQList.length>0 && CurHomeRole == 1}}" class='MarginT_40 HarfLongBt ColorWhite BgRed' bindtap='Submit'>确定</button> 
+<button wx:if="{{EQList.length>0 && CurHomeRole != 0}}" class='MarginT_40 HarfLongBt ColorWhite BgRed' bindtap='Submit'>确定</button> 
 
  <!-- <view class='Scene_EQ_FixedCircle' bindtap='ToAddEq'>
   <view class='Scene_EQ_innerCircle'>添加</view>

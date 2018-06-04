@@ -92,6 +92,26 @@ var LimitRange = {
           gt: 1,
           color: '#cc0033'
         }],
+        '温度': [{
+            gt: 0,
+            lte: 10,
+            color: '#0000FF'
+          }, {
+            gt: 10,
+            lte: 16,
+            color: '#87CEFA'
+          },{
+          gt: 16,
+          lte: 25,
+          color: '#096'
+        }, {
+          gt: 25,
+          lte: 28,
+          color: '#ffde33'
+        }, {
+          gt: 28,
+          color: '#cc0033'
+        }],
     }
 
 // 延迟
@@ -154,9 +174,10 @@ function setOption(chart, DAY) {
               //   type: 'inside'
               // }],
               visualMap: {
+                show:false,
                 top: 10,
                 right: 10,
-                pieces: [],//LimitRange[DATA.kind],
+                pieces: LimitRange[DATA.kind],
                 outOfRange: {
                   color: '#999'
                 }
@@ -241,6 +262,9 @@ function initChart(canvas, width, height) {
               tooltip: {
                 trigger: 'axis'
               },
+              // grid: {
+              //   top: 150
+              // },
               xAxis: {
                 data: res.data.qrcodelist.map(function (item) {
                   return item[0];
@@ -267,9 +291,10 @@ function initChart(canvas, width, height) {
               //   type: 'inside'
               // }],
               visualMap: {
+                show:false,
                 top: 10,
                 right: 10,
-                pieces: [],//LimitRange[DATA.kind],
+                pieces: LimitRange[DATA.kind],
                 outOfRange: {
                   color: '#999'
                 }

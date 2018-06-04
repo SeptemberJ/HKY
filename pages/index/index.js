@@ -19,8 +19,8 @@ Page({
     Toggle_show: 0,  //0初始 1展开 -1关闭
     airQuality:'',
     imgUrls: [
-      '../../images/picture/carousel_1.png',
-      '../../images/picture/carousel_2.png'
+      'https://jingshangs.com/upload/carousel_1.png',
+      'https://jingshangs.com/upload/carousel_2.png'
     ],
     indicatorDots: true,
     autoplay: false,
@@ -556,15 +556,21 @@ Page({
   },
   //删除设备
   DeleteEQ(e){
-    if (app.globalData.CurHomeRole == 1){
-      return false
-    }
     let ID = e.currentTarget.dataset.id
     wx.showModal({
       title: '提示',
       content: '确定删除该设备?',
       success: (res) => {
         if (res.confirm) {
+          if (app.globalData.CurHomeRole != 1) {
+            wx.showModal({
+              title: '提示',
+              content: '权限不足！',
+              showCancel: false
+            })
+            return false
+          }
+
           requestPromisified({
             url: h.main + '/deletenoqrcode?qrcodeid=' + ID,
             data: {
@@ -1315,6 +1321,14 @@ Page({
             SceneList: temp
           })
           break
+        case 2:
+          wx.showModal({
+            title: '提示',
+            content: '该场景中有设备不在线！',
+            showCancel: false
+          })
+          return false
+        break
         case 0:
           wx.showToast({
             image: '../../images/icon/attention.png',
@@ -1475,9 +1489,14 @@ Page({
   },
   //控制面板
   ToControl(e){
-    // wx.navigateTo({
-    //   url: '../control/index?eqid=' + e.currentTarget.dataset.eqid,
-    // })
+    let EQtype = e.currentTarget.dataset.eqtype
+    let EQid = e.currentTarget.dataset.eqid
+    if (EQtype == 1){
+      return false
+    }
+    wx.navigateTo({
+      url: '../control/index?eqid=' + EQid + '&eqtype=' + EQtype ,
+    })
   },
   //编辑自动化
   ToEdit_automatic(e){

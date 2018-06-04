@@ -126,6 +126,14 @@ Page({
     })
   },
   Submit(){
+    if (app.globalData.CurHomeRole == 3) {
+      wx.showModal({
+        title: '提示',
+        content: '权限不足！',
+        showCancel: false
+      })
+      return false
+    }
     if(this.data.Type == 0){
       this.Submit_add()
     }else{
@@ -338,6 +346,14 @@ Page({
       content: '确定删除该场景?',
       success: (res)=> {
         if (res.confirm) {
+          if (app.globalData.CurHomeRole == 3) {
+            wx.showModal({
+              title: '提示',
+              content: '权限不足！',
+              showCancel: false
+            })
+            return false
+          }
           requestPromisified({
             url: h.main + '/deletescenario?id=' + this.data.CurSceneId,
             data: {

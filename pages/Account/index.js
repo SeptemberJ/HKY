@@ -7,12 +7,11 @@ const app = getApp()
 var Timer
 Page({
   data: {
-    User_Phone:'',
+    User_Phone:null,
     IfGetCode: true,
-    RealCode: '',
+    RealCode: null,
     CountDown: 60,
-    User_Code:'',
-    RealCode: '',
+    User_Code: null,
   },
   onLoad: function () {
     
@@ -26,9 +25,6 @@ Page({
     this.setData({
       User_Code: e.detail.value
     })
-  },
-  LoginIn(){
-
   },
   //获取验证码
   GetCode() {
@@ -117,6 +113,22 @@ Page({
   },
   //登录
   LoginIn() {
+    if (!this.data.User_Phone) {
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '输入手机号！',
+        duration: 2000,
+      });
+      return false
+    }
+    if (!this.data.User_Code) {
+      wx.showToast({
+        image: '../../images/icon/attention.png',
+        title: '输入验证码！',
+        duration: 2000,
+      });
+      return false
+    }
     if (this.data.RealCode != this.data.User_Code){
       wx.showToast({
         image: '../../images/icon/attention.png',
@@ -207,7 +219,6 @@ Page({
         duration: 2000,
       });
     })
-
   },
   GetHomeList(ExperiencerAccountUser_Phone) {
     //获取home list

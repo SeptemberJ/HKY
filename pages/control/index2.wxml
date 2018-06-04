@@ -1,6 +1,6 @@
 <view class='ControlWrap'>
   <!--AirConditioner  -->
-  <view wx:if="{{EquipmentType == 3 && !IfShowChart}}" class='ControlItem AirConditioner'>
+  <view wx:if="{{EquipmentType == 0 && !IfShowChart}}" class='ControlItem AirConditioner'>
     <!--Temperature  -->
     <view class='Temperature'>
       <view class='Temperature_number'>
@@ -14,12 +14,12 @@
         </view>
       </view>
       <view class='Temperature_add_min'>
-        <image bindtap="template" src='../../images/icon/control_add.png'></image>
-        <image bindtap="template" src='../../images/icon/control_min.png'></image>
+        <image src='../../images/icon/control_add.png'></image>
+        <image src='../../images/icon/control_min.png'></image>
       </view>
     </view>
     <!--Wind  -->
-    <view class='Wind' bindtap="template">
+    <view class='Wind'>
       <view class='WindItem'>
         <image src='../../images/icon/wind.png'></image>
       </view>
@@ -29,19 +29,19 @@
     </view>
     <!--operations  -->
     <view class='Operations'>
-      <view class='OperationItem' bindtap="template">
+      <view class='OperationItem'>
         <view class='OperationItemIcon'>
           <image src='../../images/icon/hot.png'></image>
         </view>
         <text>制热模式</text>
       </view>
-      <view class='OperationItem' bindtap="template">
+      <view class='OperationItem'>
         <view class='OperationItemIcon'>
           <image src='../../images/icon/saofeng.png'></image>
         </view>
         <text>扫风</text>
       </view>
-      <view class='OperationItem' bindtap="template">
+      <view class='OperationItem'>
         <view class='OperationItemIcon'>
           <image src='../../images/icon/power.png'></image>
         </view>
@@ -50,7 +50,7 @@
     </view>
   </view> 
   <!--light  -->
-  <view wx:if="{{EquipmentType != 3 && !IfShowChart}}" class='ControlItem Light' bindtap='OnlySwitch'>
+  <view wx:if="{{EquipmentType == 1 && !IfShowChart}}" class='ControlItem Light' bindtap='OnlySwitch'>
     <text>ON</text>
   </view>
   <!--ArrowDown  -->

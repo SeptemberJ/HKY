@@ -369,6 +369,14 @@ Page({
       });
       return false
     }
+    if (app.globalData.CurHomeRole == 3) {
+      wx.showModal({
+        title: '提示',
+        content: '权限不足！',
+        showCancel: false
+      })
+      return false
+    }
     wx.showLoading({
       title: '加载中',
     })
@@ -453,6 +461,14 @@ Page({
       });
       return false
     }
+    if (app.globalData.CurHomeRole == 3) {
+      wx.showModal({
+        title: '提示',
+        content: '权限不足！',
+        showCancel: false
+      })
+      return false
+    }
     wx.showLoading({
       title: '加载中',
     })
@@ -513,6 +529,14 @@ Page({
       content: '确定删除该自动化?',
       success: (res) => {
         if (res.confirm) {
+          if (app.globalData.CurHomeRole == 3) {
+            wx.showModal({
+              title: '提示',
+              content: '权限不足！',
+              showCancel: false
+            })
+            return false
+          }
           requestPromisified({
             url: h.main + '/deleteautomation?id=' + this.data.CurAutomaticId,
             data: {
