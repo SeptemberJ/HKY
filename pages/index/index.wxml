@@ -239,7 +239,7 @@
           <text class='EQList_item_text_room'>{{Equipment.room_name}}</text>
         </view>
         <!-- 操作按钮分类显示 -->
-        <view class="ControlBt {{Equipment.on_off_status == 0?'ControlBt_off':'ControlBt_on'}}" bindtap='ToggleOpenClose_EQ' data-eqid='{{Equipment.id}}' data-eqstatus='{{Equipment.on_off_status}}' data-idx='{{EQIdx}}' wx:if="{{Equipment.sensortype != 1 && Equipment.type == 1}}">{{Equipment.on_off_status == 0?'OFF':'ON'}}</view>
+        <view class="ControlBt {{Equipment.on_off_status == 0?'ControlBt_off':'ControlBt_on'}}" bindtap='ToggleOpenClose_EQ' data-eqid='{{Equipment.id}}' data-eqstatus='{{Equipment.on_off_status}}' data-idx='{{EQIdx}}' wx:if="{{Equipment.sensortype != 1 && Equipment.type != 0}}">{{Equipment.on_off_status == 0?'OFF':'ON'}}</view>
         <view class="ControlBt_image" wx:if="{{Equipment.sensortype == 1 && Equipment.type == 1}}" bindtap='LookData_EQ' data-eqid='{{Equipment.id}}' data-eqname='{{Equipment.second_name}}'>
           <image src='../../images/icon/AnalysisBlue.png'></image>
         </view>

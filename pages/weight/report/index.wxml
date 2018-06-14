@@ -83,24 +83,35 @@
           <progress class="progress" percent="{{HeathEvaluation.weight.weight_differ_i>0 ?50 - HeathEvaluation.weight.weight_differ_i :50 - HeathEvaluation.weight.weight_differ_i }}"  stroke-width="3"  backgroundColor="#ccc" activeColor="#8ce1fa" active="true" >
           <text class='HalfLine'></text>
           </progress>
-          <text>理想：{{HeathEvaluation.weight.weight_ideal}}公斤</text>
+          <text>理想：{{HeathEvaluation.weight.weight_ideal == 0 ?'--':HeathEvaluation.weight.weight_ideal}}公斤</text>
         </view>
         <text class='HeathEvaluation_process_data'>{{HeathEvaluation.weight.weight_differ_i >0?'需 +':'需'}} {{HeathEvaluation.weight.weight_differ_i}}公斤</text>
       </view>
-      <view class='HeathEvaluation_process'>
+
+       <view class='HeathEvaluation_process'>
         <text class='HeathEvaluation_process_tit'>肌肉</text>
-        <progress class="progress" percent="0"  stroke-width="3"  backgroundColor="#ccc" activeColor="#53405c" active="true" >
-        <text class='HalfLine'></text>
-        </progress>
-        <text class='HeathEvaluation_process_data'>需 --公斤</text>
+        <view class='process_block'>
+          <progress class="progress" percent="0"  stroke-width="3"  backgroundColor="#ccc" activeColor="#53405c" active="true" >
+          <!-- <progress class="progress" percent="{{HeathEvaluation.muscle.muscle_differ_i>0 ?50 - HeathEvaluation.muscle.muscle_differ_i :50 - HeathEvaluation.muscle.muscle_differ_i }}"  stroke-width="3"  backgroundColor="#ccc" activeColor="#53405c" active="true" > -->
+          <text class='HalfLine'></text>
+          </progress>
+          <text>理想：{{HeathEvaluation.muscle.muscle_ideal == 0 ?'--':HeathEvaluation.muscle.muscle_ideal}}公斤</text>
+        </view>
+        <text class='HeathEvaluation_process_data'>{{HeathEvaluation.muscle.muscle_differ_i >0?'需 +':'需'}} {{HeathEvaluation.muscle.muscle_differ_i}}公斤</text>
       </view>
+
       <view class='HeathEvaluation_process'>
         <text class='HeathEvaluation_process_tit'>脂肪</text>
-        <progress class="progress" percent="{{HeathEvaluation.fat.fat_differ_i>0 ?50 - HeathEvaluation.fat.fat_differ_i :50 - HeathEvaluation.fat.fat_differ_i }}"  stroke-width="3"  backgroundColor="#ccc" activeColor="#f60" active="true" >
-        <text class='HalfLine'></text>
-        </progress>
-        <text class='HeathEvaluation_process_data'>需 {{HeathEvaluation.fat.fat_differ_i}}公斤</text>
+        <view class='process_block'>
+          <progress class="progress" percent="{{HeathEvaluation.fat.fat_differ_i>0 ?50 - HeathEvaluation.fat.fat_differ_i :50 - HeathEvaluation.fat.fat_differ_i }}"  stroke-width="3"  backgroundColor="#ccc" activeColor="#f60" active="true" >
+          <text class='HalfLine'></text>
+          </progress>
+          <text>理想：{{HeathEvaluation.fat.fat_ideal == 0 ? '--':HeathEvaluation.fat.fat_ideal}}公斤</text>
+        </view>
+        <text class='HeathEvaluation_process_data'>{{HeathEvaluation.fat.fat_differ_i >0?'需 +':'需'}} {{HeathEvaluation.fat.fat_differ_i}}公斤</text>
       </view>
+
+      
      </view> 
   </view>
   <!--target  -->

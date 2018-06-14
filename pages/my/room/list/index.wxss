@@ -58,7 +58,8 @@
   width: 750rpx;
   height: 130rpx;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  /* justify-content: space-between; */
   align-items: center; 
   background: #fff;
   border-bottom: 1px solid #efefef;
@@ -71,7 +72,7 @@
   display: inline-block;
 }
 .EQList_item_text{
-  width: calc(750rpx - 100rpx - 150rpx - 10rpx);
+  width: calc(750rpx - 100rpx - 150rpx);
   height: 100%;
   padding-left: 10rpx;
   display: flex;
@@ -88,13 +89,32 @@
   color: #ddd;
 }
 .ControlBt{
-  width: 150rpx;
+  width: 140rpx;
   height: 70rpx;
   margin-right: 10rpx;
   text-align: center;
   line-height: 70rpx;
   border: 1px solid green;
   border-radius: 10rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ControlBt_image{
+   width: 140rpx;
+  height: 70rpx;
+  margin-right: 10rpx;
+  text-align: center;
+  line-height: 70rpx;
+  border-radius: 10rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ControlBt_image image{
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 0;
 }
 .ControlBt_off{
   color: green;
@@ -102,4 +122,7 @@
 .ControlBt_on{
   color: #fff;
   background: green;
+}
+.offline{
+  color: #ddd;
 }

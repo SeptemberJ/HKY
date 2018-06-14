@@ -20,7 +20,8 @@
       <image class='operationIcon' src="{{Equipment.machine_img}}" data-id='{{Equipment.id}}' data-name='{{Equipment.second_name}}' bindtap=''></image>
       <text class='equipmentName' data-id='{{Equipment.id}}' data-name='{{Equipment.second_name}}' bindtap=''>{{Equipment.second_name}}</text>
        <image class='operationIcon_s' src='../../../images/icon/delete.png' data-id='{{Equipment.id}}' bindtap='Delete'></image>
-       <image wx:if="{{Equipment.sensortype == 1}}" class='operationIcon_s' src='../../../images/icon/analysis.png' data-id='{{Equipment.id}}' data-name='{{Equipment.second_name}}' bindtap='LookData'></image>
+       <image wx:if="{{Equipment.sensortype == 1 || Equipment.type == 1}}" class='operationIcon_s' src='../../../images/icon/analysis.png' data-id='{{Equipment.id}}' data-name='{{Equipment.second_name}}' bindtap='LookData'></image>
+       <text class="offline" wx:if="{{ Equipment.sensortype == 1 && Equipment.type == 0}}">offline</text>
     </view>
   </view>
     <view class="InfoNull" wx:if="{{equipmentList.length == 0}}">
