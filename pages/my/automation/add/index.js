@@ -16,7 +16,7 @@ Page({
     ConditionList2: [{ 'icon': '../../../../images/icon/delete.png', 'name': '时间', 'room': '', 'when': 0, 'status': 0, 'kind': 'time', 'time_start': '00:00', 'time_end': '23:59' },{ 'icon': '../../../../images/icon/delete.png', 'name': '灯带', 'room': '玄关', 'when': 0, 'status': 0, 'kind': 'aircondition' }, { 'icon': '../../../../images/icon/delete.png', 'name': '水晶灯', 'room': '传统', 'when': 1, 'status': 1,  'kind': 'light'}],
     ActionList2: [{ 'icon': '../../../../images/icon/delete.png', 'name': '灯带', 'room': '玄关', 'when': 0, 'status': 0, 'kind': 'equipment' }, { 'icon': '../../../../images/icon/delete.png', 'name': '回家', 'room': '', 'when': 0, 'status': 1,  'kind': 'scene' }],
     ConditionKind:{
-      '时间': [
+      'time': [
         [
           {
             id: 0,
@@ -28,7 +28,7 @@ Page({
           }
         ]
       ],
-      '空调': [
+      'd002': [
         [
           {
             id: 0,
@@ -53,7 +53,7 @@ Page({
           }
         ]
       ],
-      '灯': [
+      'd001': [
         [
           {
             id: 0,
