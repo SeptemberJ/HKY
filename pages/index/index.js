@@ -49,22 +49,21 @@ Page({
     CookStyle:'',
     CooktypeList:[],
     CooktypeLists:[],
-    tipText:''
+    tipText:'',
+    msgdata:'start'
+
+    
 
   },
-  //事件处理函数
-  // bindViewTap: function() {
-  //   wx.navigateTo({
-  //     url: '../logs/logs'
-  //   })
-  // },
   onLoad: function () {
+    var _this = this
     if (app.globalData.userInfo) {
       this.setData({
         // city: app.globalData.city,
         userInfo: app.globalData.userInfo,
         AccountName: app.globalData.User_name,
-        hasUserInfo: true
+        hasUserInfo: true,
+        msgdata: app.globalData.msgdata
       })
     } else if (this.data.canIUse){
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
@@ -88,12 +87,19 @@ Page({
         }
       })
     }
+    //监听实时数据
+    /*
+    app.globalData.selfEmit.on('global msg changed', function () {
+      console.log('i get it')
+      _this.setData({
+        msgdata: app.globalData.msgdata
+      })
+    });
+    */
   },
   onShow: function () {
     this.GetHomeList()
     this.GetAirQuality()
-    //this.GetAirQuality_inside()
-    //this.StartClock()
     this.GetMessage()
     this.GetDietInfo(util.formatTime(new Date()))
     this.IfHasInfo()
@@ -104,25 +110,8 @@ Page({
       CurHomeId: app.globalData.CurHomeId,
       CooktypeLists: app.globalData.CookingMethodList,
       Cur_tab: 0,
-      // CookingMethodList: app.globalData.CookingMethodList,
       IfHasWirteQuestionnaire: app.globalData.IfHasWirteQuestionnaire
     })
-    // if (app.globalData.CurHomeId){
-    //   switch (this.data.Cur_tab) {
-    //     case '0':
-    //       this.GetCurEQList(app.globalData.CurHomeId)
-    //       break
-    //     case '1':
-    //       this.GetCurRoomList()
-    //       break
-    //     case '2':
-    //       this.GetCurAutomaticList()
-    //       break
-    //     case '3':
-    //       this.GetCurSceneList()
-    //       break
-    //   }
-    // }
   },
   //userinfo
   getUserInfo: function(e) {
@@ -870,54 +859,53 @@ Page({
   },
   //当前空气质量
   GetAirQuality(){
-    requestPromisified({
-      url: h.main + '/selecttemperature',
-      data: {
-        latitude: app.globalData.latitude,
-        longitude: app.globalData.longitude
-        // latitude: 31.23603, //app.globalData.latitude,
-        // longitude: 121.38541, //app.globalData.longitude
-      },
-      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {
-      //   'content-type': 'application/x-www-form-urlencoded',
-      //   'Accept': 'application/json'
-      // }, // 设置请求的 header
-    }).then((res) => {
-      switch (res.data.result) {
-        case 1:
-          this.setData({
-            airQuality: res.data.temperaturelist
-          })
-          break
-        case 0:
-          wx.showToast({
-            image: '../../images/icon/attention.png',
-            title: '获取空气信息失败',
-            duration: 3000,
-          });
-          break
-        default:
-          wx.showToast({
-            image: '../../images/icon/attention.png',
-            title: '服务器繁忙！',
-            duration: 3000,
-          });
-      }
-      this.setData({
-        loadingHidden: true
+    if (app.globalData.latitude == '' || app.globalData.longitude ==''){
+      app.GetLocation()
+      this.GetAirQuality()
+    }else{
+      requestPromisified({
+        url: h.main + '/selecttemperature',
+        data: {
+          latitude: app.globalData.latitude,
+          longitude: app.globalData.longitude
+        },
+        method: 'POST',
+      }).then((res) => {
+        switch (res.data.result) {
+          case 1:
+            this.setData({
+              airQuality: res.data.temperaturelist
+            })
+            break
+          case 0:
+            wx.showToast({
+              image: '../../images/icon/attention.png',
+              title: '获取空气信息失败',
+              duration: 3000,
+            });
+            break
+          default:
+            wx.showToast({
+              image: '../../images/icon/attention.png',
+              title: '服务器繁忙！',
+              duration: 3000,
+            });
+        }
+        this.setData({
+          loadingHidden: true
+        })
+      }).catch((res) => {
+        wx.showToast({
+          image: '../../images/icon/attention.png',
+          title: '服务器繁忙！',
+          duration: 3000,
+        });
+        this.setData({
+          loadingHidden: true
+        })
+        console.log(res)
       })
-    }).catch((res) => {
-      wx.showToast({
-        image: '../../images/icon/attention.png',
-        title: '服务器繁忙！',
-        duration: 3000,
-      });
-      this.setData({
-        loadingHidden: true
-      })
-      console.log(res)
-    })
+    }
   },
   //获取室内空气质量
   GetAirQuality_inside(HomeId) {

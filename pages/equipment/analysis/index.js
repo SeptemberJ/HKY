@@ -15,7 +15,7 @@ Page({
       { 'kind': 'CO', 'value': '', 'img': '../../../images/icon/CO.png', 'unit': 'ppm'},
       { 'kind': '甲醛', 'value': '', 'img': '../../../images/icon/HCHO.png', 'unit': 'mg/m3' },
       { 'kind': '温度', 'value': '', 'img': '../../../images/icon/temperature.png', 'unit': '°C' },
-      { 'kind': 'VOCs', 'value': '', 'img': '../../../images/icon/steamer.png', 'unit': 'mg/m3' }
+      { 'kind': 'VOCs', 'value': '', 'img': '../../../images/icon/steamer.png', 'unit': '' }
     ]
   },
   onLoad: function (options) {

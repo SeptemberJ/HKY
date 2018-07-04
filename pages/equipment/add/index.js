@@ -21,6 +21,9 @@ Page({
     })
     this.GetIconList()
   },
+  onShow(){
+    app.GetLocation()
+  },
   //选择图片
   bindChange: function (e) {
     this.setData({
@@ -64,6 +67,7 @@ Page({
   },
   //新增设备
   AddEquipment() {
+    app.GetLocation()
     if (!this.data.CanDo){
       return false
     }
@@ -83,6 +87,14 @@ Page({
       });
       return false
     }
+    if (app.globalData.latitude == '' || app.globalData.longitude == ''){
+      wx.showToast({
+        image: '../../../images/icon/attention.png',
+        title: '定位失败！'
+      });
+      return false
+    }
+   
     let DATA = {
       machine_img: this.data.Equipment_Icon,
       second_name: this.data.Equipment_Name,
@@ -98,7 +110,9 @@ Page({
     requestPromisified({
       url: h.main + '/selectqrcode',
       data: {
-        qrcodes: DATA
+        qrcodes: DATA,
+        longitude: app.globalData.longitude,
+        latitude: app.globalData.latitude 
       },
       method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
       // header: {

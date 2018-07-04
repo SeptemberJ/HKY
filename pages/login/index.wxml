@@ -12,4 +12,4 @@
     <image src='../../images/icon/arrow-right.png'></image>
   </view>
 </view>
-<button open-type="getUserInfo">授权</button>  
+<!--<button open-type="getUserInfo">授权</button>-->  

@@ -407,7 +407,7 @@ Page({
             break
           case 'VOCs':
             this.setData({
-              Unit: 'mg/m³',
+              Unit: '等级',
             })
             break
         }
