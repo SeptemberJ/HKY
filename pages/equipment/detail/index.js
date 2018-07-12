@@ -1,390 +1,86 @@
-import * as echarts from '../../../ec-canvas/echarts';
 import h from '../../../utils/url.js'
 var util = require('../../../utils/util.js')
 var MD5 = require('../../../utils/md5.js')
 var requestPromisified = util.wxPromisify(wx.request)
+
 const app = getApp();
-let chart = null;
-var DATA = null
-// 不同指标的划分范围
-var LimitRange = {
-  'PM2.5': [{
-    gt: 0,
-    lte: 35,
-    color: '#096'
-  }, {
-    gt: 35,
-    lte: 75,
-    color: '#ffde33'
-  }, {
-    gt: 75,
-    lte: 115,
-    color: '#ff9933'
-  }, {
-    gt: 115,
-    lte: 150,
-    color: '#cc0033'
-  }, {
-    gt: 150,
-    lte: 250,
-    color: '#660099'
-  }, {
-    gt: 250,
-    color: '#7e0023'
-  }],
-    'CO2': [{
-      gt: 350,
-      lte: 450,
-      color: '#096'
-    }, {
-      gt: 450,
-      lte: 1000,
-      color: '#ffde33'
-    }, {
-      gt: 1000,
-      lte: 2000,
-      color: '#ff9933'
-    }, {
-      gt: 2000,
-      lte: 5000,
-      color: '#cc0033'
-    }, {
-      gt: 5000,
-      color: '#660099'
-    }],
-      'CO': [{
-        gt: 0.1,
-        lte: 0.5,
-        color: '#096'
-      }, {
-        gt: 0.5,
-        lte: 5,
-        color: '#ffde33'
-      }, {
-        gt: 5,
-        lte: 15,
-        color: '#ff9933'
-      }, {
-        gt: 15,
-        lte: 100,
-        color: '#cc0033'
-      }, {
-        gt: 100,
-        lte: 200,
-        color: '#660099'
-      }, {
-        gt: 200,
-        color: '#7e0023'
-      }],
-        '甲醛': [{
-          gt: 0.06,
-          lte: 0.1,
-          color: '#096'
-        }, {
-          gt: 0.1,
-          lte: 0.5,
-          color: '#ffde33'
-        }, {
-          gt: 0.5,
-          lte: 1,
-          color: '#ff9933'
-        }, {
-          gt: 1,
-          color: '#cc0033'
-        }],
-        '温度': [{
-            gt: 0,
-            lte: 10,
-            color: '#0000FF'
-          }, {
-            gt: 10,
-            lte: 16,
-            color: '#87CEFA'
-          },{
-          gt: 16,
-          lte: 25,
-          color: '#096'
-        }, {
-          gt: 25,
-          lte: 28,
-          color: '#ffde33'
-        }, {
-          gt: 28,
-          color: '#cc0033'
-        }],
-    }
-
-// 延迟
-function setOption(chart, DAY) {
-  wx.showLoading({
-    title: '加载中',
-  })
-  wx.getStorage({
-    key: 'equipmentInfo',
-    success: (res)=> {
-      let DATA ={
-        day: DAY,
-        qrcodeid: res.data.EquipmentId,
-        kind: res.data.Kind,
-      }
-      console.log(LimitRange[DATA.kind])
-      requestPromisified({
-        url: h.main + '/selectnoqrcode1',
-        data: {
-          qrcodes: DATA
-        },
-        method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-        // header: {
-        //   'content-type': 'application/x-www-form-urlencoded',
-        //   'Accept': 'application/json'
-        // }, // 设置请求的 header
-      }).then((res) => {
-        switch (res.data.result) {
-          case 1:
-            const option = {
-              title: {
-                text: ''
-              },
-              tooltip: {
-                trigger: 'axis'
-              },
-              xAxis: {
-                data: res.data.qrcodelist.map(function (item) {
-                  return item[0];
-                })
-              },
-              yAxis: {
-                splitLine: {
-                  show: false
-                }
-              },
-              // toolbox: {
-              //   left: 'center',
-              //   feature: {
-              //     dataZoom: {
-              //       yAxisIndex: 'none'
-              //     },
-              //     restore: {},
-              //     saveAsImage: {}
-              //   }
-              // },
-              // dataZoom: [{
-              //   startValue: '2014-06-01'
-              // }, {
-              //   type: 'inside'
-              // }],
-              visualMap: {
-                show:false,
-                top: 10,
-                right: 10,
-                pieces: LimitRange[DATA.kind],
-                outOfRange: {
-                  color: '#999'
-                }
-              },
-              series: {
-                name: '',
-                type: 'line',
-                data: res.data.qrcodelist.map(function (item) {
-                  return item[1];
-                }),
-                markLine: {
-                  silent: true,
-                  data: []
-                }
-              }
-            };
-            chart.setOption(option);
-            wx.hideLoading()
-            break
-          case 0:
-            wx.hideLoading()
-            wx.showToast({
-              image: '../../../images/attention.png',
-              title: '数据获取失败！'
-            });
-            break
-          default:
-            wx.showToast({
-              image: '../../../images/attention.png',
-              title: '服务器繁忙！'
-            });
-        }
-      }).catch((res) => {
-        console.log(res)
-      })
-    }
-  })
-}
-// 初始无延迟
-function initChart(canvas, width, height) {
-  wx.showLoading({
-    title: '加载中',
-  })
-  chart = echarts.init(canvas, null, {
-    width: width,
-    height: height
-  });
-
-  canvas.setChart(chart);
-
-  var labelRight = {
-    normal: {
-      position: 'right'
-    }
-  };
-
-  wx.getStorage({
-    key: 'equipmentInfo',
-    success: (res) => {
-      DATA = {
-        day: 7,
-        qrcodeid: res.data.EquipmentId,
-        kind: res.data.Kind,
-      }
-      requestPromisified({
-        url: h.main + '/selectnoqrcode1',
-        data: {
-          qrcodes: DATA
-        },
-        method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-        // header: {
-        //   'content-type': 'application/x-www-form-urlencoded',
-        //   'Accept': 'application/json'
-        // }, // 设置请求的 header
-      }).then((res) => {
-        switch (res.data.result){
-          case 1:
-            const option = {
-              title: {
-                text: ''
-              },
-              tooltip: {
-                trigger: 'axis'
-              },
-              // grid: {
-              //   top: 150
-              // },
-              xAxis: {
-                data: res.data.qrcodelist.map(function (item) {
-                  return item[0];
-                })
-              },
-              yAxis: {
-                splitLine: {
-                  show: false
-                }
-              },
-              // toolbox: {
-              //   left: 'center',
-              //   feature: {
-              //     dataZoom: {
-              //       yAxisIndex: 'none'
-              //     },
-              //     restore: {},
-              //     saveAsImage: {}
-              //   }
-              // },
-              // dataZoom: [{
-              //   startValue: '2014-06-01'
-              // }, {
-              //   type: 'inside'
-              // }],
-              visualMap: {
-                show:false,
-                top: 10,
-                right: 10,
-                pieces: LimitRange[DATA.kind],
-                outOfRange: {
-                  color: '#999'
-                }
-              },
-              series: {
-                name: '',
-                type: 'line',
-                data: res.data.qrcodelist.map(function (item) {
-                  return item[1];
-                }),
-                markLine: {
-                  silent: true,
-                  data: []
-                }
-              }
-            };
-            chart.setOption(option);
-            wx.hideLoading()
-            break
-          case 0:
-            wx.hideLoading()
-            wx.showToast({
-              image: '../../../images/attention.png',
-              title: '数据获取失败！'
-            });
-            break
-          default:
-            wx.showToast({
-              image: '../../../images/attention.png',
-              title: '服务器繁忙！'
-            });
-        }
-      }).catch((res) => {
-        wx.showToast({
-          image: '../../../images/attention.png',
-          title: '服务器繁忙！'
-        });
-        console.log(res)
-      })
-    }
-  })
-
-
-}
-
+var rate = 0;
+var canvasWidth = 0;
+var canvasHeight = 0;
+var DATA = null;
 Page({
-  onShareAppMessage: res => {
-    return {
-      title: 'ECharts 可以在微信小程序中使用啦！',
-      path: '/pages/index/index',
-      success: function () { },
-      fail: function () { }
-    }
-  },
 
-  onReady: function () {
-    // 获取组件
-    this.ecComponent = this.selectComponent('#mychart-dom-bar');
-  },
-
+  /**
+   * 页面的初始数据
+   */
   data: {
-    Kind:'PM2.5',
-    Unit:'',
-    EquipmentId:'',
-    ec: {
-      // 将 lazyLoad 设为 true 后，需要手动初始化图表
-      lazyLoad: true
+    lineCanvasData: {
+      canvasId: 'lineAreaCanvas',
     },
-    ec2: {
-      onInit: initChart
-    },
-    isLoaded: false,
-    isDisposed: false,
-    isShowFirst:true,
+    Kind: 'PM2.5',
+    Unit: '',
+    EquipmentId: '',
+    EquipmentName:'',
+    Number:'',
     DataInfo: [],
     CurTab: 0,
-    TabMenu: ['近7天', '近2周', '近一个月'],
-    
+    TabMenu: ['近6h', '近12h', '近24h'],
   },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
   onLoad: function (options) {
-    //this.GetEquipmentInfo()
+    //console.log(app.globalData.systemInfo);
+    var systemInfo = app.globalData.systemInfo;
+    rate = systemInfo.screenWidth / 750;
+    var updateData = {};
+    canvasWidth = systemInfo.screenWidth - rate * 64;
+    canvasHeight = rate * 306 + rate * 44 + rate * 34 + rate * 22;
+
+    var yMax = 100;
+    var yMin = 0;
+    var xMax = 30;
+    var xMin = 0;
+    updateData['lineCanvasData.canvasWidth'] = canvasWidth;
+    updateData['lineCanvasData.axisPadd'] = { left: rate * 5, top: rate * 44, right: rate * 5 };
+    updateData['lineCanvasData.axisMargin'] = { bottom: rate * 34, left: rate * 26 };
+    updateData['lineCanvasData.yAxis.fontSize'] = rate * 22;
+    updateData['lineCanvasData.yAxis.fontColor'] = '#637280';
+    updateData['lineCanvasData.yAxis.lineColor'] = '#DCE0E6';
+    updateData['lineCanvasData.yAxis.lineWidth'] = rate * 2;
+    updateData['lineCanvasData.yAxis.dataWidth'] = rate * 62;
+    updateData['lineCanvasData.yAxis.isShow'] = true;
+    updateData['lineCanvasData.yAxis.isDash'] = true;
+    updateData['lineCanvasData.yAxis.minData'] = yMin;
+    updateData['lineCanvasData.yAxis.maxData'] = yMax;
+    updateData['lineCanvasData.yAxis.padd'] = rate * 306 / (yMax - yMin);
+
+    updateData['lineCanvasData.xAxis.dataHeight'] = rate * 26;
+    updateData['lineCanvasData.xAxis.fontSize'] = rate * 22;
+    updateData['lineCanvasData.xAxis.fontColor'] = '#637280';
+    updateData['lineCanvasData.xAxis.lineColor'] = '#DCE0E6';
+    updateData['lineCanvasData.xAxis.lineWidth'] = rate * 2;
+    updateData['lineCanvasData.xAxis.minData'] = xMin;
+    updateData['lineCanvasData.xAxis.maxData'] = xMax;
+    updateData['lineCanvasData.xAxis.padd'] = (canvasWidth - rate * 103) / (xMax - xMin);
+
+    updateData['lineCanvasData.point'] = { size: rate * 4, isShow: false };
+    updateData['lineCanvasData.canvasHeight'] = canvasHeight;
+    updateData['lineCanvasData.enableScroll'] = true;
+
+
+    this.setData(updateData);
+    //----------------------------
     wx.getStorage({
       key: 'equipmentInfo',
-      success: (res)=> {
-        switch (res.data.Kind){
+      success: (res) => {
+        switch (res.data.Kind) {
           case 'PM2.5':
             this.setData({
               Unit: 'μg/m³',
             })
-          break
+            break
           case 'CO2':
             this.setData({
               Unit: 'ppm',
@@ -412,18 +108,8 @@ Page({
             break
         }
         this.setData({
-          Kind : res.data.Kind,
-          EquipmentId: res.data.EquipmentId
-        })
-      }
-    })
-    //let unit = ['PM2.5','CO2','CO','甲醛','温度','VOCs']
-  },
-  onShow(){
-    wx.getStorage({
-      key: 'equipmentInfo',
-      success: (res) => {
-        this.setData({
+          Kind: res.data.Kind,
+          EquipmentId: res.data.EquipmentId,
           EquipmentName: res.data.EquipmentName,
           Number: res.data.Data,
         })
@@ -431,116 +117,186 @@ Page({
     })
   },
 
-  // 点击按钮后初始化图表
-  init: function (DAY) {
-    this.ecComponent.init((canvas, width, height) => {
-      // 获取组件的 canvas、width、height 后的回调函数
-      // 在这里初始化图表
-      const chart = echarts.init(canvas, null, {
-        width: width ? width : app.globalData.width,
-        height: height ? height : app.globalData.width,
-      });
-      setOption(chart, DAY);
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
 
-      // 将图表实例绑定到 this 上，可以在其他成员函数（如 dispose）中访问
-      this.chart = chart;
-
-      this.setData({
-        isLoaded: true,
-        isDisposed: false
-      });
-
-      // 注意这里一定要返回 chart 实例，否则会影响事件处理等
-      return chart;
-    });
   },
-//释放
-  dispose: function () {
-    if (this.chart) {
-      this.chart.dispose();
-    }
 
-    this.setData({
-      // isDisposed: true,
-      isShowFirst:false
-    });
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    this.GetDataFn(6)
+    
   },
-  //tab change
-  ChangeTab(e) {
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+    //console.log("22222");
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  },
+  ChangeTab(e){
     let IDX = e.currentTarget.dataset.idx
     let DAY
-    switch (IDX){
+    switch (IDX) {
       case 0:
-        DAY = 7
+        DAY = 6
         break
       case 1:
-        DAY = 14
+        DAY = 12
         break
       case 2:
-        DAY = 30
+        DAY = 24
         break
     }
     this.setData({
       CurTab: IDX,
       Day: DAY
     })
-    this.init(DAY)
-    // this.init(DAY)
-    this.dispose()
-    // if (!this.data.isShowFirst){
-    //   this.dispose()
-    // }
+    this.GetDataFn(DAY)
   },
-  GetEquipmentInfo(){
+  GetDataFn(DAY) {
     wx.getStorage({
       key: 'equipmentInfo',
       success: (res) => {
         DATA = {
-          day: 7,
+          day: DAY,
           qrcodeid: res.data.EquipmentId,
           kind: res.data.Kind,
         }
+        wx.showLoading({
+          title: '加载中',
+        })
         requestPromisified({
           url: h.main + '/selectnoqrcode1',
           data: {
             qrcodes: DATA
           },
-          method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-          // header: {
-          //   'content-type': 'application/x-www-form-urlencoded',
-          //   'Accept': 'application/json'
-          // }, // 设置请求的 header
+          method: 'POST',
         }).then((res) => {
-          console.log('GetEquipmentInfo---')
-          console.log(res)
-          switch (res.data.result) {
-            case 1:
-              this.setData({
-                EquipmentName: res.data.malist[0].second_name,
-                // unit: res.data.malist[0].unit,
-                Number: res.data.malist[0].number
-              })
-              break
-            case 0:
-              wx.showToast({
-                image: '../../../images/icon/attention.png',
-                title: '详细数据获取失败！'
-              });
-              break
-            default:
-              wx.showToast({
-                image: '../../../images/icon/attention.png',
-                title: '服务器繁忙！'
-              });
-          }
+          //console.log(LimitRange[DATA.kind])
+          
+          let DataY = []
+          let DataX = []
+          let temp = res.data.qrcodelist.slice(0)
+          let temp2 = res.data.qrcodelist.slice(0)
+          temp.map((item, idx) => {
+            let objY = {
+              x: idx,
+              y: item[1],
+              title: ""
+            }
+            let objX = {
+              x: idx,
+              y: 0,
+              title: ''
+            }
+            DataY.push(objY)
+            DataX.push(objX)
+          })
+          //---------------------
+          var systemInfo = app.globalData.systemInfo;
+          rate = systemInfo.screenWidth / 750;
+          var updateData = {};
+          canvasWidth = systemInfo.screenWidth - rate * 64;
+          canvasHeight = rate * 306 + rate * 44 + rate * 34 + rate * 22;
+
+          temp2.sort(function (a, b) {
+            return -(a[1] - b[1]);
+          });
+          let Maxdata = temp2[0][1]
+          let len = Math.ceil(Maxdata / 4);
+
+          console.log(temp2)
+
+          var yMax = len * 4;
+          var yMin = 0;
+          var xMax = 30;
+          var xMin = 0;
+          var series = [{
+            data: DataY
+          }];
+          var xAxisData = DataX;
+          
+          console.log(Maxdata)
+          console.log(len)
+          var yAxisData = [
+            { x: 0, y: 0, title: '0' },
+            { x: 0, y: len, title: len },
+            { x: 0, y: len * 2, title: len * 2 },
+            { x: 0, y: len * 3, title: len * 3 },
+            { x: 0, y: len * 4, title: len * 4 },
+          ];
+          // var yAxisData = [
+          //   { x: 0, y: 0, title: '0' },
+          //   { x: 0, y: 10, title: '10' },
+          //   { x: 0, y: 20, title: '20' },
+          //   { x: 0, y: 30, title: '30' },
+          //   { x: 0, y: 40, title: '40' },
+          //   { x: 0, y: 50, title: '50' }
+          // ];
+          yMax = Maxdata;
+          yMin = 0;
+          xMax = 6;
+          xMin = 0;
+          updateData['lineCanvasData.xAxis.minData'] = xMin;
+          updateData['lineCanvasData.xAxis.maxData'] = xMax;
+          updateData['lineCanvasData.xAxis.padd'] = (canvasWidth - rate * 98) / (xMax - xMin);
+          updateData['lineCanvasData.point'] = { size: rate * 4, isShow: true };
+          updateData['lineCanvasData.yAxis.minData'] = yMin;
+          updateData['lineCanvasData.yAxis.maxData'] = yMax;
+          updateData['lineCanvasData.yAxis.padd'] = rate * 306 / (yMax - yMin);
+          updateData['lineCanvasData.series'] = series;
+          updateData['lineCanvasData.xAxis.data'] = xAxisData;
+          updateData['lineCanvasData.yAxis.data'] = yAxisData;
+          this.setData(updateData);
+          //---------------------
+          wx.hideLoading()
         }).catch((res) => {
+          wx.hideLoading()
           wx.showToast({
-            image: '../../../images/icon/attention.png',
+            image: '../../../images/attention.png',
             title: '服务器繁忙！'
           });
           console.log(res)
         })
       }
     })
-  }
-});
+  },
+  
+
+
+
+
+})

@@ -1,4 +1,4 @@
-  <view class='KindTitle Title'>{{Kind}}</view>
+<view class='KindTitle Title'>{{Kind}}</view>
 
 <view class='CurInfo'>
   <view class='CurData'>
@@ -14,10 +14,4 @@
   <view class="{{CurTab == TabIdx?'TabItem Active':'TabItem'}}" bindtap='ChangeTab' wx:for="{{TabMenu}}" wx:for-index="TabIdx" wx:for-item="Tab" wx:key="TabIdx" data-idx='{{TabIdx}}'>{{Tab}}</view>
 </view>
 
-  <view class="container" hidden='{{!isShowFirst}}'>
-    <ec-canvas id="mychart-dom-bar2" canvas-id="mychart-bar2" ec="{{ ec2 }}"></ec-canvas>
-</view>  
-
- <view class="container" hidden='{{isShowFirst}}'>
-    <ec-canvas   id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
-</view> 
+<line-chart id="line-chart" canvasData="{{lineCanvasData}}" />

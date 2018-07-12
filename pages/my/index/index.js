@@ -130,7 +130,7 @@ Page({
   //客服
   MakeCall(){
     wx.makePhoneCall({
-      phoneNumber: '021-3100-7227' 
+      phoneNumber: '021-64085119-2504' 
     })
   },
   //商城

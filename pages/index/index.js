@@ -931,7 +931,7 @@ Page({
         case 2:
           this.setData({
             airQuality_inside: [],
-            tipText:'请先绑定设备'
+            tipText:'请先添加默认设备'
           })
           break
         case 3:

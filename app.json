@@ -42,14 +42,13 @@
     "pages/authorize/index",
 
     "pages/sport/index",
-   
     
-
+    "pages/equipment/detail/index",
     "pages/equipment/index/index",
     "pages/equipment/list/index",
     "pages/equipment/add/index",
     "pages/equipment/analysis/index",
-    "pages/equipment/detail/index",
+    
 
     "pages/questionnaire/index",
     "pages/my/index/index",
@@ -60,7 +59,7 @@
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "white",
-    "navigationBarTitleText": "SmartHox",
+    "navigationBarTitleText": "小E厨房哨兵",
     "navigationBarTextStyle":"black",
     "enablePullDownRefresh": true
   },
@@ -80,13 +79,7 @@
         "pagePath": "pages/Interaction/index/index",
         "iconPath": "images/icon/releaseBar.png",
         "selectedIconPath": "images/icon/releaseBar_acitve.png",
-        "text": "酷玩"
-      },
-      {
-        "pagePath": "pages/sport/index",
-        "iconPath": "images/icon/discover.png",
-        "selectedIconPath": "images/icon/discover-active.png",
-        "text": "发现"
+        "text": "圈子"
       },
       {
         "pagePath": "pages/my/index/index",

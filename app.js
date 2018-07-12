@@ -60,7 +60,10 @@ App({
     // 本机信息
     wx.getSystemInfo({
       success: (res)=> {
+        console.log('systemInfo---')
+        console.log(res)
         this.globalData.width = res.windowWidth
+        this.globalData.systemInfo = res
       }
     }),
       wx.login({

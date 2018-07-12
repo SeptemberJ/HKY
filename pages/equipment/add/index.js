@@ -7,6 +7,7 @@ const app = getApp()
 
 Page({
   data: {
+    defaulttype: false,//  默认  1   不默认0
     IconList: [],
     Equipment_Icon: 0,
     Equipment_Name: '',
@@ -65,6 +66,12 @@ Page({
       }
     })
   },
+  //默认设备设置
+  switch1Change: function (e) {
+    this.setData({
+      defaulttype: e.detail.value
+    })
+  },
   //新增设备
   AddEquipment() {
     app.GetLocation()
@@ -80,7 +87,7 @@ Page({
       return false
     }
     //校验
-    if (!this.data.Equipment_Name || !this.data.Equipment_Code_F || !this.data.Equipment_Code_S) {
+    if (!this.data.Equipment_Name || !this.data.Equipment_Code_S) {
       wx.showToast({
         image: '../../../images/icon/attention.png',
         title: '请填写相关信息！'
@@ -96,10 +103,13 @@ Page({
     }
    
     let DATA = {
+      defaulttype: this.data.defaulttype?1:0,
       machine_img: this.data.Equipment_Icon,
       second_name: this.data.Equipment_Name,
-      master_control: this.data.Equipment_Code_F,
-      second_qrcode: this.data.Equipment_Code_S,
+      master_control: this.data.Equipment_Code_S,
+      second_qrcode: '',
+      // master_control: this.data.Equipment_Code_F,
+      // second_qrcode: this.data.Equipment_Code_S,
       ftelphone: app.globalData.User_Phone,
       homeid: app.globalData.CurHomeId,
       roomid: this.data.RoomId ? this.data.RoomId:''

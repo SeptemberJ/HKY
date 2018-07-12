@@ -5,12 +5,12 @@
     <!--topBar  -->
     <view class='topBar'>
       <!--left userAccounts  -->
-      <picker bindchange="ToggleCurHome"  range="{{HomeList}}" range-key="fname">
+      <!-- <picker bindchange="ToggleCurHome"  range="{{HomeList}}" range-key="fname">
         <view class='nickName' bindtap='ToggleCurHome'>
         {{CurHomeName?CurHomeName:''}}
          <image class="ArrowDown" wx:if="{{CurHomeName}}" src="../../images/icon/arrow.png"></image> 
       </view>
-      </picker>
+      </picker> -->
       <!--./left userAccounts  -->
       <!--middle GPS  -->
       <view class='MiddleGps' wx:if="{{SwiperCur == 1}}">
@@ -23,7 +23,7 @@
         <image class='operationIcon messageIocn' bindtap='ToTrend' src='../../images/icon/qushi.png'></image>
         <image class='operationIcon messageIocn' bindtap='ToMyMessage' src='../../images/icon/message.png'></image>
         <view class='TipDot' wx:if='{{MessageCount>0}}'></view>
-        <image class='operationIcon' src='../../images/icon/add.png' bindtap='ToAddOptions'></image>
+        <!-- <image class='operationIcon' src='../../images/icon/add.png' bindtap='ToAddOptions'></image> -->
       </view>
     </view>
     <!--./topBar  -->
@@ -227,9 +227,9 @@
   <view class='EQBlock' wx:if="{{EQList.length>0}}">
     <view class='EQBlock_tab'>
       <text class="{{Cur_tab == 0?'tab_ative':''}}" data-idx='0' bindtap='ChangeTab'>设备</text>
-      <text class="{{Cur_tab == 1?'tab_ative':''}}" data-idx='1' bindtap='ChangeTab'>房间</text>
+      <!-- <text class="{{Cur_tab == 1?'tab_ative':''}}" data-idx='1' bindtap='ChangeTab'>房间</text>
       <text class="{{Cur_tab == 2?'tab_ative':''}}" data-idx='2' bindtap='ChangeTab'>自动化</text>
-      <text class="{{Cur_tab == 3?'tab_ative':''}}" data-idx='3' bindtap='ChangeTab'>场景</text>
+      <text class="{{Cur_tab == 3?'tab_ative':''}}" data-idx='3' bindtap='ChangeTab'>场景</text> -->
     </view>
     <!--EQList  -->
     <view class='EQList' wx:if="{{Cur_tab == 0}}">

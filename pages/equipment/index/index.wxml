@@ -19,9 +19,11 @@
     <view class='equipmentItem' wx:for="{{equipmentList}}" wx:for-index="EquipmentIdx" wx:for-item="Equipment" wx:key="EquipmentIdx">
       <image class='operationIcon' src="{{Equipment.machine_img}}" data-id='{{Equipment.id}}' data-name='{{Equipment.second_name}}' bindtap=''></image>
       <text class='equipmentName' data-id='{{Equipment.id}}' data-name='{{Equipment.second_name}}' bindtap=''>{{Equipment.second_name}}</text>
+      <image class='operationIcon_s' src='../../../images/icon/edit.png' data-id='{{Equipment.id}}' bindtap='EditEquipment' data-name='{{Equipment.second_name}}' data-defaulttype='{{Equipment.defaulttype}}'></image>
        <image class='operationIcon_s' src='../../../images/icon/delete.png' data-id='{{Equipment.id}}' bindtap='Delete'></image>
-       <image wx:if="{{Equipment.sensortype == 1 || Equipment.type == 1}}" class='operationIcon_s' src='../../../images/icon/analysis.png' data-id='{{Equipment.id}}' data-name='{{Equipment.second_name}}' bindtap='LookData'></image>
-       <text class="offline" wx:if="{{ Equipment.sensortype == 1 && Equipment.type == 0}}">offline</text>
+       <image wx:if="{{Equipment.sensortype == 1 && Equipment.type == 1}}" class='operationIcon_s' src='../../../images/icon/AnalysisBlue.png' data-id='{{Equipment.id}}' data-name='{{Equipment.second_name}}' bindtap='LookData'></image>
+       <image wx:if="{{ Equipment.sensortype == 1 && Equipment.type == 0}}" class='operationIcon_s' src='../../../images/icon/AnalysisGray.png'></image>
+       <!-- <text class="offline" wx:if="{{ Equipment.sensortype == 1 && Equipment.type == 0}}">offline</text> -->
     </view>
   </view>
     <view class="InfoNull" wx:if="{{equipmentList.length == 0}}">
@@ -31,17 +33,19 @@
 </view>
 
 <!--新增设备  -->
-<view class='Mask' wx-if="{{IdAdd}}">
+ <view class='Mask' wx-if="{{IdModify}}">
 </view>
-<view class='Modal' wx-if="{{IdAdd}}">
-  <text class='Modal_tit'>新增设备</text>
+<view class='Modal' wx-if="{{IdModify}}">
+  <text class='Modal_tit'>修改设备</text>
   <view class='InputBox'>
-    <input placeholder='请输入设备名称' bindinput='ChangeEquipment_Name'></input>
-    <input placeholder='请输入主控条码' bindinput='ChangeEquipment_Code_F'></input>
-    <input placeholder='请输入设备条码' bindinput='ChangeEquipment_Code_S'></input>
+    <input placeholder='请输入设备名称' bindinput='ChangeEquipment_Name' value="{{Equipment_Name}}"></input>
+  </view>
+  <view class='InputBox'>
+    <text>设为默认设备</text>
+    <switch checked="{{defaulttype}}" bindchange="switch1Change"/>
   </view>
   <view class='operationBlock'>
       <view class='operation_item lightGreen' bindtap='Cancel'>取消</view>
-      <view class='operation_item borderL lightGreen' bindtap='AddEquipment'>保存    </view> 
+      <view class='operation_item borderL lightGreen' bindtap='ModifyEquipment'>保存    </view> 
   </view>
-</view>
+</view> 

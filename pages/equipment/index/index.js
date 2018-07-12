@@ -9,32 +9,33 @@ Page({
   data: {
     equipmentList2: [{ 'icon': '', 'name': '智能升降器', 'id': '2' }, { 'icon': '', 'name': '声控开关', 'id': '2' }],
     equipmentList:[],
-    IdAdd: false,
+    IdModify: false,
+    EQid:'',
     Equipment_Name: '',
-    Equipment_Code_F: '',
-    Equipment_Code_S: '',
+    defaulttype: false,
+
   },
   onShow: function(){
     this.GetEquipmentList()
   },
-  // onLoad: function () {
-  //   this.GetEquipmentList()
 
-  // },
+  EditEquipment(e){
+    this.setData({
+      IdModify: true,
+      EQid: e.currentTarget.dataset.id,
+      Equipment_Name: e.currentTarget.dataset.name,
+      defaulttype: e.currentTarget.dataset.defaulttype == 1?true:false,
+    })
+  },
   //input change
   ChangeEquipment_Name(e) {
     this.setData({
       Equipment_Name: e.detail.value
     })
   },
-  ChangeEquipment_Code_F(e) {
+  switch1Change: function (e) {
     this.setData({
-      Equipment_Code_F: e.detail.value
-    })
-  },
-  ChangeEquipment_Code_S(e) {
-    this.setData({
-      Equipment_Code_S: e.detail.value
+      defaulttype: e.detail.value
     })
   },
   ToAdd() {
@@ -44,56 +45,49 @@ Page({
   },
   Cancel() {
     this.setData({
-      IdAdd: false
+      IdModify: false
     })
   },
-  //新增设备
-  AddEquipment() {
-    //校验
-    if (!this.data.Equipment_Name || !this.data.Equipment_Code_F || !this.data.Equipment_Code_S) {
-      wx.showToast({
-        image: '../../../images/icon/attention.png',
-        title: '请填写相关信息！'
-      });
+  //修改设备
+  ModifyEquipment(e){
+    if (this.data.Equipment_Name.trim() == '') {
+      wx.showModal({
+        title: '提示',
+        content: '输入设备名！',
+        showCancel: false
+      })
       return false
-    }
-    let DATA = {
-      second_name: this.data.Equipment_Name,
-      master_control: this.data.Equipment_Code_F,
-      second_qrcode: this.data.Equipment_Code_S,
-      ftelphone: app.globalData.User_Phone
     }
     wx.showLoading({
       title: '加载中',
     })
     requestPromisified({
-      url: h.main + '/selectqrcode',
+      url: h.main + '/updateregistermachine1',
       data: {
-        qrcodes: DATA
+        second_name: this.data.Equipment_Name,
+        id:this.data.EQid,
+        defaulttype:this.data.defaulttype?1:0
       },
-      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {
-      //   'content-type': 'application/x-www-form-urlencoded',
-      //   'Accept': 'application/json'
-      // }, // 设置请求的 header
+      method: 'POST', 
     }).then((res) => {
       switch (res.data.result) {
         case 1:
           wx.hideLoading()
           wx.showToast({
-            title: '新增成功！',
+            title: '修改成功！',
             icon: 'success',
             duration: 1500
           })
-          this.Cancel()
-          //刷新列表
+          this.setData({
+            IdModify: false
+          })
           this.GetEquipmentList()
           break
         case 0:
           wx.hideLoading()
           wx.showToast({
             image: '../../../images/icon/attention.png',
-            title: '新增失败'
+            title: '修改失败！'
           });
           break
         default:

@@ -12,13 +12,17 @@
   <view class='Inputitem'>
     <input placeholder='请输入设备名称' bindinput='ChangeEquipment_Name'></input>
   </view>
-  <view class='Inputitem'>
+  <!-- <view class='Inputitem'>
     <input placeholder='请输入主控条码' bindinput='ChangeEquipment_Code_F' value='{{Equipment_Code_F}}'></input>
     <image class='Icon' src='../../../images/icon/scan.png' bindtap='Scan_Code_F'></image>
-  </view>
+  </view> -->
   <view class='Inputitem'>
     <input placeholder='请输入设备条码' bindinput='ChangeEquipment_Code_S'  value='{{Equipment_Code_S}}'></input>
     <image class='Icon' src='../../../images/icon/scan.png' bindtap='Scan_Code_S'></image>
+  </view>
+  <view class='Inputitem'>
+    <text>设为默认设备</text>
+    <switch  bindchange="switch1Change"/>
   </view>
   <view class='Btn' bindtap='AddEquipment'>保存</view> 
 </view>
