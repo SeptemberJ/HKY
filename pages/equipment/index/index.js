@@ -154,8 +154,28 @@ Page({
   },
   // 查看数据
   LookData(e) {
+    let ismanager = e.currentTarget.dataset.ismanager
+    if (ismanager == 1) {
+      wx.navigateTo({
+        url: '../analysis/index?id=' + e.currentTarget.dataset.id + '&name=' + e.currentTarget.dataset.name
+      })
+    }else{
+      this.ToAQIDetail(e.currentTarget.dataset.eqid, e.currentTarget.dataset.eqname)
+    }
+  },
+  //普通用户查看AQI趋势
+  ToAQIDetail(EquipmentId, EquipmentName, Data) {
+    let Info = {
+      Kind: 'AQI',
+      EquipmentId: EquipmentId,
+      EquipmentName: EquipmentName,
+    }
+    wx.setStorage({
+      key: "equipmentInfo",
+      data: Info
+    })
     wx.navigateTo({
-      url: '../analysis/index?id=' + e.currentTarget.dataset.id + '&name=' + e.currentTarget.dataset.name
+      url: '../detail/index'
     })
   },
   //删除设备

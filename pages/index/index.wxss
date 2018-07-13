@@ -968,8 +968,8 @@ animation: Move 2s ease-in-out alternate infinite;
   width: 750rpx;
   height: 130rpx;
   display: flex;
-  justify-content: flex-start;
-  /* justify-content: space-between; */
+  justify-content: flex-start;  
+  /* justify-content: space-between;  */
   align-items: center; 
   background: #fff;
   border-bottom: 1px solid #efefef;
@@ -982,7 +982,7 @@ animation: Move 2s ease-in-out alternate infinite;
   display: inline-block;
 }
 .EQList_item_text{
-  width: calc(750rpx - 100rpx - 150rpx);
+  width: calc(750rpx - 100rpx - 250rpx);
   height: 100%;
   padding-left: 10rpx;
   display: flex;
@@ -999,9 +999,17 @@ animation: Move 2s ease-in-out alternate infinite;
   font-size: 30rpx;
   color: #999;
 }
+.EQOperations{
+  width: 250rpx;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
 .ControlBt{
   width: 140rpx;
   height: 70rpx;
+  /* float: right; */
   margin-right: 10rpx;
   text-align: center;
   line-height: 70rpx;
@@ -1035,6 +1043,9 @@ animation: Move 2s ease-in-out alternate infinite;
   background: green;
 }
 .offline{
+  width: 150rpx;
+  height: 70rpx;
+  margin-right: 10rpx;
   color: #ddd;
 }
 /*Roomlist */

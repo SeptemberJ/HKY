@@ -121,9 +121,9 @@ Page({
       hasUserInfo: true
     })
   },
-  GoQuestionnaire(){
+  GoQuestionnaire(e){
     wx.navigateTo({
-      url: '../questionnaire/index?id=' + app.globalData.QuestionnaireId
+      url: '../questionnaire/index?questionnaireid=' + e.currentTarget.dataset.questionnaireid + '&eqid=' + e.currentTarget.dataset.eqid
     })
   },
   //烹饪方式
@@ -1276,8 +1276,29 @@ Page({
   },
   // 查看传感器趋势数据
   LookData_EQ(e) {
+    let ismanager = e.currentTarget.dataset.ismanager
+    if (ismanager == 1){
+      wx.navigateTo({
+        url: '../equipment/analysis/index?id=' + e.currentTarget.dataset.eqid + '&name=' + e.currentTarget.dataset.eqname
+      })
+    }else{
+      this.ToAQIDetail(e.currentTarget.dataset.eqid, e.currentTarget.dataset.eqname)
+    }
+    
+  },
+  //普通用户查看AQI趋势
+  ToAQIDetail(EquipmentId, EquipmentName, Data) {
+    let Info = {
+      Kind: 'AQI',
+      EquipmentId: EquipmentId,
+      EquipmentName: EquipmentName,
+    }
+    wx.setStorage({
+      key: "equipmentInfo",
+      data: Info
+    })
     wx.navigateTo({
-      url: '../equipment/analysis/index?id=' + e.currentTarget.dataset.eqid + '&name=' + e.currentTarget.dataset.eqname
+      url: '../equipment/detail/index'
     })
   },
   //开关场景

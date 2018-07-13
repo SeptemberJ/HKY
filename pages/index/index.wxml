@@ -39,9 +39,9 @@
             </view>
             <!----室内空气质量 有设备  -->
             <view class='IndoorAirQuality' wx:if="{{airQuality_inside != ''}}">
-              <view class='GoQuestionnaire' wx:if="{{IfHasWirteQuestionnaire == 0}}" bindtap='GoQuestionnaire'>
+              <!-- <view class='GoQuestionnaire' wx:if="{{IfHasWirteQuestionnaire == 0}}" bindtap='GoQuestionnaire'>
                 <text>填问卷</text>
-              </view>
+              </view> -->
               <text class='tit'>室内实时空气质量</text>
               <view class='AirQuality_level'>
                 <view class='level_typeData'>
@@ -236,15 +236,23 @@
       <view class='EQList_item' wx:for="{{EQList}}" wx:for-index="EQIdx" wx:for-item="Equipment" wx:key="EQIdx" bindlongtap='DeleteEQ' data-id='{{Equipment.id}}'>
         <image src="{{Equipment.machine_img}}" bindtap='ToControl' data-eqid='{{Equipment.id}}' data-eqtype='{{Equipment.sensortype}}'></image>
         <view class='EQList_item_text' bindtap='ToControl' data-eqid='{{Equipment.id}}' data-eqtype='{{Equipment.sensortype}}'>
-          <text class='EQList_item_text_name'>{{Equipment.second_name}}</text>
-          <text class='EQList_item_text_room'>{{Equipment.room_name}}</text>
+        <view>
+        <text class='EQList_item_text_name'>{{Equipment.second_name}}</text>
+        <image wx:if="{{Equipment.defaulttype == 1}}" style='width:50rpx;height:50rpx;' src='../../images/icon/default.png'></image>
+        </view>
+        <view>
+           <text class='EQList_item_text_room'>{{Equipment.room_name}}</text>
+        </view>
         </view>
         <!-- 操作按钮分类显示 -->
+        <view class='EQOperations'>
+          <image wx:if="{{Equipment.fstatus == '0' }}"  data-eqid='{{Equipment.master_control}}' data-questionnaireid='{{Equipment.collectionlist[0].id}}' style="width:70rpx;height:70rpx;display:inline-block" src='../../images/icon/questionnaire.png' bindtap='GoQuestionnaire'></image>
         <view class="ControlBt {{Equipment.on_off_status == 0?'ControlBt_off':'ControlBt_on'}}" bindtap='ToggleOpenClose_EQ' data-eqid='{{Equipment.id}}' data-eqstatus='{{Equipment.on_off_status}}' data-idx='{{EQIdx}}' wx:if="{{Equipment.sensortype != 1 && Equipment.type != 0}}">{{Equipment.on_off_status == 0?'OFF':'ON'}}</view>
-        <view class="ControlBt_image" wx:if="{{Equipment.sensortype == 1 && Equipment.type == 1}}" bindtap='LookData_EQ' data-eqid='{{Equipment.id}}' data-eqname='{{Equipment.second_name}}'>
+        <view class="ControlBt_image" wx:if="{{Equipment.sensortype == 1 && Equipment.type == 1}}" bindtap='LookData_EQ' data-eqid='{{Equipment.id}}' data-eqname='{{Equipment.second_name}}' data-ismanager='{{Equipment.ismanager}}'>
           <image src='../../images/icon/AnalysisBlue.png'></image>
         </view>
         <view class="offline" wx:if="{{ Equipment.type == 0}}">offline</view>
+        </view>
         
       </view>
       <view class="InfoNull" wx:if="{{CurHomeRole != 0}}">

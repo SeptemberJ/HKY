@@ -17,7 +17,7 @@ Page({
       success: (res) => {
         app.globalData.User_Phone = res.data.User_Phone
         app.globalData.User_name = res.data.User_name
-        this.IfHasWirteQuestionnaire(res.data.User_Phone)
+        //this.IfHasWirteQuestionnaire(res.data.User_Phone)
         //获取home list
         requestPromisified({
           url: h.main + '/selectallhome?ftelphone=' + res.data.User_Phone,

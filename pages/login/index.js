@@ -136,11 +136,12 @@ Page({
             key: "UserInfo",
             data: temp_accountInfo
           })
-          if (res.data.collectionlist.length>0){
-            this.ToQuestionnaire(res.data.collectionlist[0].id)
-          }else{
-            this.SkipQuestionnaire()
-          }
+          this.SkipQuestionnaire()
+          // if (res.data.collectionlist.length>0){
+          //   this.ToQuestionnaire(res.data.collectionlist[0].id)
+          // }else{
+          //   this.SkipQuestionnaire()
+          // }
           app.globalData.User_Phone = this.data.User_Phone
           app.globalData.User_name = res.data.registerlist[0].fname
           app.globalData.Add_count = res.data.integral

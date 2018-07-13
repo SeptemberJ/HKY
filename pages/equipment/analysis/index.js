@@ -32,7 +32,7 @@ Page({
       Kind: e.currentTarget.dataset.kind,
       EquipmentId: this.data.EquipmentId,
       EquipmentName: this.data.EquipmentName,
-      Data: e.currentTarget.dataset.datavalue
+      //Data: e.currentTarget.dataset.datavalue
     }
     wx.setStorage({
       key: "equipmentInfo",

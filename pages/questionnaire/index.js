@@ -13,13 +13,15 @@ Page({
     submitForm:[],
     ifShowList:[],
     CurStep:0,
-    StepList:[]
+    StepList:[],
+    Eqid:''
   },
   onLoad: function (options) {
     this.setData({
-      QuestionnaireId: options.id
+      QuestionnaireId: options.questionnaireid,
+      Eqid: options.eqid,
     })
-    this.GetQuestionnaireList(options.id)
+    this.GetQuestionnaireList(options.questionnaireid)
     
   },
   
@@ -220,10 +222,12 @@ Page({
   },
   //提交问卷
   Submit: function(){
+    let _this = this
     console.log(this.data.ifShowList)
     console.log(this.data.submitForm)
     let temp = this.data.ifShowList
     let DATA = {
+      registermachineid:this.data.Eqid,
       collections:this.data.submitForm,
       id: this.data.QuestionnaireId,
       ftelphone: app.globalData.User_Phone
@@ -258,11 +262,14 @@ Page({
           wx.showToast({
             title: '+' + res.data.integral +'积分！',
             icon: 'success',
-            duration: 3000
+            duration: 1500
           })
           app.globalData.IfHasWirteQuestionnaire = 1
-          setTimeout(this.SkipQuestionnaire(),3000)
-          
+          setTimeout(()=>{
+            wx.switchTab({
+              url: '../index/index'
+            })
+          }, 1500)
           break
         case 0:
           wx.hideLoading()
@@ -280,14 +287,14 @@ Page({
             duration: 2000,
           });
       }
-    }).catch((res)=>{
-      wx.hideLoading()
-      wx.showToast({
-        title: '服务器繁忙',
-        image: '../../images/icon/attention.png',
-        duration: 2000,
-      })
-      console.log(res)
+      }).catch((res)=>{
+        wx.hideLoading()
+        wx.showToast({
+          title: '服务器繁忙',
+          image: '../../images/icon/attention.png',
+          duration: 2000,
+        })
+        console.log(res)
     })
     console.log(this.data.ifShowList)
     console.log(this.data.submitForm)

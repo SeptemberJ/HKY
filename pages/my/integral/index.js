@@ -22,6 +22,9 @@ Page({
   },
   //获取积分
   GetIntegral() {
+    wx.showLoading({
+      title: '加载中',
+    })
     requestPromisified({
       url: h.main + '/selectintegral?ftelphone=' + app.globalData.User_Phone,
       data: {
@@ -39,20 +42,24 @@ Page({
             getRecordList: res.data.integrallist,
             integral: res.data.count
           })
+          wx.hideLoading()
           break
         case 0:
           wx.showToast({
             image: '../../../images/icon/attention.png',
             title: '消息获取失败!'
           });
+          wx.hideLoading()
           break
         default:
+          wx.hideLoading()
           wx.showToast({
             image: '../../../images/icon/attention.png',
             title: '服务器繁忙！'
           });
       }
     }).catch((res) => {
+      wx.hideLoading()
       wx.showToast({
         image: '../../../images/icon/attention.png',
         title: '服务器繁忙！'

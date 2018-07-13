@@ -76,6 +76,11 @@ Page({
       key: 'equipmentInfo',
       success: (res) => {
         switch (res.data.Kind) {
+          case 'AQI':
+            this.setData({
+              Unit: '--',
+            })
+            break
           case 'PM2.5':
             this.setData({
               Unit: 'μg/m³',
@@ -93,7 +98,7 @@ Page({
             break
           case '甲醛':
             this.setData({
-              Unit: 'mg/m³',
+              Unit: 'ppm',
             })
             break
           case '温度':
@@ -103,7 +108,7 @@ Page({
             break
           case 'VOCs':
             this.setData({
-              Unit: '等级',
+              Unit: '--',
             })
             break
         }
@@ -111,7 +116,6 @@ Page({
           Kind: res.data.Kind,
           EquipmentId: res.data.EquipmentId,
           EquipmentName: res.data.EquipmentName,
-          Number: res.data.Data,
         })
       }
     })
@@ -206,6 +210,9 @@ Page({
           method: 'POST',
         }).then((res) => {
           //console.log(LimitRange[DATA.kind])
+          this.setData({
+            Number: parseInt(res.data.malist[0].number),
+          })
           
           let DataY = []
           let DataX = []
