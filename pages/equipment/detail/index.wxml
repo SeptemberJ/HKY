@@ -1,17 +1,138 @@
-<view class='KindTitle Title'>{{Kind}}</view>
+<view class='containWrap'>
+  <view class='TopInfo'>
+    <view class='KindTitle Title'>{{Kind}}</view>
+    <view class='CurInfo'>
+      <view class='CurData'>
+        <text class='data'>{{Number}}</text>
+      </view>
+      <view class='additionalData'>
+        <text>设备：{{EquipmentName}}</text>
+        <text>单位：{{Unit}}</text>
+      </view>
+    </view> 
 
-<view class='CurInfo'>
-  <view class='CurData'>
-    <text class='data'>{{Number}}</text>
+    <view class='TabBox'>
+      <view class="{{CurTab == TabIdx?'TabItem Active':'TabItem'}}" bindtap='ChangeTab' wx:for="{{TabMenu}}" wx:for-index="TabIdx" wx:for-item="Tab" wx:key="TabIdx" data-idx='{{TabIdx}}'>{{Tab}}      </view>
+    </view> 
   </view>
-  <view class='additionalData'>
-    <text>设备：{{EquipmentName}}</text>
-    <text>单位：{{Unit}}</text>
-  </view>
-</view> 
 
-<view class='TabBox'>
-  <view class="{{CurTab == TabIdx?'TabItem Active':'TabItem'}}" bindtap='ChangeTab' wx:for="{{TabMenu}}" wx:for-index="TabIdx" wx:for-item="Tab" wx:key="TabIdx" data-idx='{{TabIdx}}'>{{Tab}}</view>
+  <view class='CanvasBlock'>
+      <canvas canvas-id='myCanvasAxis' style='width:{{PaddingLeft}}px;height:{{CanvasHeight}}px;position:fixed;background:#fff;'></canvas> 
+      <canvas canvas-id="myCanvasData" style="width:{{CanvasWidth}}px;height:{{CanvasHeight}}px;left:{{PaddingLeft}}px;background:#fff;">
+       <cover-view class="cover-view" style='width:90px;height:70px;top: {{(CanvasHeight - ips[ChoosedIdx].y * Rate - 10)>CanvasHeight?(CanvasHeight - ips[ChoosedIdx].y * Rate - 10):10}}px;left: {{(1+ AxisXWidth * (ChoosedIdx + 1 - StartRend)-AxisXWidth/2)>(CanvasWidth-90)?((1+ AxisXWidth * (ChoosedIdx + 1 - StartRend)-AxisXWidth/2)-100):(1+ AxisXWidth * (ChoosedIdx + 1 - StartRend)-AxisXWidth/2)}}px;'>
+        <!-- <cover-view class="cover-view" style='width:180rpx;height:70px;top: {{(CanvasHeight - ips[ChoosedIdx].y * Rate - 10)>CanvasHeight?(CanvasHeight - ips[ChoosedIdx].y * Rate - 10):10}}px;left: {{(1+ AxisXWidth * (ChoosedIdx + 1 - StartRend)-AxisXWidth/2)>(CanvasWidth-80)?(CanvasWidth-130):(1+ AxisXWidth * (ChoosedIdx + 1 - StartRend)-AxisXWidth/2)}}px;'> -->
+      
+          <cover-view>时间：</cover-view>
+          <cover-view>{{ips[ChoosedIdx].title}}</cover-view>
+          <cover-view>数值：</cover-view>
+          <cover-view>{{ips[ChoosedIdx].y}}</cover-view>
+        </cover-view>
+      </canvas>
+  </view>
+
+  <view class='ScrollBlock'>
+    <scroll-view scroll-x="true" class="ip_tab_comtainer" bindscroll="Scroll" wx:if="{{ifRestore}}" scroll-left="0">
+      <!-- <view style='width:200px;height:40px;background:blue;display:inline-block;'>
+      </view>
+      <view style='width:200px;height:40px;background:red;display:inline-block;'>
+      </view>
+      <view style='width:200px;height:40px;background:pink;display:inline-block;'>
+      </view> -->
+      <view style='padding-left:{{PaddingLeft}}px;height:40rpx;background:#fff;'>
+        <block wx:for="{{ips}}" wx:for-item="ip" wx:key="{{ip.x}}" wx:for-index="idx">
+          <view class="{{ChoosedIdx == idx?'ip_tab_item_s':'ip_tab_item_n'}}" bindtap="onIpItemClick" data-idx="{{idx}}" wx:key="{{ip.x}}" data-item="{{ip}}">{{ip.x}}
+          </view>
+        </block>
+      </view>
+    </scroll-view>
+    <scroll-view class="scroll-view_H" scroll-x style="width: 100%" bindscroll="Scroll"  wx:if="{{!ifRestore}}" scroll-left="120">
+      <view style='padding-left:{{PaddingLeft}}px;height:40rpx;background:#fff;'>
+        <block wx:for="{{ips}}" wx:for-item="ip" wx:key="{{ip.x}}" wx:for-index="idx">
+          <view class="{{ChoosedIdx == idx?'ip_tab_item_s':'ip_tab_item_n'}}" bindtap="onIpItemClick" data-idx="{{idx}}" wx:key="{{ip.x}}" data-item="{{ip}}">{{ip.x}}
+          </view>
+        </block>
+      </view>
+    </scroll-view>
+  </view>
+
 </view>
 
-<line-chart id="line-chart" canvasData="{{lineCanvasData}}" />
+<!-- <view class='containWrap'>
+  <view class='TopInfo'>
+    <view class='KindTitle Title' >{{Kind}}{{CanvasWidth}}</view>
+
+    <view class='CurInfo'>
+      <view class='CurData'>
+        <text class='data'>{{Number}}</text>
+      </view>
+      <view class='additionalData'>
+        <text>设备：{{EquipmentName}}</text>
+        <text>单位：{{Unit}}</text>
+      </view>
+    </view> 
+
+    <view class='TabBox'>
+      <view class="{{CurTab == TabIdx?'TabItem Active':'TabItem'}}" bindtap='ChangeTab' wx:for="{{TabMenu}}" wx:for-index="TabIdx" wx:for-item="Tab" wx:key="TabIdx" data-idx='{{TabIdx}}'>{{Tab}}      </view>
+    </view> 
+  </view>
+
+  <view class='chartBlock'> -->
+    <!-- <scroll-view scroll-x="true" class="ip_tab_comtainer" bindscroll="Scroll" wx:if="{{ifRestore}}" scroll-left="0">
+  <view class="ip_tab_comtainer_padd"></view>
+  <view class='wrapper'>
+    <view style='width:100%;margin-left:-{{Distance}}px;display: flex;justify-content: flex-start;position: relative;top:0;left:0;height:{{CanvasHeight}}px;background:#fff;'>
+        <canvas canvas-id='myCanvasAxis' style='width:{{PaddingLeft}}px;height:{{CanvasHeight}}px;position:fixed'></canvas> 
+       <canvas canvas-id='myCanvasData' style='width:{{CanvasWidth}}px;height:{{CanvasHeight}}px;position:absolute;top:0;left:{{PaddingLeft}}px;z-index:99;background:#fff;'>
+        
+         <cover-view class="cover-view" style='width:160rpx;height:50px;top: {{(CanvasHeight - ips[ChoosedIdx].y * Rate - 50)>0?(CanvasHeight - ips[ChoosedIdx].y * Rate - 50):50}}px;left: {{1+ AxisXWidth * (ChoosedIdx + 1)-AxisXWidth/2}}px;'>
+          <cover-view>时间：</cover-view>
+          <cover-view>{{ips[ChoosedIdx].title}}</cover-view>
+          <cover-view>数值：</cover-view>
+          <cover-view>{{ips[ChoosedIdx].y}}</cover-view>
+        </cover-view>  
+       </canvas> 
+    </view>
+    <view style='padding-left:{{PaddingLeft}}px;'>
+      <block wx:for="{{ips}}" wx:for-item="ip" wx:key="{{ip.x}}" wx:for-index="idx">
+        <view class="{{ChoosedIdx == idx?'ip_tab_item_s':'ip_tab_item_n'}}" bindtap="onIpItemClick" data-idx="{{idx}}" wx:key="{{ip.x}}" data-item="{{ip}}">
+        </view>
+      </block>
+    </view>
+  </view>
+   
+  <view class="ip_tab_comtainer_padd"></view>
+</scroll-view> -->
+    <!-- <scroll-view scroll-x="true" class="ip_tab_comtainer" bindscroll="Scroll" wx:if="{{!ifRestore}}">
+  <view class="ip_tab_comtainer_padd"></view>
+  <view class='wrapper'>
+    <view style='width:100%;margin-left:-{{Distance}}px;display: flex;justify-content: flex-start;position: relative;top:0;left:0;height:{{CanvasHeight}}px;background:#fff;'>
+        <canvas canvas-id='myCanvasAxis' style='width:{{PaddingLeft}}px;height:{{CanvasHeight}}px;position:fixed'></canvas> 
+       <canvas canvas-id='myCanvasData' style='width:{{CanvasWidth}}px;height:{{CanvasHeight}}px;position:absolute;top:0;left:{{PaddingLeft}}px;z-index:99;background:pink;'>
+       
+         <cover-view class="cover-view" style='width:180rpx;height:70px;top: {{(CanvasHeight - ips[ChoosedIdx].y * Rate - 70)>0?(CanvasHeight - ips[ChoosedIdx].y * Rate - 50):50}}px;left: {{(1+ AxisXWidth * (ChoosedIdx + 1)-AxisXWidth/2)+80>CanvasWidth?(CanvasWidth-180):(1+ AxisXWidth * (ChoosedIdx + 1)-AxisXWidth/2)}}px;'>
+          <cover-view>时间：</cover-view>
+          <cover-view>{{ips[ChoosedIdx].title}}</cover-view>
+          <cover-view>数值：</cover-view>
+          <cover-view>{{ips[ChoosedIdx].y}}</cover-view>
+        </cover-view>  
+       </canvas> 
+    </view>
+    <view style='padding-left:{{PaddingLeft}}px;'>
+      <block wx:for="{{ips}}" wx:for-item="ip" wx:key="{{ip.x}}" wx:for-index="idx">
+        <view class="{{ChoosedIdx == idx?'ip_tab_item_s':'ip_tab_item_n'}}" bindtap="onIpItemClick" data-idx="{{idx}}" wx:key="{{ip.x}}" data-item="{{ip}}">
+        </view>
+      </block>
+    </view>
+  </view>
+   
+  <view class="ip_tab_comtainer_padd"></view>
+</scroll-view>
+  </view>
+</view> -->
+
+
+
+
+
+
+

@@ -853,9 +853,9 @@ Page({
     this.setData({
       DateInfo: DateInfo
     })
-    setTimeout(()=>{
-      this.StartClock()
-    },1000)
+    // setTimeout(()=>{
+    //   this.StartClock()
+    // },1000)
   },
   //当前空气质量
   GetAirQuality(){
@@ -926,7 +926,7 @@ Page({
           })
           // setTimeout(() => {
           //   this.GetAirQuality_inside(app.globalData.CurHomeId)
-          // }, 2000)
+          // }, 5000)
           break
         case 2:
           this.setData({

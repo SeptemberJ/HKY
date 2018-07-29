@@ -202,12 +202,15 @@ var util = {};
     }
 
   };
+  //console.log()
 }());
 
 /**
  * 绘制xy网格
  */
 function drawXYAxisGrid(opts, config, context) {
+  console.log('绘制xy网格')
+  console.log(config.xAxis.padd)
   var padd = config.padd;
   var axisMargin = config.axisMargin;
   var axisPadd = config.axisPadd;
@@ -223,6 +226,8 @@ function drawXYAxisGrid(opts, config, context) {
  * 绘制y轴网格
  */
 function drawYAxisGrid(leftOffset, topOffset, config, context) {
+  console.log('绘制y轴网格')
+  console.log(config.xAxis.padd)
   if (config.yAxis.data == null || config.yAxis.data.length < 1) {
     return;
   }
@@ -298,8 +303,11 @@ function drawXAxis(opts, config, context) {
   context.beginPath();
   context.setFontSize(config.xAxis.fontSize);
   context.setFillStyle(config.xAxis.fontColor);
-  xAxis.forEach(function (item) {
-    context.fillText(item.content, item.x, item.y);
+  xAxis.forEach(function (item,idx) {
+    if (((idx + 1) % 10) == 0){
+      context.fillText(item.content, item.x, item.y);
+    }
+    //context.fillText(item.content, item.x, item.y);
   });
   context.closePath();
   context.stroke();
@@ -625,6 +633,8 @@ Animation.prototype.stop = function () {
 };
 
 function drawCharts(type, opts, config, context) {
+  var configNew = config;
+  configNew.xAxis.padd = 10
   var _this = this;
   var series = opts.series;
   var duration = opts.animation ? 1000 : 0;
@@ -633,10 +643,10 @@ function drawCharts(type, opts, config, context) {
     timing: 'easeIn',
     duration: duration,
     onProcess: function onProcess(process) {
-      drawXYAxisGrid(opts, config, context);
-      drawXAxis(opts, config, context);
-      drawArea(series, opts, config, context);
-      drawYAxis(opts, config, context);
+      //drawXYAxisGrid(opts, config, context);
+      drawXAxis(opts, configNew, context);
+      drawArea(series, opts, configNew, context);
+      drawYAxis(opts, configNew, context);
       drawCanvas(opts, context);
     },
     onAnimationFinish: function onAnimationFinish() {
@@ -673,6 +683,8 @@ Event.prototype.trigger = function () {
 };
 
 var Charts = function Charts(opts, _that) {
+  console.log('Charts---')
+  console.log(this.config)
   this.opts = opts;
   this.config = util.extend(true, config, opts);
   this.context = wx.createCanvasContext(opts.canvasId, _that);
@@ -700,7 +712,8 @@ Charts.prototype.updateData = function (opts) {
     distance: 0
   };
   this.opts._scrollDistance_ = 0;
-
+  console.log('updateData---')
+  console.log(this.config)
   drawCharts.call(this, this.config.type, this.opts, this.config, this.context);
 };
 
@@ -756,7 +769,7 @@ function calValidDistance(distance, currentOffset, config) {
   } else if (Math.abs(validDistance) >= realWidth - availableWidth) {
     validDistance = availableWidth - realWidth;
   }
-  console.log('validDistance======' + validDistance)
+  //console.log('validDistance======' + validDistance)
   return validDistance;
 }
 

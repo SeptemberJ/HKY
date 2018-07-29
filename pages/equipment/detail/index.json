@@ -1,6 +1,3 @@
 {
-  "navigationBarTitleText": "详细数据",
-  "usingComponents": {
-    "line-chart": "../../../components/line-chart/line-chart"
-  }
+  "navigationBarTitleText": "详细数据"
 }

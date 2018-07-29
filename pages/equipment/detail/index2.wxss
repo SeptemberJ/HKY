@@ -1,7 +1,6 @@
 .containWrap{
   width: 100%;
   height: 100vh;
-  /* position: relative; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -11,37 +10,41 @@
 .TopInfo{
   width: 100%;
   height: 205px;
+  background:yellow;
 }
 .CanvasBlock{
   width: 100%;
-  /* height: 205px; */
+  height: 205px;
+  background:purple;
 }
 .ScrollBlock{
   width: 100%;
   height: 40px;
-  /* position: absolute; */
-  /* margin-top: 100px; */
-  /* position: fixed;
+  position: fixed;
   bottom: 0;
-  left: 0; */
+  left: 0;
+  background:pink;
 }
-
-/* pages/about/about.wxss */
-.scroll-view_H {
-    width: 100%;
-    background-color: #fff;
-    padding: 20rpx 0 0;
-    white-space: nowrap;
-    overflow:hidden;
-}
-
-.chartBlock{
+/* .containWrap{
   width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: flex-start;
+  overflow: hidden;
+}
+.chartBlock{
+  width: 100%;
   position: relative;
 }
+.containWrap .TopInfo{
+  width: 100%;
+  height: 205px;
+} */
+
+
+
 .KindTitle{
   text-align: center;
   font-size: 18px;
@@ -105,22 +108,51 @@
   background: #3498db;
   color: #fff;
 }
+/* .None{
+     display: none;   
+}
+.CanvasItem{
+  display: block;   
+  position: absolute;
+  top: 0;
+  left: 0; 
+} */
+/* .TabLeft{
+  border-top-left-radius: 25%;
+  border-bottom-left-radius: 25%;
+}
+.TabRight{
+  border-top-right-radius: 30%;
+  border-bottom-right-radius: 30%;
+} */
 
-/*  */
+ec-canvas {
+  width: 100%;
+  height: 750rpx;
+  background-color: #fff;
+}
+
+/*ChartBlock  */
+.ChartBlock{
+  width: 100%;
+  /* height: 300px; */
+  /* position: fixed;
+  top: 160px;
+  left: 0; */
+}
 .cover-view{
-  width: 90px;
+  width: 180rpx;
   height: 50px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: flex-start;
   font-size: 22rpx;
-  padding: 10rpx 5px;
+  padding: 10rpx 20rpx;
   background: #efefef;
   position: absolute;
   border-radius: 15rpx;
-  /* opacity: .8; */
   
 }
 .cover-view text{
@@ -154,35 +186,33 @@
     height: 40rpx;
     display: inline-block;
     line-height: 40rpx;
-    padding: 0rpx;
-    color: #3498db;
+    padding: 12rpx 0rpx;
+    color: #ED373D;
     margin-right: 0rpx;
     font-size: 28rpx;
     text-align: center;
     overflow: hidden;
     text-overflow: ellipsis;
-    background-color: #3498db;
-    border-top-left-radius: 5rpx;
-    border-top-right-radius: 5rpx;
-    border-right: 1px solid #fff;
+    background-color: #0077FF;
+    border-radius: 4rpx;
+    border-right: 1px solid #CCCCCC;
 }
 
 .ip_tab_item_n {
     width: 19px;
     height: 40rpx;
     display: inline-block;
-    padding: 0rpx;
+    padding: 12rpx 0rpx;
     line-height: 40rpx;
-    color: #efefef;
+    color: #353535;
     margin-right: 0rpx;
     background-color: #efefef;
     font-size: 28rpx;
     text-align: center;
     overflow: hidden;
     text-overflow: ellipsis;
-    border-top-left-radius: 5rpx;
-    border-top-right-radius: 5rpx;
-    border-right: 1px solid #fff;
+    border-radius: 4rpx;
+    border-right: 1px solid #CCCCCC;
 }
 
 /**

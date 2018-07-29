@@ -5,18 +5,41 @@ var requestPromisified = util.wxPromisify(wx.request)
 
 const app = getApp();
 var rate = 0;
-var canvasWidth = 0;
-var canvasHeight = 0;
-var DATA = null;
+var doubleColumnCanvasWidth = 0;
+var doubleColumnCanvasHeight = 0;
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    lineCanvasData: {
-      canvasId: 'lineAreaCanvas',
-    },
+    ifRestore: false,
+    ctx:null,
+    ctxData:null,
+    ItemData:null,
+    Distance: 0,
+    CanvasWidth: 300,
+    CanvasHeight: 300,
+    PaddingLeft: 40,
+    PaddingTop: 10,
+    AxisXWidth: 20,
+    LineWidth: 1,
+    LineLong: 5,
+    count: 4,
+    Rate: null,
+    ItemData: null,
+    ChoosedIdx: 0,
+    ips: [],
+    StartRend: 0,
+    // doubleColumnCanvasData: {
+    //   canvasId: 'doubleColumn',
+    // },
+    // doubleColumnTitle: "",
+    // doubleColumnUnit: [
+    //   { color: "#13CE66", title: "" },
+    //   { color: "#FFA848", title: "" }
+    // ],
     Kind: 'PM2.5',
     Unit: '',
     EquipmentId: '',
@@ -31,47 +54,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    //console.log(app.globalData.systemInfo);
-    var systemInfo = app.globalData.systemInfo;
-    rate = systemInfo.screenWidth / 750;
-    var updateData = {};
-    canvasWidth = systemInfo.screenWidth - rate * 64;
-    canvasHeight = rate * 306 + rate * 44 + rate * 34 + rate * 22;
+    var temp = []
+   
+    var ctx = wx.createCanvasContext('myCanvasAxis');
+    var ctxData = wx.createCanvasContext('myCanvasData');
+    
+    this.setData({
+      ctx: ctx,
+      ctxData: ctxData,
+      CanvasHeight: app.globalData.systemInfo.screenHeight - 200 - 150
 
-    var yMax = 100;
-    var yMin = 0;
-    var xMax = 30;
-    var xMin = 0;
-    updateData['lineCanvasData.canvasWidth'] = canvasWidth;
-    updateData['lineCanvasData.axisPadd'] = { left: rate * 5, top: rate * 44, right: rate * 5 };
-    updateData['lineCanvasData.axisMargin'] = { bottom: rate * 34, left: rate * 26 };
-    updateData['lineCanvasData.yAxis.fontSize'] = rate * 22;
-    updateData['lineCanvasData.yAxis.fontColor'] = '#637280';
-    updateData['lineCanvasData.yAxis.lineColor'] = '#DCE0E6';
-    updateData['lineCanvasData.yAxis.lineWidth'] = rate * 2;
-    updateData['lineCanvasData.yAxis.dataWidth'] = rate * 62;
-    updateData['lineCanvasData.yAxis.isShow'] = true;
-    updateData['lineCanvasData.yAxis.isDash'] = true;
-    updateData['lineCanvasData.yAxis.minData'] = yMin;
-    updateData['lineCanvasData.yAxis.maxData'] = yMax;
-    updateData['lineCanvasData.yAxis.padd'] = rate * 306 / (yMax - yMin);
-
-    updateData['lineCanvasData.xAxis.dataHeight'] = rate * 26;
-    updateData['lineCanvasData.xAxis.fontSize'] = rate * 22;
-    updateData['lineCanvasData.xAxis.fontColor'] = '#637280';
-    updateData['lineCanvasData.xAxis.lineColor'] = '#DCE0E6';
-    updateData['lineCanvasData.xAxis.lineWidth'] = rate * 2;
-    updateData['lineCanvasData.xAxis.minData'] = xMin;
-    updateData['lineCanvasData.xAxis.maxData'] = xMax;
-    updateData['lineCanvasData.xAxis.padd'] = (canvasWidth - rate * 103) / (xMax - xMin);
-
-    updateData['lineCanvasData.point'] = { size: rate * 4, isShow: false };
-    updateData['lineCanvasData.canvasHeight'] = canvasHeight;
-    updateData['lineCanvasData.enableScroll'] = true;
-
-
-    this.setData(updateData);
-    //----------------------------
+    })
     wx.getStorage({
       key: 'equipmentInfo',
       success: (res) => {
@@ -119,56 +112,115 @@ Page({
         })
       }
     })
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    this.GetDataFn(6)
+    this.GetDataFn(6);
     
   },
+  onShow: function () {
+    this.setData({
+      ctx: wx.createCanvasContext('myCanvasAxis'),
+      ctxData: wx.createCanvasContext('myCanvasData'),
+    })
+  },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
+  // Y轴
+  DrawAxisY: function (ctx, ItemLong, ItemData) {
+    ctx.setLineWidth(this.data.LineWidth);
+    ctx.setStrokeStyle("#000");
+    ctx.beginPath();
+    ctx.moveTo((this.data.PaddingLeft - this.data.LineWidth - this.data.LineLong), 0);
+    ctx.lineTo((this.data.PaddingLeft - this.data.LineWidth - this.data.LineLong), this.data.CanvasHeight);
+    ctx.stroke();
+    for (var i = 0; i < 5; i++) {
+      ctx.moveTo(this.data.PaddingLeft - this.data.LineWidth - this.data.LineLong, this.data.PaddingTop + (i * ItemLong));
+      ctx.lineTo(this.data.PaddingLeft - this.data.LineWidth + (i * ItemLong), this.data.PaddingTop + (i * ItemLong));
+      ctx.closePath();
+      ctx.font = "bold 12px Arial ";
+      // ctx.fillStyle = 'white';
+      ctx.fillText(ItemData * (5 - i), 0, this.data.PaddingTop + (i * ItemLong) + 5);
+      ctx.stroke();
+    }
+    ctx.draw();
+  },
+
+
+  DrawDataArea: function (ctx, Rate,Data) {
+    console.log(Data)
+    ctx.beginPath();
+    ctx.setStrokeStyle("#0077FF");
+    //折线
+    Data.map((item, idx) => {
+      ctx.save();
+      ctx.restore();
+      if (idx == 0) {
+        ctx.moveTo((this.data.AxisXWidth / 2), this.data.CanvasHeight - item.y * Rate);
+        console.log((this.data.AxisXWidth / 2))
+      } else {
+        ctx.lineTo(this.data.AxisXWidth * (idx + 1) - (this.data.AxisXWidth / 2), this.data.CanvasHeight - item.y * Rate);
+        ctx.stroke();
+      }
+      //结点样式
+      ctx.beginPath();
+      ctx.setFillStyle('#0077FF')
+      ctx.arc(this.data.AxisXWidth * (idx + 1) - (this.data.AxisXWidth / 2), this.data.CanvasHeight - item.y * Rate, 2, 0, 2 * Math.PI);
+      ctx.stroke();
+    })
+    //结点样式
+    // Data.map((item, idx) => {
+    //   ctx.beginPath();
+    //   ctx.setFillStyle('#0077FF')
+    //   ctx.arc(this.data.AxisXWidth * (idx + 1) - (this.data.AxisXWidth / 2), this.data.CanvasHeight - item.y * Rate, 2, 0, 2 * Math.PI);
+    //   ctx.stroke();
+    // })
+    //竖线
+    ctx.save();
+    ctx.restore();
+    var AxisX = 1 + this.data.AxisXWidth * (this.data.ChoosedIdx + 1) - this.data.AxisXWidth / 2;
+    var AxisY = this.data.CanvasHeight - this.data.ips[this.data.ChoosedIdx].y * this.data.Rate - 70;
+    ctx.setLineDash([5, 5]);
+    ctx.setStrokeStyle("#ccc");
+    //ctx.restore();
+    ctx.moveTo(AxisX, AxisY);
+    ctx.lineTo(AxisX, this.data.CanvasHeight);
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.draw();
 
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-    //console.log("22222");
+  Scroll: function (e) {
+    console.log('Scroll-----------------')
+    // console.log(e)
+    this.setData({
+      Distance: e.detail.scrollLeft,
+      ScrollLeft: e.detail.scrollLeft,
+      StartRend: Math.round(e.detail.scrollLeft / this.data.AxisXWidth)
+    })
+    let which = Math.round(e.detail.scrollLeft / this.data.AxisXWidth)
+    console.log('which---' + which + '---' + this.data.ips[which].x)
+    this.DrawLine(this.data.ips, which)
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
+  Render: function () {
+    let t = this.data.StartRend
+    this.data.ctxData.clearRect(0, 0, 300, this.data.CanvasHeight);
+    this.setData({
+      StartRend: t + 5,
+      Distance: this.data.AxisXWidth * (t +5),
+    })
+    this.DrawLine(this.data.ips, this.data.StartRend)
   },
-
   /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+    * item点击事件
+    */
+  onIpItemClick: function (event) {
+    var ctxData = wx.createCanvasContext('myCanvasData');
+    var Idx = event.currentTarget.dataset.idx;
+    this.setData({
+      ChoosedIdx: Idx,
+    });
+    console.log('ChoosedIdx--' + Idx)
+    console.log('this.data.StartRend--' + this.data.StartRend)
+    this.DrawLine(this.data.ips, this.data.StartRend)
   },
   ChangeTab(e){
     let IDX = e.currentTarget.dataset.idx
@@ -186,22 +238,104 @@ Page({
     }
     this.setData({
       CurTab: IDX,
-      Day: DAY
+      Day: DAY,
+      ChoosedIdx: 0,
+      ifRestore: true,
+      StartRend: 0,
     })
     this.GetDataFn(DAY)
+  },
+  DrawLine2: function (DATA) {
+    console.log(DATA)
+    var ctx = wx.createCanvasContext('myCanvasData');
+    DATA.map((item, idx) => {
+      if (idx == 0) {
+        ctx.moveTo((this.data.AxisXWidth / 2), this.data.CanvasHeight - item.y * this.data.Rate);
+      } else {
+        ctx.lineTo(this.data.AxisXWidth * (idx + 1) - (this.data.AxisXWidth / 2), this.data.CanvasHeight - item.y * this.data.Rate);
+        ctx.stroke();
+      }
+    })
+    ctx.draw();
+  },
+
+
+  DrawLine: function (DATA, StartRendIdx) {
+    console.log('DrawLine---')
+    console.log('StartRendIdx---' + StartRendIdx)
+    console.log(DATA)
+    let RenderData = DATA.slice(StartRendIdx, StartRendIdx + 16);
+    console.log(RenderData)
+    console.log(RenderData[0].x)
+    console.log(RenderData[0].y)
+    let ctx = this.data.ctxData;
+    let AxisXWidth = this.data.AxisXWidth;
+    let CanvasHeight = this.data.CanvasHeight;
+    let Rate = this.data.Rate;
+    ctx.beginPath();
+    ctx.setStrokeStyle("#3498db");
+    RenderData.map((item, idx) => {
+      if (idx == 0) {
+        ctx.moveTo((AxisXWidth / 2), CanvasHeight - item.y * Rate);
+      } else {
+        ctx.lineTo(AxisXWidth * (idx) + (AxisXWidth / 2), CanvasHeight - item.y * Rate);
+        ctx.stroke();
+      }
+      //结点
+      ctx.beginPath();
+      ctx.setFillStyle('#3498db');
+      ctx.arc(AxisXWidth * (idx) + (AxisXWidth / 2), this.data.CanvasHeight - item.y * Rate, 1, 0, 2 * Math.PI);
+      ctx.stroke();
+    })
+    //ctx.closePath();
+    //结点
+    // ctx.beginPath();
+    // ctx.setFillStyle('#0077FF')
+    // RenderData.map((item, idx) => {
+    //   ctx.restore();
+    //   ctx.setFillStyle('#0077FF')
+    //   ctx.arc(AxisXWidth * (idx) + (AxisXWidth / 2), this.data.CanvasHeight - item.y * Rate, 2, 0, 2 * Math.PI);
+    //   ctx.stroke();
+    // })
+    //ctx.closePath();
+    //竖线
+    ctx.save();
+    ctx.restore();
+    var AxisX = 1 + AxisXWidth * (this.data.ChoosedIdx + 1 - this.data.StartRend) - AxisXWidth / 2;
+    var AxisY = this.data.CanvasHeight - this.data.ips[this.data.ChoosedIdx].y * this.data.Rate - 70;
+    ctx.setLineDash([5, 5]);
+    ctx.setStrokeStyle("#ccc");
+    ctx.moveTo(AxisX, AxisY);
+    ctx.lineTo(AxisX, this.data.CanvasHeight);
+
+    ctx.stroke();
+    // ctx.save();
+    // ctx.restore();
+    // var AxisX = 1 + this.data.AxisXWidth * (this.data.ChoosedIdx + 1) - this.data.AxisXWidth / 2;
+    // var AxisY = this.data.CanvasHeight - this.data.ips[this.data.ChoosedIdx].y * this.data.Rate - 70;
+    // ctx.setLineDash([5, 5]);
+    // ctx.setStrokeStyle("#ccc");
+    // //ctx.restore();
+    // ctx.moveTo(AxisX, AxisY);
+    // ctx.lineTo(AxisX, this.data.CanvasHeight);
+    // ctx.stroke();
+    // ctx.closePath();
+
+    ctx.closePath();
+    ctx.draw();
   },
   GetDataFn(DAY) {
     wx.getStorage({
       key: 'equipmentInfo',
       success: (res) => {
-        DATA = {
+        var DATA = {
           day: DAY,
           qrcodeid: res.data.EquipmentId,
           kind: res.data.Kind,
         }
-        wx.showLoading({
-          title: '加载中',
-        })
+        // wx.showLoading({
+        //   title: '加载中',
+        // })
         requestPromisified({
           url: h.main + '/selectnoqrcode1',
           data: {
@@ -213,81 +347,31 @@ Page({
           this.setData({
             Number: parseInt(res.data.malist[0].number),
           })
-          
-          let DataY = []
-          let DataX = []
-          let temp = res.data.qrcodelist.slice(0)
-          let temp2 = res.data.qrcodelist.slice(0)
-          temp.map((item, idx) => {
-            let objY = {
-              x: idx,
+          var temp = [];
+          var one = res.data.qrcodelist.slice(0);
+          var temp2 = res.data.qrcodelist.slice(0);
+          var double = res.data.qrcodelist.slice(0);
+          double.map((item, idx) => {
+            let Obj = {
+              x: idx + 1,
               y: item[1],
-              title: ""
+              title: item[0],
             }
-            let objX = {
-              x: idx,
-              y: 0,
-              title: ''
-            }
-            DataY.push(objY)
-            DataX.push(objX)
+            temp.push(Obj)
           })
-          //---------------------
-          var systemInfo = app.globalData.systemInfo;
-          rate = systemInfo.screenWidth / 750;
-          var updateData = {};
-          canvasWidth = systemInfo.screenWidth - rate * 64;
-          canvasHeight = rate * 306 + rate * 44 + rate * 34 + rate * 22;
-
           temp2.sort(function (a, b) {
             return -(a[1] - b[1]);
           });
-          let Maxdata = temp2[0][1]
-          let len = Math.ceil(Maxdata / 4);
-
-          console.log(temp2)
-
-          var yMax = len * 4;
-          var yMin = 0;
-          var xMax = 30;
-          var xMin = 0;
-          var series = [{
-            data: DataY
-          }];
-          var xAxisData = DataX;
-          
-          console.log(Maxdata)
-          console.log(len)
-          var yAxisData = [
-            { x: 0, y: 0, title: '0' },
-            { x: 0, y: len, title: len },
-            { x: 0, y: len * 2, title: len * 2 },
-            { x: 0, y: len * 3, title: len * 3 },
-            { x: 0, y: len * 4, title: len * 4 },
-          ];
-          // var yAxisData = [
-          //   { x: 0, y: 0, title: '0' },
-          //   { x: 0, y: 10, title: '10' },
-          //   { x: 0, y: 20, title: '20' },
-          //   { x: 0, y: 30, title: '30' },
-          //   { x: 0, y: 40, title: '40' },
-          //   { x: 0, y: 50, title: '50' }
-          // ];
-          yMax = Maxdata;
-          yMin = 0;
-          xMax = 6;
-          xMin = 0;
-          updateData['lineCanvasData.xAxis.minData'] = xMin;
-          updateData['lineCanvasData.xAxis.maxData'] = xMax;
-          updateData['lineCanvasData.xAxis.padd'] = (canvasWidth - rate * 98) / (xMax - xMin);
-          updateData['lineCanvasData.point'] = { size: rate * 4, isShow: true };
-          updateData['lineCanvasData.yAxis.minData'] = yMin;
-          updateData['lineCanvasData.yAxis.maxData'] = yMax;
-          updateData['lineCanvasData.yAxis.padd'] = rate * 306 / (yMax - yMin);
-          updateData['lineCanvasData.series'] = series;
-          updateData['lineCanvasData.xAxis.data'] = xAxisData;
-          updateData['lineCanvasData.yAxis.data'] = yAxisData;
-          this.setData(updateData);
+          var NewMaxdata = temp2[0][1]
+          this.setData({
+            ips: temp,
+            Rate: (this.data.CanvasHeight - this.data.PaddingTop) / NewMaxdata
+          })
+          console.log('NewMaxdata---' + NewMaxdata)
+          console.log(temp)
+          var NewItemData = Math.ceil(NewMaxdata / (this.data.count + 1));
+          this.DrawAxisY(this.data.ctx, (this.data.CanvasHeight - this.data.PaddingTop) / (this.data.count + 1), NewItemData)
+          this.DrawLine(temp, this.data.StartRend)
           //---------------------
           wx.hideLoading()
         }).catch((res) => {
