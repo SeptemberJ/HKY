@@ -924,9 +924,9 @@ Page({
             airQuality_inside: res.data.indoorairlist[0],
             AQI: res.data.indoorairlist[0].aqi,
           })
-          // setTimeout(() => {
-          //   this.GetAirQuality_inside(app.globalData.CurHomeId)
-          // }, 5000)
+          setTimeout(() => {
+            this.GetAirQuality_inside(app.globalData.CurHomeId)
+          }, 5000)
           break
         case 2:
           this.setData({

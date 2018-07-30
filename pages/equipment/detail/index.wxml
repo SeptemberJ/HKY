@@ -19,13 +19,13 @@
   <view class='CanvasBlock'>
       <canvas canvas-id='myCanvasAxis' style='width:{{PaddingLeft}}px;height:{{CanvasHeight}}px;position:fixed;background:#fff;'></canvas> 
       <canvas canvas-id="myCanvasData" style="width:{{CanvasWidth}}px;height:{{CanvasHeight}}px;left:{{PaddingLeft}}px;background:#fff;">
-       <cover-view class="cover-view" style='width:90px;height:70px;top: {{(CanvasHeight - ips[ChoosedIdx].y * Rate - 10)>CanvasHeight?(CanvasHeight - ips[ChoosedIdx].y * Rate - 10):10}}px;left: {{(1+ AxisXWidth * (ChoosedIdx + 1 - StartRend)-AxisXWidth/2)>(CanvasWidth-90)?((1+ AxisXWidth * (ChoosedIdx + 1 - StartRend)-AxisXWidth/2)-100):(1+ AxisXWidth * (ChoosedIdx + 1 - StartRend)-AxisXWidth/2)}}px;'>
+       <cover-view class="cover-view" style='width:100px;height:70px;top: {{(CanvasHeight - ips[ChoosedIdx].y * Rate - 10)>CanvasHeight?(CanvasHeight - ips[ChoosedIdx].y * Rate - 10):10}}px;left: {{(1+ AxisXWidth * (ChoosedIdx + 1 - StartRend)-AxisXWidth/2)>(CanvasWidth-100)?((1+ AxisXWidth * (ChoosedIdx + 1 - StartRend)-AxisXWidth/2)-110):(1+ AxisXWidth * (ChoosedIdx + 1 - StartRend)-AxisXWidth/2)}}px;'>
         <!-- <cover-view class="cover-view" style='width:180rpx;height:70px;top: {{(CanvasHeight - ips[ChoosedIdx].y * Rate - 10)>CanvasHeight?(CanvasHeight - ips[ChoosedIdx].y * Rate - 10):10}}px;left: {{(1+ AxisXWidth * (ChoosedIdx + 1 - StartRend)-AxisXWidth/2)>(CanvasWidth-80)?(CanvasWidth-130):(1+ AxisXWidth * (ChoosedIdx + 1 - StartRend)-AxisXWidth/2)}}px;'> -->
       
-          <cover-view>时间：</cover-view>
-          <cover-view>{{ips[ChoosedIdx].title}}</cover-view>
-          <cover-view>数值：</cover-view>
-          <cover-view>{{ips[ChoosedIdx].y}}</cover-view>
+          <cover-view class='cover-view-item'>时间：</cover-view>
+          <cover-view class='cover-view-item'>{{ips[ChoosedIdx].title}}</cover-view>
+          <cover-view class='cover-view-item'>数值：</cover-view>
+          <cover-view class='cover-view-item'>{{ips[ChoosedIdx].y}}</cover-view>
         </cover-view>
       </canvas>
   </view>

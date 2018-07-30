@@ -19,7 +19,7 @@ Page({
     ctxData:null,
     ItemData:null,
     Distance: 0,
-    CanvasWidth: 300,
+    CanvasWidth: 400,
     CanvasHeight: 300,
     PaddingLeft: 40,
     PaddingTop: 10,
@@ -264,7 +264,7 @@ Page({
     console.log('DrawLine---')
     console.log('StartRendIdx---' + StartRendIdx)
     console.log(DATA)
-    let RenderData = DATA.slice(StartRendIdx, StartRendIdx + 16);
+    let RenderData = DATA.slice(StartRendIdx, StartRendIdx + 36);
     console.log(RenderData)
     console.log(RenderData[0].x)
     console.log(RenderData[0].y)

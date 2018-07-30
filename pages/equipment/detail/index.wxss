@@ -108,22 +108,21 @@
 
 /*  */
 .cover-view{
-  width: 90px;
+  width: 100px;
   height: 50px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: flex-start;
-  font-size: 22rpx;
+  font-size: 18rpx;
   padding: 10rpx 5px;
   background: #efefef;
   position: absolute;
   border-radius: 15rpx;
   /* opacity: .8; */
-  
 }
-.cover-view text{
+.cover-view-item{
   width: 100%;
   display: flex;
   flex-wrap: wrap;
