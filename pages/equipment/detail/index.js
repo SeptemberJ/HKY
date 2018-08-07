@@ -21,7 +21,7 @@ Page({
     Distance: 0,
     CanvasWidth: 400,
     CanvasHeight: 300,
-    PaddingLeft: 40,
+    PaddingLeft: 50,
     PaddingTop: 10,
     AxisXWidth: 20,
     LineWidth: 1,
@@ -124,6 +124,8 @@ Page({
 
   // Y轴
   DrawAxisY: function (ctx, ItemLong, ItemData) {
+    console.log('ItemLong---' + ItemLong)
+    console.log('ItemData---' + ItemData)
     ctx.setLineWidth(this.data.LineWidth);
     ctx.setStrokeStyle("#000");
     ctx.beginPath();
@@ -134,9 +136,9 @@ Page({
       ctx.moveTo(this.data.PaddingLeft - this.data.LineWidth - this.data.LineLong, this.data.PaddingTop + (i * ItemLong));
       ctx.lineTo(this.data.PaddingLeft - this.data.LineWidth + (i * ItemLong), this.data.PaddingTop + (i * ItemLong));
       ctx.closePath();
-      ctx.font = "bold 12px Arial ";
+      ctx.font = "8px Arial ";
       // ctx.fillStyle = 'white';
-      ctx.fillText(ItemData * (5 - i), 0, this.data.PaddingTop + (i * ItemLong) + 5);
+      ctx.fillText((ItemData * (5 - i)).toFixed(1), 0, this.data.PaddingTop + (i * ItemLong) + 5);
       ctx.stroke();
     }
     ctx.draw();
@@ -345,7 +347,10 @@ Page({
         }).then((res) => {
           //console.log(LimitRange[DATA.kind])
           this.setData({
-            Number: parseInt(res.data.malist[0].number),
+            Number: res.data.malist[0].number,
+            // Number: parseInt(res.data.malist[0].number),
+            Fz: res.data.maxqrcodelist.length>0? res.data.maxqrcodelist[0].aqi:'',
+            Sj: res.data.maxqrcodelist.length > 0? res.data.maxqrcodelist[0].faddtime:'',
           })
           var temp = [];
           var one = res.data.qrcodelist.slice(0);
@@ -362,14 +367,15 @@ Page({
           temp2.sort(function (a, b) {
             return -(a[1] - b[1]);
           });
-          var NewMaxdata = temp2[0][1]
+          var NewMaxdata = Math.ceil(temp2[0][1])
           this.setData({
             ips: temp,
             Rate: (this.data.CanvasHeight - this.data.PaddingTop) / NewMaxdata
           })
           console.log('NewMaxdata---' + NewMaxdata)
           console.log(temp)
-          var NewItemData = Math.ceil(NewMaxdata / (this.data.count + 1));
+          var NewItemData = NewMaxdata / (this.data.count + 1)
+          //var NewItemData = Math.ceil(NewMaxdata / (this.data.count + 1));
           this.DrawAxisY(this.data.ctx, (this.data.CanvasHeight - this.data.PaddingTop) / (this.data.count + 1), NewItemData)
           this.DrawLine(temp, this.data.StartRend)
           //---------------------

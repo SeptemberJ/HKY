@@ -8,6 +8,8 @@
       <view class='additionalData'>
         <text>设备：{{EquipmentName}}</text>
         <text>单位：{{Unit}}</text>
+        <text>峰值：{{Fz}}</text>
+        <text>时间：{{Sj}}</text>
       </view>
     </view> 
 
